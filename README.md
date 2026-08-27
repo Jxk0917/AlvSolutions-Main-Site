@@ -55,6 +55,38 @@ string. The `price` filter renders it as a visible `$—` marked
 card basic and premium, T-shirt basic and premium, onboarding, extra revision
 round, rush delivery.
 
+## Deployment
+
+Live at **https://jxk0917.github.io/AlvSolutions-Main-Site/** — repo
+`Jxk0917/AlvSolutions-Main-Site`, public.
+
+Every push to `main` triggers `.github/workflows/deploy.yml`: Eleventy build →
+`upload-pages-artifact` → `deploy-pages`. About 30 seconds end to end. There is
+nothing to run by hand.
+
+**CI installs with `npm ci --omit=dev`, and that flag is load-bearing.**
+`canvas` and `puppeteer` are devDependencies used only by the local `shot-*.mjs`
+capture tooling. A plain `npm ci` makes CI compile canvas from source and
+download a Chromium build on every deploy.
+
+**The repo is public because it has to be.** GitHub's free plan refuses to serve
+Pages from a private repo. A future *client* site that must stay closed-source
+needs Cloudflare Pages or Netlify instead.
+
+### Switching to alvsolutions.com
+
+The site currently builds with `PATH_PREFIX: AlvSolutions-Main-Site` so it
+renders at the github.io project subpath. `HtmlBasePlugin` rewrites every
+root-absolute link, so nothing is hardcoded and the switch is two edits:
+
+1. Set `PATH_PREFIX: "/"` in `.github/workflows/deploy.yml`.
+2. Add `src/CNAME` containing `alvsolutions.com`, and register it with
+   `gh api -X PUT repos/Jxk0917/AlvSolutions-Main-Site/pages -f cname=alvsolutions.com`.
+   The CNAME file alone does **not** set the Pages domain on an Actions deploy.
+
+Do both only after DNS resolves, or Pages serves the domain before the
+certificate exists.
+
 ## Not done yet
 
 - **Home page rewiring.** The home page is unchanged from before the migration

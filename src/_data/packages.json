@@ -1,0 +1,81 @@
+{
+  "_comment": "Row order in `features` is the row order of the comparison chart. A tier's `has` value renders as a tick for true, a dash for false, the literal string for anything else, and 'Either one' for \"either\".",
+
+  "features": [
+    { "key": "pages",     "label": "Pages" },
+    { "key": "mobile",    "label": "Mobile-friendly design" },
+    { "key": "form",      "label": "Contact form" },
+    { "key": "maps",      "label": "Google Maps" },
+    { "key": "hosting",   "label": "Hosting + SSL security" },
+    { "key": "revisions", "label": "Revision rounds" },
+    { "key": "menu",      "label": "Menu / service page" },
+    { "key": "catering",  "label": "Catering / quote page" },
+    { "key": "booking",   "label": "Booking integration" },
+    { "key": "updates",   "label": "Updates included" },
+    { "key": "card",      "label": "Business card design" }
+  ],
+
+  "tiers": [
+    {
+      "slug": "starter",
+      "name": "Starter",
+      "price": 500,
+      "monthly": 50,
+      "for": "A business that needs to exist online, properly, without paying for anything it will not use.",
+      "has": {
+        "pages": "3",
+        "mobile": true,
+        "form": true,
+        "maps": false,
+        "hosting": true,
+        "revisions": "1",
+        "menu": false,
+        "catering": false,
+        "booking": false,
+        "updates": false,
+        "card": false
+      }
+    },
+    {
+      "slug": "growth",
+      "name": "Growth",
+      "price": 800,
+      "monthly": 80,
+      "popular": true,
+      "for": "A business with something to show — a menu, a service list, a catering offer — and customers who look it up on a phone.",
+      "has": {
+        "pages": "4",
+        "mobile": true,
+        "form": true,
+        "maps": true,
+        "hosting": true,
+        "revisions": "2",
+        "menu": "either",
+        "catering": "either",
+        "booking": false,
+        "updates": "3 / month",
+        "card": false
+      }
+    },
+    {
+      "slug": "pro",
+      "name": "Pro",
+      "price": 1200,
+      "monthly": 100,
+      "for": "A business that takes bookings and wants the whole thing handled — site, menu, catering, appointments and the card in your hand.",
+      "has": {
+        "pages": "4 · premium design",
+        "mobile": true,
+        "form": true,
+        "maps": true,
+        "hosting": true,
+        "revisions": "3",
+        "menu": true,
+        "catering": true,
+        "booking": true,
+        "updates": "Unlimited",
+        "card": "Basic"
+      }
+    }
+  ]
+}

@@ -1,0 +1,52 @@
+{#
+  The packages comparison chart AND the add-on factor tables are the same
+  object: a row label plus one value per column. One component, so the
+  horizontal-scroll behaviour and the sticky first column are solved once.
+
+  Called with:
+    cols  = [{ label, sub, popular }]
+    rows  = [{ label, values: [...], example }]
+    caption (optional, visually hidden)
+
+  A value renders as a tick for true, a dash for false, "Either one" for
+  "either", and its own text for anything else.
+#}
+<div class="matrix-wrap">
+  <table class="matrix">
+    {%- if caption %}<caption class="vh">{{ caption }}</caption>{%- endif %}
+    <thead>
+      <tr>
+        <th scope="col" class="mx-corner"><span class="vh">Feature</span></th>
+        {%- for c in cols %}
+        <th scope="col"{% if c.popular %} class="col-pop"{% endif %}>
+          {{ c.label }}
+          {%- if c.sub %}<span class="mx-sub">{{ c.sub | safe }}</span>{% endif %}
+        </th>
+        {%- endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      {%- for r in rows %}
+      <tr{% if r.example %} class="mx-eg"{% endif %}>
+        <th scope="row">{{ r.label }}</th>
+        {%- for v in r.values %}
+        {%- set pop = cols[loop.index0].popular %}
+        <td{% if pop %} class="col-pop"{% endif %}>
+          {#- order matters: `v` falsy is the last branch, so a missing key
+              renders as "not included" rather than as the string "undefined" #}
+          {%- if v === true %}
+          <svg class="ic mx-yes" viewBox="0 0 24 24" role="img" aria-label="Included"><use href="#i-check"/></svg>
+          {%- elif v === "either" %}
+          <span class="mx-val mx-either">Either one</span>
+          {%- elif v %}
+          <span class="mx-val">{{ v }}</span>
+          {%- else %}
+          <svg class="ic mx-no" viewBox="0 0 24 24" role="img" aria-label="Not included"><use href="#i-dash"/></svg>
+          {%- endif %}
+        </td>
+        {%- endfor %}
+      </tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>

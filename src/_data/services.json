@@ -1,0 +1,337 @@
+[
+  {
+    "slug": "business-websites",
+    "family": "web",
+    "name": "Business websites",
+    "icon": "browser",
+    "promise": "A branded site that represents your business around the clock.",
+    "blurb": "The core build. Structured so a visitor knows what you do and how to reach you within seconds of landing.",
+    "intro": [
+      "Most people looking for a business like yours will decide whether to call you before they ever speak to you. They will do it on a phone, in under a minute, from a search result. A business website exists to win that minute.",
+      "That means the essentials come first: what you do, where you are, what it costs, and how to get hold of you. Everything else is arranged around those four."
+    ],
+    "includes": [
+      "Home, services, about and contact pages",
+      "Contact and quote forms that reach your inbox",
+      "Google Maps, hours and click to call",
+      "Photo galleries for your own work",
+      "Hosting, domain and SSL set up for you",
+      "Built for phones first"
+    ],
+    "packagePricing": true,
+    "faq": [
+      {
+        "q": "What do you need from me to start?",
+        "a": "Your logo if you have one, photos of your own work, and a rough idea of what you want each page to say. If you have none of that, onboarding covers me gathering it with you — it is a listed fee, not a surprise."
+      },
+      {
+        "q": "Who owns the site when it is done?",
+        "a": "You do. The domain is registered in your name and the site is yours. The monthly plan covers hosting and updates, not custody of your own business."
+      }
+    ],
+    "related": [
+      "menu-service-page",
+      "booking-integration",
+      "search-visibility"
+    ]
+  },
+  {
+    "slug": "menu-service-page",
+    "family": "web",
+    "name": "Menu / service page",
+    "icon": "menu",
+    "promise": "Everything you offer, on one page a customer can actually read.",
+    "blurb": "Food, nail, detailing, lawn — any business type.",
+    "intro": [
+      "A printed menu photographed and uploaded as a PDF is the most common mistake a small business makes online. It is unreadable at arm's length on a phone, invisible to Google, and out of date the day a price changes.",
+      "A real menu or service page is text. It scales to the screen, it can be searched, and changing a price takes a minute instead of a reprint. It works exactly the same whether you are listing tacos, nail treatments, detailing packages or lawn services."
+    ],
+    "includes": [
+      "Every item as real text, not an image of text",
+      "Prices you can change without a redesign",
+      "Sections or categories where the list is long",
+      "Photos per item where you have them",
+      "Readable at arm's length on a phone"
+    ],
+    "addon": "menu-service-page",
+    "faq": [
+      {
+        "q": "What if I do not sell food?",
+        "a": "Then it is a service page, and it works identically. A lawn care company listing five services and a restaurant listing sixty items are the same page with different amounts in it — which is exactly what the simple and complex pricing measures."
+      },
+      {
+        "q": "Can I update prices myself?",
+        "a": "Price changes are a minor website update, and they are included in the monthly allowance on Growth and Pro. On Starter they are charged per update at the minor rate."
+      }
+    ],
+    "related": [
+      "catering-quote-page",
+      "business-websites",
+      "website-updates"
+    ],
+    "packageKey": "menu"
+  },
+  {
+    "slug": "catering-quote-page",
+    "family": "web",
+    "name": "Catering / quote page",
+    "icon": "clipboard",
+    "promise": "Turn a big job enquiry into a lead you can actually follow up.",
+    "blurb": "Lead capture for large or scheduled jobs.",
+    "intro": [
+      "The jobs worth the most are the ones that need a conversation first: a wedding, a fleet, a full-property contract. Those enquiries arrive as a phone call you miss, or a message with none of the detail you need to quote.",
+      "A catering or quote page asks the right questions up front. You open your inbox to a date, a headcount and a budget instead of the word \"hi\"."
+    ],
+    "includes": [
+      "A form that asks what you need to quote",
+      "Your packages laid out with what each includes",
+      "Enquiries delivered to your inbox",
+      "Works for catering, events, contracts or fleet work"
+    ],
+    "addon": "catering-quote-page",
+    "faq": [
+      {
+        "q": "How is this different from the contact form?",
+        "a": "The contact form asks for a name and a message. This one asks the questions that decide whether you can take the job and what to charge for it — the date, the headcount, the specifics. It is the difference between a lead and an enquiry."
+      }
+    ],
+    "related": [
+      "menu-service-page",
+      "booking-integration",
+      "business-websites"
+    ],
+    "packageKey": "catering"
+  },
+  {
+    "slug": "booking-integration",
+    "family": "web",
+    "name": "Booking integration",
+    "icon": "calendar",
+    "promise": "Let clients book straight from your site, 24/7. No phone tag.",
+    "blurb": "Calendly, Square, Booksy or similar setup.",
+    "intro": [
+      "Every booking made by phone costs you a call, and every call you miss costs you the booking. Someone deciding at nine at night will book the business that lets them, and leave a voicemail for the one that does not.",
+      "I connect the booking system to your site so the availability people see is the availability you actually have."
+    ],
+    "includes": [
+      "Your platform embedded so it looks like part of the site",
+      "Calendly, Square, Booksy, Vagaro or similar",
+      "Booking buttons where people are ready to act",
+      "Tested end to end before launch"
+    ],
+    "addon": "booking-integration",
+    "faq": [
+      {
+        "q": "Do I need an account already?",
+        "a": "No, but having one makes it a simple setup rather than a complex one — that is one of the factors in the price. If you do not have one, I will set it up and configure your services with you."
+      },
+      {
+        "q": "Which platform should I use?",
+        "a": "Tell me how you take bookings today and I will tell you plainly. Most single-service businesses are well served by Calendly's free tier; salons and multi-staff operations usually need something like Square or Vagaro."
+      }
+    ],
+    "related": [
+      "business-websites",
+      "menu-service-page",
+      "website-updates"
+    ],
+    "packageKey": "booking"
+  },
+  {
+    "slug": "website-updates",
+    "family": "web",
+    "name": "Website updates",
+    "icon": "refresh",
+    "promise": "A site that stays current, without you learning to edit it.",
+    "blurb": "Monthly maintenance, plus one-time updates priced by size.",
+    "intro": [
+      "Hours change. Prices change. You get better photos. A site that still shows last year's information does more damage than no site, because it teaches people your business cannot be trusted on detail.",
+      "Every package includes a monthly plan that covers hosting, security and keeping the thing running. Growth includes three updates a month, Pro includes unlimited. Anything beyond that is priced by how big the job actually is."
+    ],
+    "includes": [
+      "Hosting, SSL and security maintained",
+      "Text, photo, hours and price changes",
+      "You send a message, I make the change",
+      "No CMS to learn, no password to lose"
+    ],
+    "addon": "website-update",
+    "faq": [
+      {
+        "q": "How do I request an update?",
+        "a": "You message me. You get my number, not a ticket queue."
+      },
+      {
+        "q": "What counts as one update?",
+        "a": "One request, however many small changes are in it, up to the size boundaries in the table above. Sending four photos to swap is one update, not four."
+      }
+    ],
+    "related": [
+      "business-websites",
+      "menu-service-page",
+      "search-visibility"
+    ],
+    "packageKey": "updates"
+  },
+  {
+    "slug": "search-visibility",
+    "family": "web",
+    "name": "Search visibility",
+    "icon": "search",
+    "promise": "Clean structure and fast load times, so Google can find you.",
+    "blurb": "Included in every build. Not sold separately.",
+    "included": true,
+    "intro": [
+      "This is not an add-on and there is no monthly SEO retainer attached to it. It is a property of building the site properly in the first place, and it is in every package at no extra cost.",
+      "What that means in practice: real page titles, headings in a sensible order, text that is text rather than pictures of text, pages that load fast on a phone on mobile data, and the location and contact details marked up so search engines can read them.",
+      "What it does not mean is a guarantee of ranking first. Anyone selling you that is selling you something they cannot deliver."
+    ],
+    "includes": [
+      "Real page titles and descriptions per page",
+      "Headings structured so a crawler can follow them",
+      "Fast load times on mobile data",
+      "Location, hours and contact marked up for search",
+      "Menus and services as readable text, never PDFs"
+    ],
+    "faq": [
+      {
+        "q": "Will I rank first on Google?",
+        "a": "I cannot promise that and neither can anyone else. What I can do is make sure nothing about how the site is built is holding you back, which is more than most small business sites can say."
+      }
+    ],
+    "related": [
+      "google-ads",
+      "business-websites",
+      "website-updates"
+    ]
+  },
+  {
+    "slug": "google-ads",
+    "family": "ads",
+    "name": "Google Ads management",
+    "icon": "target",
+    "promise": "Be at the top of Google for the work you want, on the day you want it.",
+    "blurb": "Search ads built, run and reported on. Your ad budget goes straight to Google.",
+    "intro": [
+      "Search visibility is the long game. It is built into every site I make, it costs nothing extra, and it compounds quietly over months. Paid search is the short game. It puts you above the results for \"mobile detailing near me\" this afternoon, and it stops the day you say stop.",
+      "That is the reason to run ads at all: demand becomes something you can turn on. A slow February, a service nobody knows you offer, a second van you need to keep busy — those are the weeks ads earn their keep, and the weeks a business without them just waits for the phone.",
+      "Your ad budget is charged to your own card by Google, at whatever number you set. I never hold it and I never take a percentage of it. What you pay me is the setup and the month, and both are listed below."
+    ],
+    "includes": [
+      "Keyword research based on what your customers actually type",
+      "Campaigns, ad groups and ad copy written for you",
+      "Conversion tracking, so calls and form fills are counted",
+      "Negative keywords, so you stop paying for the wrong clicks",
+      "Targeting set to your service area and your opening hours",
+      "A monthly report in plain English, not a dashboard login"
+    ],
+    "addon": "google-ads",
+    "processHeading": "How a project runs.",
+    "turnaroundNote": "Campaigns are built and live within <b style=\"color:var(--text)\">3 to 5 business days</b> of getting access to your account. After that it runs month to month, and you can pause it any time.",
+    "faq": [
+      {
+        "q": "Do I pay you the ad budget as well?",
+        "a": "No. Google charges your own card for the clicks, in an account registered in your name, and you can see every dollar of it. I charge for building the campaigns and for running them — never a cut of what you spend."
+      },
+      {
+        "q": "How much should I put behind it?",
+        "a": "Tell me what one job is worth to you and roughly how many you want, and I will give you a starting number rather than a range. Most local businesses find out what they actually need inside the first month, then set the budget from real figures instead of a guess."
+      },
+      {
+        "q": "Can I stop whenever I want?",
+        "a": "Any month. Pausing a campaign takes a minute, the account stays in your name, and nothing about the setup is held hostage if you stop paying me."
+      },
+      {
+        "q": "Is this not the same as search visibility?",
+        "a": "No, and you want both. Search visibility is the site being built so Google can read it, and it is in every package at no extra cost. Ads are paid placement above those results. One is the foundation, the other is a tap you can open."
+      }
+    ],
+    "related": [
+      "search-visibility",
+      "business-websites",
+      "website-updates"
+    ]
+  },
+  {
+    "slug": "business-cards",
+    "family": "print",
+    "name": "Business cards",
+    "icon": "card",
+    "promise": "Cards that match the site exactly, so your brand looks the same on screen and in hand.",
+    "blurb": "Basic and premium, designed against the same brand as the site.",
+    "intro": [
+      "A card designed separately from the website always looks like it. Different blue, different typeface, a logo at a slightly different weight — small differences that add up to a business that looks improvised.",
+      "Designing the card against the same brand as the site means the person who found you online and the person handed your card meet the same business."
+    ],
+    "includes": [
+      "Designed against your site's exact brand",
+      "Print-ready files at the right bleed and resolution",
+      "Front, or front and back on premium",
+      "QR code to your site on premium"
+    ],
+    "addonGroup": "business-cards",
+    "factors": [
+      { "label": "Faces designed",
+        "values": ["Front only", "Front and back"] },
+      { "label": "QR code to your site",
+        "values": [false, true] },
+      { "label": "Card stock",
+        "values": ["Standard", "Thick"] },
+      { "label": "You receive",
+        "values": ["Print-ready files for any printer", "Printed cards, delivered to you"] },
+      { "label": "For example", "example": true,
+        "values": ["Files you walk into a local print shop with", "A finished box of cards in your hand"] }
+    ],
+    "faq": [
+      {
+        "q": "Do you handle the printing?",
+        "a": "Premium is delivered printed. Basic is design only — you get print-ready files and can take them to any printer you like."
+      }
+    ],
+    "related": [
+      "shirt-design",
+      "business-websites"
+    ],
+    "packageKey": "card"
+  },
+  {
+    "slug": "shirt-design",
+    "family": "print",
+    "name": "Shirt design",
+    "icon": "shirt",
+    "promise": "Your team is your brand on the move.",
+    "blurb": "Basic and premium, designed against the same brand as the site.",
+    "intro": [
+      "A branded shirt is the cheapest advertising a service business owns. A crew in matching shirts on a driveway is seen by every neighbour on the street, and it is the difference between looking like a company and looking like a guy with a van.",
+      "Same rule as the cards: designed against the brand the site already uses, so it reads as one business rather than three."
+    ],
+    "includes": [
+      "Logo, business name and brand colors",
+      "Front, or front, back and sleeve on premium",
+      "Artwork prepared to the printer's specification",
+      "Fulfillment handled on premium"
+    ],
+    "addonGroup": "shirt-design",
+    "factors": [
+      { "label": "Print areas",
+        "values": ["Front only", "Front, back and sleeve"] },
+      { "label": "Artwork",
+        "values": ["Prepared to your printer's spec", "Prepared and sent to the printer for you"] },
+      { "label": "Fulfillment",
+        "values": [false, true] },
+      { "label": "You receive",
+        "values": ["Artwork files for any printer", "Printed shirts, handled end to end"] },
+      { "label": "For example", "example": true,
+        "values": ["A design you hand to a local shop", "Shirts that arrive ready to wear"] }
+    ],
+    "faq": [
+      {
+        "q": "Do you handle the printing?",
+        "a": "Premium includes fulfillment. Basic is design only — you get artwork ready for any printer."
+      }
+    ],
+    "related": [
+      "business-cards",
+      "business-websites"
+    ]
+  }
+]

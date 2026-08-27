@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "legal/privacy",
+    "section": "Legal",
+    "name": "Privacy policy",
+    "heading": "Privacy policy.",
+    "blurb": "What the contact form collects and what happens to it.",
+    "body": "The quote form currently opens your own mail app rather than posting anywhere, so today the site collects nothing at all. That changes the moment the form is routed through a service, and this page has to exist and be accurate before it does.",
+    "cta": { "label": "Email me directly instead", "url": "/contact/" }
+  },
+  {
+    "slug": "legal/terms",
+    "section": "Legal",
+    "name": "Terms",
+    "heading": "Terms of service.",
+    "blurb": "Deposit, revision rounds, ownership and rush work.",
+    "body": "The commercial terms are settled and published on the pricing pages — flat price agreed up front, a deposit to begin, revision rounds per package, and named fees for anything beyond them. Turning that into terms of service needs wording written for the business, not a template pasted from another company.",
+    "cta": { "label": "See the pricing instead", "url": "/packages/" }
+  }
+]

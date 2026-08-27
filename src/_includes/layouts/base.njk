@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{% if title %}{{ title }} | AlvSolutions{% else %}AlvSolutions | Professional Business Websites in San Antonio{% endif %}</title>
+  <meta name="description" content="{{ description | default('Fast, professional websites for San Antonio small businesses. Flat pricing from $500, live in about a week, with hosting and support handled.') }}" />
+  <meta name="theme-color" content="#070C14" />
+  <meta property="og:title" content="{% if title %}{{ title }} | AlvSolutions{% else %}AlvSolutions | Professional Business Websites{% endif %}" />
+  <meta property="og:description" content="{{ description | default('Fast, professional websites for San Antonio small businesses. Flat pricing from $500, live in about a week.') }}" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="/assets/brand/alv-lockup.png" />
+  <link rel="icon" href="/assets/brand/alv-mark.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  {%- if preloadImage %}
+  <link rel="preload" as="image" href="{{ preloadImage }}" />
+  {%- endif %}
+
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="stylesheet" href="/assets/pages.css" />
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+{% include "components/icon-sprite.njk" %}
+{% include "components/nav.njk" %}
+
+{{ content | safe }}
+
+{% include "components/footer.njk" %}
+
+<script src="/assets/main.js" defer></script>
+{%- if shader %}
+<script src="/assets/shader.js" defer></script>
+{%- endif %}
+</body>
+</html>

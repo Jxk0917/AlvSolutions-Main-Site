@@ -1,0 +1,108 @@
+---
+layout: layouts/base.njk
+title: Portfolio
+description: Two demo sites built end to end — Hacienda Grill, a restaurant site, and Lucid Detailing, a mobile detailing site built around booking.
+---
+
+{%- set ph = {
+  eyebrow: "Recent builds",
+  heading: "Two demo sites,<br />built end to end.",
+  lead: "Both are demo builds rather than client work — made to show what a finished site looks like, not to borrow someone else's name. Open either one and click through it.",
+  crumbs: [{ label: "Portfolio" }],
+  actions: [{ label: "Start a project", url: "/contact/" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main" class="work-page">
+<section class="sec sec-aurora" id="work">
+  <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <div class="wrap">
+
+    <article class="work-row reveal">
+      <div class="work-copy">
+        <span class="work-tag"><b>Demo build</b> &middot; Restaurant</span>
+        <h3 style="font-size: clamp(24px, 2.6vw, 32px); font-weight: 700;">Hacienda Grill</h3>
+        <p class="body-3">
+          A full restaurant site: menu with photography, hours, location and a
+          reservation form. The menu is tabbed rather than a printed PDF, so it
+          stays readable on a phone at the table.
+        </p>
+        <div class="work-meta">
+          <span class="chip">Tabbed menu</span>
+          <span class="chip">Reservations</span>
+          <span class="chip">Hours and location</span>
+        </div>
+        <!-- TODO: swap href for the live URL when the build is hosted -->
+        <a class="btn btn-ghost work-cta"
+           href="/Demo%20Restaurant/index.html" target="_blank" rel="noopener">
+          View build
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7l-10 10" /> <path d="M8 7l9 0l0 9" /></svg>
+        </a>
+      </div>
+      <div class="shot">
+        <div class="stage">
+          <div class="frame">
+            <div class="frame-bar">
+              <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="frame-url">Hacienda Grill &middot; demo build</div>
+            </div>
+            <img src="/assets/portfolio/hacienda-grill-1440.jpg"
+                 srcset="/assets/portfolio/hacienda-grill-720.jpg 720w, /assets/portfolio/hacienda-grill-1440.jpg 1440w"
+                 sizes="(min-width: 940px) 58vw, 100vw"
+                 width="1440" height="900" loading="lazy" decoding="async"
+                 alt="Hacienda Grill homepage on desktop" />
+          </div>
+        </div>
+        <div class="shot-mob">
+          <img src="/assets/portfolio/hacienda-grill-mobile.jpg" width="430" height="860" loading="lazy" decoding="async"
+               alt="Hacienda Grill homepage on mobile" />
+        </div>
+      </div>
+    </article>
+
+    <article class="work-row flip reveal">
+      <div class="work-copy">
+        <span class="work-tag"><b>Demo build</b> &middot; Auto services</span>
+        <h3 style="font-size: clamp(24px, 2.6vw, 32px); font-weight: 700;">Lucid Detailing</h3>
+        <p class="body-3">
+          A mobile detailing site built around booking. Services and pricing are
+          laid out plainly, a gallery carries the before and after work, and the
+          booking call to action follows you down the page.
+        </p>
+        <div class="work-meta">
+          <span class="chip">Service pricing</span>
+          <span class="chip">Booking flow</span>
+          <span class="chip">Gallery</span>
+        </div>
+        <!-- TODO: swap href for the live URL when the build is hosted -->
+        <a class="btn btn-ghost work-cta"
+           href="/Demo%20Detailer/index.html" target="_blank" rel="noopener">
+          View build
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7l-10 10" /> <path d="M8 7l9 0l0 9" /></svg>
+        </a>
+      </div>
+      <div class="shot">
+        <div class="stage">
+          <div class="frame">
+            <div class="frame-bar">
+              <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="frame-url">Lucid Detailing &middot; demo build</div>
+            </div>
+            <img src="/assets/portfolio/lucid-detailing-1440.jpg"
+                 srcset="/assets/portfolio/lucid-detailing-720.jpg 720w, /assets/portfolio/lucid-detailing-1440.jpg 1440w"
+                 sizes="(min-width: 940px) 58vw, 100vw"
+                 width="1440" height="900" loading="lazy" decoding="async"
+                 alt="Lucid Detailing homepage on desktop" />
+          </div>
+        </div>
+        <div class="shot-mob">
+          <img src="/assets/portfolio/lucid-detailing-mobile.jpg" width="430" height="860" loading="lazy" decoding="async"
+               alt="Lucid Detailing homepage on mobile" />
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+  {% include "components/cta-band.njk" %}
+</main>

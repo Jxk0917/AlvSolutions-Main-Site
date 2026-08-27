@@ -1,0 +1,521 @@
+/* ============================================================
+   PAGES.CSS
+   Everything the inner pages need that the home page never did.
+   styles.css is untouched: it is the home page's stylesheet and the
+   shared foundation, and nothing here overrides a rule in it except
+   the two marked OVERRIDE below.
+
+   Same rules as styles.css, no exceptions:
+     radius  --r-xs 6 inner chrome · --r-ctl 10 controls
+             --r-card 16 cards/media · 999px pills and dots only
+     icons   Tabler outline, uniform 1.75 stroke, no emoji
+     motion  reveal only, everything gated on prefers-reduced-motion
+   ============================================================ */
+
+/* ---------- utilities ---------- */
+
+.vh {
+  position: absolute; width: 1px; height: 1px;
+  padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Unsupplied data. Deliberately loud: a price nobody has set must read as
+   unfinished, never as free. Greppable as PLACEHOLDER in _site/. */
+.ph {
+  display: inline-block;
+  font-size: .92em; font-weight: 600;
+  color: var(--gold);
+  background: rgba(255,200,17,.08);
+  border: 1px dashed rgba(255,200,17,.45);
+  border-radius: var(--r-xs);
+  padding: 0 7px;
+  letter-spacing: .02em;
+}
+
+/* ---------- nav: current page ---------- */
+
+.nav-link.is-current { color: var(--text); }
+.nav-link.is-current::after { transform: scaleX(1); }
+.mob-menu .nav-link.is-current { color: var(--blue); }
+
+/* ---------- footer: OVERRIDE, three link groups instead of one ---------- */
+
+@media (min-width: 780px) {
+  .foot-grid { grid-template-columns: 1.7fr 1.15fr .8fr .9fr; gap: 40px; }
+}
+.foot-legal { display: flex; gap: 18px; }
+.foot-legal a { color: inherit; text-decoration: none; transition: color .18s var(--ease); }
+.foot-legal a:hover { color: var(--text-2); }
+
+/* ---------- gold button ----------
+   Solid gold, ink label — measures 12.6:1. Used for the popular tier's CTA,
+   the one other button on the site that is allowed to compete with
+   "Start a project" for attention.                                   */
+
+.btn-gold { background: var(--gold); color: var(--ink); }
+.btn-gold:hover { background: #FFD84A; }
+.btn-gold:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
+
+/* ---------- page head ---------- */
+
+.pagehead {
+  padding-top: calc(var(--nav-h) + clamp(44px, 6vw, 82px));
+  padding-bottom: clamp(36px, 4.4vw, 56px);
+  position: relative;
+}
+.pagehead::after {
+  content: ''; position: absolute; inset: auto 0 0 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--line-2) 22%, var(--line-2) 78%, transparent);
+}
+.pagehead h1 { max-width: 17ch; }
+.pagehead .eyebrow { display: block; margin-bottom: 16px; }
+.pagehead .lead { margin-top: 20px; max-width: 58ch; }
+.pagehead .hero-actions { margin-top: 30px; }
+
+/* A real .btn-ghost — same chrome, same gold-on-highlight as every other
+   button — just with its arrow reversed to point at where it goes. */
+.btn-back .ic { transform: scaleX(-1); }
+
+.crumbs { margin-bottom: 22px; }
+.crumbs ol { list-style: none; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.crumbs li { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-3); }
+.crumbs li + li::before { content: '/'; color: var(--line-2); }
+.crumbs a { color: var(--text-3); text-decoration: none; transition: color .18s var(--ease); }
+.crumbs a:hover { color: var(--blue); }
+.crumbs [aria-current] { color: var(--text-2); }
+
+/* ---------- package tier cards ---------- */
+
+.tiers { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 720px) { .tiers { grid-template-columns: repeat(3, 1fr); } }
+
+.tier {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 26px 24px 24px;
+  position: relative;
+  display: flex; flex-direction: column;
+  height: 100%;
+}
+.tier.pop {
+  border-color: rgba(255,200,17,.42);
+  background: linear-gradient(180deg, rgba(255,200,17,.055), transparent 46%), var(--surface);
+}
+.tier-badge {
+  position: absolute; top: -10px; left: 24px;
+  font-size: 10.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink); background: var(--gold);
+  border-radius: 999px; padding: 3px 11px;
+}
+.tier-name { font-size: 20px; font-weight: 700; }
+.tier-for { color: var(--text-3); font-size: 14px; line-height: 1.6; margin-top: 8px; min-height: 4.8em; }
+
+.tier-price { margin: 20px 0 22px; padding-bottom: 22px; border-bottom: 1px solid var(--line); }
+.tier-amt {
+  display: block; font-size: 40px; font-weight: 700;
+  letter-spacing: -.035em; line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.tier.pop .tier-amt { color: var(--gold); }
+.tier-mo { display: block; margin-top: 10px; font-size: 14px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+/* align-content:start matters: the ul is flex:1 so all three cards end the
+   same height, and a stretched grid would space Starter's five rows out to
+   fill the gap left by Pro's eleven. */
+.tier-list { list-style: none; padding: 0; margin: 0 0 24px; display: grid; gap: 10px; align-content: start; flex: 1; }
+.tier-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.tier-list .ic { font-size: 17px; color: var(--blue); margin-top: 2px; }
+.tier.pop .tier-list .ic { color: var(--gold); }
+.tier-list b { color: var(--text); font-weight: 600; }
+.tier-list em { font-style: normal; color: var(--text-3); }
+.tier-cta { width: 100%; }
+
+/* ---------- comparison matrix ----------
+   Shared by the packages chart and every add-on factor table. The wrapper
+   owns the horizontal scroll so the page body never scrolls sideways. */
+
+.matrix-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  background: var(--ink-2);
+  -webkit-overflow-scrolling: touch;
+}
+.matrix { border-collapse: collapse; width: 100%; min-width: 600px; }
+
+.matrix th, .matrix td {
+  padding: 13px 18px;
+  text-align: center;
+  font-size: 14px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: middle;
+}
+.matrix thead th {
+  background: var(--surface-2);
+  font-size: 15px; font-weight: 700; letter-spacing: -.015em;
+  border-bottom: 1px solid var(--line-2);
+  white-space: nowrap;
+}
+.mx-sub {
+  display: block; margin-top: 3px;
+  font-size: 12.5px; font-weight: 500; color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+/* first column pinned, so the row label stays readable while scrolling */
+.matrix th[scope="row"] {
+  text-align: left; font-weight: 500; font-size: 14px;
+  color: var(--text-2); white-space: nowrap;
+  position: sticky; left: 0; z-index: 1;
+  background: var(--ink-2);
+  border-right: 1px solid var(--line);
+}
+.matrix .mx-corner { position: sticky; left: 0; z-index: 3; background: var(--surface-2); }
+.matrix tbody tr:last-child th, .matrix tbody tr:last-child td { border-bottom: 0; }
+.matrix tbody tr:hover th[scope="row"] { background: var(--surface); }
+.matrix tbody tr:hover td { background: rgba(125,166,214,.04); }
+
+/* the recommended tier reads down the whole column, not just in a badge */
+.matrix .col-pop { background: rgba(255,200,17,.045); }
+.matrix thead .col-pop { background: linear-gradient(180deg, rgba(255,200,17,.13), rgba(255,200,17,.05)); }
+.matrix tbody tr:hover .col-pop { background: rgba(255,200,17,.085); }
+
+.mx-yes { font-size: 20px; color: var(--blue); margin-inline: auto; }
+.col-pop .mx-yes { color: var(--gold); }
+.mx-no  { font-size: 20px; color: var(--text-3); opacity: .55; margin-inline: auto; }
+.mx-val { color: var(--text); font-variant-numeric: tabular-nums; }
+.mx-either { color: var(--gold); font-weight: 600; font-size: 13.5px; }
+
+/* factor tables read left-aligned: these are sentences, not values */
+.addon .matrix td { text-align: left; }
+.addon .matrix thead th { text-align: left; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; color: var(--text-2); }
+.addon .matrix thead th .mx-sub { font-size: 15px; font-weight: 700; letter-spacing: -.02em; color: var(--text); text-transform: none; }
+.addon .matrix { min-width: 560px; }
+.mx-eg th[scope="row"], .mx-eg td { color: var(--text-3); font-size: 13.5px; font-style: italic; }
+
+/* ---------- add-on blocks ---------- */
+
+.addons { display: grid; gap: 20px; }
+.addon {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 24px;
+  scroll-margin-top: calc(var(--nav-h) + 24px);
+}
+
+/* Fixed-price items (cards, shirts) carry no factor table, so nothing needs
+   the width a table demands. Two to a row instead of stacked full-bleed,
+   which is what was leaving the print & apparel section mostly empty air. */
+.addons-compact { gap: 16px; }
+@media (min-width: 640px) {
+  .addons-compact { grid-template-columns: repeat(2, 1fr); }
+}
+.addon-compact { padding: 22px; display: flex; flex-direction: column; }
+.addon-compact .addon-head { margin-bottom: 0; flex: 1; }
+.addon-compact .addon-more { margin-top: 16px; }
+.addon-head {
+  display: flex; flex-wrap: wrap; gap: 16px 24px;
+  align-items: flex-start; justify-content: space-between;
+  margin-bottom: 20px;
+}
+.addon-head h3 { font-size: 20px; font-weight: 700; }
+.addon-head p { color: var(--text-3); font-size: 14px; margin-top: 6px; max-width: 46ch; }
+
+.addon-prices { display: flex; flex-wrap: wrap; gap: 10px; }
+.lvl {
+  display: grid; gap: 2px;
+  border: 1px solid var(--line-2);
+  border-radius: var(--r-ctl);
+  padding: 9px 16px;
+  background: var(--ink-2);
+  text-align: center;
+}
+.lvl-hi { border-color: rgba(255,200,17,.32); }
+.lvl-l { font-size: 11px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--text-3); }
+.lvl-p { font-size: 19px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.lvl-hi .lvl-p { color: var(--gold); }
+/* "one-time" / "per month" under a price, for levels that are two different
+   charges rather than two brackets of the same one. */
+.lvl-u { font-size: 10.5px; font-weight: 500; letter-spacing: .07em; text-transform: uppercase; color: var(--text-3); }
+
+.addon-more {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 18px; font-size: 14px; font-weight: 600;
+  color: var(--blue); text-decoration: none;
+  transition: gap .18s var(--ease);
+}
+.addon-more:hover { gap: 12px; }
+.addon-more:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; border-radius: 3px; }
+
+/* ---------- fees ---------- */
+
+.fees { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 780px) { .fees { grid-template-columns: repeat(3, 1fr); } }
+.fee {
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-left: 2px solid rgba(255,200,17,.4);
+  border-radius: var(--r-card);
+  padding: 22px 24px;
+}
+.fee-top { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: baseline; justify-content: space-between; margin-bottom: 14px; }
+.fee-top h3 { font-size: 16.5px; }
+.fee-price { font-size: 19px; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.fee-unit { display: block; font-size: 11.5px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--text-3); text-align: right; margin-top: 2px; }
+.fee-when { font-size: 14px; color: var(--text-2); }
+.fee-when b { color: var(--text); font-weight: 600; }
+.fee-covers { font-size: 14px; color: var(--text-3); margin-top: 8px; }
+
+/* ---------- service hub ---------- */
+
+.family + .family { margin-top: clamp(48px, 5vw, 68px); }
+.family-head { display: flex; align-items: baseline; gap: 14px; margin-bottom: 24px; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.family-head h2 { font-size: clamp(22px, 2.4vw, 28px); }
+.family-count { font-size: 13px; color: var(--text-3); font-variant-numeric: tabular-nums; }
+
+.svc-grid { display: grid; gap: 16px; grid-template-columns: 1fr; }
+@media (min-width: 620px) { .svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 980px) { .svc-grid { grid-template-columns: repeat(3, 1fr); } }
+
+.svc-card { display: flex; flex-direction: column; text-decoration: none; }
+.svc-card h3 { margin-top: 18px; }
+.svc-card p { color: var(--text-3); font-size: 14px; margin-top: 8px; flex: 1; }
+.svc-foot {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--line);
+}
+.svc-from { font-size: 13.5px; font-weight: 600; color: var(--text-2); font-variant-numeric: tabular-nums; }
+.svc-inc { color: var(--blue); }
+.svc-arrow { font-size: 18px; color: var(--blue); transition: transform .2s var(--ease); }
+.svc-card:hover .svc-arrow { transform: translateX(4px); }
+
+/* ---------- pricing tier picker ----------
+   One tier on screen at a time, the others a click away. The tab strip is a
+   segmented control rather than a row of loose buttons so it reads as "pick
+   one of these", and Compare is pushed to the end behind a divider because it
+   is a different kind of action: not a tier, a view of all of them.          */
+
+.ptier {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: clamp(18px, 2.2vw, 24px);
+}
+
+.ptier-tabs {
+  display: flex; flex-wrap: wrap; gap: 4px;
+  background: var(--ink-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-ctl);
+  padding: 5px;
+  margin-bottom: clamp(22px, 2.6vw, 30px);
+}
+.ptier-tab {
+  display: inline-flex; align-items: center; gap: 7px;
+  background: transparent; border: 1px solid transparent;
+  border-radius: var(--r-xs);
+  padding: 9px 18px; cursor: pointer;
+  font-size: 13.5px; font-weight: 600; letter-spacing: -.005em;
+  color: var(--text-3); white-space: nowrap;
+  transition: background .18s var(--ease), color .18s var(--ease),
+              border-color .18s var(--ease);
+}
+.ptier-tab .ic { font-size: 15px; }
+/* same gold-on-highlight rule as every other button on the site */
+.ptier-tab:hover { color: var(--gold); background: rgba(255,200,17,.08); }
+.ptier-tab:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.ptier-tab[aria-selected="true"] {
+  background: var(--surface-2); color: var(--text);
+  border-color: var(--line-2);
+}
+/* Compare sits apart: it is a view, not a tier */
+.ptier-tab-cmp { margin-left: auto; }
+@media (max-width: 560px) { .ptier-tab-cmp { margin-left: 0; } }
+
+.ptier-top { display: flex; flex-wrap: wrap; align-items: baseline; gap: 8px 20px; }
+.ptier-amount { display: flex; align-items: baseline; gap: 10px; }
+.ptier-price {
+  font-size: clamp(34px, 4.2vw, 46px); font-weight: 700;
+  letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums;
+}
+.ptier-unit {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--text-3);
+}
+.ptier-note { color: var(--text-3); font-size: 14.5px; max-width: 52ch; }
+.ptier-top .ptier-note { margin-left: auto; text-align: right; }
+@media (max-width: 700px) { .ptier-top .ptier-note { margin-left: 0; text-align: left; } }
+
+/* factor rows for the selected tier: label left, what you get right */
+.ptier-rows { margin-top: clamp(20px, 2.4vw, 28px); }
+.ptier-rows > div {
+  display: grid; grid-template-columns: 1fr; gap: 3px;
+  padding: 14px 0; border-top: 1px solid var(--line);
+}
+@media (min-width: 620px) {
+  .ptier-rows > div { grid-template-columns: minmax(140px, 210px) 1fr; gap: 24px; align-items: baseline; }
+}
+.ptier-rows dt { font-size: 13.5px; font-weight: 600; color: var(--text-3); }
+.ptier-rows dd { margin: 0; font-size: 15px; color: var(--text); }
+/* .mx-yes / .mx-no centre themselves inside a table cell; in this list they
+   need to sit on the same left edge as every other value. */
+.ptier-rows dd .ic { font-size: 20px; margin-inline: 0; }
+.ptier-eg dt, .ptier-eg dd { font-style: italic; color: var(--text-3) !important; font-size: 13.5px !important; }
+
+/* ---------- card mockups, with a flip for two-sided ones ----------
+   Each face was cut out of its mockup so it stands alone edge to edge; the
+   depth below is the page's, not the photograph's. Sized deliberately small —
+   a business card is a small object and printing it half a screen wide made
+   the page look like a gallery instead of a price list.                     */
+
+.cardshot { margin: clamp(18px, 2vw, 22px) 0 0; max-width: 380px; }
+.cardshot-stage { perspective: 1400px; }
+.cardshot-inner {
+  position: relative; aspect-ratio: 1.96;
+  transform-style: preserve-3d;
+  transition: transform .62s cubic-bezier(.4,.12,.2,1);
+}
+.cardshot.flipped .cardshot-inner { transform: rotateY(180deg); }
+.cardshot-face {
+  position: absolute; inset: 0;
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+  border-radius: 10px; overflow: hidden;
+  border: 1px solid var(--line-2);
+  box-shadow: 0 14px 34px -16px rgba(0,0,0,.85);
+}
+.cardshot-face.is-back { transform: rotateY(180deg); }
+.cardshot-face img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.cardshot-btn {
+  display: inline-flex; align-items: center; gap: 7px;
+  margin-top: 14px; padding: 7px 14px;
+  background: transparent; border: 1px solid var(--line-2);
+  border-radius: var(--r-ctl); cursor: pointer;
+  font-size: 12.5px; font-weight: 600; color: var(--text-2);
+  transition: color .18s var(--ease), border-color .18s var(--ease), background .18s var(--ease);
+}
+.cardshot-btn .ic { font-size: 14px; }
+.cardshot-btn:hover { color: var(--gold); border-color: rgba(255,200,17,.55); background: rgba(255,200,17,.08); }
+.cardshot-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.cardshot figcaption { margin-top: 12px; font-size: 13px; color: var(--text-3); max-width: 42ch; }
+
+@media (prefers-reduced-motion: reduce) { .cardshot-inner { transition: none; } }
+
+/* both cards in the Compare view, side by side and smaller again */
+.ptier-cmp-shots {
+  display: grid; gap: 22px; grid-template-columns: repeat(2, 1fr);
+  align-items: start; margin-bottom: 26px;
+}
+.ptier-cmp-shots .cardshot { margin-top: 8px; max-width: 100%; }
+.ptier-cmp-shots figcaption { display: none; }
+.ptier-cmp-label {
+  font-size: 11.5px; font-weight: 600; letter-spacing: .09em;
+  text-transform: uppercase; color: var(--text-3);
+}
+
+/* the compare matrix reuses .addon's table rules without its card chrome */
+.ptier-panel .addon { background: transparent; border: 0; padding: 0; }
+
+/* ---------- service page ---------- */
+
+/* Cost on the left, the case for it on the right. The left column is the
+   wider of the two because it holds the compare table; the right holds prose,
+   which stops being comfortable to read much past 60ch anyway. */
+.svc-split { display: grid; gap: clamp(34px, 4vw, 52px); grid-template-columns: 1fr; align-items: start; }
+@media (min-width: 1000px) { .svc-split { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); } }
+.svc-h2 { font-size: clamp(21px, 2.2vw, 26px); }
+.svc-money { display: grid; gap: 18px; align-content: start; }
+/* The fact cards close the right column rather than the left: the pricing
+   block is the tall one, and hanging these off the shorter side is what
+   keeps the two columns finishing near the same place. */
+.svc-facts { display: grid; gap: 14px; grid-template-columns: 1fr; margin-top: 32px; }
+@media (min-width: 560px) and (max-width: 999px) { .svc-facts { grid-template-columns: repeat(2, 1fr); } }
+
+.svc-prose p { color: var(--text-2); font-size: 16px; line-height: 1.75; max-width: 62ch; }
+.svc-prose p + p { margin-top: 16px; }
+/* one column: the right-hand track is too narrow for the two-up default */
+.svc-story .inc-list { grid-template-columns: 1fr; }
+
+.aside-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-card);
+  padding: 20px 22px;
+}
+.aside-card h3 { font-size: 12px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; color: var(--text-3); margin-bottom: 14px; }
+.aside-price { font-size: 30px; font-weight: 700; letter-spacing: -.03em; line-height: 1; font-variant-numeric: tabular-nums; }
+.aside-note { font-size: 13.5px; color: var(--text-3); margin-top: 10px; }
+.aside-card .btn { width: 100%; margin-top: 16px; }
+.in-pack { display: grid; gap: 9px; }
+.in-pack li { display: flex; align-items: center; gap: 10px; font-size: 13.5px; color: var(--text-2); }
+.in-pack .ic { font-size: 16px; color: var(--blue); }
+.in-pack .no { color: var(--text-3); opacity: .5; }
+.in-pack b { color: var(--text); font-weight: 600; }
+
+/* ---------- faq ---------- */
+
+.faq { display: grid; gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-card); overflow: hidden; }
+.faq details { background: var(--ink-2); }
+.faq summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 22px; cursor: pointer; list-style: none;
+  font-size: 15.5px; font-weight: 600; letter-spacing: -.01em;
+  transition: color .18s var(--ease);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: var(--blue); }
+.faq summary:focus-visible { outline: 2px solid var(--blue-2); outline-offset: -2px; }
+.faq summary::after {
+  content: ''; flex: none; width: 10px; height: 10px;
+  border-right: 2px solid var(--text-3); border-bottom: 2px solid var(--text-3);
+  transform: rotate(45deg) translate(-2px, -2px);
+  transition: transform .2s var(--ease);
+}
+.faq details[open] summary::after { transform: rotate(-135deg) translate(-2px, -2px); }
+.faq details[open] summary { color: var(--blue); }
+.faq .faq-a { padding: 0 22px 20px; color: var(--text-2); font-size: 14.5px; line-height: 1.7; max-width: 68ch; }
+
+/* ---------- related ---------- */
+
+.related-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 700px) { .related-grid { grid-template-columns: repeat(3, 1fr); } }
+
+/* ---------- work page ---------- */
+
+.work-page .work-row + .work-row { margin-top: clamp(56px, 6vw, 88px); }
+
+/* ---------- about page ---------- */
+
+.about-page .about { align-items: start; }
+
+/* ---------- cta band ---------- */
+
+.cta-in { max-width: 620px; }
+.cta-in .lead { margin-top: 18px; }
+.cta-in .hero-actions { margin-top: 28px; }
+
+/* ---------- stub pages ---------- */
+
+.stub { max-width: 64ch; }
+.notice-todo {
+  display: flex; align-items: flex-start; gap: 12px;
+  background: rgba(255,200,17,.06);
+  border: 1px dashed rgba(255,200,17,.34);
+  border-radius: var(--r-ctl);
+  padding: 16px 20px;
+  font-size: 14px; color: var(--text-2);
+  margin-bottom: 24px;
+}
+.notice-todo .ic { font-size: 19px; color: var(--gold); margin-top: 2px; }
+.stub-body { color: var(--text-2); }
+.stub .hero-actions { margin-top: 26px; }
+
+/* ---------- reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-card:hover .svc-arrow,
+  .addon-more:hover { transform: none; gap: 8px; }
+  .faq summary::after { transition: none; }
+}

@@ -1,0 +1,21 @@
+{#
+  The three special fees. These sit on the main pricing page rather than with
+  the add-ons on purpose: nobody shops for an onboarding fee, they get
+  surprised by one on an invoice. Naming them plainly, up front, is what stops
+  that being a bad conversation later.
+#}
+<div class="fees">
+  {%- for f in fees %}
+  <article class="fee">
+    <div class="fee-top">
+      <h3>{{ f.name }}</h3>
+      <span class="fee-price">
+        {{ f.price | price | safe }}
+        <span class="fee-unit">{{ f.unit }}</span>
+      </span>
+    </div>
+    <p class="fee-when"><b>When it applies:</b> {{ f.when }}</p>
+    <p class="fee-covers">{{ f.covers }}</p>
+  </article>
+  {%- endfor %}
+</div>

@@ -1,0 +1,40 @@
+{#
+  The three package cards. Reads packages.tiers directly — the chart below it
+  reads the same objects, so a card and its column can never disagree.
+#}
+<div class="tiers">
+  {%- for t in packages.tiers %}
+  <article class="tier{% if t.popular %} pop{% endif %} reveal" style="--d:{{ loop.index0 }}">
+    {%- if t.popular %}<span class="tier-badge">Most popular</span>{% endif %}
+
+    <h3 class="tier-name">{{ t.name }}</h3>
+    <p class="tier-for">{{ t.for }}</p>
+
+    <div class="tier-price">
+      <span class="tier-amt">{{ t.price | price | safe }}</span>
+      <span class="tier-mo">+ {{ t.monthly | price | safe }}/mo maintenance</span>
+    </div>
+
+    <ul class="tier-list">
+      {%- for f in packages.features %}
+      {%- set v = t.has[f.key] %}
+      {%- if v %}
+      <li>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
+        <span>
+          {%- if v === true %}{{ f.label }}
+          {%- elif v === "either" %}{{ f.label }} <em>(choose one)</em>
+          {%- else %}{{ f.label }} &middot; <b>{{ v }}</b>{% endif %}
+        </span>
+      </li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+
+    <a class="btn {% if t.popular %}btn-gold{% else %}btn-ghost{% endif %} tier-cta" href="/contact/?package={{ t.slug }}">
+      Start with {{ t.name }}
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+    </a>
+  </article>
+  {%- endfor %}
+</div>

@@ -1,0 +1,167 @@
+---
+layout: layouts/base.njk
+title: Packages and pricing
+description: Three website packages for San Antonio small businesses. Starter $500, Growth $800, Pro $1,200, each with flat pricing and a monthly plan that covers hosting and updates.
+---
+
+{%- set ph = {
+  eyebrow: "Pricing",
+  heading: "One price, agreed<br />before I start.",
+  lead: "Three packages. Every one includes hosting, SSL, a mobile-first build and support after launch. Nothing here is a monthly trap and nothing appears on your invoice that is not on this page.",
+  crumbs: [{ label: "Packages" }],
+  actions: [
+    { label: "Start a project", url: "/contact/" },
+    { label: "See add-ons", url: "/packages/add-ons/", style: "btn-ghost" }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+  <!-- ══════════════ TIER CARDS ══════════════ -->
+  <section class="sec">
+    <div class="wrap">
+      {% include "components/tier-cards.njk" %}
+    </div>
+  </section>
+
+
+  <!-- ══════════════ COMPARISON CHART ══════════════ -->
+  <section class="sec band sec-line" id="compare">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 36px;">
+        <span class="eyebrow">Side by side</span>
+        <h2 style="margin-top: 14px;">What changes between them.</h2>
+        <p class="lead">Scroll the table sideways on a phone. The feature column stays put.</p>
+      </div>
+
+      {#- columns and rows are derived from packages.json, so a card and its
+          column can never disagree about what a tier includes -#}
+      {%- set cols = [] %}
+      {%- for t in packages.tiers %}
+      {%- set sub = (t.price | price) + " &middot; " + (t.monthly | price) + "/mo" %}
+      {%- set cols = (cols.push({ label: t.name, sub: sub, popular: t.popular }), cols) %}
+      {%- endfor %}
+
+      {%- set rows = [] %}
+      {%- for f in packages.features %}
+      {%- set vals = [] %}
+      {%- for t in packages.tiers %}{% set vals = (vals.push(t.has[f.key]), vals) %}{% endfor %}
+      {%- set rows = (rows.push({ label: f.label, values: vals }), rows) %}
+      {%- endfor %}
+
+      {%- set caption = "What each package includes" %}
+      <div class="reveal">
+        {% include "components/price-matrix.njk" %}
+      </div>
+
+      <p class="body-3 reveal" style="margin-top: 18px; max-width: 62ch;">
+        Growth includes a menu <b>or</b> a catering page &mdash; whichever your business
+        actually needs. Pro includes both. If you are not sure which one applies to you,
+        the <a href="/packages/add-ons/" style="color: var(--blue);">add-ons page</a> has
+        the qualifying criteria in full.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ ADD-ONS TEASER ══════════════ -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <span class="eyebrow">À la carte</span>
+        <h2 style="margin-top: 14px;">Add anything to any package.</h2>
+        <p class="lead">
+          Eight extras, priced by what the job actually takes rather than by a flat
+          rate that overcharges the simple version.
+        </p>
+      </div>
+
+      <div class="svc-grid reveal" style="margin-top: 34px;">
+        {%- for a in addons %}
+        {%- if loop.index <= 3 %}
+        <a class="card card-hover svc-card" href="/packages/add-ons/#{{ a.slug }}" style="--d:{{ loop.index0 }}">
+          <div class="ic-box">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+          </div>
+          <h3>{{ a.name }}</h3>
+          <p>{{ a.blurb }}</p>
+          <span class="svc-foot">
+            <span class="svc-from">From {{ a.levels[0].price | price | safe }}</span>
+            <svg class="ic svc-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </span>
+        </a>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+
+      <div class="sec-close reveal" style="margin-top: 34px;">
+        <p>Business cards, shirts and one-time website updates are on the same page.</p>
+        <a class="btn btn-ghost" href="/packages/add-ons/">
+          See all add-ons
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ FEES ══════════════ -->
+  <section class="sec band sec-line" id="fees">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 32px;">
+        <span class="eyebrow">Extra fees</span>
+        <h2 style="margin-top: 14px;">The three charges that are not in a package.</h2>
+        <p class="lead">
+          Listed here rather than discovered on an invoice. None of them applies unless
+          you ask for it, and I will tell you before it does.
+        </p>
+      </div>
+      <div class="reveal">
+        {% include "components/fee-list.njk" %}
+      </div>
+    </div>
+  </section>
+
+
+  {%- set processHeading = "How a project runs." %}
+  {% include "components/process-steps.njk" %}
+
+
+  <!-- ══════════════ PRICING FAQ ══════════════ -->
+  <section class="sec band sec-line">
+    <div class="wrap wrap-mid">
+      <div class="sec-head reveal" style="margin-bottom: 30px;">
+        <h2>Questions about the price.</h2>
+      </div>
+      <div class="faq reveal">
+        <details>
+          <summary>What does the monthly maintenance actually cover?</summary>
+          <div class="faq-a">Hosting, the SSL certificate, and keeping the site running and current. On Growth it also covers three updates a month; on Pro, unlimited. It is not a retainer for work you never asked for.</div>
+        </details>
+        <details>
+          <summary>Do I have to pay the whole amount up front?</summary>
+          <div class="faq-a">No. We agree the total before I start, and I take a deposit to begin. The balance is due at launch, not before.</div>
+        </details>
+        <details>
+          <summary>What happens if I want changes after launch?</summary>
+          <div class="faq-a">Small changes are website updates, priced by size &mdash; and included in the monthly allowance on Growth and Pro. Changes during the build are revision rounds, and each package includes some. Beyond those, extra rounds are a listed fee.</div>
+        </details>
+        <details>
+          <summary>Can I start on Starter and move up later?</summary>
+          <div class="faq-a">Yes. Adding a menu page, a catering page or booking to an existing site is exactly what the add-ons are for, and you pay the à-la-carte price rather than the difference between packages.</div>
+        </details>
+        <details>
+          <summary>Do I own the site and the domain?</summary>
+          <div class="faq-a">Yes. The domain is registered in your name and the site is yours. The monthly plan covers hosting and updates, not custody of your own business.</div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+
+  {%- set ctaHeading = "Not sure which one fits?" %}
+  {%- set ctaLead = "Tell me what the business does and I will say plainly which package it needs — including if that is the cheapest one." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

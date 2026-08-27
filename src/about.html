@@ -1,0 +1,74 @@
+---
+layout: layouts/base.njk
+title: About
+description: A San Antonio based web designer building fast, professional sites for local businesses. Flat pricing, direct contact, support after launch.
+---
+
+{%- set ph = {
+  eyebrow: "About",
+  heading: "Not just a website.<br />A business asset.",
+  lead: "I am a San Antonio based web designer focused on one thing: getting local businesses online with a site that actually looks good and works.",
+  crumbs: [{ label: "About" }],
+  actions: [
+    { label: "Start a project", url: "/contact/" },
+    { label: "See packages", url: "/packages/", style: "btn-ghost" }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main" class="about-page">
+
+  <section class="sec">
+    <div class="wrap about">
+
+      <div class="about-copy reveal">
+        <h2 style="font-size: clamp(24px, 2.8vw, 34px);">A direct line to the person building your site.</h2>
+        <p class="body-3" style="max-width: 52ch; margin-top: 20px;">
+          No agency overhead, no three month timelines, no account manager relaying
+          your notes to somebody you never meet. You talk to me, and I build it.
+        </p>
+        <p class="body-3" style="max-width: 52ch; margin-top: 14px;">
+          I stay with you after launch through a simple monthly plan that covers
+          hosting, security and the changes every business needs eventually &mdash;
+          new hours, new prices, new photos. Sites start at
+          <span class="price">{{ site.startingPrice }}</span>.
+        </p>
+        <div class="hero-actions" style="margin-top: 26px;">
+          <a class="btn btn-primary" href="/contact/">
+            Start a project
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="pts reveal" style="--d:1">
+        <div class="pt">
+          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div>
+            <h3>Fast turnaround</h3>
+            <p>Done in days, not months. Your site is delivered in {{ site.turnaround }} so you can start getting found online right away.</p>
+          </div>
+        </div>
+        <div class="pt">
+          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div>
+            <h3>Local to San Antonio</h3>
+            <p>A real person, not a ticket. You can call, meet in person, and work with someone who knows your city.</p>
+          </div>
+        </div>
+        <div class="pt is-gold">
+          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
+          <div>
+            <h3>Priced for small business</h3>
+            <p>Here to help, not to gouge. One flat price agreed before I start, with no hidden fees and no surprises on your invoice.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  {% include "components/process-steps.njk" %}
+  {% include "components/cta-band.njk" %}
+
+</main>

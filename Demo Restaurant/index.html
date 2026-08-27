@@ -1,0 +1,1711 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hacienda Grill — Cooked Over Fire | San Antonio, TX</title>
+<meta name="description" content="Family taqueria on Calle Bonita since 2012. Birria braised overnight, pork on the trompo, tortillas pressed at five in the morning. Order online or book a table.">
+<meta name="theme-color" content="#140C08">
+<link rel="icon" href="Hacienda%20Demo%20Resturant%20Logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>document.documentElement.className += ' js';</script>
+<style>
+/* ══════════════════════════════════════════════════════════════
+   HACIENDA GRILL — "Enamel & Fire"
+   Palette + type taken from the official brand guidelines.
+   ══════════════════════════════════════════════════════════════ */
+
+:root{
+  /* Brand palette — official hex values */
+  --charcoal:  #231F20;
+  --chili:     #C81010;
+  --terracotta:#FF8C00;
+  --gold:      #F2C230;
+  --agave:     #6B8E23;
+  --cream:     #F7F1E1;
+  --sand:      #D9B27A;
+  --cocoa:     #4B2E20;
+
+  /* Derived working tones */
+  --ink:        #140C08;
+  --ink-soft:   #1F140E;
+  --paper:      #FDFAF2;
+  --chili-deep: #9E0C0C;
+  --muted:      #7C6A57;
+  --rule:       rgba(75,46,32,.14);
+  --rule-strong:rgba(75,46,32,.26);
+  --on-dark:    rgba(247,241,225,.62);
+  --on-dark-hi: rgba(247,241,225,.90);
+
+  /* Type */
+  --display: 'Bebas Neue', 'Haettenschweiler', Impact, sans-serif;
+  --body:    'Montserrat', system-ui, -apple-system, sans-serif;
+
+  /* Layout */
+  --max: 1180px;
+  --gutter: clamp(20px, 5vw, 52px);
+  --section-y: clamp(68px, 9vw, 124px);
+
+  --r-xs: 3px;
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 20px;
+
+  --sh-sm: 0 1px 2px rgba(35,31,32,.05), 0 4px 12px rgba(35,31,32,.05);
+  --sh-md: 0 2px 6px rgba(35,31,32,.05), 0 16px 40px rgba(35,31,32,.10);
+  --sh-lg: 0 4px 10px rgba(20,12,8,.08), 0 30px 70px rgba(20,12,8,.20);
+  --sh-dark: 0 24px 60px rgba(0,0,0,.45);
+
+  --ease: cubic-bezier(.2,.75,.3,1);
+}
+
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+
+html{ scroll-behavior:smooth; scroll-padding-top:84px; -webkit-text-size-adjust:100%; }
+
+body{
+  background:var(--paper);
+  color:var(--charcoal);
+  font-family:var(--body);
+  font-size:15px;
+  line-height:1.75;
+  font-weight:400;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+img,svg{ display:block; max-width:100%; }
+a{ color:inherit; }
+
+:focus-visible{
+  outline:3px solid var(--terracotta);
+  outline-offset:3px;
+  border-radius:2px;
+}
+
+::selection{ background:var(--gold); color:var(--charcoal); }
+
+::-webkit-scrollbar{ width:10px; }
+::-webkit-scrollbar-track{ background:var(--cream); }
+::-webkit-scrollbar-thumb{ background:var(--sand); border-radius:10px; border:3px solid var(--cream); }
+::-webkit-scrollbar-thumb:hover{ background:var(--cocoa); }
+
+.skip{
+  position:absolute; left:14px; top:-100px; z-index:200;
+  background:var(--chili); color:#fff; padding:12px 20px; border-radius:var(--r-sm);
+  font:700 12px/1 var(--body); letter-spacing:.12em; text-transform:uppercase; text-decoration:none;
+  transition:top .2s var(--ease);
+}
+.skip:focus{ top:14px; }
+
+/* ── Shell ─────────────────────────────────────────────── */
+.wrap{ width:100%; max-width:var(--max); margin-inline:auto; padding-inline:var(--gutter); }
+.section{ padding-block:var(--section-y); }
+
+/* ── Diamond band — the brand's signature seam ─────────── */
+.band{
+  height:9px;
+  background-color:var(--chili);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23C81010'/%3E%3Cpath d='M12 1.5 22.5 12 12 22.5 1.5 12Z' fill='%23F7F1E1'/%3E%3Cpath d='M12 7 17 12 12 17 7 12Z' fill='%23C81010'/%3E%3Ccircle cx='12' cy='12' r='1.5' fill='%23F2C230'/%3E%3C/svg%3E");
+  background-repeat:repeat-x;
+  background-size:auto 100%;
+  background-position:center;
+}
+.band--thin{ height:6px; }
+
+/* ── Type system ───────────────────────────────────────── */
+.eyebrow{
+  display:flex; align-items:center; gap:11px;
+  font:600 clamp(10px,1vw,11.5px)/1 var(--body);
+  letter-spacing:.26em; text-transform:uppercase;
+  color:var(--chili);
+}
+.eyebrow::before{
+  content:''; width:7px; height:7px; flex:none;
+  background:currentColor; transform:rotate(45deg);
+}
+.eyebrow::after{
+  content:''; height:1px; flex:1; max-width:70px;
+  background:currentColor; opacity:.32;
+}
+.eyebrow--center{ justify-content:center; }
+.eyebrow--center::after{ display:none; }
+.eyebrow--center::before{ margin-right:0; }
+.eyebrow--gold{ color:var(--gold); }
+.eyebrow--cream{ color:rgba(247,241,225,.75); }
+
+.h1{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(3.4rem, 8.4vw, 6.7rem);
+  line-height:.85; letter-spacing:.012em;
+  text-transform:uppercase;
+}
+.h2{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(2.4rem, 5.4vw, 4.4rem);
+  line-height:.9; letter-spacing:.015em;
+  text-transform:uppercase;
+}
+.h3{
+  font-family:var(--display); font-weight:400;
+  font-size:clamp(1.65rem, 2.8vw, 2.3rem);
+  line-height:.98; letter-spacing:.02em;
+  text-transform:uppercase;
+}
+
+/* Painted two-tone signage lettering */
+.outlined{
+  color:transparent;
+  -webkit-text-stroke:2px var(--gold);
+  paint-order:stroke fill;
+}
+@supports not (-webkit-text-stroke: 2px red){ .outlined{ color:var(--gold); } }
+
+.lead{
+  font-size:clamp(15px,1.5vw,17px); line-height:1.75;
+  color:var(--muted); max-width:46ch;
+}
+.lead--dark{ color:var(--on-dark); }
+.lead--sm{ font-size:14px; }
+
+.section-head{ max-width:620px; margin-bottom:clamp(38px,5vw,60px); }
+.section-head .h2{ margin-block:16px 14px; }
+.section-head--center{ margin-inline:auto; text-align:center; }
+.section-head--center .lead{ margin-inline:auto; }
+
+/* Heading + trailing action on one baseline */
+.head-row{
+  display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between;
+  gap:22px 40px; margin-bottom:clamp(38px,5vw,60px);
+}
+.head-row .section-head{ margin-bottom:0; }
+
+.h2--stack{ margin-block:16px 20px; }
+
+/* ── Buttons — per brand guide ─────────────────────────── */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:9px;
+  font:700 12px/1 var(--body); letter-spacing:.14em; text-transform:uppercase;
+  padding:16px 28px; border-radius:var(--r-xs);
+  border:2px solid transparent; text-decoration:none; cursor:pointer;
+  transition:transform .2s var(--ease), box-shadow .2s var(--ease),
+             background .2s var(--ease), color .2s var(--ease), border-color .2s var(--ease);
+}
+.btn svg{ width:14px; height:14px; flex:none; }
+
+.btn--primary{ background:var(--chili); color:#fff; box-shadow:0 5px 16px rgba(200,16,16,.30); }
+.btn--primary:hover{ background:var(--chili-deep); transform:translateY(-2px); box-shadow:0 10px 26px rgba(200,16,16,.42); }
+
+.btn--secondary{ background:var(--agave); color:#fff; box-shadow:0 5px 16px rgba(107,142,35,.30); }
+.btn--secondary:hover{ background:#5A7A1C; transform:translateY(-2px); box-shadow:0 10px 26px rgba(107,142,35,.42); }
+
+.btn--outline{ border-color:var(--charcoal); color:var(--charcoal); background:transparent; }
+.btn--outline:hover{ background:var(--charcoal); color:var(--cream); transform:translateY(-2px); }
+.btn--outline-light{ border-color:rgba(247,241,225,.5); color:var(--cream); background:transparent; }
+.btn--outline-light:hover{ background:var(--cream); color:var(--charcoal); border-color:var(--cream); transform:translateY(-2px); }
+
+.btn--text{
+  padding:6px 0; border-radius:0; color:var(--charcoal); background:none;
+  border-bottom:2px solid var(--chili); text-decoration:none;
+}
+.btn--text:hover{ color:var(--chili); gap:13px; }
+
+.btn:active{ transform:translateY(0) scale(.985); }
+.btn--sm{ padding:12px 20px; font-size:11px; }
+.btn--block{ width:100%; }
+
+/* ── Logo — cropped from the source PNG's transparent canvas ──
+   Source 1536×1024, artwork occupies x386–1087, y153–722.       */
+.logo{
+  position:relative; overflow:hidden; flex:none; display:block;
+  height:var(--logo-h);
+  width:calc(var(--logo-h) * 1.23198);
+}
+.logo img{
+  position:absolute; max-width:none; width:auto;
+  height:calc(var(--logo-h) * 1.79965);
+  top:calc(var(--logo-h) * -.26890);
+  left:calc(var(--logo-h) * -.67838);
+}
+
+/* ── Navigation ────────────────────────────────────────── */
+.nav{
+  position:sticky; top:0; z-index:100;
+  background:rgba(253,250,242,.94);
+  backdrop-filter:blur(16px) saturate(1.4);
+  -webkit-backdrop-filter:blur(16px) saturate(1.4);
+  border-bottom:1px solid var(--rule);
+  transition:box-shadow .3s var(--ease), background .3s var(--ease);
+}
+.nav.is-stuck{ box-shadow:0 6px 30px rgba(35,31,32,.10); background:rgba(253,250,242,.98); }
+
+.nav-inner{
+  max-width:var(--max); margin-inline:auto; padding-inline:var(--gutter);
+  height:74px; display:flex; align-items:center; justify-content:space-between; gap:20px;
+}
+.nav-brand{ --logo-h:52px; text-decoration:none; }
+@media (min-width:900px){ .nav-brand{ --logo-h:58px; } }
+
+.nav-links{ display:none; align-items:center; gap:clamp(20px,3vw,38px); }
+.nav-link{
+  position:relative; padding:6px 0;
+  font:600 12px/1 var(--body); letter-spacing:.13em; text-transform:uppercase;
+  color:var(--charcoal); text-decoration:none;
+  transition:color .2s var(--ease);
+}
+.nav-link::after{
+  content:''; position:absolute; left:0; right:0; bottom:0; height:2px;
+  background:var(--chili); transform:scaleX(0); transform-origin:left;
+  transition:transform .25s var(--ease);
+}
+.nav-link:hover{ color:var(--chili); }
+.nav-link:hover::after{ transform:scaleX(1); }
+
+.nav-cta{ display:none; }
+
+.burger{
+  display:grid; place-items:center; gap:5px; width:44px; height:44px;
+  background:none; border:none; cursor:pointer; padding:0;
+}
+.burger span{
+  display:block; width:22px; height:2px; background:var(--charcoal); border-radius:2px;
+  transition:transform .28s var(--ease), opacity .2s var(--ease);
+}
+.burger[aria-expanded="true"] span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2){ opacity:0; }
+.burger[aria-expanded="true"] span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+.mobile-menu{
+  display:grid; grid-template-rows:0fr;
+  transition:grid-template-rows .35s var(--ease);
+  background:var(--cream); border-top:1px solid var(--rule);
+}
+.mobile-menu.is-open{ grid-template-rows:1fr; }
+.mobile-menu > div{ overflow:hidden; }
+.mobile-menu-inner{
+  padding:8px var(--gutter) 26px; display:flex; flex-direction:column; gap:2px;
+}
+.mobile-menu .nav-link{
+  padding:14px 0; border-bottom:1px solid var(--rule); font-size:13px;
+}
+.mobile-menu .btn{ margin-top:16px; }
+
+@media (min-width:900px){
+  .nav-links{ display:flex; }
+  .nav-cta{ display:inline-flex; }
+  .burger{ display:none; }
+  .mobile-menu{ display:none; }
+}
+
+/* ══ HERO ══════════════════════════════════════════════════
+   Split composition: the grill footage keeps close to its native
+   480px width so it stays sharp instead of being blurred to mush. */
+.hero{ position:relative; background:var(--ink); overflow:hidden; }
+
+.hero-grid{
+  display:grid;
+  grid-template-columns:1fr;
+}
+
+.hero-media{
+  position:relative; overflow:hidden;
+  min-height:clamp(200px, 38vw, 300px);
+  background:#0B0605;
+}
+.hero-media img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:center 62%;
+  filter:saturate(1.24) contrast(1.08) brightness(.96);
+}
+.hero-media::after{
+  content:''; position:absolute; inset:0;
+  background:
+    linear-gradient(to top, rgba(20,12,8,.92) 0%, rgba(20,12,8,.22) 44%, rgba(20,12,8,.10) 100%),
+    radial-gradient(95% 70% at 55% 86%, rgba(255,140,0,.26), transparent 62%);
+}
+
+.hero-media-note{
+  position:absolute; left:22px; bottom:15px; z-index:3;
+  display:inline-flex; align-items:center; gap:9px;
+  font:600 10.5px/1 var(--body); letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(247,241,225,.88);
+}
+.hero-media-note::before{
+  content:''; width:7px; height:7px; border-radius:50%; flex:none;
+  background:var(--terracotta); box-shadow:0 0 10px rgba(255,140,0,.9);
+}
+
+.hero-panel{
+  position:relative; z-index:2;
+  padding:clamp(38px,6vw,64px) var(--gutter) clamp(84px,9vw,96px);
+  display:flex; flex-direction:column; align-items:flex-start;
+  background:
+    radial-gradient(75% 60% at 100% 42%, rgba(255,140,0,.10), transparent 70%),
+    var(--ink);
+}
+/* faint diamond texture keeps the ink panel from reading as dead flat */
+.hero-panel::before{
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.045;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cpath d='M17 2 32 17 17 32 2 17Z' fill='none' stroke='%23F7F1E1' stroke-width='1'/%3E%3Ccircle cx='17' cy='17' r='1.6' fill='%23F2C230'/%3E%3C/svg%3E");
+}
+.hero-panel > *{ position:relative; }
+
+.hero-logo{ --logo-h:clamp(70px,9.5vw,96px); margin-bottom:clamp(16px,2.2vw,24px); }
+
+.hero .eyebrow{ margin-bottom:clamp(14px,2vw,20px); }
+
+.hero-title{ color:var(--cream); margin-bottom:18px; }
+.hero-title span{ display:block; }
+
+.hero-rule{
+  width:56px; height:4px; margin-bottom:20px; border-radius:2px;
+  background:linear-gradient(90deg, var(--chili), var(--terracotta));
+}
+.hero .lead{ margin-bottom:clamp(22px,2.8vw,28px); max-width:44ch; }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:12px; }
+
+/* Live open/closed strip pinned to the base of the hero */
+.hero-status{
+  position:absolute; left:0; right:0; bottom:0; z-index:4;
+  display:flex; flex-wrap:wrap; align-items:center; gap:10px 18px;
+  padding:14px var(--gutter);
+  background:rgba(10,6,4,.72);
+  backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  border-top:1px solid rgba(247,241,225,.12);
+  font:600 11.5px/1.4 var(--body); letter-spacing:.14em; text-transform:uppercase;
+  color:var(--on-dark);
+}
+.status-badge{ display:inline-flex; align-items:center; gap:9px; color:var(--cream); }
+.status-dot{
+  width:9px; height:9px; border-radius:50%; flex:none;
+  background:var(--agave); box-shadow:0 0 0 0 rgba(107,142,35,.6);
+  animation:pulse 2.6s infinite;
+}
+.status-dot[data-state="closed"]{ background:var(--terracotta); animation:none; box-shadow:none; }
+@keyframes pulse{
+  0%{ box-shadow:0 0 0 0 rgba(107,142,35,.55); }
+  70%{ box-shadow:0 0 0 9px rgba(107,142,35,0); }
+  100%{ box-shadow:0 0 0 0 rgba(107,142,35,0); }
+}
+.status-sep{ width:1px; height:14px; background:rgba(247,241,225,.2); }
+.status-link{ text-decoration:none; transition:color .2s var(--ease); }
+.status-link:hover{ color:var(--gold); }
+
+@media (min-width:900px){
+  .hero-grid{ grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr); min-height:clamp(540px,80vh,740px); }
+  /* The footage is 480×270. Cropping it to a full-height portrait slab
+     upscales ~3× and throws away most of the frame, so it plays letterboxed
+     at its native aspect instead — sharp, and the hairlines make the
+     framing read as deliberate. */
+  .hero-media{
+    order:2; align-self:center;
+    min-height:0; aspect-ratio:16/9;
+    border-block:1px solid rgba(242,194,48,.32);
+  }
+  .hero-media img{
+    object-position:center center;
+    filter:saturate(1.18) contrast(1.06);
+  }
+  .hero-media::after{
+    background:
+      linear-gradient(to right, var(--ink) 0%, rgba(20,12,8,.42) 22%, rgba(20,12,8,0) 52%),
+      linear-gradient(to top, rgba(20,12,8,.42) 0%, rgba(20,12,8,0) 38%);
+  }
+  .hero-panel{
+    order:1; justify-content:center;
+    padding-block:clamp(46px,5vw,60px) clamp(76px,7vw,88px);
+    padding-right:clamp(30px,4vw,56px);
+  }
+}
+@media (min-width:1400px){
+  .hero-panel{ padding-left:max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); }
+}
+
+/* ══ TICKER ════════════════════════════════════════════════ */
+.ticker{
+  background:var(--chili); color:var(--cream);
+  overflow:hidden; padding-block:15px;
+  border-bottom:1px solid rgba(0,0,0,.18);
+}
+.ticker-track{ display:flex; width:max-content; animation:slide 46s linear infinite; }
+.ticker:hover .ticker-track,
+.ticker:focus-within .ticker-track{ animation-play-state:paused; }
+.ticker-group{ display:flex; }
+.ticker-item{
+  display:inline-flex; align-items:center; gap:20px; padding-inline:20px;
+  font:600 11.5px/1 var(--body); letter-spacing:.2em; text-transform:uppercase;
+  white-space:nowrap;
+}
+.ticker-item::after{
+  content:''; width:7px; height:7px; flex:none;
+  background:var(--gold); transform:rotate(45deg);
+}
+@keyframes slide{ to{ transform:translateX(-50%); } }
+
+/* ══ FAN FAVORITES ═════════════════════════════════════════ */
+.faves-section{ background:var(--paper); }
+.faves{ display:grid; gap:18px; }
+
+.fave{
+  position:relative; overflow:hidden; border-radius:var(--r-md);
+  background:var(--cream); text-decoration:none; color:inherit;
+  box-shadow:var(--sh-sm);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.fave:hover{ transform:translateY(-5px); box-shadow:var(--sh-md); }
+.fave img{ width:100%; height:100%; object-fit:cover; transition:transform .6s var(--ease); }
+.fave:hover img{ transform:scale(1.045); }
+
+/* Lead card — image with the plate details laid over it */
+.fave--lead{ display:block; }
+.fave--lead .fave-photo{ position:relative; aspect-ratio:4/3; }
+.fave--lead .fave-photo::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(20,12,8,.93) 6%, rgba(20,12,8,.55) 38%, rgba(20,12,8,.05) 72%);
+}
+.fave--lead .fave-body{
+  position:absolute; left:0; right:0; bottom:0; z-index:2;
+  padding:clamp(24px,3.4vw,36px);
+}
+.fave--lead .fave-name{ color:var(--cream); }
+.fave--lead .fave-desc{ color:var(--on-dark); max-width:40ch; }
+.fave--lead .fave-foot{ border-top-color:rgba(247,241,225,.2); }
+.fave--lead .fave-note{ color:rgba(247,241,225,.55); }
+
+/* Side cards — horizontal */
+.fave--side{ display:grid; grid-template-columns:118px 1fr; align-items:stretch; }
+.fave--side .fave-photo{ position:relative; overflow:hidden; }
+.fave--side .fave-body{ padding:20px 22px; display:flex; flex-direction:column; justify-content:center; }
+
+.fave-cat{
+  font:600 10.5px/1 var(--body); letter-spacing:.2em; text-transform:uppercase;
+  color:var(--chili); margin-bottom:9px;
+}
+.fave--lead .fave-cat{ color:var(--gold); }
+.fave-name{ font-family:var(--display); font-size:clamp(1.55rem,2.6vw,2.35rem); line-height:1; letter-spacing:.02em; text-transform:uppercase; margin-bottom:8px; }
+.fave-desc{ font-size:13.5px; line-height:1.6; color:var(--muted); }
+.fave-foot{
+  display:flex; align-items:baseline; justify-content:space-between; gap:12px;
+  margin-top:16px; padding-top:14px; border-top:1px solid var(--rule);
+}
+.fave-price{ font-family:var(--display); font-size:1.9rem; line-height:1; color:var(--chili); letter-spacing:.02em; }
+.fave--lead .fave-price{ color:var(--gold); }
+.fave-note{ font-size:11.5px; color:var(--muted); letter-spacing:.02em; }
+
+.tag{
+  position:absolute; top:16px; left:16px; z-index:3;
+  display:inline-flex; align-items:center; gap:7px;
+  background:var(--chili); color:#fff;
+  font:700 10.5px/1 var(--body); letter-spacing:.16em; text-transform:uppercase;
+  padding:8px 13px; border-radius:var(--r-xs);
+  box-shadow:0 4px 14px rgba(0,0,0,.28);
+}
+.tag::before{ content:''; width:5px; height:5px; background:var(--gold); transform:rotate(45deg); }
+
+@media (min-width:820px){
+  .faves{ grid-template-columns:1.28fr 1fr; }
+  .fave--lead{ grid-row:span 2; }
+  .fave--lead .fave-photo{ aspect-ratio:auto; height:100%; min-height:460px; }
+  .fave--side{ grid-template-columns:150px 1fr; }
+}
+
+/* ══ STORY ═════════════════════════════════════════════════ */
+.story-section{ background:var(--cream); }
+.story{ display:grid; gap:clamp(38px,6vw,68px); align-items:center; }
+
+.story-photos{ display:grid; gap:10px; grid-template-columns:1fr 1fr; }
+.story-photo{
+  position:relative; overflow:hidden; border-radius:var(--r-md);
+  box-shadow:var(--sh-md); background:var(--sand);
+}
+.story-photo img{ width:100%; height:100%; object-fit:cover; }
+.story-photo--tall{ grid-column:span 2; aspect-ratio:16/10; }
+.story-photo--wide{ aspect-ratio:1/1; }
+.story-caption{
+  position:absolute; left:14px; bottom:14px; z-index:2;
+  background:rgba(20,12,8,.78); color:var(--cream);
+  font:600 10px/1 var(--body); letter-spacing:.18em; text-transform:uppercase;
+  padding:8px 12px; border-radius:var(--r-xs);
+  backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+
+.story-body p{ color:var(--muted); margin-bottom:16px; max-width:52ch; }
+.story-body p:last-of-type{ margin-bottom:0; }
+
+.quote{
+  margin:28px 0; padding:22px 0 22px 24px;
+  border-left:4px solid var(--gold);
+}
+.quote blockquote{
+  font-family:var(--display); font-size:clamp(1.35rem,2.3vw,1.85rem);
+  line-height:1.14; letter-spacing:.015em; text-transform:uppercase;
+  color:var(--charcoal); margin-bottom:12px;
+}
+.quote cite{
+  font:600 11px/1 var(--body); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--chili); font-style:normal;
+}
+
+.figures{
+  display:flex; flex-wrap:wrap; gap:0 clamp(22px,4vw,44px);
+  margin:26px 0 30px; padding-block:18px;
+  border-block:1px solid var(--rule-strong);
+}
+.figure{ display:flex; flex-direction:column; gap:2px; }
+.figure b{
+  font-family:var(--display); font-weight:400; font-size:1.85rem; line-height:1;
+  color:var(--chili); letter-spacing:.02em;
+}
+.figure span{
+  font:600 10.5px/1.4 var(--body); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--muted);
+}
+
+.specs{ display:grid; gap:0; }
+.spec{
+  display:flex; align-items:center; gap:16px;
+  padding:15px 0; border-bottom:1px solid var(--rule);
+}
+.spec:last-child{ border-bottom:none; }
+.spec svg{ width:30px; height:30px; flex:none; color:var(--cocoa); }
+.spec p{ font-size:13.5px; line-height:1.55; color:var(--charcoal); margin:0; max-width:none; }
+
+@media (min-width:900px){
+  .story{ grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr); }
+}
+
+/* ══ THE BOARD — signature section ═════════════════════════ */
+.board-section{
+  position:relative; overflow:hidden;
+  background:var(--ink);
+  padding-block:var(--section-y);
+}
+.board-section::before{
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cpath d='M17 2 32 17 17 32 2 17Z' fill='none' stroke='%23F7F1E1' stroke-width='1'/%3E%3Ccircle cx='17' cy='17' r='1.6' fill='%23F2C230'/%3E%3C/svg%3E");
+}
+.board-section::after{
+  content:''; position:absolute; inset:0; pointer-events:none;
+  background:radial-gradient(90% 60% at 50% -10%, rgba(255,140,0,.12), transparent 60%);
+}
+.board-section .wrap{ position:relative; z-index:2; }
+.board-section .h2{ color:var(--cream); }
+
+.tabs{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:8px;
+  margin-bottom:clamp(28px,4vw,42px);
+}
+.tab{
+  font-family:var(--display); font-size:17px; letter-spacing:.11em; text-transform:uppercase;
+  padding:11px 22px; border-radius:var(--r-xs); cursor:pointer;
+  background:transparent; color:rgba(247,241,225,.58);
+  border:1.5px solid rgba(247,241,225,.18);
+  transition:color .2s var(--ease), background .2s var(--ease),
+             border-color .2s var(--ease), box-shadow .2s var(--ease), transform .2s var(--ease);
+}
+.tab:hover{ color:var(--cream); border-color:rgba(247,241,225,.45); }
+.tab[aria-selected="true"]{
+  background:var(--chili); color:#fff; border-color:var(--chili);
+  box-shadow:0 6px 20px rgba(200,16,16,.4);
+}
+
+.board{ display:grid; gap:8px; }
+.board[hidden]{ display:none; }
+.board:not([hidden]){ animation:panelIn .38s var(--ease) both; }
+@keyframes panelIn{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+
+.board-row{
+  display:flex; align-items:center; gap:18px;
+  padding:14px 18px; border-radius:var(--r-md);
+  background:rgba(247,241,225,.035);
+  border:1px solid rgba(247,241,225,.09);
+  transition:background .25s var(--ease), border-color .25s var(--ease), transform .25s var(--ease);
+}
+.board-row:hover{
+  background:rgba(247,241,225,.07);
+  border-color:rgba(242,194,48,.34);
+  transform:translateX(4px);
+}
+/* Comal disc */
+.board-disc{
+  width:72px; height:72px; flex:none; border-radius:50%; object-fit:cover;
+  box-shadow:0 0 0 2px rgba(242,194,48,.5), 0 0 0 6px rgba(20,12,8,.85), 0 8px 18px rgba(0,0,0,.45);
+}
+.board-main{ flex:1; min-width:0; }
+.board-line{ display:flex; align-items:baseline; }
+.board-name{
+  font:600 14.5px/1.35 var(--body); color:var(--cream);
+  letter-spacing:.01em;
+}
+.board-dots{
+  flex:1; min-width:14px; margin:0 10px;
+  border-bottom:2px dotted rgba(247,241,225,.34);
+  transform:translateY(-4px);
+}
+.board-price{
+  font-family:var(--display); font-size:1.5rem; line-height:1;
+  color:var(--gold); letter-spacing:.02em; white-space:nowrap;
+}
+.board-desc{
+  margin-top:5px; font-size:12.5px; line-height:1.55;
+  color:rgba(247,241,225,.52);
+}
+
+.board-foot{
+  display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px 24px;
+  margin-top:clamp(30px,4vw,42px); padding-top:clamp(24px,3vw,32px);
+  border-top:1px solid rgba(247,241,225,.14);
+  font-size:13px; color:var(--on-dark); text-align:center;
+}
+
+@media (min-width:880px){
+  .board{ grid-template-columns:1fr 1fr; gap:10px; }
+}
+
+/* ══ REVIEWS ═══════════════════════════════════════════════ */
+.reviews-section{
+  position:relative; overflow:hidden;
+  background:var(--chili);
+  padding-block:var(--section-y);
+}
+.reviews-section::before{
+  content:''; position:absolute; inset:0; pointer-events:none; opacity:.5;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath d='M15 1 29 15 15 29 1 15Z' fill='none' stroke='rgba(0,0,0,0.16)' stroke-width='1'/%3E%3Ccircle cx='15' cy='15' r='1.5' fill='rgba(242,194,48,0.22)'/%3E%3C/svg%3E");
+}
+.reviews-section .wrap{ position:relative; z-index:2; }
+.reviews-section .h2{ color:#fff; }
+
+.reviews{ display:grid; gap:18px; }
+.plaque{
+  position:relative; display:flex; flex-direction:column;
+  background:var(--paper); border-radius:var(--r-md);
+  border-top:5px solid var(--gold);
+  padding:28px 26px 24px;
+  box-shadow:0 20px 46px rgba(20,12,8,.26);
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+}
+.plaque:hover{ transform:translateY(-5px); box-shadow:0 28px 60px rgba(20,12,8,.34); }
+.stars{ display:flex; gap:3px; margin-bottom:15px; color:var(--gold); }
+.stars svg{ width:17px; height:17px; }
+.plaque > p{ flex:1; font-size:14px; line-height:1.75; color:var(--charcoal); margin-bottom:20px; }
+.reviewer{ display:flex; align-items:center; gap:12px; padding-top:16px; border-top:1px solid var(--rule); }
+.avatar{
+  width:38px; height:38px; border-radius:50%; flex:none;
+  display:grid; place-items:center;
+  font:700 14px/1 var(--body); color:#fff;
+}
+.avatar--chili{ background:var(--chili); }
+.avatar--agave{ background:var(--agave); }
+.avatar--cocoa{ background:var(--cocoa); }
+.reviewer-meta b{ display:block; font:600 13px/1.35 var(--body); color:var(--charcoal); }
+.reviewer-meta small{ display:block; font:400 11px/1.5 var(--body); color:var(--muted); letter-spacing:.04em; }
+
+@media (min-width:760px){ .reviews{ grid-template-columns:repeat(3,1fr); } }
+
+/* ══ VISIT ═════════════════════════════════════════════════ */
+.visit-section{ background:var(--paper); }
+.visit{ display:grid; gap:clamp(38px,5vw,56px); align-items:start; }
+
+.map{
+  position:relative; overflow:hidden;
+  border-radius:var(--r-md); border:1px solid var(--rule-strong);
+  background:var(--cocoa); aspect-ratio:16/8; margin-bottom:24px;
+  box-shadow:var(--sh-sm);
+}
+.map::before{
+  content:'Calle Bonita Ave'; position:absolute; inset:0; z-index:0;
+  display:grid; place-items:center;
+  font-family:var(--display); font-size:1.4rem; letter-spacing:.14em;
+  color:rgba(247,241,225,.28);
+}
+.map iframe{ position:relative; z-index:1; width:100%; height:100%; border:0; display:block; filter:saturate(.86) contrast(1.03); }
+
+.contact-row{ display:flex; gap:14px; margin-bottom:16px; }
+.contact-icon{
+  width:38px; height:38px; flex:none; border-radius:var(--r-sm);
+  display:grid; place-items:center;
+  background:rgba(200,16,16,.09); color:var(--chili);
+}
+.contact-icon svg{ width:17px; height:17px; }
+.contact-row h3{
+  font:600 10.5px/1 var(--body); letter-spacing:.18em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:6px;
+}
+.contact-row p{ font-size:14px; line-height:1.6; color:var(--charcoal); }
+.contact-row a{ text-decoration:none; border-bottom:1px solid var(--rule-strong); transition:color .2s var(--ease), border-color .2s var(--ease); }
+.contact-row a:hover{ color:var(--chili); border-color:var(--chili); }
+
+.hours-card{
+  margin-top:26px; background:var(--cream);
+  border:1px solid var(--rule); border-radius:var(--r-md);
+  padding:24px 22px;
+}
+.hours-card h3{
+  font-family:var(--display); font-size:1.25rem; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--charcoal); margin-bottom:16px;
+}
+.hours-list{ list-style:none; display:grid; gap:1px; }
+.hours-list li{
+  display:flex; justify-content:space-between; gap:16px; align-items:baseline;
+  padding:8px 10px; margin-inline:-10px; border-radius:var(--r-xs);
+  font-size:13px; color:var(--muted);
+}
+.hours-list li b{ font-weight:600; color:var(--charcoal); font-variant-numeric:tabular-nums; }
+.hours-list li.is-today{ background:rgba(242,194,48,.24); color:var(--charcoal); }
+.hours-list li.is-today::after{
+  content:'Today'; font:700 9.5px/1 var(--body); letter-spacing:.16em; text-transform:uppercase;
+  color:var(--cocoa); background:var(--gold); padding:4px 7px; border-radius:2px;
+  align-self:center; order:1; margin-right:auto;
+}
+.hours-list li.is-today b{ order:2; }
+.happy{
+  display:flex; justify-content:space-between; gap:16px;
+  margin-top:14px; padding-top:14px; border-top:1px solid var(--rule-strong);
+  font-size:13px; color:var(--muted);
+}
+.happy b{ color:var(--agave); font-weight:600; }
+
+/* Reservation form */
+.reserve-card{
+  background:var(--cream); border:1px solid var(--rule);
+  border-top:5px solid var(--chili);
+  border-radius:var(--r-md); padding:clamp(24px,3.4vw,34px);
+  box-shadow:var(--sh-sm);
+}
+.form{ display:grid; gap:15px; margin-top:24px; }
+.field-row{ display:grid; gap:15px; }
+@media (min-width:520px){ .field-row{ grid-template-columns:1fr 1fr; } }
+.field label{
+  display:block; margin-bottom:7px;
+  font:600 10.5px/1 var(--body); letter-spacing:.17em; text-transform:uppercase;
+  color:var(--cocoa);
+}
+.input{
+  width:100%; padding:13px 14px;
+  font:400 14px/1.4 var(--body); color:var(--charcoal);
+  background:var(--paper); border:1.5px solid var(--rule-strong);
+  border-radius:var(--r-xs); outline:none;
+  transition:border-color .2s var(--ease), box-shadow .2s var(--ease);
+}
+.input::placeholder{ color:#A99884; }
+.input:hover{ border-color:rgba(75,46,32,.4); }
+.input:focus{ border-color:var(--chili); box-shadow:0 0 0 3px rgba(200,16,16,.12); }
+select.input{ cursor:pointer; appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%234B2E20' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 14px center; padding-right:36px; }
+textarea.input{ resize:vertical; min-height:88px; }
+.form-note{ font-size:12px; color:var(--muted); text-align:center; margin-top:2px; }
+
+@media (min-width:940px){
+  .visit{ grid-template-columns:minmax(0,1fr) minmax(0,1fr); }
+  /* The hours column runs longer than the form; let the form ride along. */
+  .visit-reserve{ position:sticky; top:96px; }
+}
+
+/* Happy hour band — full-bleed image, text aligned to the page grid */
+.happy-band{
+  background:var(--cocoa); color:var(--cream);
+  overflow:hidden;
+}
+.happy-inner{ display:grid; gap:0; align-items:center; }
+.happy-media{ position:relative; aspect-ratio:16/9; overflow:hidden; background:#2C1B12; }
+.happy-media img{ width:100%; height:100%; object-fit:cover; object-position:center 40%; }
+.happy-media::after{
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(to top, rgba(75,46,32,.85), transparent 55%);
+}
+.happy-text{ padding:clamp(32px,5vw,48px) var(--gutter); }
+.happy-text .h3{ color:var(--gold); margin-block:14px 12px; }
+.happy-text p{ color:rgba(247,241,225,.7); font-size:14.5px; max-width:44ch; margin-bottom:20px; }
+
+@media (min-width:860px){
+  .happy-inner{ grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr); }
+  .happy-media{ aspect-ratio:auto; height:100%; min-height:320px; }
+  .happy-media::after{ background:linear-gradient(to right, transparent 32%, rgba(75,46,32,.92) 100%); }
+  .happy-text{
+    padding-left:clamp(32px,4vw,60px);
+    padding-right:max(var(--gutter), calc((100vw - var(--max)) / 2));
+  }
+}
+
+/* ══ FOOTER ════════════════════════════════════════════════ */
+.footer{ background:var(--charcoal); color:var(--cream); padding-block:clamp(52px,7vw,74px) 26px; }
+.footer-grid{ display:grid; gap:40px; margin-bottom:44px; }
+.footer-brand{ --logo-h:64px; margin-bottom:20px; }
+.footer-about{ font-size:13px; line-height:1.75; color:rgba(247,241,225,.5); max-width:30ch; margin-bottom:22px; }
+
+.socials{ display:flex; gap:10px; }
+.social{
+  width:40px; height:40px; border-radius:var(--r-sm);
+  display:grid; place-items:center;
+  background:rgba(247,241,225,.07); border:1px solid rgba(247,241,225,.13);
+  color:rgba(247,241,225,.62);
+  transition:background .2s var(--ease), border-color .2s var(--ease), color .2s var(--ease), transform .2s var(--ease);
+}
+.social svg{ width:16px; height:16px; }
+.social:hover{ background:var(--chili); border-color:var(--chili); color:#fff; transform:translateY(-2px); }
+
+.footer-col h4{
+  font-family:var(--display); font-weight:400; font-size:1.05rem;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--cream); margin-bottom:18px;
+}
+.footer-col ul{ list-style:none; display:grid; gap:11px; }
+.footer-col a{
+  font-size:13px; color:rgba(247,241,225,.5); text-decoration:none;
+  transition:color .2s var(--ease);
+}
+.footer-col a:hover{ color:var(--gold); }
+.footer-col li{ font-size:13px; line-height:1.6; color:rgba(247,241,225,.5); }
+
+.footer-bottom{
+  display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px;
+  padding-top:22px; border-top:1px solid rgba(247,241,225,.1);
+  font-size:12px; color:rgba(247,241,225,.32);
+}
+.footer-bottom a{ color:var(--gold); text-decoration:none; opacity:.75; transition:opacity .2s var(--ease); }
+.footer-bottom a:hover{ opacity:1; }
+
+@media (min-width:720px){ .footer-grid{ grid-template-columns:1.6fr 1fr 1fr; gap:48px; } }
+@media (min-width:960px){ .footer-grid{ grid-template-columns:2fr 1fr 1fr 1.1fr; } }
+
+/* ══ Scroll reveals ════════════════════════════════════════ */
+.js .reveal{
+  opacity:0; transform:translateY(20px);
+  transition:opacity .6s var(--ease), transform .7s var(--ease);
+}
+.js .reveal.is-visible{ opacity:1; transform:none; }
+.js .reveal[data-delay="1"]{ transition-delay:.09s; }
+.js .reveal[data-delay="2"]{ transition-delay:.18s; }
+.js .reveal[data-delay="3"]{ transition-delay:.27s; }
+
+/* Hero load sequence */
+.js .hero-panel > *{ opacity:0; transform:translateY(16px); animation:heroIn .8s var(--ease) forwards; }
+.js .hero-panel > *:nth-child(1){ animation-delay:.05s; }
+.js .hero-panel > *:nth-child(2){ animation-delay:.14s; }
+.js .hero-panel > *:nth-child(3){ animation-delay:.22s; }
+.js .hero-panel > *:nth-child(4){ animation-delay:.29s; }
+.js .hero-panel > *:nth-child(5){ animation-delay:.35s; }
+.js .hero-panel > *:nth-child(6){ animation-delay:.41s; }
+@keyframes heroIn{ to{ opacity:1; transform:none; } }
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .ticker-track{ animation:none; width:auto; }
+  .js .reveal{ opacity:1; transform:none; }
+  .js .hero-panel > *{ opacity:1; transform:none; }
+  .status-dot{ animation:none; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="band" role="presentation"></div>
+
+<!-- ══ NAV ══════════════════════════════════════════════ -->
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand logo" aria-label="Hacienda Grill — home">
+      <img src="Hacienda%20Demo%20Resturant%20Logo.png" alt="Hacienda Grill">
+    </a>
+
+    <div class="nav-links">
+      <a href="#board" class="nav-link">Menu</a>
+      <a href="#story" class="nav-link">Our Story</a>
+      <a href="#reviews" class="nav-link">Reviews</a>
+      <a href="#visit" class="nav-link">Visit</a>
+    </div>
+
+    <a href="#reserve" class="btn btn--primary btn--sm nav-cta">Order Now</a>
+
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu">
+    <div>
+      <div class="mobile-menu-inner">
+        <a href="#board" class="nav-link">Menu</a>
+        <a href="#story" class="nav-link">Our Story</a>
+        <a href="#reviews" class="nav-link">Reviews</a>
+        <a href="#visit" class="nav-link">Visit</a>
+        <a href="#reserve" class="btn btn--primary">Order Now</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ══ HERO ═════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-grid">
+
+    <figure class="hero-media">
+      <img src="Hacienda%20Gif.gif" alt="Steak and chicken searing over open flame on the grill" width="480" height="270">
+      <figcaption class="hero-media-note">On the grill tonight</figcaption>
+    </figure>
+
+    <div class="hero-panel">
+      <div class="hero-logo logo">
+        <img src="Hacienda%20Demo%20Resturant%20Logo.png" alt="Hacienda Grill">
+      </div>
+
+      <p class="eyebrow eyebrow--gold">San Antonio, Texas &middot; Since 2012</p>
+
+      <h1 class="h1 hero-title">
+        <span>Cooked</span>
+        <span>Over</span>
+        <span class="outlined">Fire</span>
+      </h1>
+
+      <div class="hero-rule"></div>
+
+      <p class="lead lead--dark">
+        Twelve years on Calle Bonita. Beef braised overnight, pork turning on the trompo,
+        tortillas pressed at five in the morning — nothing on your plate has been sitting.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#reserve" class="btn btn--primary">Order Now</a>
+        <a href="#board" class="btn btn--outline-light">View Menu</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hero-status">
+    <span class="status-badge">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">Checking today&rsquo;s hours</span>
+    </span>
+    <span class="status-sep" aria-hidden="true"></span>
+    <a href="#visit" class="status-link">1842 Calle Bonita Ave &middot; San Antonio</a>
+  </div>
+</section>
+
+<!-- ══ TICKER ═══════════════════════════════════════════ -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <div class="ticker-group">
+      <span class="ticker-item">Tortillas pressed at 5am</span>
+      <span class="ticker-item">Salsa ground the same day</span>
+      <span class="ticker-item">Birria braised eight hours</span>
+      <span class="ticker-item">Three generations of recipes</span>
+      <span class="ticker-item">Happy hour Mon&ndash;Fri, 3&ndash;6</span>
+    </div>
+    <div class="ticker-group">
+      <span class="ticker-item">Tortillas pressed at 5am</span>
+      <span class="ticker-item">Salsa ground the same day</span>
+      <span class="ticker-item">Birria braised eight hours</span>
+      <span class="ticker-item">Three generations of recipes</span>
+      <span class="ticker-item">Happy hour Mon&ndash;Fri, 3&ndash;6</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══ FAN FAVORITES ════════════════════════════════════ -->
+<section class="section faves-section" id="favorites">
+  <div class="wrap">
+    <div class="head-row reveal">
+      <div class="section-head">
+        <p class="eyebrow">Fan favorites</p>
+        <h2 class="h2">What people drive<br>across town for</h2>
+        <p class="lead">Three plates we have never been allowed to take off the board.</p>
+      </div>
+      <a href="#board" class="btn btn--text">See the whole board</a>
+    </div>
+
+    <div class="faves">
+
+      <a href="#board" class="fave fave--lead reveal">
+        <span class="tag">Bestseller</span>
+        <div class="fave-photo">
+          <img src="My-Fave-Birria-Tacos.jpg" alt="Birria street tacos griddled crisp, served with a cup of consommé" loading="lazy">
+        </div>
+        <div class="fave-body">
+          <p class="fave-cat">Tacos</p>
+          <h3 class="fave-name">Birria Street Tacos</h3>
+          <p class="fave-desc">Beef braised overnight in guajillo and ancho, griddled in its own fat, onion, cilantro, and a cup of consommé for dipping.</p>
+          <div class="fave-foot">
+            <span class="fave-price">$14.50</span>
+            <span class="fave-note">Three per order</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#board" class="fave fave--side reveal" data-delay="1">
+        <div class="fave-photo">
+          <img src="carne-asada-platter-recipe.jpg" alt="Char-grilled carne asada platter with rice, beans and warm tortillas" loading="lazy">
+        </div>
+        <div class="fave-body">
+          <p class="fave-cat">Entrees</p>
+          <h3 class="fave-name">Carne Asada Platter</h3>
+          <p class="fave-desc">Skirt steak in citrus marinade, straight off the fire, with rice, beans and warm tortillas.</p>
+          <div class="fave-foot">
+            <span class="fave-price">$19.00</span>
+            <span class="fave-note">Serves 1&ndash;2</span>
+          </div>
+        </div>
+      </a>
+
+      <a href="#board" class="fave fave--side reveal" data-delay="2">
+        <div class="fave-photo">
+          <img src="Cilantro-Lime-Chicken-Bowls-with-Peach-Salsa-2.jpg" alt="Fuego bowl with cilantro lime rice, grilled chicken and fresh salsa" loading="lazy">
+        </div>
+        <div class="fave-body">
+          <p class="fave-cat">Bowls</p>
+          <h3 class="fave-name">Fuego Bowl</h3>
+          <p class="fave-desc">Cilantro lime rice, black beans, your protein, pico and avocado crema. Built how you want it.</p>
+          <div class="fave-foot">
+            <span class="fave-price">$13.00</span>
+            <span class="fave-note">Build your own</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ STORY ════════════════════════════════════════════ -->
+<section class="section story-section" id="story">
+  <div class="wrap">
+    <div class="story">
+
+      <div class="story-photos reveal">
+        <div class="story-photo story-photo--tall">
+          <img src="commercial-kitchen-layout-design-for-restaurats-inset-1.jpg" alt="The Hacienda Grill kitchen line during service" loading="lazy">
+          <span class="story-caption">The line, 6:40pm</span>
+        </div>
+        <div class="story-photo story-photo--wide">
+          <img src="Roasted-VegetablesIMG_0409-500x500.jpg" alt="Peppers and vegetables roasting on the flat top" loading="lazy">
+        </div>
+        <div class="story-photo story-photo--wide">
+          <img src="Burrito-Supremo-WEBSITE--1024x683.jpg" alt="A burrito being wrapped at the counter" loading="lazy">
+        </div>
+      </div>
+
+      <div class="story-body reveal" data-delay="1">
+        <p class="eyebrow">Our story</p>
+        <h2 class="h2 h2--stack">One cart.<br>Three generations.</h2>
+
+        <p>
+          In 2012 we sold birria out of a cart on the corner of Calle Bonita and Fifth &mdash;
+          four hours a night, until the pot ran out. The recipes came from Elena&rsquo;s grandmother
+          in Jalisco, written on index cards that still hang above the pass.
+        </p>
+        <p>
+          We took the lease on the building in 2016. The cart is still parked out back.
+        </p>
+
+        <div class="quote">
+          <blockquote>If the salsa wasn&rsquo;t ground this morning, it doesn&rsquo;t leave the kitchen.</blockquote>
+          <cite>Elena Rivas &mdash; Owner</cite>
+        </div>
+
+        <div class="figures">
+          <div class="figure"><b>2012</b><span>Established</span></div>
+          <div class="figure"><b>40+</b><span>On the board</span></div>
+          <div class="figure"><b>3</b><span>Generations</span></div>
+        </div>
+
+        <div class="specs">
+          <div class="spec">
+            <!-- molcajete -->
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5.5 13h21a10.5 10.5 0 0 1-21 0Z"/>
+              <path d="M9.5 21.6 7.5 26.5M22.5 21.6l2 4.9M16 23.5v3.5"/>
+              <path d="m19.5 12.5 3.2-7.6"/>
+              <circle cx="23.2" cy="4" r="1.9"/>
+              <path d="M10.5 15.4c1.7 1.5 3.5 2.2 5.5 2.2s3.8-.7 5.5-2.2"/>
+            </svg>
+            <p>Salsa ground by hand in the molcajete, twice a day</p>
+          </div>
+          <div class="spec">
+            <!-- corn -->
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 3.6c-3.5 2.7-5.4 6.6-5.4 11.1 0 5.3 2.1 9.9 5.4 12.7 3.3-2.8 5.4-7.4 5.4-12.7 0-4.5-1.9-8.4-5.4-11.1Z"/>
+              <path d="M10.8 13.2C7.7 13.6 5.3 15.8 4.6 19c2.7.6 5.2-.3 6.9-2.1"/>
+              <path d="M21.2 13.2c3.1.4 5.5 2.6 6.2 5.8-2.7.6-5.2-.3-6.9-2.1"/>
+              <path d="M13 7.7v15.6M19 7.7v15.6"/>
+            </svg>
+            <p>Nixtamalized corn, pressed into tortillas at five in the morning</p>
+          </div>
+          <div class="spec">
+            <!-- chili -->
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22.5 10.5c1.9 4.8.4 10-3.8 13.1-4.2 3.1-9.6 3.3-13.6.6 4.8.2 9-1.5 11.5-4.6 2.1-2.7 3.1-6 2.9-9.4"/>
+              <path d="m22.5 10.5 2.2-4.3"/>
+              <path d="M24.7 6.2c1.7-.5 3.2.4 3.8 2.1"/>
+            </svg>
+            <p>Guajillo, ancho and árbol toasted for every batch of adobo</p>
+          </div>
+          <div class="spec">
+            <!-- avocado -->
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 3.5c-4.6 3.7-7.2 8.3-7.2 12.9A7.2 7.2 0 0 0 16 28.2a7.2 7.2 0 0 0 7.2-11.8c0-4.6-2.6-9.2-7.2-12.9Z"/>
+              <ellipse cx="16" cy="18.6" rx="3.6" ry="4.3"/>
+            </svg>
+            <p>Produce from growers within the county, delivered every morning</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="band" role="presentation"></div>
+
+<!-- ══ THE BOARD ════════════════════════════════════════ -->
+<section class="board-section" id="board">
+  <div class="wrap">
+
+    <div class="section-head section-head--center reveal">
+      <p class="eyebrow eyebrow--gold eyebrow--center">The board</p>
+      <h2 class="h2">Everything we make</h2>
+      <p class="lead lead--dark">Forty-plus items, four categories, all of it cooked in-house the same day you eat it.</p>
+    </div>
+
+    <div class="tabs reveal" role="tablist" aria-label="Menu categories">
+      <button class="tab" role="tab" id="tab-tacos"    aria-selected="true"  aria-controls="panel-tacos">Tacos</button>
+      <button class="tab" role="tab" id="tab-burritos" aria-selected="false" aria-controls="panel-burritos" tabindex="-1">Burritos</button>
+      <button class="tab" role="tab" id="tab-bowls"    aria-selected="false" aria-controls="panel-bowls"    tabindex="-1">Bowls</button>
+      <button class="tab" role="tab" id="tab-sides"    aria-selected="false" aria-controls="panel-sides"    tabindex="-1">Sides &amp; Drinks</button>
+    </div>
+
+    <!-- TACOS -->
+    <div class="board" id="panel-tacos" role="tabpanel" aria-labelledby="tab-tacos" tabindex="0">
+      <div class="board-row">
+        <img class="board-disc" src="Birria-tacos_4 Mini.webp" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Birria Tacos</span><span class="board-dots"></span><span class="board-price">$14.50</span></div>
+          <p class="board-desc">Slow-braised beef, consommé for dipping, onion, cilantro</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="257538-authentic-tacos-al-pastor-VAT-Beauty-2x1-2eddda03a8d84e1ea215e89154e73f25.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Al Pastor Tacos</span><span class="board-dots"></span><span class="board-price">$12.00</span></div>
+          <p class="board-desc">Spit-roasted pork, pineapple, achiote marinade</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Pollo-Asado-Tacos-1.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Pollo Asado Tacos</span><span class="board-dots"></span><span class="board-price">$11.50</span></div>
+          <p class="board-desc">Grilled marinated chicken, avocado salsa, lime</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Veggie-Tacos4577.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Veggie Tacos</span><span class="board-dots"></span><span class="board-price">$10.50</span></div>
+          <p class="board-desc">Roasted peppers, black beans, cotija, chipotle crema</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BURRITOS -->
+    <div class="board" id="panel-burritos" role="tabpanel" aria-labelledby="tab-burritos" tabindex="0" hidden>
+      <div class="board-row">
+        <img class="board-disc" src="Carne asada burrito mini.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Carne Asada Burrito</span><span class="board-dots"></span><span class="board-price">$15.00</span></div>
+          <p class="board-desc">Grilled skirt steak, rice, beans, pico, guacamole</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Chicken-Burrito_374635aacd4cafccef5bb0653ee5dedb.webp" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Chicken Burrito</span><span class="board-dots"></span><span class="board-price">$13.50</span></div>
+          <p class="board-desc">Grilled chicken, cilantro rice, sour cream, salsa verde</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Shrimp Burrito mini.avif" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Shrimp Burrito</span><span class="board-dots"></span><span class="board-price">$16.00</span></div>
+          <p class="board-desc">Garlic shrimp, mango salsa, chipotle aioli, corn</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Bean and cheese Burrito.jpeg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Bean &amp; Cheese Burrito</span><span class="board-dots"></span><span class="board-price">$9.50</span></div>
+          <p class="board-desc">Refried beans, melted cheese blend, salsa roja</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOWLS -->
+    <div class="board" id="panel-bowls" role="tabpanel" aria-labelledby="tab-bowls" tabindex="0" hidden>
+      <div class="board-row">
+        <img class="board-disc" src="Cilantro-Lime-Chicken-Bowls-with-Peach-Salsa-2.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Fuego Bowl</span><span class="board-dots"></span><span class="board-price">$13.00</span></div>
+          <p class="board-desc">Cilantro lime rice, choice of protein, all toppings</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="summer-corn-salad.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Verde Salad Bowl</span><span class="board-dots"></span><span class="board-price">$12.00</span></div>
+          <p class="board-desc">Romaine, corn, black beans, cotija, avocado dressing</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Birria bowl.webp" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Birria Bowl</span><span class="board-dots"></span><span class="board-price">$15.50</span></div>
+          <p class="board-desc">Braised beef, consommé broth, rice, pickled onions</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Kid Bowl.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Kid&rsquo;s Bowl</span><span class="board-dots"></span><span class="board-price">$8.00</span></div>
+          <p class="board-desc">Rice, beans, mild chicken, shredded cheese</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDES & DRINKS -->
+    <div class="board" id="panel-sides" role="tabpanel" aria-labelledby="tab-sides" tabindex="0" hidden>
+      <div class="board-row">
+        <img class="board-disc" src="Guac.jfif" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">House Guacamole</span><span class="board-dots"></span><span class="board-price">$5.50</span></div>
+          <p class="board-desc">Hass avocados, lime, jalapeño, tomato, chips</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="mexican-street-corn-V03-1200x1800.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Elote</span><span class="board-dots"></span><span class="board-price">$4.50</span></div>
+          <p class="board-desc">Grilled corn, mayo, cotija, chili powder, lime</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="vegan-horchata-recipe-1200-1200.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Horchata</span><span class="board-dots"></span><span class="board-price">$3.50</span></div>
+          <p class="board-desc">House-made cinnamon rice milk, lightly sweetened</p>
+        </div>
+      </div>
+      <div class="board-row">
+        <img class="board-disc" src="Agua-de-Fresa-Finals-Two-Glasses-Straight-On.jpg" alt="" loading="lazy">
+        <div class="board-main">
+          <div class="board-line"><span class="board-name">Agua Fresca</span><span class="board-dots"></span><span class="board-price">$3.00</span></div>
+          <p class="board-desc">Daily rotation: watermelon, hibiscus or tamarind</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="board-foot reveal">
+      <span>Vegetarian and gluten-free options on every category. Ask the counter.</span>
+      <a href="#reserve" class="btn btn--secondary btn--sm">Order for pickup</a>
+    </div>
+
+  </div>
+</section>
+
+<div class="band" role="presentation"></div>
+
+<!-- ══ REVIEWS ══════════════════════════════════════════ -->
+<section class="reviews-section" id="reviews">
+  <div class="wrap">
+    <div class="section-head section-head--center reveal">
+      <p class="eyebrow eyebrow--cream eyebrow--center">Word of mouth</p>
+      <h2 class="h2">What guests say</h2>
+    </div>
+
+    <div class="reviews">
+      <article class="plaque reveal">
+        <div class="stars" role="img" aria-label="Rated 5 out of 5">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+        </div>
+        <p>&ldquo;Best birria tacos in the city, hands down. The consommé alone is worth the trip. We come every Friday without fail.&rdquo;</p>
+        <div class="reviewer">
+          <span class="avatar avatar--chili" aria-hidden="true">M</span>
+          <div class="reviewer-meta"><b>Maria G.</b><small>Google Review</small></div>
+        </div>
+      </article>
+
+      <article class="plaque reveal" data-delay="1">
+        <div class="stars" role="img" aria-label="Rated 5 out of 5">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+        </div>
+        <p>&ldquo;Took the whole family for my dad&rsquo;s birthday. The carne asada platter was incredible. Real, authentic flavors, not the Americanized stuff.&rdquo;</p>
+        <div class="reviewer">
+          <span class="avatar avatar--agave" aria-hidden="true">D</span>
+          <div class="reviewer-meta"><b>David R.</b><small>Yelp Review</small></div>
+        </div>
+      </article>
+
+      <article class="plaque reveal" data-delay="2">
+        <div class="stars" role="img" aria-label="Rated 5 out of 5">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21.1 7 14.2 2 9.3l6.9-1z"/></svg>
+        </div>
+        <p>&ldquo;The room is warm, the staff are wonderful, and the food is absolutely fire. The al pastor reminded me of home.&rdquo;</p>
+        <div class="reviewer">
+          <span class="avatar avatar--cocoa" aria-hidden="true">S</span>
+          <div class="reviewer-meta"><b>Sofia M.</b><small>TripAdvisor</small></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ══ VISIT & RESERVE ══════════════════════════════════ -->
+<section class="section visit-section" id="visit">
+  <div class="wrap">
+    <div class="visit">
+
+      <div class="reveal">
+        <p class="eyebrow">Visit us</p>
+        <h2 class="h2 h2--stack">Find us on<br>Calle Bonita</h2>
+
+        <div class="map">
+          <iframe
+            title="Map of Hacienda Grill, San Antonio, Texas"
+            src="https://maps.google.com/maps?q=San%20Antonio%2C%20TX%2078205&z=14&output=embed"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <div class="contact-row">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </span>
+          <div>
+            <h3>Address</h3>
+            <p>1842 Calle Bonita Ave, Suite 101<br>San Antonio, TX 78205</p>
+          </div>
+        </div>
+        <div class="contact-row">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L7.9 9.8a16 16 0 0 0 6 6l1-.9a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
+          </span>
+          <div>
+            <h3>Phone</h3>
+            <p><a href="tel:+12105550182">(210) 555-0182</a></p>
+          </div>
+        </div>
+
+        <div class="hours-card">
+          <h3>Hours of operation</h3>
+          <ul class="hours-list" id="hours-list">
+            <li data-day="1"><span>Monday</span><b>11:00am &ndash; 9:00pm</b></li>
+            <li data-day="2"><span>Tuesday</span><b>11:00am &ndash; 9:00pm</b></li>
+            <li data-day="3"><span>Wednesday</span><b>11:00am &ndash; 9:00pm</b></li>
+            <li data-day="4"><span>Thursday</span><b>11:00am &ndash; 9:00pm</b></li>
+            <li data-day="5"><span>Friday</span><b>11:00am &ndash; 10:30pm</b></li>
+            <li data-day="6"><span>Saturday</span><b>11:00am &ndash; 10:30pm</b></li>
+            <li data-day="0"><span>Sunday</span><b>12:00pm &ndash; 8:00pm</b></li>
+          </ul>
+          <div class="happy"><span>Happy hour</span><b>Mon&ndash;Fri, 3&ndash;6pm</b></div>
+        </div>
+      </div>
+
+      <div class="reveal visit-reserve" data-delay="1" id="reserve">
+        <div class="reserve-card">
+          <p class="eyebrow">Reserve</p>
+          <h2 class="h2 h2--stack">Book a table</h2>
+          <p class="lead lead--sm">
+            Walk-ins are always welcome. Reservations get you seated first on Friday and Saturday nights.
+          </p>
+
+          <form class="form" id="reservation-form" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="first-name">First name</label>
+                <input class="input" id="first-name" name="first-name" type="text" autocomplete="given-name" placeholder="Maria" required>
+              </div>
+              <div class="field">
+                <label for="last-name">Last name</label>
+                <input class="input" id="last-name" name="last-name" type="text" autocomplete="family-name" placeholder="Garcia" required>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input class="input" id="email" name="email" type="email" autocomplete="email" placeholder="maria@email.com" required>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="date">Date</label>
+                <input class="input" id="date" name="date" type="date" required>
+              </div>
+              <div class="field">
+                <label for="party">Party size</label>
+                <select class="input" id="party" name="party" required>
+                  <option value="" disabled selected>Select</option>
+                  <option>1 guest</option>
+                  <option>2 guests</option>
+                  <option>3&ndash;4 guests</option>
+                  <option>5&ndash;6 guests</option>
+                  <option>7+ guests</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="notes">Anything we should know</label>
+              <textarea class="input" id="notes" name="notes" rows="3" placeholder="Dietary restrictions, celebrations, accessibility needs"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--block" id="reserve-submit">Request a table</button>
+            <p class="form-note" id="form-note">We&rsquo;ll confirm by email within the hour.</p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══ HAPPY HOUR ═══════════════════════════════════════ -->
+<section class="happy-band">
+  <div class="happy-inner">
+    <div class="happy-media">
+      <img src="Serving%20Gif.gif" alt="Drinks being poured at the bar" loading="lazy" width="480" height="267">
+    </div>
+    <div class="happy-text">
+      <p class="eyebrow eyebrow--gold">At the bar</p>
+      <h3 class="h3">Happy hour, three to six</h3>
+      <p>Monday through Friday: two-dollar street tacos, half-price aguas frescas, and the whole bar to yourself before the dinner rush lands.</p>
+      <a href="#reserve" class="btn btn--outline-light btn--sm">Save a seat</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══ FOOTER ═══════════════════════════════════════════ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-grid">
+
+      <div>
+        <div class="footer-brand logo">
+          <img src="Hacienda%20Demo%20Resturant%20Logo.png" alt="Hacienda Grill">
+        </div>
+        <p class="footer-about">Authentic Mexican cooking on Calle Bonita since 2012. One cart, three generations, still pressing tortillas at five in the morning.</p>
+        <div class="socials">
+          <a href="#" class="social" aria-label="Hacienda Grill on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social" aria-label="Hacienda Grill on Facebook">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h4>Menu</h4>
+        <ul>
+          <li><a href="#board" data-jump="tacos">Tacos</a></li>
+          <li><a href="#board" data-jump="burritos">Burritos</a></li>
+          <li><a href="#board" data-jump="bowls">Bowls</a></li>
+          <li><a href="#board" data-jump="sides">Sides &amp; Drinks</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="#visit">Hours &amp; location</a></li>
+          <li><a href="#reserve">Book a table</a></li>
+          <li><a href="#reviews">Reviews</a></li>
+          <li><a href="#story">Our story</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <ul>
+          <li>1842 Calle Bonita Ave<br>San Antonio, TX 78205</li>
+          <li><a href="tel:+12105550182">(210) 555-0182</a></li>
+          <li><a href="mailto:hello@haciendagrill.com">hello@haciendagrill.com</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>&copy; 2026 Hacienda Grill. All rights reserved.</span>
+      <span>Website by <a href="../index.html">AlvSolutions</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="band" role="presentation"></div>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ── Sticky nav shadow ─────────────────────────────── */
+  var nav = document.getElementById('nav');
+  var onScroll = function () { nav.classList.toggle('is-stuck', window.scrollY > 8); };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* ── Mobile menu ───────────────────────────────────── */
+  var burger = document.getElementById('burger');
+  var mobileMenu = document.getElementById('mobile-menu');
+  var setMenu = function (open) {
+    mobileMenu.classList.toggle('is-open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  burger.addEventListener('click', function () {
+    setMenu(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  mobileMenu.querySelectorAll('a').forEach(function (a) {
+    a.addEventListener('click', function () { setMenu(false); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && burger.getAttribute('aria-expanded') === 'true') {
+      setMenu(false); burger.focus();
+    }
+  });
+
+  /* ── Menu board tabs ───────────────────────────────── */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('.tab'));
+  var selectTab = function (tab, focus) {
+    tabs.forEach(function (t) {
+      var on = t === tab;
+      t.setAttribute('aria-selected', String(on));
+      t.tabIndex = on ? 0 : -1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) tab.focus();
+  };
+  tabs.forEach(function (tab, i) {
+    tab.addEventListener('click', function () { selectTab(tab); });
+    tab.addEventListener('keydown', function (e) {
+      var next = null;
+      if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
+      else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
+      else if (e.key === 'Home') next = tabs[0];
+      else if (e.key === 'End') next = tabs[tabs.length - 1];
+      if (next) { e.preventDefault(); selectTab(next, true); }
+    });
+  });
+
+  /* Footer category links open the matching board panel */
+  document.querySelectorAll('[data-jump]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var tab = document.getElementById('tab-' + link.dataset.jump);
+      if (tab) selectTab(tab);
+    });
+  });
+
+  /* ── Opening hours: live status + today's row ──────── */
+  /* index 0 = Sunday */
+  var SCHEDULE = [
+    { open: 12 * 60, close: 20 * 60 },
+    { open: 11 * 60, close: 21 * 60 },
+    { open: 11 * 60, close: 21 * 60 },
+    { open: 11 * 60, close: 21 * 60 },
+    { open: 11 * 60, close: 21 * 60 },
+    { open: 11 * 60, close: 22 * 60 + 30 },
+    { open: 11 * 60, close: 22 * 60 + 30 }
+  ];
+  var DAY_NAMES = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  var fmt = function (mins) {
+    var h = Math.floor(mins / 60), m = mins % 60;
+    var suffix = h >= 12 ? 'pm' : 'am';
+    var h12 = h % 12 === 0 ? 12 : h % 12;
+    return h12 + ':' + String(m).padStart(2, '0') + suffix;
+  };
+
+  var updateHours = function () {
+    var now = new Date();
+    var day = now.getDay();
+    var mins = now.getHours() * 60 + now.getMinutes();
+    var today = SCHEDULE[day];
+    var dot = document.getElementById('status-dot');
+    var text = document.getElementById('status-text');
+
+    if (mins >= today.open && mins < today.close) {
+      dot.dataset.state = 'open';
+      text.textContent = 'Open now · until ' + fmt(today.close);
+    } else if (mins < today.open) {
+      dot.dataset.state = 'closed';
+      text.textContent = 'Closed · opens today at ' + fmt(today.open);
+    } else {
+      dot.dataset.state = 'closed';
+      var next = SCHEDULE[(day + 1) % 7];
+      text.textContent = 'Closed · opens tomorrow at ' + fmt(next.open);
+    }
+
+    document.querySelectorAll('#hours-list li').forEach(function (li) {
+      li.classList.toggle('is-today', Number(li.dataset.day) === day);
+    });
+  };
+  updateHours();
+  setInterval(updateHours, 60000);
+
+  /* ── Scroll reveals ────────────────────────────────── */
+  var reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ── Reservation form ──────────────────────────────── */
+  var form = document.getElementById('reservation-form');
+  var submit = document.getElementById('reserve-submit');
+  var note = document.getElementById('form-note');
+
+  var dateField = document.getElementById('date');
+  dateField.min = new Date().toISOString().slice(0, 10);
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    submit.textContent = 'Table requested';
+    submit.classList.remove('btn--primary');
+    submit.classList.add('btn--secondary');
+    submit.disabled = true;
+    note.textContent = 'Thanks. We’ll email you a confirmation shortly.';
+  });
+})();
+</script>
+</body>
+</html>

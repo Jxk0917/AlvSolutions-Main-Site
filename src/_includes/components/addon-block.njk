@@ -1,0 +1,51 @@
+{#
+  One à-la-carte item: the price row, then its factor table if it has one.
+  Called with `addon`. Used on /packages/add-ons/ and again inside the matching
+  service page, so the qualifying criteria a client reads can never differ
+  between the two places they might read it.
+
+  "fixed" items (cards, shirts) carry levels but no factors, and the table
+  simply does not render.
+
+  "monthly" items charge twice — once to build, then every month to run — so
+  their two levels are not brackets. lvl-hi is suppressed for them: gold on the
+  last level reads as "the expensive tier", which would be a lie here.
+
+  addon-compact: no factors means no table, which means nothing needs the full
+  width a table demands. These sit two to a row instead of stacked full-bleed.
+#}
+<article class="addon{% if not addon.factors %} addon-compact{% endif %}" id="{{ addon.slug }}">
+  <header class="addon-head">
+    <div>
+      <h3>{{ addon.name }}</h3>
+      <p>{{ addon.blurb }}</p>
+    </div>
+    <div class="addon-prices">
+      {%- for l in addon.levels %}
+      <span class="lvl{% if loop.last and addon.levels.length > 1 and addon.pricing != "monthly" %} lvl-hi{% endif %}">
+        <span class="lvl-l">{{ l.label }}</span>
+        <span class="lvl-p">{{ l.price | price | safe }}</span>
+        {%- if l.unit %}<span class="lvl-u">{{ l.unit }}</span>{% endif %}
+      </span>
+      {%- endfor %}
+    </div>
+  </header>
+
+  {%- if addon.factors %}
+  {%- set cols = [] %}
+  {%- for l in addon.levels %}{% set cols = (cols.push({ label: l.label, sub: l.price | price }), cols) %}{% endfor %}
+  {%- set rows = [] %}
+  {%- for f in addon.factors %}{% set rows = (rows.push({ label: f.label, values: f.values, example: f.example }), rows) %}{% endfor %}
+  {%- set caption = "What " + addon.name + " covers at setup and each month"
+       if addon.pricing == "monthly"
+       else "What makes " + addon.name + " simple or complex" %}
+  {% include "components/price-matrix.njk" %}
+  {%- endif %}
+
+  {%- if addon.service %}
+  <a class="addon-more" href="/services/{{ addon.service }}/">
+    More about {{ addon.linkName or addon.name | lower }}
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+  </a>
+  {%- endif %}
+</article>

@@ -1,0 +1,26 @@
+[
+  {
+    "slug": "onboarding",
+    "name": "Onboarding / content collection",
+    "unit": "one-time",
+    "price": null,
+    "when": "You have no logo, photos or copy ready.",
+    "covers": "Extra calls, follow-ups, and gathering your information for you."
+  },
+  {
+    "slug": "extra-revision",
+    "name": "Extra revision round",
+    "unit": "per round",
+    "price": null,
+    "when": "You want changes beyond the rounds included in your package.",
+    "covers": "A full round of changes. Charged per round, not per change — so one round can hold as many notes as you like."
+  },
+  {
+    "slug": "rush",
+    "name": "Rush delivery",
+    "unit": "flat fee",
+    "price": null,
+    "when": "You need the site faster than the standard 1–2 week turnaround.",
+    "covers": "Your project moves to the front of the queue."
+  }
+]

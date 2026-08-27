@@ -1,0 +1,38 @@
+{#
+  Links come from site.nav so adding a page never means editing markup.
+
+  A link is marked current when the page URL sits at or below it, which is what
+  makes /services/business-websites/ light up "Services". The home link is
+  exempt from that test: every URL starts with "/", so without the special case
+  home would be current on every page of the site.
+#}
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/" aria-label="AlvSolutions home">
+      <img src="/assets/brand/alv-mark.png" alt="" width="42" height="27" />
+      <span class="wordmark">Alv<span>Solutions</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      {%- for item in site.nav %}
+      {%- set current = (item.url == "/" and page.url == "/") or (item.url != "/" and page.url.startsWith(item.url)) %}
+      <a class="nav-link{% if current %} is-current{% endif %}" href="{{ item.url }}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+      {%- endfor %}
+    </nav>
+
+    <a class="btn btn-primary btn-sm nav-cta" href="/contact/">Start a project</a>
+
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
+      <svg class="ic ic-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></svg>
+      <svg class="ic ic-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></svg>
+    </button>
+  </div>
+
+  <div class="mob-menu" id="mob-menu">
+    {%- for item in site.nav %}
+    {%- set current = (item.url == "/" and page.url == "/") or (item.url != "/" and page.url.startsWith(item.url)) %}
+    <a class="nav-link{% if current %} is-current{% endif %}" href="{{ item.url }}"{% if current %} aria-current="page"{% endif %}>{{ item.label }}</a>
+    {%- endfor %}
+    <a class="btn btn-primary" href="/contact/">Start a project</a>
+  </div>
+</header>

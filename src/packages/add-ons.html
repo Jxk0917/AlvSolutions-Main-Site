@@ -1,0 +1,138 @@
+---
+layout: layouts/base.njk
+permalink: /packages/add-ons/
+title: Add-ons and à la carte pricing
+description: Menu pages, catering pages, booking integration, website updates, Google Ads management, business cards and shirt design — priced by what the job actually takes.
+---
+
+{%- set ph = {
+  eyebrow: "À la carte",
+  heading: "Priced by what<br />the job takes.",
+  lead: "A five-item lawn care list and a sixty-item restaurant menu are not the same job, so they are not the same price. Each add-on below says exactly what puts it in one bracket or the other.",
+  back: { label: "Packages", url: "/packages/" },
+  crumbs: [{ label: "Packages", url: "/packages/" }, { label: "Add-ons" }],
+  actions: [
+    { label: "Start a project", url: "/contact/" }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+  <!-- ══════════════ SCOPED ══════════════ -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 32px;">
+        <h2>Pages and integrations</h2>
+        <p class="lead">
+          Three add-ons priced simple or complex. The table under each one is the whole
+          rule &mdash; there is no judgement call happening off this page.
+        </p>
+      </div>
+
+      <div class="addons">
+        {%- for addon in addons %}
+        {%- if addon.pricing == "scoped" %}
+        <div class="reveal" style="--d:{{ loop.index0 }}">
+          {% include "components/addon-block.njk" %}
+        </div>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ SIZED ══════════════ -->
+  <section class="sec band sec-line">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 32px;">
+        <h2>Website updates</h2>
+        <p class="lead">
+          One-time changes to a site that is already live. Growth includes three of these
+          a month and Pro includes unlimited &mdash; this is for anything beyond that, or
+          for Starter.
+        </p>
+      </div>
+
+      <div class="addons">
+        {%- for addon in addons %}
+        {%- if addon.pricing == "sized" %}
+        <div class="reveal">
+          {% include "components/addon-block.njk" %}
+        </div>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ MONTHLY ══════════════ -->
+  <section class="sec">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 32px;">
+        <h2>Advertising</h2>
+        <p class="lead">
+          Charged twice and only twice: once to build the campaigns, then a flat fee
+          for every month I run them. Your ad budget is paid to Google on your own
+          card and I take no percentage of it.
+        </p>
+      </div>
+
+      <div class="addons">
+        {%- for addon in addons %}
+        {%- if addon.pricing == "monthly" %}
+        <div class="reveal">
+          {% include "components/addon-block.njk" %}
+        </div>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ FIXED ══════════════ -->
+  <section class="sec sec-line">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 32px;">
+        <h2>Print and apparel</h2>
+        <p class="lead">
+          Designed against the same brand as the site, so the business someone finds
+          online and the business they meet in person look like the same one.
+        </p>
+      </div>
+
+      <div class="addons addons-compact">
+        {%- for addon in addons %}
+        {%- if addon.pricing == "fixed" %}
+        <div class="reveal" style="--d:{{ loop.index0 }}">
+          {% include "components/addon-block.njk" %}
+        </div>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ FEES ══════════════ -->
+  <section class="sec band sec-line" id="fees">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 32px;">
+        <h2>Extra fees</h2>
+        <p class="lead">None of these applies unless you ask for it, and I will tell you before it does.</p>
+      </div>
+      <div class="reveal">
+        {% include "components/fee-list.njk" %}
+      </div>
+    </div>
+  </section>
+
+
+  {%- set ctaHeading = "Tell me the job and I will tell you the bracket." %}
+  {%- set ctaLead = "Send me what you have — a menu, a service list, a booking system you already use — and I will tell you which side of the table it lands on before you commit to anything." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

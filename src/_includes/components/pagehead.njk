@@ -1,0 +1,67 @@
+{#
+  Inner-page head. Set `ph` before including:
+    ph = { eyebrow, heading, lead, crumbs: [{label,url}], actions: [{label,url,style}],
+           back: {label, url, showIf} }
+
+  Deliberately not the home hero: that one carries a browser mockup and a
+  shader, and repeating it on eighteen pages would make every page look like a
+  landing page and none of them look like a document.
+
+  `back` is for a page you only ever arrive at by clicking something — a
+  service, an add-on, a package. It renders as a real button, first in the
+  actions row (left of "Start a project"), not a quiet text link, because
+  leaving is exactly as valid an action as starting a project is. Its href is
+  a sensible default (the index it belongs to), but main.js upgrades the
+  click to a real history.back() whenever the visit actually came from this
+  site, so it returns you to the exact page and scroll position you clicked
+  from rather than a fresh copy of the index.
+
+  `showIf` is for a page reached from more than one place, where the default
+  is only right some of the time — /contact/ says "Back to Packages" for
+  someone who clicked a package, and says nothing for someone who clicked
+  "Start a project" from the nav. Set it to a URL query key and main.js
+  reveals the button only when that key is present.
+#}
+<section class="pagehead">
+  <div class="wrap">
+    {%- if ph.crumbs %}
+    <nav class="crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li><a href="/">Home</a></li>
+        {%- for c in ph.crumbs %}
+        <li>{% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}<span aria-current="page">{{ c.label }}</span>{% endif %}</li>
+        {%- endfor %}
+      </ol>
+    </nav>
+    {%- endif %}
+
+    {%- if ph.eyebrow %}
+    <span class="eyebrow">{{ ph.eyebrow }}</span>
+    {%- endif %}
+
+    <h1>{{ ph.heading | safe }}</h1>
+
+    {%- if ph.lead %}
+    <p class="lead">{{ ph.lead | safe }}</p>
+    {%- endif %}
+
+    {%- if ph.actions or ph.back %}
+    <div class="hero-actions">
+      {%- if ph.back %}
+      <a class="btn btn-ghost btn-back js-back"
+         href="{{ ph.back.url }}"
+         {%- if ph.back.showIf %} hidden data-show-if="{{ ph.back.showIf }}"{% endif %}>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Back to {{ ph.back.label }}
+      </a>
+      {%- endif %}
+      {%- for a in ph.actions %}
+      <a class="btn {{ a.style | default('btn-primary') }}" href="{{ a.url }}">
+        {{ a.label }}
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </a>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </div>
+</section>

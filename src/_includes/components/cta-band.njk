@@ -1,0 +1,19 @@
+{#
+  Closes every inner page the same way. `ctaHeading` / `ctaLead` override the
+  default so a service page can close on its own subject.
+#}
+<section class="sec band sec-line cta-band">
+  <div class="wrap">
+    <div class="cta-in reveal">
+      <h2>{{ ctaHeading | default("Let's talk about your site.") }}</h2>
+      <p class="lead">{{ ctaLead | default("Tell me what your business does and what you need. Free quote, no pressure.") }}</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="/contact/">
+          Start a project
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="/packages/">See packages</a>
+      </div>
+    </div>
+  </div>
+</section>

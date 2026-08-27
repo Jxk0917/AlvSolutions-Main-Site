@@ -1,0 +1,17 @@
+{
+  "name": "alvsolutions-main-site",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AlvSolutions company site — Eleventy static build.",
+  "scripts": {
+    "build": "eleventy",
+    "serve": "eleventy --serve --port=3000"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^3.1.6"
+  },
+  "devDependencies": {
+    "canvas": "^3.2.3",
+    "puppeteer": "^24.40.0"
+  }
+}

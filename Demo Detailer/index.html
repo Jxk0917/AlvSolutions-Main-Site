@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucid Detailing — Cleaner Surface. Better Finish.</title>
+<meta name="description" content="Mobile paint correction, ceramic coating, and interior detailing. We come to your driveway and finish under inspection lighting.">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@500;600;700&family=Raleway:wght@400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ==========================================================================
+     LUCID DETAILING — design system
+     Palette, type, and logo are fixed by the brand guidelines. The organising
+     idea is that light is the product: a single sky-blue light source moving
+     across black surfaces. Nothing on this page glows in a colour the brand
+     does not own.
+     ========================================================================== */
+  :root{
+    /* brand palette (from Lucid Detailing Brand GuideLines.png) */
+    --ink:#0D0D0F;          /* the bay: page ground */
+    --ink-2:#12171E;        /* raised ground, between ink and navy */
+    --navy:#1E2A38;
+    --slate:#4A5563;
+    --fog:#D1D5DB;
+    --sky:#6FAEE6;
+    --white:#FFFFFF;
+
+    /* derived, all mixed from the six above */
+    --fog-dim:#8B94A2;
+    --sky-soft:rgba(111,174,230,0.10);
+    --line:rgba(111,174,230,0.14);
+    --line-strong:rgba(111,174,230,0.34);
+    --hairline:rgba(209,213,219,0.12);
+
+    --r-sm:8px; --r-md:12px; --r-lg:18px;
+    --ease:cubic-bezier(0.16,1,0.3,1);
+    --gutter:clamp(20px,5vw,64px);
+  }
+
+  *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+  html{ scroll-behavior:smooth; scroll-padding-top:88px; }
+  body{
+    background:var(--ink);
+    color:var(--fog);
+    font-family:'Montserrat',sans-serif;
+    font-weight:400; font-size:16px; line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  img{ display:block; max-width:100%; }
+  ::selection{ background:var(--sky); color:var(--ink); }
+
+  /* ---- Type roles -------------------------------------------------------- */
+  h1,h2,h3,h4{
+    font-family:'Exo 2',sans-serif; font-weight:600; color:var(--white);
+    line-height:1.1; letter-spacing:0.035em;
+  }
+  .t-hero{ font-size:clamp(46px,8.2vw,92px); line-height:0.98; letter-spacing:0.02em; }
+  .t-h2{ font-size:clamp(30px,4.4vw,52px); }
+  .t-h3{ font-size:clamp(19px,1.7vw,22px); letter-spacing:0.045em; }
+  .t-lead{ font-size:clamp(16px,1.5vw,18.5px); line-height:1.65; color:var(--fog); }
+  .t-body{ font-size:15px; color:var(--fog-dim); }
+  .t-small{ font-size:13.5px; color:var(--fog-dim); }
+
+  .label{
+    font-family:'Raleway',sans-serif; font-weight:600;
+    font-size:11.5px; letter-spacing:0.24em; text-transform:uppercase;
+    color:var(--fog-dim);
+  }
+  .eyebrow{
+    font-family:'Raleway',sans-serif; font-weight:600;
+    font-size:11.5px; letter-spacing:0.26em; text-transform:uppercase;
+    color:var(--sky); display:inline-flex; align-items:center; gap:14px;
+  }
+  .eyebrow::before{ content:''; width:30px; height:1px; background:var(--sky); opacity:0.8; }
+
+  /* Chrome: the logo's own material, rendered in type. The sweep runs once on
+     load, the way a highlight crosses a panel as you walk past it. */
+  .chrome{
+    background:linear-gradient(100deg,
+      var(--white) 0%, var(--white) 30%, var(--fog) 40%,
+      var(--sky) 47%, var(--white) 56%, var(--fog) 68%, var(--white) 88%);
+    background-size:260% 100%; background-position:0% 0;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:chrome-sweep 2.4s var(--ease) 0.35s 1 both;
+  }
+  @keyframes chrome-sweep{ from{ background-position:170% 0; } to{ background-position:0% 0; } }
+
+  /* ---- Layout ------------------------------------------------------------ */
+  .wrap{ width:100%; max-width:1280px; margin-inline:auto; padding-inline:var(--gutter); }
+  .section{ padding-block:clamp(76px,9vw,132px); }
+  .rule{ height:1px; background:var(--hairline); border:0; }
+  .rule-lit{ height:1px; border:0; background:linear-gradient(90deg,transparent,var(--line-strong),transparent); }
+
+  /* ---- Buttons ----------------------------------------------------------- */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:10px;
+    font-family:'Raleway',sans-serif; font-weight:700; font-size:12px;
+    letter-spacing:0.16em; text-transform:uppercase; white-space:nowrap;
+    text-decoration:none; cursor:pointer; border-radius:var(--r-sm);
+    padding:16px 30px; border:1px solid transparent;
+    transition:background .25s ease, border-color .25s ease, color .25s ease,
+               transform .25s var(--ease), box-shadow .25s ease;
+  }
+  .btn svg{ width:14px; height:14px; transition:transform .25s var(--ease); }
+  .btn:hover svg{ transform:translateX(4px); }
+  .btn:active{ transform:translateY(0); }
+
+  .btn-primary{
+    background:var(--sky); color:var(--ink); border-color:var(--sky);
+    box-shadow:0 10px 30px -14px rgba(111,174,230,0.9);
+  }
+  .btn-primary:hover{ background:var(--white); border-color:var(--white); transform:translateY(-2px); box-shadow:0 16px 36px -14px rgba(111,174,230,0.9); }
+  .btn-secondary{ background:transparent; color:var(--sky); border-color:var(--line-strong); }
+  .btn-secondary:hover{ background:var(--sky-soft); border-color:var(--sky); transform:translateY(-2px); }
+  .btn-ghost{ background:transparent; color:var(--white); border-color:rgba(209,213,219,0.26); }
+  .btn-ghost:hover{ background:rgba(255,255,255,0.05); border-color:rgba(209,213,219,0.6); transform:translateY(-2px); }
+  .btn-sm{ padding:12px 22px; font-size:11px; }
+
+  :where(a,button,input,select,textarea,[tabindex]):focus-visible{
+    outline:2px solid var(--sky); outline-offset:3px; border-radius:4px;
+  }
+
+  /* ---- Nav --------------------------------------------------------------- */
+  #nav{
+    position:fixed; inset:0 0 auto 0; z-index:50;
+    border-bottom:1px solid transparent;
+    transition:background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+  }
+  #nav.is-scrolled{
+    background:rgba(13,13,15,0.86);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    border-bottom-color:var(--line);
+  }
+  .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:84px; gap:24px; }
+  /* The supplied logo is a 1536x1024 PNG whose artwork occupies x 259–1272,
+     y 328–757 inside a black plate. Each lockup is a window cropped to those
+     measured bounds, so the plate never reaches the edge of the frame. Screen
+     blending clears whatever black remains behind the letterforms wherever the
+     element is not sealed inside its own stacking context. */
+  .lockup{ display:block; position:relative; overflow:hidden; flex:none; }
+  /* The plate is knocked out with an SVG alpha filter rather than a blend mode:
+     the fixed header is its own stacking context, so screen blending there has
+     nothing behind it to blend into and the black would stay opaque.
+     max-width:none is required too — the global reset would otherwise clamp the
+     image to the window width and throw the crop offsets out. */
+  .lockup img{ position:absolute; height:auto; max-width:none; filter:url(#plate-out); }
+  /* nav: car, LUCID, and DETAILING — the strapline is cropped out */
+  .nav-logo{ width:150px; height:52px; }
+  .nav-logo img{ width:231px; left:-40px; top:-50px; }
+  /* footer: the full lockup, strapline included */
+  .foot-logo{ width:200px; height:85px; }
+  .foot-logo img{ width:303px; left:-51px; top:-65px; }
+  .nav-links{ display:none; align-items:center; gap:34px; }
+  .nav-link{
+    font-family:'Raleway',sans-serif; font-weight:600; font-size:12px;
+    letter-spacing:0.14em; text-transform:uppercase; color:var(--fog);
+    text-decoration:none; position:relative; padding-block:6px;
+    transition:color .2s ease;
+  }
+  .nav-link::after{
+    content:''; position:absolute; left:0; right:0; bottom:0; height:1px;
+    background:var(--sky); transform:scaleX(0); transform-origin:left;
+    transition:transform .3s var(--ease);
+  }
+  .nav-link:hover{ color:var(--white); }
+  .nav-link:hover::after,.nav-link.is-current::after{ transform:scaleX(1); }
+  .nav-link.is-current{ color:var(--white); }
+  .nav-cta{ display:none; }
+  .nav-toggle{ display:flex; align-items:center; justify-content:center; width:44px; height:44px; color:var(--white); background:none; border:0; cursor:pointer; }
+  /* must follow the base rules above, or it loses the cascade to them */
+  @media (min-width:1024px){
+    .nav-links{ display:flex; }
+    .nav-cta{ display:inline-flex; }
+    .nav-toggle{ display:none; }
+  }
+
+  #mobile-menu{
+    overflow:hidden; max-height:0; opacity:0;
+    background:rgba(13,13,15,0.97);
+    backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+    border-top:1px solid var(--line);
+    transition:max-height .38s var(--ease), opacity .25s ease;
+  }
+  #mobile-menu .nav-link{ display:block; padding:15px 0; border-bottom:1px solid var(--hairline); }
+
+  /* ==========================================================================
+     HERO — the car is the thesis, not a blurred texture. The photograph is a
+     car under LED inspection tubes, so it is left sharp and only darkened on
+     the side that carries type.
+     ========================================================================== */
+  .hero{ position:relative; min-height:min(100svh,940px); display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden; padding-top:150px; }
+  @media (max-width:900px){ .hero{ min-height:0; padding-top:112px; } }
+  .hero-photo{ position:absolute; inset:0; z-index:0; }
+  /* the car is pushed right so the headline lands on empty bay wall, not on the grille */
+  .hero-photo img{ width:100%; height:100%; object-fit:cover; object-position:66% 44%; filter:contrast(1.06) saturate(0.92); }
+  .hero-scrim{
+    position:absolute; inset:0; z-index:1;
+    background:
+      linear-gradient(90deg, var(--ink) 0%, rgba(13,13,15,0.95) 30%, rgba(13,13,15,0.62) 52%, rgba(13,13,15,0.26) 76%, rgba(13,13,15,0.58) 100%),
+      linear-gradient(180deg, rgba(13,13,15,0.92) 0%, rgba(13,13,15,0.28) 34%, rgba(13,13,15,0.55) 72%, var(--ink) 100%);
+  }
+  /* On a narrow screen the copy sits over the middle of the frame rather than
+     beside it, so the photograph is held further back through that band. */
+  @media (max-width:900px){
+    .hero-photo img{ object-position:62% 42%; }
+    .hero-scrim{
+      background:linear-gradient(180deg,
+        rgba(13,13,15,0.86) 0%, rgba(13,13,15,0.34) 22%,
+        rgba(13,13,15,0.80) 44%, rgba(13,13,15,0.90) 74%, var(--ink) 100%);
+    }
+  }
+  .hero-tint{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse 52% 48% at 16% 34%, rgba(111,174,230,0.16), transparent 62%);
+  }
+  .hero-body{ position:relative; z-index:2; padding-bottom:clamp(36px,5vw,60px); }
+  .hero-copy{ max-width:660px; }
+  .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; margin-top:clamp(30px,4vw,42px); }
+
+  /* Trust rail: one quiet line, not four oversized stat blocks. */
+  .rail{ position:relative; z-index:2; border-top:1px solid var(--hairline); }
+  .rail-list{
+    display:flex; flex-wrap:wrap; align-items:center;
+    gap:14px clamp(20px,4vw,52px); padding-block:22px;
+    list-style:none;
+  }
+  .rail-list li{
+    display:flex; align-items:baseline; gap:9px;
+    font-family:'Raleway',sans-serif; font-weight:600; font-size:11.5px;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--fog-dim);
+  }
+  .rail-list b{ font-family:'Exo 2',sans-serif; font-weight:600; font-size:16px; letter-spacing:0.04em; color:var(--white); }
+  .rail-list .sky{ color:var(--sky); }
+
+  /* ==========================================================================
+     SERVICES — an index, not a card grid. Hovering or focusing a row lights
+     that row and swaps the panel photograph.
+     ========================================================================== */
+  /* the panel column stretches to the height of the list beside it, which is
+     what gives the sticky panel somewhere to travel */
+  .svc{ display:grid; gap:clamp(30px,4vw,56px); grid-template-columns:1fr; }
+  @media (min-width:1024px){ .svc{ grid-template-columns:minmax(0,0.76fr) minmax(0,1fr); } }
+
+  .svc-panel{
+    position:relative; border-radius:var(--r-lg); overflow:hidden;
+    background:var(--ink-2); border:1px solid var(--line);
+    aspect-ratio:4/3;
+  }
+  @media (min-width:1024px){ .svc-panel{ position:sticky; top:110px; aspect-ratio:3/4; } }
+  .svc-panel figure{ position:absolute; inset:0; opacity:0; transition:opacity .55s ease; }
+  .svc-panel figure.is-active{ opacity:1; }
+  .svc-panel img{ width:100%; height:100%; object-fit:cover; }
+  .svc-panel::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:
+      linear-gradient(180deg, rgba(13,13,15,0.30) 0%, transparent 32%, rgba(13,13,15,0.72) 100%),
+      radial-gradient(ellipse 80% 60% at 20% 8%, rgba(111,174,230,0.14), transparent 60%);
+  }
+  .svc-panel-caption{
+    position:absolute; left:22px; right:22px; bottom:20px; z-index:2;
+    display:flex; align-items:baseline; justify-content:space-between; gap:16px;
+  }
+  .svc-panel-caption .label{ color:var(--white); }
+  .svc-panel-caption .idx{ font-family:'Exo 2',sans-serif; font-size:12px; letter-spacing:0.14em; color:var(--sky); }
+
+  .svc-list{ list-style:none; }
+  .svc-row{
+    display:grid; grid-template-columns:auto 1fr auto; align-items:start;
+    gap:18px; width:100%; text-align:left; background:none; border:0;
+    border-top:1px solid var(--hairline); cursor:pointer; color:inherit;
+    padding:22px 4px 22px 0; font:inherit;
+    transition:border-color .3s ease, padding-left .35s var(--ease), background .3s ease;
+  }
+  .svc-list li:last-child .svc-row{ border-bottom:1px solid var(--hairline); }
+  .svc-num{
+    font-family:'Exo 2',sans-serif; font-size:11.5px; letter-spacing:0.16em;
+    color:var(--slate); padding-top:6px; transition:color .3s ease;
+  }
+  .svc-name{
+    display:block;
+    font-family:'Exo 2',sans-serif; font-weight:600; letter-spacing:0.04em;
+    font-size:clamp(19px,2vw,25px); color:var(--fog); line-height:1.25;
+    transition:color .3s ease;
+  }
+  .svc-desc{ display:block; font-size:14.5px; line-height:1.6; color:var(--fog-dim); margin-top:7px; max-width:46ch; }
+  .svc-mark{
+    width:34px; height:34px; border-radius:50%; flex:none; margin-top:2px;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--hairline); color:var(--slate);
+    transition:border-color .3s ease, color .3s ease, transform .35s var(--ease);
+  }
+  .svc-mark svg{ width:13px; height:13px; }
+  .svc-row:hover,.svc-row:focus-visible,.svc-row.is-active{ border-top-color:var(--line-strong); padding-left:14px; }
+  .svc-row:hover .svc-name,.svc-row:focus-visible .svc-name,.svc-row.is-active .svc-name{ color:var(--white); }
+  .svc-row:hover .svc-num,.svc-row.is-active .svc-num{ color:var(--sky); }
+  .svc-row:hover .svc-mark,.svc-row.is-active .svc-mark{ border-color:var(--sky); color:var(--sky); transform:translateX(3px); }
+  .svc-list li:last-child .svc-row.is-active,.svc-list li:last-child .svc-row:hover{ border-bottom-color:var(--line-strong); }
+
+  /* ==========================================================================
+     SIGNATURE — the inspection lamp. Drag the light across the panel and the
+     clear coat changes state under it. This is the one bold element on the
+     page; everything around it stays quiet.
+     ========================================================================== */
+  .inspect-band{ background:var(--ink-2); border-block:1px solid var(--line); }
+  .inspect{
+    --pos:52%;
+    position:relative; border-radius:var(--r-lg); overflow:hidden;
+    background:var(--ink); border:1px solid var(--line);
+    aspect-ratio:16/9; touch-action:pan-y;
+    box-shadow:0 40px 90px -50px rgba(0,0,0,0.95);
+  }
+  @media (max-width:640px){ .inspect{ aspect-ratio:4/3; } }
+  .inspect img{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+
+  /* corrected: the photograph as shot, with a cool inspection-light cast */
+  .inspect-after{ filter:contrast(1.1) saturate(1.02) brightness(1.02); }
+  /* uncorrected: hazy, flat, and carrying swirl marks */
+  .inspect-before{
+    position:absolute; inset:0;
+    clip-path:inset(0 calc(100% - var(--pos)) 0 0);
+  }
+  .inspect-before img{ filter:saturate(0.32) brightness(0.66) contrast(0.8) blur(0.6px); }
+  .inspect-before::after{
+    content:''; position:absolute; inset:0; pointer-events:none;
+    background:linear-gradient(90deg, rgba(30,42,56,0.42), rgba(30,42,56,0.18));
+  }
+  .inspect-swirl{
+    position:absolute; inset:0; width:100%; height:100%; z-index:1;
+    mix-blend-mode:screen; opacity:1; pointer-events:none;
+  }
+
+  /* the lamp itself: a hard vertical highlight with a soft falloff either side */
+  .inspect-beam{
+    position:absolute; top:0; bottom:0; left:var(--pos); width:260px;
+    transform:translateX(-50%); pointer-events:none;
+    background:linear-gradient(90deg, transparent, rgba(111,174,230,0.16) 38%, rgba(255,255,255,0.30) 50%, rgba(111,174,230,0.16) 62%, transparent);
+    mix-blend-mode:screen;
+  }
+  .inspect-edge{
+    position:absolute; top:0; bottom:0; left:var(--pos); width:2px;
+    transform:translateX(-1px); pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,255,255,0.25), var(--white) 22%, var(--white) 78%, rgba(255,255,255,0.25));
+    box-shadow:0 0 22px 3px rgba(111,174,230,0.75);
+  }
+  .inspect-handle{
+    position:absolute; top:50%; left:var(--pos); z-index:3;
+    width:56px; height:56px; border-radius:50%; transform:translate(-50%,-50%);
+    display:flex; align-items:center; justify-content:center; gap:3px;
+    background:rgba(13,13,15,0.7); border:1px solid rgba(255,255,255,0.55);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+    color:var(--white); pointer-events:none;
+    box-shadow:0 0 0 1px rgba(111,174,230,0.35), 0 10px 30px -10px rgba(0,0,0,0.9);
+    transition:box-shadow .2s ease, transform .2s ease;
+  }
+  .inspect-handle svg{ width:15px; height:15px; }
+  .inspect.is-focused .inspect-handle{ box-shadow:0 0 0 3px var(--sky), 0 10px 30px -10px rgba(0,0,0,0.9); }
+  .inspect:hover .inspect-handle{ transform:translate(-50%,-50%) scale(1.06); }
+
+  /* the real control: a full-bleed range input, invisible but fully operable
+     by pointer, touch, and keyboard */
+  .inspect-range{
+    position:absolute; inset:0; z-index:4; width:100%; height:100%;
+    margin:0; padding:0; opacity:0; cursor:ew-resize;
+    -webkit-appearance:none; appearance:none; background:transparent;
+  }
+  .inspect-range::-webkit-slider-thumb{ -webkit-appearance:none; width:64px; height:100%; }
+  .inspect-range::-moz-range-thumb{ width:64px; height:100%; border:0; border-radius:0; }
+  .inspect-range:focus{ outline:none; }
+
+  .inspect-tag{
+    position:absolute; top:18px; z-index:3; pointer-events:none;
+    font-family:'Raleway',sans-serif; font-weight:600; font-size:10.5px;
+    letter-spacing:0.2em; text-transform:uppercase;
+    padding:7px 13px; border-radius:999px;
+    background:rgba(13,13,15,0.62); border:1px solid var(--hairline);
+    backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+  }
+  .inspect-tag-l{ left:18px; color:var(--fog-dim); }
+  .inspect-tag-r{ right:18px; color:var(--sky); border-color:var(--line-strong); }
+  @media (max-width:520px){ .inspect-tag{ font-size:9.5px; padding:6px 10px; top:12px; } .inspect-tag-l{ left:12px; } .inspect-tag-r{ right:12px; } }
+
+  .inspect-facts{ display:grid; gap:2px; grid-template-columns:1fr; margin-top:2px; }
+  @media (min-width:640px){ .inspect-facts{ grid-template-columns:repeat(3,1fr); } }
+  .inspect-fact{ padding:22px 0; border-top:1px solid var(--hairline); }
+  @media (min-width:640px){ .inspect-fact{ padding:22px 26px 22px 0; } }
+  .inspect-fact b{ display:block; font-family:'Exo 2',sans-serif; font-weight:600; font-size:26px; letter-spacing:0.03em; color:var(--white); }
+  .inspect-fact span{ display:block; margin-top:6px; }
+
+  /* ==========================================================================
+     PROCESS — a genuine sequence, so it is numbered, and each step carries the
+     one thing a customer actually wants to know: how long it takes.
+     ========================================================================== */
+  .steps{ display:grid; gap:0; grid-template-columns:1fr; }
+  @media (min-width:900px){ .steps{ grid-template-columns:repeat(4,1fr); } }
+  /* flex column with the duration pushed to the bottom, so the chips sit on one
+     line no matter how many lines each step's text runs to */
+  .step{ position:relative; display:flex; flex-direction:column; padding:34px 0 0; border-top:1px solid var(--hairline); }
+  @media (min-width:900px){ .step{ padding:34px 30px 0 0; } }
+  .step::before{
+    content:''; position:absolute; top:-1px; left:0; width:34px; height:1px;
+    background:var(--sky); box-shadow:0 0 12px 1px rgba(111,174,230,0.6);
+  }
+  .step-num{ font-family:'Exo 2',sans-serif; font-weight:600; font-size:12px; letter-spacing:0.2em; color:var(--sky); }
+  .step h3{ margin-top:14px; }
+  .step p{ margin:12px 0 20px; font-size:14.5px; color:var(--fog-dim); }
+  .step-time{
+    align-self:flex-start; display:inline-flex; align-items:center; gap:8px;
+    margin-top:auto;
+    font-family:'Raleway',sans-serif; font-weight:600; font-size:11px;
+    letter-spacing:0.16em; text-transform:uppercase; color:var(--fog);
+    padding:7px 12px; border:1px solid var(--hairline); border-radius:999px;
+  }
+  .step-time svg{ width:12px; height:12px; color:var(--sky); }
+
+  /* ==========================================================================
+     PACKAGES — the same six rows in every column so the eye can read straight
+     across and see exactly what each step up buys.
+     ========================================================================== */
+  .tiers{ display:grid; gap:20px; grid-template-columns:1fr; align-items:stretch; }
+  @media (min-width:960px){ .tiers{ grid-template-columns:repeat(3,1fr); gap:24px; } }
+  .tier{
+    display:flex; flex-direction:column;
+    background:linear-gradient(170deg, var(--ink-2) 0%, #0F1319 100%);
+    border:1px solid var(--line); border-radius:var(--r-lg);
+    padding:clamp(28px,3vw,38px);
+    transition:border-color .3s ease, transform .35s var(--ease), box-shadow .35s ease;
+  }
+  .tier:hover{ border-color:var(--line-strong); transform:translateY(-4px); box-shadow:0 30px 60px -40px rgba(0,0,0,0.9); }
+  .tier-feature{
+    position:relative;
+    border-color:var(--line-strong);
+    background:linear-gradient(170deg, #1A2432 0%, #10161E 100%);
+    box-shadow:0 0 0 1px rgba(111,174,230,0.12), 0 40px 90px -50px rgba(111,174,230,0.5);
+  }
+  .tier-badge{
+    position:absolute; top:0; left:clamp(28px,3vw,38px); transform:translateY(-50%);
+    font-family:'Raleway',sans-serif; font-weight:700; font-size:10px;
+    letter-spacing:0.2em; text-transform:uppercase; color:var(--ink);
+    background:var(--sky); padding:6px 14px; border-radius:999px;
+  }
+  .tier-name{ font-family:'Exo 2',sans-serif; font-weight:600; font-size:20px; letter-spacing:0.05em; color:var(--white); }
+  .tier-note{ font-size:14px; color:var(--fog-dim); margin-top:8px; min-height:44px; }
+  .tier-price{ display:flex; align-items:baseline; gap:8px; margin-top:22px; padding-bottom:24px; border-bottom:1px solid var(--hairline); }
+  .tier-price b{ font-family:'Exo 2',sans-serif; font-weight:600; font-size:42px; letter-spacing:0.01em; color:var(--white); }
+  .tier-price span{ font-size:13px; color:var(--fog-dim); }
+  .tier-rows{ list-style:none; margin:8px 0 28px; flex:1; }
+  .tier-rows li{
+    display:flex; align-items:flex-start; gap:12px;
+    padding:13px 0; border-bottom:1px solid rgba(209,213,219,0.07);
+    font-size:14px; min-height:52px;
+  }
+  .tier-rows li:last-child{ border-bottom:0; }
+  /* rows 5 and 6 are the only ones that can carry a qualifier, so they reserve
+     the taller height in every column — otherwise the tiers stop lining up and
+     the comparison the layout exists for stops working */
+  .tier-rows li:nth-child(5),.tier-rows li:nth-child(6){ min-height:74px; }
+  .tier-rows .yes{ color:var(--fog); }
+  .tier-rows .no{ color:var(--slate); }
+  .tier-rows .mk{ flex:none; width:16px; height:16px; margin-top:3px; }
+  .tier-rows .yes .mk{ color:var(--sky); }
+  .tier-rows em{ display:block; font-style:normal; font-size:12px; color:var(--sky); margin-top:2px; letter-spacing:0.04em; }
+
+  /* ==========================================================================
+     WORK — an asymmetric mosaic. Cell sizes follow each photograph's real
+     resolution, so nothing is upscaled past what it can carry.
+     ========================================================================== */
+  .mosaic{ display:grid; grid-template-columns:repeat(12,1fr); gap:14px; }
+  .shot{
+    position:relative; overflow:hidden; border-radius:var(--r-md);
+    grid-column:span 12; border:1px solid var(--hairline);
+    cursor:pointer; background:var(--ink-2);
+  }
+  .shot img{ width:100%; height:100%; object-fit:cover; transition:transform .8s var(--ease), filter .4s ease; filter:saturate(0.96); }
+  .shot::after{
+    content:''; position:absolute; inset:0; z-index:1;
+    background:linear-gradient(to top, rgba(13,13,15,0.9) 0%, rgba(13,13,15,0.18) 46%, transparent 66%);
+    transition:opacity .4s ease;
+  }
+  .shot:hover img{ transform:scale(1.045); filter:saturate(1); }
+  .shot:hover{ border-color:var(--line-strong); }
+  .shot-label{ position:absolute; left:20px; right:20px; bottom:17px; z-index:2; }
+  .shot-label .label{ color:var(--white); }
+  .shot-label p{ font-size:13px; color:var(--fog-dim); margin-top:5px; }
+  .shot-a{ height:260px; } .shot-b{ height:260px; }
+  .shot-c,.shot-d,.shot-e{ height:220px; }
+  .shot-f{ height:240px; }
+  @media (min-width:700px){
+    .shot-a{ grid-column:span 7; height:420px; }
+    .shot-b{ grid-column:span 5; height:420px; }
+    .shot-c,.shot-d,.shot-e{ grid-column:span 4; height:280px; }
+    .shot-f{ grid-column:span 12; height:320px; }
+  }
+  /* this frame carries a badge in its lower-left corner, so it is composed off it */
+  .shot-crop img{ object-position:72% 26%; transform:scale(1.14); }
+  .shot-crop:hover img{ transform:scale(1.19); }
+
+  /* ==========================================================================
+     REVIEWS — no boxes. On black, type on hairlines reads more expensive than
+     three identical cards.
+     ========================================================================== */
+  .quote-lead{
+    font-family:'Exo 2',sans-serif; font-weight:500; color:var(--white);
+    font-size:clamp(23px,3.1vw,38px); line-height:1.34; letter-spacing:0.015em;
+  }
+  .quote-lead span{ color:var(--sky); }
+  .review-head{ display:grid; gap:clamp(30px,4vw,56px); grid-template-columns:1fr; margin-top:clamp(28px,3.4vw,42px); }
+  @media (min-width:900px){
+    .review-head{ grid-template-columns:minmax(0,1fr) 260px; align-items:end; }
+    .quote-lead{ max-width:20ch; }
+  }
+  .score{ border-top:1px solid var(--hairline); padding-top:24px; }
+  .score b{ display:block; font-family:'Exo 2',sans-serif; font-weight:600; font-size:56px; line-height:1; letter-spacing:0.01em; color:var(--white); }
+  .score .stars{ display:block; margin-top:10px; }
+  .score p{ margin-top:14px; }
+  .quote-grid{ display:grid; gap:0 clamp(28px,4vw,56px); grid-template-columns:1fr; }
+  @media (min-width:800px){ .quote-grid{ grid-template-columns:1fr 1fr; } }
+  .quote{ padding:30px 0; border-top:1px solid var(--hairline); }
+  .quote p{ font-size:15px; color:var(--fog); }
+  .quote footer{ margin-top:16px; display:flex; align-items:center; gap:12px; }
+  .stars{ color:var(--sky); letter-spacing:0.14em; font-size:12px; }
+  .attrib{ font-family:'Raleway',sans-serif; font-weight:600; font-size:11.5px; letter-spacing:0.18em; text-transform:uppercase; color:var(--fog-dim); }
+
+  /* ==========================================================================
+     BOOK — the only place an ambient GIF appears. The clips are 400px wide, so
+     they can only ever work as out-of-focus atmosphere behind a wash.
+     ========================================================================== */
+  .book{ position:relative; overflow:hidden; background:var(--ink-2); }
+  .book-media{ position:absolute; inset:0; z-index:0; }
+  .book-media img{ width:100%; height:100%; object-fit:cover; transform:scale(1.1); filter:blur(16px) saturate(0.6) brightness(0.5); opacity:0.45; }
+  .book-media::after{
+    content:''; position:absolute; inset:0;
+    background:
+      radial-gradient(ellipse 60% 55% at 82% 12%, rgba(111,174,230,0.16), transparent 62%),
+      linear-gradient(180deg, var(--ink) 0%, rgba(18,23,30,0.72) 30%, rgba(18,23,30,0.82) 70%, var(--ink) 100%);
+  }
+  .book-grid{ position:relative; z-index:1; display:grid; gap:clamp(36px,5vw,72px); grid-template-columns:1fr; }
+  @media (min-width:1000px){ .book-grid{ grid-template-columns:minmax(0,0.82fr) minmax(0,1fr); } }
+
+  .contact-list{ list-style:none; display:grid; gap:2px; margin-top:38px; }
+  .contact-list li{ display:flex; gap:16px; align-items:flex-start; padding:18px 0; border-top:1px solid var(--hairline); }
+  .contact-list li:last-child{ border-bottom:1px solid var(--hairline); }
+  .contact-ic{
+    flex:none; width:40px; height:40px; border-radius:var(--r-sm);
+    display:flex; align-items:center; justify-content:center;
+    background:var(--sky-soft); border:1px solid var(--line); color:var(--sky);
+  }
+  .contact-ic svg{ width:17px; height:17px; }
+  .contact-list .c-label{ font-family:'Raleway',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:var(--fog-dim); }
+  .contact-list .c-value{ color:var(--white); margin-top:5px; font-size:15px; }
+  .contact-list a{ color:inherit; text-decoration:none; border-bottom:1px solid transparent; transition:border-color .2s ease, color .2s ease; }
+  .contact-list a:hover{ color:var(--sky); border-bottom-color:var(--sky); }
+
+  .form-card{
+    background:rgba(13,13,15,0.6); border:1px solid var(--line);
+    border-radius:var(--r-lg); padding:clamp(26px,3.4vw,44px);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+  }
+  .field{ display:block; }
+  .field > span{ display:block; font-family:'Raleway',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase; color:var(--fog-dim); margin-bottom:9px; }
+  input,select,textarea{
+    width:100%; background:rgba(255,255,255,0.035);
+    border:1px solid rgba(209,213,219,0.14); color:var(--white);
+    border-radius:var(--r-sm); padding:14px 16px;
+    font-family:'Montserrat',sans-serif; font-size:14.5px;
+    transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+  }
+  textarea{ resize:vertical; min-height:118px; }
+  input::placeholder,textarea::placeholder{ color:var(--slate); }
+  input:focus,select:focus,textarea:focus{
+    outline:none; border-color:var(--sky);
+    box-shadow:0 0 0 3px rgba(111,174,230,0.16); background:rgba(255,255,255,0.05);
+  }
+  select{ appearance:none; -webkit-appearance:none; cursor:pointer;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238B94A2' stroke-width='2' stroke-linecap='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat:no-repeat; background-position:right 14px center; background-size:16px; padding-right:44px;
+  }
+  select option{ background:var(--ink-2); color:var(--white); }
+  .form-note{ font-size:12.5px; color:var(--slate); margin-top:16px; }
+
+  /* ---- Footer ------------------------------------------------------------ */
+  .foot{ border-top:1px solid var(--line); padding-block:clamp(52px,6vw,76px) 30px; }
+  .foot-grid{ display:grid; gap:44px; grid-template-columns:1fr; }
+  @media (min-width:640px){ .foot-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (min-width:1000px){ .foot-grid{ grid-template-columns:1.6fr 1fr 1fr 1fr; gap:56px; } }
+  .foot h4{ font-family:'Raleway',sans-serif; font-weight:600; font-size:10.5px; letter-spacing:0.22em; text-transform:uppercase; color:var(--white); }
+  .foot ul{ list-style:none; margin-top:20px; display:grid; gap:12px; font-size:14px; color:var(--fog-dim); }
+  .foot a{ color:inherit; text-decoration:none; transition:color .2s ease; }
+  .foot a:hover{ color:var(--white); }
+  .socials{ display:flex; gap:10px; margin-top:26px; }
+  .social{
+    width:38px; height:38px; border-radius:var(--r-sm);
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--hairline); color:var(--fog-dim);
+    transition:color .2s ease, border-color .2s ease, background .2s ease, transform .3s var(--ease);
+  }
+  .social svg{ width:16px; height:16px; }
+  .social:hover{ color:var(--sky); border-color:var(--sky); background:var(--sky-soft); transform:translateY(-2px); }
+
+  /* ---- Back to top ------------------------------------------------------- */
+  .to-top{
+    position:fixed; right:24px; bottom:24px; z-index:40;
+    width:46px; height:46px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(18,23,30,0.86); border:1px solid var(--line-strong); color:var(--sky);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    opacity:0; visibility:hidden; transform:translateY(10px);
+    transition:opacity .3s ease, transform .3s var(--ease), background .2s ease, color .2s ease;
+  }
+  .to-top.is-visible{ opacity:1; visibility:visible; transform:translateY(0); }
+  .to-top:hover{ background:var(--sky); color:var(--ink); }
+  .to-top svg{ width:17px; height:17px; }
+  @media (max-width:640px){ .to-top{ right:14px; bottom:14px; } }
+
+  /* ---- Lightbox ---------------------------------------------------------- */
+  .lightbox{
+    position:fixed; inset:0; z-index:100; display:flex; align-items:center; justify-content:center;
+    padding:clamp(50px,8vh,90px) clamp(16px,6vw,80px);
+    background:rgba(6,7,10,0.94); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    opacity:0; visibility:hidden; transition:opacity .28s ease;
+  }
+  .lightbox.is-open{ opacity:1; visibility:visible; }
+  .lightbox figure{ max-width:min(1120px,100%); text-align:center; }
+  .lightbox img{
+    margin-inline:auto; width:auto; max-width:100%; max-height:74vh;
+    border-radius:var(--r-md); border:1px solid var(--line);
+    transform:scale(0.97); transition:transform .32s var(--ease);
+  }
+  .lightbox.is-open img{ transform:scale(1); }
+  .lightbox figcaption{ margin-top:18px; }
+  .lb-btn{
+    position:fixed; z-index:101; width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(18,23,30,0.8); border:1px solid var(--line); color:var(--fog);
+    cursor:pointer; transition:background .2s ease, color .2s ease, border-color .2s ease;
+  }
+  .lb-btn:hover{ background:var(--sky-soft); border-color:var(--sky); color:var(--sky); }
+  .lb-btn svg{ width:19px; height:19px; }
+  .lb-close{ top:20px; right:20px; }
+  .lb-prev,.lb-next{ top:50%; margin-top:-22px; }
+  .lb-prev{ left:16px; } .lb-next{ right:16px; }
+
+  /* ---- Scroll reveal ----------------------------------------------------- */
+  .js .reveal{ opacity:0; transform:translateY(18px); }
+  .js .reveal.is-in{ opacity:1; transform:none; transition:opacity .6s ease, transform .6s var(--ease); }
+  @media (prefers-reduced-motion:reduce){
+    html{ scroll-behavior:auto; }
+    .js .reveal{ opacity:1; transform:none; }
+    .chrome{ animation:none; }
+    *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Turns the logo PNG's black plate into transparency: alpha is rebuilt from
+     luminance, so the white and silver artwork stays and the plate drops out. -->
+<svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute">
+  <filter id="plate-out" color-interpolation-filters="sRGB">
+    <feColorMatrix type="matrix" values="1 0 0 0 0
+                                         0 1 0 0 0
+                                         0 0 1 0 0
+                                         2 2 2 0 0"/>
+  </filter>
+</svg>
+
+<!-- ============================ NAV ============================ -->
+<header id="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="lockup nav-logo" aria-label="Lucid Detailing — home">
+      <img src="Lucid Detailing Logo.png" alt="Lucid Detailing">
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#correction" class="nav-link">Correction</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#packages" class="nav-link">Packages</a>
+      <a href="#work" class="nav-link">Work</a>
+    </nav>
+    <a href="#book" class="btn btn-primary btn-sm nav-cta">
+      Book a detail
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    <button id="menu-btn" class="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+      <svg id="icon-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" class="w-6 h-6"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <svg id="icon-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" class="w-6 h-6 hidden"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div id="mobile-menu">
+    <div class="wrap" style="padding-block:6px 22px;">
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#correction" class="nav-link">Correction</a>
+      <a href="#process" class="nav-link">Process</a>
+      <a href="#packages" class="nav-link">Packages</a>
+      <a href="#work" class="nav-link">Work</a>
+      <a href="#book" class="btn btn-primary" style="margin-top:22px;width:100%;">Book a detail</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section id="top" class="hero">
+  <div class="hero-photo" aria-hidden="true">
+    <img src="Bmw M4 paint Correction.webp" alt="" fetchpriority="high">
+  </div>
+  <div class="hero-scrim" aria-hidden="true"></div>
+  <div class="hero-tint" aria-hidden="true"></div>
+
+  <div class="wrap hero-body">
+    <div class="hero-copy">
+      <p class="eyebrow">Mobile detailing</p>
+      <h1 class="t-hero chrome" style="margin-top:26px;">Light<br>doesn&rsquo;t lie.</h1>
+      <p class="t-lead" style="margin-top:26px;max-width:52ch;">
+        Every swirl and water spot shows up under the lamp. We correct, coat, and protect
+        your paint in your own driveway — then hand it back under inspection lighting.
+      </p>
+      <div class="hero-actions">
+        <a href="#book" class="btn btn-primary">
+          Book a detail
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#correction" class="btn btn-ghost">
+          See a correction
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="rail">
+    <div class="wrap">
+      <ul class="rail-list">
+        <li><b>500+</b> vehicles detailed</li>
+        <li><b>4.9<span class="sky">★</span></b> across 213 reviews</li>
+        <li><b>2 yr</b> coating warranty</li>
+        <li><b>Fully</b> insured &amp; mobile</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ SERVICES ============================ -->
+<section id="services" class="section">
+  <div class="wrap">
+    <div class="reveal" style="max-width:640px;">
+      <p class="eyebrow">Services</p>
+      <h2 class="t-h2" style="margin-top:22px;">Six services,<br>one standard.</h2>
+      <p class="t-lead" style="margin-top:20px;">
+        Every job is done by hand or by machine polisher — never through an automated tunnel,
+        and never in a hurry.
+      </p>
+    </div>
+
+    <div class="svc" style="margin-top:clamp(44px,5vw,72px);">
+      <!-- photo panel: swaps with the hovered or focused row -->
+      <div class="svc-panel-col reveal">
+      <div class="svc-panel" id="svc-panel" aria-hidden="true">
+        <figure class="is-active" data-panel="1"><img src="Audi Rs6 Exterior.webp" alt="" loading="lazy"></figure>
+        <figure data-panel="2"><img src="Range Rover Interior.webp" alt="" loading="lazy" style="object-position:72% 26%;transform:scale(1.16);"></figure>
+        <figure data-panel="3"><img src="Tesla M3 ceramic coat.jpg" alt="" loading="lazy"></figure>
+        <figure data-panel="4"><img src="Wheel closeup pic.avif" alt="" loading="lazy"></figure>
+        <figure data-panel="5"><img src="Window close up pic.jpg" alt="" loading="lazy"></figure>
+        <figure data-panel="6"><img src="Corvette Engine bay.avif" alt="" loading="lazy"></figure>
+        <div class="svc-panel-caption">
+          <span class="label" id="svc-caption">Exterior hand wash</span>
+          <span class="idx"><span id="svc-idx">01</span> / 06</span>
+        </div>
+      </div>
+      </div>
+
+      <ul class="svc-list reveal" id="svc-list">
+        <li>
+          <button type="button" class="svc-row is-active" data-svc="1">
+            <span class="svc-num">01</span>
+            <span>
+              <span class="svc-name">Exterior hand wash</span>
+              <span class="svc-desc">Two buckets, pH-neutral soap, spot-free rinse. The grime comes off; the clear coat stays put.</span>
+            </span>
+            <span class="svc-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="svc-row" data-svc="2">
+            <span class="svc-num">02</span>
+            <span>
+              <span class="svc-name">Interior detail</span>
+              <span class="svc-desc">Vacuum, steam extraction, and conditioning across seats, carpet, headliner, and trim.</span>
+            </span>
+            <span class="svc-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="svc-row" data-svc="3">
+            <span class="svc-num">03</span>
+            <span>
+              <span class="svc-name">Ceramic coating</span>
+              <span class="svc-desc">A nano-ceramic layer that beads water and holds gloss for years rather than weeks.</span>
+            </span>
+            <span class="svc-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="svc-row" data-svc="4">
+            <span class="svc-num">04</span>
+            <span>
+              <span class="svc-name">Wheels &amp; tyres</span>
+              <span class="svc-desc">Acid-free cleaner taken barrel-deep, then dressed to match the paint instead of sling it.</span>
+            </span>
+            <span class="svc-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="svc-row" data-svc="5">
+            <span class="svc-num">05</span>
+            <span>
+              <span class="svc-name">Glass &amp; trim</span>
+              <span class="svc-desc">Streak-free inside and out, then sealed so rain runs off the screen instead of sitting on it.</span>
+            </span>
+            <span class="svc-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </button>
+        </li>
+        <li>
+          <button type="button" class="svc-row" data-svc="6">
+            <span class="svc-num">06</span>
+            <span>
+              <span class="svc-name">Engine bay</span>
+              <span class="svc-desc">Water-safe cleaning and dressing around the covers and looms. Looks as tidy as it runs.</span>
+            </span>
+            <span class="svc-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </span>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CORRECTION (signature) ============================ -->
+<section id="correction" class="section inspect-band">
+  <div class="wrap">
+    <div class="reveal" style="max-width:660px;">
+      <p class="eyebrow">Paint correction</p>
+      <h2 class="t-h2" style="margin-top:22px;">Drag the lamp<br>across the panel.</h2>
+      <p class="t-lead" style="margin-top:20px;">
+        Swirl marks only exist when light catches them. Machine polishing levels the clear coat
+        until there is nothing left for the light to find.
+      </p>
+    </div>
+
+    <div class="inspect reveal" id="inspect" style="margin-top:clamp(34px,4vw,52px);">
+      <img class="inspect-after" src="Mustang Paint correction.png" alt="A dual-action polisher working across the front wing of a grey car.">
+      <div class="inspect-before" aria-hidden="true">
+        <img src="Mustang Paint correction.png" alt="">
+        <svg class="inspect-swirl" viewBox="0 0 400 225" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <defs>
+            <!-- swirl marks: short arcs at many radii, the halo pattern a rotary
+                 leaves behind when the clear coat has never been levelled -->
+            <pattern id="swirl" width="100" height="100" patternUnits="userSpaceOnUse">
+              <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-width="0.8" opacity="0.95">
+                <circle cx="26" cy="24" r="9"  stroke-dasharray="9 60" stroke-dashoffset="4"/>
+                <circle cx="26" cy="24" r="15" stroke-dasharray="13 100" stroke-dashoffset="30"/>
+                <circle cx="26" cy="24" r="21" stroke-dasharray="11 140" stroke-dashoffset="70"/>
+                <circle cx="72" cy="66" r="7"  stroke-dasharray="7 48" stroke-dashoffset="12"/>
+                <circle cx="72" cy="66" r="13" stroke-dasharray="12 90" stroke-dashoffset="52"/>
+                <circle cx="72" cy="66" r="19" stroke-dasharray="10 130" stroke-dashoffset="20"/>
+                <circle cx="82" cy="18" r="11" stroke-dasharray="10 76" stroke-dashoffset="40"/>
+                <circle cx="82" cy="18" r="17" stroke-dasharray="9 116" stroke-dashoffset="88"/>
+                <circle cx="16" cy="78" r="10" stroke-dasharray="8 68" stroke-dashoffset="24"/>
+                <circle cx="16" cy="78" r="16" stroke-dasharray="12 108" stroke-dashoffset="62"/>
+                <circle cx="48" cy="46" r="24" stroke-dasharray="14 160" stroke-dashoffset="110"/>
+                <circle cx="48" cy="46" r="31" stroke-dasharray="11 200" stroke-dashoffset="46"/>
+              </g>
+            </pattern>
+            <!-- swirls are only visible where the beam falls, so the overlay is
+                 masked to a pool of light rather than painted edge to edge -->
+            <radialGradient id="swirl-pool" cx="62%" cy="46%" r="62%">
+              <stop offset="0%"   stop-color="#fff" stop-opacity="1"/>
+              <stop offset="45%"  stop-color="#fff" stop-opacity="0.72"/>
+              <stop offset="100%" stop-color="#fff" stop-opacity="0.12"/>
+            </radialGradient>
+            <mask id="swirl-mask">
+              <rect width="400" height="225" fill="url(#swirl-pool)"/>
+            </mask>
+          </defs>
+          <rect width="400" height="225" fill="url(#swirl)" mask="url(#swirl-mask)"/>
+        </svg>
+      </div>
+
+      <div class="inspect-beam" aria-hidden="true"></div>
+      <div class="inspect-edge" aria-hidden="true"></div>
+      <div class="inspect-handle" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 7l-5 5 5 5"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 7l5 5-5 5"/></svg>
+      </div>
+      <span class="inspect-tag inspect-tag-l">Uncorrected</span>
+      <span class="inspect-tag inspect-tag-r">Corrected</span>
+
+      <input type="range" class="inspect-range" id="inspect-range" min="4" max="96" value="52" step="0.1"
+             aria-label="Move the inspection lamp across the panel">
+    </div>
+
+    <p class="t-small reveal" style="margin-top:16px;">
+      Illustration — the swirl overlay simulates uncorrected clear coat on a real workshop photograph.
+    </p>
+
+    <div class="inspect-facts reveal" style="margin-top:clamp(34px,4vw,50px);">
+      <div class="inspect-fact">
+        <b>1–3</b>
+        <span class="t-small">Stages of cut and polish, set by how deep the defects run.</span>
+      </div>
+      <div class="inspect-fact">
+        <b>2–8 hrs</b>
+        <span class="t-small">On site, depending on paint condition and panel count.</span>
+      </div>
+      <div class="inspect-fact">
+        <b>3,000 lm</b>
+        <span class="t-small">Handheld inspection lamp used on every panel before handover.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROCESS ============================ -->
+<section id="process" class="section">
+  <div class="wrap">
+    <div class="reveal" style="max-width:600px;">
+      <p class="eyebrow">How a detail runs</p>
+      <h2 class="t-h2" style="margin-top:22px;">Four stages,<br>start to handover.</h2>
+    </div>
+
+    <div class="steps reveal" style="margin-top:clamp(44px,5vw,68px);">
+      <div class="step">
+        <span class="step-num">01</span>
+        <h3 class="t-h3">Walkaround</h3>
+        <p>We look over the paint with you, agree what is worth correcting, and quote before anything starts.</p>
+        <span class="step-time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>
+          15 min
+        </span>
+      </div>
+      <div class="step">
+        <span class="step-num">02</span>
+        <h3 class="t-h3">Wash &amp; decontamination</h3>
+        <p>Foam pre-soak, iron fallout remover, then clay across every panel to lift what a wash leaves behind.</p>
+        <span class="step-time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>
+          60–90 min
+        </span>
+      </div>
+      <div class="step">
+        <span class="step-num">03</span>
+        <h3 class="t-h3">Correct &amp; protect</h3>
+        <p>Machine polishing to level the clear coat, then coating or sealant applied panel by panel.</p>
+        <span class="step-time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>
+          2–8 hrs
+        </span>
+      </div>
+      <div class="step">
+        <span class="step-num">04</span>
+        <h3 class="t-h3">Inspection</h3>
+        <p>A lamp-lit walkaround together. If a panel is not right, it goes back under the polisher before we leave.</p>
+        <span class="step-time">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/></svg>
+          20 min
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PACKAGES ============================ -->
+<section id="packages" class="section" style="background:var(--ink-2);border-block:1px solid var(--line);">
+  <div class="wrap">
+    <div class="reveal" style="max-width:620px;">
+      <p class="eyebrow">Packages</p>
+      <h2 class="t-h2" style="margin-top:22px;">Pick your finish.</h2>
+      <p class="t-lead" style="margin-top:20px;">
+        All three are fully mobile — we bring water, power, and lighting to your driveway or car park.
+      </p>
+    </div>
+
+    <div class="tiers reveal" style="margin-top:clamp(44px,5vw,66px);">
+
+      <article class="tier">
+        <h3 class="tier-name">Essential</h3>
+        <p class="tier-note">A proper refresh for a car that gets used every day.</p>
+        <div class="tier-price"><b>$149</b><span>per vehicle · 2–3 hrs on site</span></div>
+        <ul class="tier-rows">
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Hand wash, wheels &amp; tyres</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Interior vacuum &amp; wipe-down</span></li>
+          <li class="no"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg><span>Clay bar decontamination</span></li>
+          <li class="no"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg><span>Steam &amp; leather care</span></li>
+          <li class="no"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg><span>Paint correction</span></li>
+          <li class="no"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg><span>Ceramic coating</span></li>
+        </ul>
+        <a href="#book" class="btn btn-secondary" data-package="Essential">Book Essential</a>
+      </article>
+
+      <article class="tier tier-feature">
+        <span class="tier-badge">Most booked</span>
+        <h3 class="tier-name">Signature</h3>
+        <p class="tier-note">The full detail, inside and out, with the gloss brought back.</p>
+        <div class="tier-price"><b>$349</b><span>per vehicle · 5–6 hrs on site</span></div>
+        <ul class="tier-rows">
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Hand wash, wheels &amp; tyres</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Interior vacuum &amp; wipe-down</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Clay bar decontamination</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Steam &amp; leather care</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Paint correction<em>Single stage</em></span></li>
+          <li class="no"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 12h12"/></svg><span>Ceramic coating</span></li>
+        </ul>
+        <a href="#book" class="btn btn-primary" data-package="Signature">Book Signature</a>
+      </article>
+
+      <article class="tier">
+        <h3 class="tier-name">Elite Ceramic</h3>
+        <p class="tier-note">Everything levelled, then sealed under a two-year coating.</p>
+        <div class="tier-price"><b>$899</b><span>per vehicle · 2 days on site</span></div>
+        <ul class="tier-rows">
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Hand wash, wheels &amp; tyres</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Interior vacuum &amp; wipe-down</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Clay bar decontamination</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Steam, leather &amp; fabric seal</span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Paint correction<em>Multi-stage</em></span></li>
+          <li class="yes"><svg class="mk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg><span>Ceramic coating<em>2 years · 90-day touch-up</em></span></li>
+        </ul>
+        <a href="#book" class="btn btn-secondary" data-package="Elite Ceramic">Book Elite</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WORK ============================ -->
+<section id="work" class="section">
+  <div class="wrap">
+    <div class="reveal" style="display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:20px;">
+      <div style="max-width:520px;">
+        <p class="eyebrow">Recent work</p>
+        <h2 class="t-h2" style="margin-top:22px;">Finished, then photographed.</h2>
+      </div>
+      <p class="t-small" style="max-width:32ch;">A selection of recent jobs across paint, wheels, glass, and cabins. Select any frame to enlarge it.</p>
+    </div>
+
+    <div class="mosaic reveal" style="margin-top:clamp(38px,4.5vw,58px);">
+      <figure class="shot shot-a" role="button" tabindex="0" aria-label="Enlarge: ceramic coating on a Porsche 911">
+        <img src="Porsche 911 pic.avif" alt="A Porsche 911 finished with a ceramic coating." loading="lazy">
+        <figcaption class="shot-label"><span class="label">Ceramic coating</span><p>Porsche 911 · 2-year system</p></figcaption>
+      </figure>
+      <figure class="shot shot-b" role="button" tabindex="0" aria-label="Enlarge: wheel detail on a Porsche 911">
+        <img src="Porsche 911 wheel.webp" alt="A refinished wheel on a Porsche 911 after barrel-deep cleaning." loading="lazy">
+        <figcaption class="shot-label"><span class="label">Wheel detail</span><p>Porsche 911 · barrels off the car</p></figcaption>
+      </figure>
+      <figure class="shot shot-c" role="button" tabindex="0" aria-label="Enlarge: headlight restoration on a BMW">
+        <img src="Bmw Headlight.webp" alt="A restored and polished BMW headlight lens." loading="lazy">
+        <figcaption class="shot-label"><span class="label">Headlight restoration</span><p>BMW · sanded &amp; resealed</p></figcaption>
+      </figure>
+      <figure class="shot shot-d" role="button" tabindex="0" aria-label="Enlarge: interior detail in a Mercedes">
+        <img src="Mercedes Ambient Lighting.avif" alt="A Mercedes cabin after a full interior detail." loading="lazy">
+        <figcaption class="shot-label"><span class="label">Interior detail</span><p>Mercedes · full cabin steam</p></figcaption>
+      </figure>
+      <figure class="shot shot-e" role="button" tabindex="0" aria-label="Enlarge: hand wash and dry on an Audi">
+        <img src="Audi detail.jpg" alt="An Audi being hand dried after a two-bucket wash." loading="lazy">
+        <figcaption class="shot-label"><span class="label">Hand wash &amp; dry</span><p>Audi · maintenance visit</p></figcaption>
+      </figure>
+      <figure class="shot shot-f" role="button" tabindex="0" aria-label="Enlarge: engine bay detail on a Mercedes-AMG C63">
+        <img src="Mercedes amg c63 engine bay.avif" alt="A cleaned and dressed engine bay in a Mercedes-AMG C63." loading="lazy">
+        <figcaption class="shot-label"><span class="label">Engine bay</span><p>Mercedes-AMG C63 · water-safe clean &amp; dress</p></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ REVIEWS ============================ -->
+<section id="reviews" class="section" style="background:var(--ink-2);border-block:1px solid var(--line);">
+  <div class="wrap">
+    <p class="eyebrow reveal">Owners</p>
+
+    <div class="review-head reveal">
+      <blockquote>
+        <p class="quote-lead">
+          &ldquo;I didn&rsquo;t think eight-year-old clear coat could look like <span>that</span> again.&rdquo;
+        </p>
+        <footer style="margin-top:24px;display:flex;align-items:center;gap:14px;">
+          <span class="stars">★★★★★</span>
+          <span class="attrib">Marcus T. · Signature</span>
+        </footer>
+      </blockquote>
+
+      <aside class="score">
+        <b>4.9</b>
+        <span class="stars" style="font-size:15px;">★★★★★</span>
+        <p class="t-small">Average across 213 reviews, every one left after a handover.</p>
+      </aside>
+    </div>
+
+    <div class="quote-grid reveal" style="margin-top:clamp(40px,5vw,64px);">
+      <blockquote class="quote">
+        <p>“Professional, punctual, and the coating still beads water eighteen months on. Worth every penny.”</p>
+        <footer><span class="stars">★★★★★</span><span class="attrib">Sarah K. · Elite Ceramic</span></footer>
+      </blockquote>
+      <blockquote class="quote">
+        <p>“They detailed the car in my office car park while I worked. It came back better than the day I bought it.”</p>
+        <footer><span class="stars">★★★★★</span><span class="attrib">David R. · Essential</span></footer>
+      </blockquote>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ BOOK ============================ -->
+<section id="book" class="book section">
+  <div class="book-media" aria-hidden="true"><img src="Wax car Gif.gif" alt=""></div>
+  <div class="wrap book-grid">
+
+    <div class="reveal">
+      <p class="eyebrow">Book a detail</p>
+      <h2 class="t-h2" style="margin-top:22px;">Give it the finish<br>it deserves.</h2>
+      <p class="t-lead" style="margin-top:20px;max-width:42ch;">
+        Tell us the vehicle and the finish you are after. We confirm a mobile slot within one business day.
+      </p>
+
+      <ul class="contact-list">
+        <li>
+          <span class="contact-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5c0-1 .8-1.8 1.8-1.8h2.1c.5 0 .9.3 1 .8l.9 3.2c.1.4 0 .9-.4 1.2l-1.5 1.3a12.5 12.5 0 0 0 5.9 5.9l1.3-1.5c.3-.3.7-.5 1.2-.4l3.2.9c.5.1.8.5.8 1v2.1c0 1-.8 1.8-1.8 1.8C10.5 20 4 13.5 4 5.5z"/></svg>
+          </span>
+          <div><p class="c-label">Call or text</p><p class="c-value"><a href="tel:+15552140198">(555) 214-0198</a></p></div>
+        </li>
+        <li>
+          <span class="contact-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6.5h16v11a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 17.5v-11z"/><path d="M4.5 7l7.5 6 7.5-6"/></svg>
+          </span>
+          <div><p class="c-label">Email</p><p class="c-value"><a href="mailto:book@lucid-detailing.com">book@lucid-detailing.com</a></p></div>
+        </li>
+        <li>
+          <span class="contact-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6.5-5.7-6.5-10.8a6.5 6.5 0 0 1 13 0C18.5 15.3 12 21 12 21z"/><circle cx="12" cy="10.2" r="2.2"/></svg>
+          </span>
+          <div><p class="c-label">Where we come to you</p><p class="c-value">Greater metro area and surrounding suburbs</p></div>
+        </li>
+        <li>
+          <span class="contact-ic" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 7.4V12l3 2"/></svg>
+          </span>
+          <div><p class="c-label">Hours</p><p class="c-value">Monday – Saturday · 8:00am – 6:00pm</p></div>
+        </li>
+      </ul>
+
+      <div class="socials">
+        <a href="#" class="social" aria-label="Lucid Detailing on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="7" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="#" class="social" aria-label="Lucid Detailing on Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M14 21v-7h2.5l.5-3H14V9c0-.9.3-1.5 1.7-1.5H17V4.8c-.3 0-1.2-.1-2.3-.1-2.3 0-3.9 1.4-3.9 4V11H8.5v3H11v7h3z"/></svg>
+        </a>
+        <a href="#" class="social" aria-label="Lucid Detailing on YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6" width="18" height="12" rx="3"/><path d="M10.5 9.5l4 2.5-4 2.5v-5z" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <form class="form-card reveal" id="book-form" novalidate>
+      <div class="grid sm:grid-cols-2 gap-5">
+        <label class="field"><span>Full name</span><input type="text" name="name" placeholder="Jordan Ellis" autocomplete="name" required></label>
+        <label class="field"><span>Phone</span><input type="tel" name="phone" placeholder="(555) 000-0000" autocomplete="tel" required></label>
+        <label class="field sm:col-span-2"><span>Email</span><input type="email" name="email" placeholder="you@email.com" autocomplete="email" required></label>
+        <label class="field sm:col-span-2"><span>Vehicle</span><input type="text" name="vehicle" placeholder="2022 Audi Q5, silver" required></label>
+        <label class="field sm:col-span-2">
+          <span>Package</span>
+          <select name="package" id="package-select">
+            <option>Not sure yet — recommend one</option>
+            <option>Essential — $149</option>
+            <option>Signature — $349</option>
+            <option>Elite Ceramic — $899</option>
+          </select>
+        </label>
+        <label class="field sm:col-span-2"><span>Anything we should know</span><textarea name="notes" rows="4" placeholder="Condition of the paint, where the car will be parked, dates that suit you."></textarea></label>
+      </div>
+      <button type="submit" class="btn btn-primary" style="margin-top:26px;width:100%;">
+        Request an appointment
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </button>
+      <p class="form-note" id="form-note">No deposit taken here — we confirm the slot and price with you first.</p>
+    </form>
+
+  </div>
+</section>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="lockup foot-logo"><img src="Lucid Detailing Logo.png" alt="Lucid Detailing"></span>
+        <p class="t-small" style="margin-top:14px;max-width:34ch;">
+          Mobile paint correction, ceramic coating, and interior detailing. Cleaner surface. Better finish.
+        </p>
+      </div>
+      <div>
+        <h4>Sections</h4>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#correction">Paint correction</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#work">Recent work</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Packages</h4>
+        <ul>
+          <li><a href="#packages">Essential · $149</a></li>
+          <li><a href="#packages">Signature · $349</a></li>
+          <li><a href="#packages">Elite Ceramic · $899</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="tel:+15552140198">(555) 214-0198</a></li>
+          <li><a href="mailto:book@lucid-detailing.com">book@lucid-detailing.com</a></li>
+          <li>Greater metro area</li>
+          <li>Mon – Sat · 8am – 6pm</li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="rule" style="margin-block:clamp(38px,4vw,54px) 24px;">
+    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;">
+      <p class="t-small">© 2026 Lucid Detailing. All rights reserved.</p>
+      <p class="label" style="color:var(--slate);">Cleaner surface. Better finish.</p>
+    </div>
+  </div>
+</footer>
+
+<a href="#top" class="to-top" id="to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
+
+<!-- ============================ LIGHTBOX ============================ -->
+<div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photograph viewer" aria-hidden="true">
+  <button class="lb-btn lb-close" id="lb-close" aria-label="Close viewer">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <button class="lb-btn lb-prev" id="lb-prev" aria-label="Previous photograph">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+  </button>
+  <button class="lb-btn lb-next" id="lb-next" aria-label="Next photograph">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>
+  </button>
+  <figure>
+    <img id="lb-img" src="" alt="">
+    <figcaption>
+      <span class="label" id="lb-title" style="color:var(--white)"></span>
+      <p class="t-small" id="lb-sub" style="margin-top:6px;"></p>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+
+/* ---------- nav: background on scroll, current-section marker ------------- */
+(function () {
+  const nav = document.getElementById('nav');
+  const toTop = document.getElementById('to-top');
+  const links = Array.from(document.querySelectorAll('.nav-links .nav-link'));
+  const targets = links
+    .map(l => document.querySelector(l.getAttribute('href')))
+    .filter(Boolean);
+
+  let ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(() => {
+      const y = window.scrollY;
+      nav.classList.toggle('is-scrolled', y > 24);
+      toTop.classList.toggle('is-visible', y > window.innerHeight * 0.7);
+
+      let current = -1;
+      targets.forEach((el, i) => {
+        if (el.getBoundingClientRect().top <= 140) current = i;
+      });
+      links.forEach((l, i) => l.classList.toggle('is-current', i === current));
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+})();
+
+/* ---------- mobile menu -------------------------------------------------- */
+(function () {
+  const btn = document.getElementById('menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const open = document.getElementById('icon-open');
+  const close = document.getElementById('icon-close');
+  let isOpen = false;
+
+  function set(state) {
+    isOpen = state;
+    btn.setAttribute('aria-expanded', String(isOpen));
+    btn.setAttribute('aria-label', isOpen ? 'Close menu' : 'Open menu');
+    open.classList.toggle('hidden', isOpen);
+    close.classList.toggle('hidden', !isOpen);
+    menu.style.maxHeight = isOpen ? menu.scrollHeight + 'px' : '0px';
+    menu.style.opacity = isOpen ? '1' : '0';
+  }
+  btn.addEventListener('click', () => set(!isOpen));
+  menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => set(false)));
+  window.addEventListener('resize', () => { if (isOpen) menu.style.maxHeight = menu.scrollHeight + 'px'; });
+})();
+
+/* ---------- services index: rows drive the photo panel -------------------- */
+(function () {
+  const rows = Array.from(document.querySelectorAll('.svc-row'));
+  const figures = Array.from(document.querySelectorAll('.svc-panel figure'));
+  const caption = document.getElementById('svc-caption');
+  const idx = document.getElementById('svc-idx');
+  if (!rows.length) return;
+
+  function activate(row) {
+    const id = row.dataset.svc;
+    rows.forEach(r => r.classList.toggle('is-active', r === row));
+    figures.forEach(f => f.classList.toggle('is-active', f.dataset.panel === id));
+    caption.textContent = row.querySelector('.svc-name').textContent;
+    idx.textContent = String(id).padStart(2, '0');
+  }
+
+  rows.forEach(row => {
+    row.addEventListener('mouseenter', () => activate(row));
+    row.addEventListener('focus', () => activate(row));
+    row.addEventListener('click', () => activate(row));
+  });
+})();
+
+/* ---------- the inspection lamp ------------------------------------------ */
+(function () {
+  const box = document.getElementById('inspect');
+  const range = document.getElementById('inspect-range');
+  if (!box || !range) return;
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let demo = null;
+  let touched = false;
+
+  function set(v) {
+    const clamped = Math.min(96, Math.max(4, v));
+    box.style.setProperty('--pos', clamped + '%');
+    range.value = clamped;
+  }
+  set(52);
+
+  range.addEventListener('input', () => { stopDemo(); set(parseFloat(range.value)); });
+  range.addEventListener('pointerdown', stopDemo);
+  range.addEventListener('keydown', stopDemo);
+  range.addEventListener('focus', () => box.classList.add('is-focused'));
+  range.addEventListener('blur', () => box.classList.remove('is-focused'));
+
+  function stopDemo() {
+    touched = true;
+    if (demo) { cancelAnimationFrame(demo); demo = null; }
+  }
+
+  /* One pass of the lamp when the panel first comes into view, so the control
+     explains itself. It hands over the moment anyone touches it. */
+  function runDemo() {
+    if (reduce || touched) return;
+    const keys = [52, 20, 82, 52];
+    const legs = keys.length - 1;
+    const duration = 2600;
+    const start = performance.now();
+
+    (function frame(now) {
+      if (touched) return;
+      const t = Math.min(1, (now - start) / duration);
+      const scaled = t * legs;
+      const leg = Math.min(legs - 1, Math.floor(scaled));
+      const local = scaled - leg;
+      const eased = local < 0.5 ? 2 * local * local : 1 - Math.pow(-2 * local + 2, 2) / 2;
+      set(keys[leg] + (keys[leg + 1] - keys[leg]) * eased);
+      if (t < 1) demo = requestAnimationFrame(frame);
+      else demo = null;
+    })(start);
+  }
+
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { io.disconnect(); setTimeout(runDemo, 320); }
+      });
+    }, { threshold: 0.45 });
+    io.observe(box);
+  }
+})();
+
+/* ---------- package buttons preselect the form --------------------------- */
+(function () {
+  const select = document.getElementById('package-select');
+  if (!select) return;
+  document.querySelectorAll('[data-package]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const wanted = btn.dataset.package;
+      const match = Array.from(select.options).find(o => o.text.startsWith(wanted));
+      if (match) select.value = match.value;
+    });
+  });
+})();
+
+/* ---------- booking form: confirm in place ------------------------------- */
+(function () {
+  const form = document.getElementById('book-form');
+  const note = document.getElementById('form-note');
+  if (!form) return;
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) { form.reportValidity(); return; }
+    note.textContent = 'Request received. We will confirm your slot within one business day.';
+    note.style.color = 'var(--sky)';
+    form.reset();
+  });
+})();
+
+/* ---------- lightbox ----------------------------------------------------- */
+(function () {
+  const shots = Array.from(document.querySelectorAll('.shot'));
+  if (!shots.length) return;
+
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lb-img');
+  const title = document.getElementById('lb-title');
+  const sub = document.getElementById('lb-sub');
+  const closeBtn = document.getElementById('lb-close');
+  let i = 0;
+  let last = null;
+
+  function openAt(n) {
+    i = (n + shots.length) % shots.length;
+    const shot = shots[i];
+    const source = shot.querySelector('img');
+    img.src = source.currentSrc || source.src;
+    img.alt = source.alt;
+    title.textContent = shot.querySelector('.label').textContent;
+    sub.textContent = shot.querySelector('.shot-label p').textContent;
+    lb.classList.add('is-open');
+    lb.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function close() {
+    lb.classList.remove('is-open');
+    lb.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (last) last.focus();
+  }
+
+  shots.forEach((shot, n) => {
+    shot.addEventListener('click', () => { last = shot; openAt(n); });
+    shot.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); last = shot; openAt(n); }
+    });
+  });
+
+  closeBtn.addEventListener('click', close);
+  document.getElementById('lb-prev').addEventListener('click', () => openAt(i - 1));
+  document.getElementById('lb-next').addEventListener('click', () => openAt(i + 1));
+  lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lb.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowLeft') openAt(i - 1);
+    if (e.key === 'ArrowRight') openAt(i + 1);
+    if (e.key === 'Tab') {
+      /* keep focus inside the viewer while it is open */
+      const focusable = lb.querySelectorAll('button');
+      const first = focusable[0];
+      const lastEl = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); lastEl.focus(); }
+      else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); first.focus(); }
+    }
+  });
+})();
+
+/* ---------- scroll reveal ------------------------------------------------ */
+(function () {
+  const items = Array.from(document.querySelectorAll('.reveal'));
+  if (!items.length) return;
+  if (!('IntersectionObserver' in window)) {
+    items.forEach(el => el.classList.add('is-in'));
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+  items.forEach(el => io.observe(el));
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,136 @@
+{#
+  The pricing picker. One tier shown at a time, the rest a click away, and a
+  Compare tab last that puts them side by side.
+
+  Called with a normalised `tiers` array, built in service.njk so this file
+  never has to know whether the numbers came from one add-on with levels or
+  from a pair of add-ons:
+
+    tiers = [{ label, price, unit, note, shot, rows: [{label,value,example}] }]
+    shot  = { caption, faces: [{ label, src, small, w, h, alt }] }
+
+  plus `hasFactors` / `cmpFactors` / `cmpName` for the Compare table.
+
+  Showing one tier at a time is the point: the old block put every bracket on
+  screen at once, which is the layout you want when you are auditing prices
+  and the wrong one when you are trying to find out what YOUR job costs.
+#}
+{%- macro shot(s, sizes) -%}
+{%- if s -%}
+<figure class="cardshot{% if s.faces.length > 1 %} cardshot-2{% endif %}">
+  <div class="cardshot-stage">
+    {#- the frame takes the first face's own proportions, so a one-sided card
+        is never cropped to fit a guessed box. Two-sided cards differ by ~3%
+        between faces and both are covered into the front's shape. -#}
+    <div class="cardshot-inner" style="aspect-ratio: {{ s.faces[0].w }} / {{ s.faces[0].h }}">
+      {%- for f in s.faces %}
+      <div class="cardshot-face{% if not loop.first %} is-back{% endif %}">
+        <img src="{{ f.src }}" srcset="{{ f.small }} 400w, {{ f.src }} 800w"
+             sizes="{{ sizes }}" width="{{ f.w }}" height="{{ f.h }}"
+             alt="{{ f.alt }}" loading="lazy" decoding="async" />
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- if s.faces.length > 1 %}
+  {#- the whole reason the faces were cut apart: a card has two sides and a
+      flat photo of both at once shows neither properly. -#}
+  <button class="cardshot-btn" type="button" aria-pressed="false"
+          data-a="Show {{ s.faces[1].label | lower }}"
+          data-b="Show {{ s.faces[0].label | lower }}">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-refresh"/></svg>
+    <span>Show {{ s.faces[1].label | lower }}</span>
+  </button>
+  {%- endif %}
+  {%- if s.caption %}<figcaption>{{ s.caption }}</figcaption>{% endif %}
+</figure>
+{%- endif -%}
+{%- endmacro -%}
+
+<div class="ptier reveal">
+
+  <div class="ptier-tabs" role="tablist" aria-label="Pricing options">
+    {%- for t in tiers %}
+    <button class="ptier-tab" type="button" role="tab"
+            id="pt-{{ ptid }}-tab-{{ loop.index0 }}"
+            aria-controls="pt-{{ ptid }}-panel-{{ loop.index0 }}"
+            aria-selected="{{ 'true' if loop.first else 'false' }}"
+            tabindex="{{ '0' if loop.first else '-1' }}">
+      {{ t.label }}
+    </button>
+    {%- endfor %}
+    <button class="ptier-tab ptier-tab-cmp" type="button" role="tab"
+            id="pt-{{ ptid }}-tab-cmp"
+            aria-controls="pt-{{ ptid }}-panel-cmp"
+            aria-selected="false" tabindex="-1">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
+      Compare
+    </button>
+  </div>
+
+  {#- ─────────── one panel per tier ─────────── #}
+  {%- for t in tiers %}
+  <div class="ptier-panel" role="tabpanel"
+       id="pt-{{ ptid }}-panel-{{ loop.index0 }}"
+       aria-labelledby="pt-{{ ptid }}-tab-{{ loop.index0 }}"
+       {%- if not loop.first %} hidden{% endif %}>
+
+    <div class="ptier-top">
+      <div class="ptier-amount">
+        <span class="ptier-price">{{ t.price | price | safe }}</span>
+        {%- if t.unit %}<span class="ptier-unit">{{ t.unit }}</span>{% endif %}
+      </div>
+      {%- if t.note %}<p class="ptier-note">{{ t.note }}</p>{% endif %}
+    </div>
+
+    {{ shot(t.shot, "(min-width: 1000px) 380px, 88vw") }}
+
+    {%- if t.rows.length %}
+    <dl class="ptier-rows">
+      {%- for r in t.rows %}
+      <div{% if r.example %} class="ptier-eg"{% endif %}>
+        <dt>{{ r.label }}</dt>
+        <dd>
+          {%- if r.value === true %}
+          <svg class="ic mx-yes" viewBox="0 0 24 24" role="img" aria-label="Included"><use href="#i-check"/></svg>
+          {%- elif r.value %}{{ r.value }}
+          {%- else %}
+          <svg class="ic mx-no" viewBox="0 0 24 24" role="img" aria-label="Not included"><use href="#i-dash"/></svg>
+          {%- endif %}
+        </dd>
+      </div>
+      {%- endfor %}
+    </dl>
+    {%- endif %}
+  </div>
+  {%- endfor %}
+
+  {#- ─────────── compare ─────────── #}
+  <div class="ptier-panel" role="tabpanel"
+       id="pt-{{ ptid }}-panel-cmp"
+       aria-labelledby="pt-{{ ptid }}-tab-cmp" hidden>
+
+    {%- if hasShots %}
+    <div class="ptier-cmp-shots">
+      {%- for t in tiers %}
+      <div>
+        <span class="ptier-cmp-label">{{ t.label }}</span>
+        {{ shot(t.shot, "(min-width: 1000px) 280px, 44vw") }}
+      </div>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+
+    {%- if hasFactors %}
+    {%- set cols = [] %}
+    {%- for t in tiers %}{% set cols = (cols.push({ label: t.label, sub: t.price | price }), cols) %}{% endfor %}
+    {%- set rows = [] %}
+    {%- for f in cmpFactors %}{% set rows = (rows.push({ label: f.label, values: f.values, example: f.example }), rows) %}{% endfor %}
+    {%- set caption = "Every tier of " + cmpName + " compared" %}
+    <div class="addon">
+      {% include "components/price-matrix.njk" %}
+    </div>
+    {%- endif %}
+  </div>
+
+</div>

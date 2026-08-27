@@ -1,0 +1,176 @@
+[
+  {
+    "slug": "menu-service-page",
+    "name": "Menu / service page",
+    "service": "menu-service-page",
+    "blurb": "Food, nail, detailing, lawn — any business type.",
+    "pricing": "scoped",
+    "levels": [
+      { "label": "Simple",  "price": 75 },
+      { "label": "Complex", "price": 150 }
+    ],
+    "factors": [
+      { "label": "Number of items",
+        "values": ["Under 10 items or services", "20+ items, multiple categories"] },
+      { "label": "Content provided",
+        "values": ["Client sends a clean, organized list", "Client has nothing ready, built from scratch"] },
+      { "label": "Photos needed",
+        "values": ["No photos, text only", "Each item needs a photo (stock or provided)"] },
+      { "label": "Layout complexity",
+        "values": ["Simple list or basic grid", "Tabbed sections, filters, or category headers"] },
+      { "label": "For example", "example": true,
+        "values": ["Lawn care — 5 services listed", "Restaurant — full food menu with sections, prices, photos"] }
+    ]
+  },
+
+  {
+    "slug": "catering-quote-page",
+    "name": "Catering / quote page",
+    "service": "catering-quote-page",
+    "blurb": "Lead capture for large or scheduled jobs.",
+    "pricing": "scoped",
+    "levels": [
+      { "label": "Simple",  "price": 75 },
+      { "label": "Complex", "price": 150 }
+    ],
+    "factors": [
+      { "label": "Page structure",
+        "values": ["Basic inquiry form + contact info", "Full packages displayed + pricing tiers + form"] },
+      { "label": "Content provided",
+        "values": ["Client has their packages written out", "Content organised and written for them"] },
+      { "label": "Form complexity",
+        "values": ["Name, email, message, submit", "Event date, guest count, menu selections, special requests"] },
+      { "label": "For example", "example": true,
+        "values": ["Detailer — request a quote form only", "Restaurant — full catering packages with photos and pricing"] }
+    ]
+  },
+
+  {
+    "slug": "booking-integration",
+    "name": "Booking integration",
+    "service": "booking-integration",
+    "blurb": "Calendly, Square, Booksy or similar setup.",
+    "pricing": "scoped",
+    "levels": [
+      { "label": "Simple",  "price": 100 },
+      { "label": "Complex", "price": 200 }
+    ],
+    "factors": [
+      { "label": "Platform",
+        "values": ["Calendly — straightforward embed", "Square, Vagaro, or custom system needing configuration"] },
+      { "label": "Client setup",
+        "values": ["Client already has an account set up and ready", "Account set up and services configured for them"] },
+      { "label": "Number of service types",
+        "values": ["One booking type (e.g. appointments)", "Multiple service types, staff members, or locations"] },
+      { "label": "Testing required",
+        "values": ["Basic embed test", "Full end-to-end booking flow testing"] },
+      { "label": "For example", "example": true,
+        "values": ["Nail salon with Calendly already set up", "Detailer with multiple services, packages, and time slots"] }
+    ]
+  },
+
+  {
+    "slug": "website-update",
+    "name": "Website update (one-time)",
+    "service": "website-updates",
+    "blurb": "Photos, text, hours, name changes. Separate from the monthly allowance in Growth and Pro.",
+    "pricing": "sized",
+    "levels": [
+      { "label": "Minor",       "price": 25 },
+      { "label": "Moderate",    "price": 50 },
+      { "label": "Substantial", "price": 75 }
+    ],
+    "factors": [
+      { "label": "Scope",
+        "values": ["Single change — phone number, hours, one photo swap", "2–4 changes across the site", "5+ changes or one major section rewrite"] },
+      { "label": "Time estimate",
+        "values": ["Under 15 minutes", "15–30 minutes", "30–60 minutes"] },
+      { "label": "For example", "example": true,
+        "values": ["Update business hours", "Swap 3 photos + update prices", "Rewrite services section + new photos throughout"] }
+    ]
+  },
+
+  {
+    "slug": "google-ads",
+    "name": "Google Ads management",
+    "linkName": "Google Ads management",
+    "service": "google-ads",
+    "blurb": "Built once, then run month to month. Your ad budget is paid to Google and I take no percentage of it.",
+    "pricing": "monthly",
+    "levels": [
+      { "label": "Setup",      "price": null, "unit": "one-time" },
+      { "label": "Management", "price": null, "unit": "per month" }
+    ],
+    "factors": [
+      { "label": "Keyword research",
+        "values": ["The full build — search terms, competitors, match types", "Re-cut each month against what people actually searched"] },
+      { "label": "Ad copy",
+        "values": ["Every ad group written and launched", "Rewritten where the numbers say to"] },
+      { "label": "Conversion tracking",
+        "values": ["Installed on your site and tested end to end", "Checked that it is still firing"] },
+      { "label": "Negative keywords",
+        "values": ["A starting list, before a dollar is spent", "Pruned against the real search terms report"] },
+      { "label": "Budget and bids",
+        "values": [false, true] },
+      { "label": "Your report",
+        "values": [false, "One a month, in plain English"] },
+      { "label": "For example", "example": true,
+        "values": ["A detailer going live on Google for the first time", "The same detailer in month four, paying less per call"] }
+    ]
+  },
+
+  {
+    "slug": "business-card-basic",
+    "name": "Business card — basic",
+    "service": "business-cards",
+    "blurb": "Front design, logo, name, contact.",
+    "pricing": "fixed",
+    "levels": [{ "label": "Basic", "price": null }],
+    "shot": {
+      "caption": "One face. Logo, name and the three ways to reach you.",
+      "faces": [
+        { "label": "Front", "w": 800, "h": 367,
+          "src": "/assets/showcase/card-basic-front-800.jpg",
+          "small": "/assets/showcase/card-basic-front-400.jpg",
+          "alt": "The basic card: logo on the left, then name, phone number, address and website." }
+      ]
+    }
+  },
+  {
+    "slug": "business-card-premium",
+    "name": "Business card — premium",
+    "service": "business-cards",
+    "blurb": "Front + back, thick stock, QR code, delivered.",
+    "pricing": "fixed",
+    "levels": [{ "label": "Premium", "price": null }],
+    "shot": {
+      "caption": "Front is the logo on its own. Flip it for your details and a QR code to your site.",
+      "faces": [
+        { "label": "Front", "w": 800, "h": 398,
+          "src": "/assets/showcase/card-premium-front-800.jpg",
+          "small": "/assets/showcase/card-premium-front-400.jpg",
+          "alt": "The premium card, front: the full AlvSolutions logo lockup centred on white." },
+        { "label": "Back", "w": 800, "h": 413,
+          "src": "/assets/showcase/card-premium-back-800.jpg",
+          "small": "/assets/showcase/card-premium-back-400.jpg",
+          "alt": "The premium card, back: a QR code beside the logo, with name, phone number, address and website on navy." }
+      ]
+    }
+  },
+  {
+    "slug": "shirt-basic",
+    "name": "T-shirt — basic",
+    "service": "shirt-design",
+    "blurb": "Logo, name, brand colors, front only.",
+    "pricing": "fixed",
+    "levels": [{ "label": "Basic", "price": null }]
+  },
+  {
+    "slug": "shirt-premium",
+    "name": "T-shirt — premium",
+    "service": "shirt-design",
+    "blurb": "Front, back, sleeve design + fulfillment.",
+    "pricing": "fixed",
+    "levels": [{ "label": "Premium", "price": null }]
+  }
+]

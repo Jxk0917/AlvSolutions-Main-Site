@@ -1,0 +1,25 @@
+{#
+  One service in a grid. Called with `card` — deliberately not `svc`: the
+  service page sets `svc` for the page it is rendering, and a related-services
+  loop that reassigned `svc` would clobber it for everything after the loop.
+  Reads `addons` itself so the caller never has to know how pricing works.
+#}
+{%- set a = addons | find("slug", card.addon) %}
+<a class="card card-hover svc-card reveal" href="/services/{{ card.slug }}/" style="--d:{{ d | default(0) }}">
+  <div class="ic-box{% if card.family == 'print' %} gold{% endif %}">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-{{ card.icon }}"/></svg>
+  </div>
+  <h3>{{ card.name }}</h3>
+  <p>{{ card.blurb }}</p>
+
+  <span class="svc-foot">
+    {%- if card.packagePricing %}
+    <span class="svc-from">From {{ packages.tiers[0].price | price | safe }}</span>
+    {%- elif card.included %}
+    <span class="svc-from svc-inc">In every package</span>
+    {%- elif a %}
+    <span class="svc-from">From {{ a.levels[0].price | price | safe }}</span>
+    {%- endif %}
+    <svg class="ic svc-arrow" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+  </span>
+</a>

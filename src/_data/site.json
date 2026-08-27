@@ -1,0 +1,55 @@
+{
+  "name": "AlvSolutions",
+  "tagline": "Professional business websites, built and supported in San Antonio, Texas.",
+  "email": "laurenttsautos@gmail.com",
+  "city": "San Antonio, Texas",
+  "turnaround": "5 to 10 business days",
+  "startingPrice": "$500 flat",
+
+  "nav": [
+    { "label": "Home",     "url": "/" },
+    { "label": "Services", "url": "/services/" },
+    { "label": "Packages", "url": "/packages/" },
+    { "label": "Portfolio","url": "/work/" },
+    { "label": "About",    "url": "/about/" }
+  ],
+
+  "footerGroups": [
+    {
+      "title": "Services",
+      "links": [
+        { "label": "Business websites",     "url": "/services/business-websites/" },
+        { "label": "Menu / service page",   "url": "/services/menu-service-page/" },
+        { "label": "Catering / quote page", "url": "/services/catering-quote-page/" },
+        { "label": "Booking integration",   "url": "/services/booking-integration/" },
+        { "label": "Website updates",       "url": "/services/website-updates/" },
+        { "label": "Search visibility",     "url": "/services/search-visibility/" },
+        { "label": "Google Ads management", "url": "/services/google-ads/" },
+        { "label": "Business cards",        "url": "/services/business-cards/" },
+        { "label": "Shirt design",          "url": "/services/shirt-design/" }
+      ]
+    },
+    {
+      "title": "Pricing",
+      "links": [
+        { "label": "Packages",     "url": "/packages/" },
+        { "label": "Add-ons",      "url": "/packages/add-ons/" },
+        { "label": "Extra fees",   "url": "/packages/#fees" }
+      ]
+    },
+    {
+      "title": "Company",
+      "links": [
+        { "label": "About",   "url": "/about/" },
+        { "label": "Portfolio", "url": "/work/" },
+        { "label": "Process", "url": "/#process" },
+        { "label": "Contact", "url": "/contact/" }
+      ]
+    }
+  ],
+
+  "legalLinks": [
+    { "label": "Privacy", "url": "/legal/privacy/" },
+    { "label": "Terms",   "url": "/legal/terms/" }
+  ]
+}

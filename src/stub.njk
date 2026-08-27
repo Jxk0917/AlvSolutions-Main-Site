@@ -1,0 +1,45 @@
+---
+layout: layouts/base.njk
+pagination:
+  data: stubs
+  size: 1
+  alias: stub
+permalink: "/{{ stub.slug }}/"
+eleventyComputed:
+  title: "{{ stub.name }}"
+  description: "{{ stub.blurb }}"
+---
+
+{#
+  A real URL so the footer never points at nothing, and a page that is
+  obviously unwritten so it can never be mistaken for finished. Same rule as
+  the price placeholders: unfinished must read as unfinished.
+#}
+
+{%- set ph = {
+  eyebrow: stub.section,
+  heading: stub.heading,
+  lead: stub.blurb,
+  crumbs: [{ label: stub.section }, { label: stub.name }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+  <section class="sec">
+    <div class="wrap">
+      <div class="stub reveal">
+        <p class="notice-todo">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
+          <span>This page has a real URL so the footer never points at nothing, but it has not been written yet.</span>
+        </p>
+        <p class="stub-body">{{ stub.body }}</p>
+        <div class="hero-actions">
+          <a class="btn btn-ghost" href="{{ stub.cta.url }}">
+            {{ stub.cta.label }}
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

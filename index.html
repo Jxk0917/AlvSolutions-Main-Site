@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AlvSolutions | Professional Business Websites in San Antonio</title>
+  <meta name="description" content="Fast, professional websites for San Antonio small businesses. Flat pricing from $500, live in about a week, with hosting and support handled." />
+  <meta name="theme-color" content="#070C14" />
+  <meta property="og:title" content="AlvSolutions | Professional Business Websites" />
+  <meta property="og:description" content="Fast, professional websites for San Antonio small businesses. Flat pricing from $500, live in about a week." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="Brand_Assets/derived/alv-lockup.png" />
+  <link rel="icon" href="Brand_Assets/derived/alv-mark.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="preload" as="image" href="Portfolio/web/hacienda-grill-1440.jpg" />
+
+  <style>
+  /* ============================================================
+     DESIGN TOKENS
+     Palette is the official brand palette (Brand_Assets/Brand Guidelines.png).
+     Typography is Poppins per the brand guide: Bold headings,
+     SemiBold subheadings, Regular body.
+
+     RADIUS RULE (applied everywhere, no exceptions):
+       --r-xs    6px  inner chrome: url bar, scrollbar
+       --r-ctl  10px  controls: buttons, inputs, small tiles
+       --r-card 16px  cards, panels, media frames
+       999px          pills and dots only
+     ============================================================ */
+  :root {
+    /* surfaces */
+    --ink:       #070C14;
+    --ink-2:     #0A111C;
+    --surface:   #0E1826;
+    --surface-2: #14202F;
+    --line:      rgba(125,166,214,.13);
+    --line-2:    rgba(125,166,214,.24);
+
+    /* brand */
+    --blue:      #3DA8F8;
+    --blue-2:    #30ABFB;
+    --blue-deep: #1A72C6;  /* button fill: 4.9:1 with white text */
+    --navy:      #0D1B2A;
+    --gold:      #FFC811;
+
+    /* text, all AA or better on --ink */
+    --text:      #EDF2F8;  /* 17.0:1 */
+    --text-2:    #B4C2D2;  /* 10.4:1 */
+    --text-3:    #8698AC;  /*  6.4:1 */
+
+    --r-xs:    6px;
+    --r-ctl:  10px;
+    --r-card: 16px;
+
+    --sp:      clamp(64px, 6.6vw, 100px);
+    --sp-tight:clamp(52px, 5.4vw, 78px);
+    --gut:     clamp(20px, 4vw, 32px);
+    --nav-h:   68px;
+
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *,*::before,*::after { box-sizing: border-box; }
+  * { margin: 0; }
+
+  html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-text-size-adjust: 100%; }
+
+  body {
+    font-family: 'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background: var(--ink);
+    color: var(--text);
+    font-size: 15.5px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img, svg, picture { display: block; max-width: 100%; }
+  img { height: auto; }
+  a { color: inherit; }
+  button, input, textarea { font: inherit; color: inherit; }
+
+  ::selection { background: rgba(61,168,248,.28); }
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: rgba(125,166,214,.2); border-radius: 999px; border: 3px solid var(--ink); }
+  ::-webkit-scrollbar-thumb:hover { background: rgba(125,166,214,.34); }
+
+  /* ---------- layout primitives ---------- */
+  .wrap      { width: 100%; max-width: 1240px; margin-inline: auto; padding-inline: var(--gut); }
+  .wrap-mid  { max-width: 940px; }
+  .sec       { padding-block: var(--sp); position: relative; }
+  .sec-tight { padding-block: var(--sp-tight); }
+  .sec-line  { border-top: 1px solid var(--line); }
+  .band      { background: var(--ink-2); }
+
+  /* ---------- type ---------- */
+  h1,h2,h3,h4 { font-weight: 700; letter-spacing: -.025em; line-height: 1.12; text-wrap: balance; }
+  h1 { font-size: clamp(35px, 4.4vw, 54px); line-height: 1.06; letter-spacing: -.032em; }
+  h2 { font-size: clamp(28px, 3.4vw, 43px); }
+  h3 { font-size: 18.5px; font-weight: 600; letter-spacing: -.015em; line-height: 1.35; }
+  p  { text-wrap: pretty; }
+
+  .accent    { color: var(--blue); }
+  .lead      { font-size: 17px; line-height: 1.72; color: var(--text-2); max-width: 52ch; }
+  .body-2    { color: var(--text-2); }
+  .body-3    { color: var(--text-3); font-size: 14.5px; line-height: 1.68; }
+  .eyebrow   { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--blue); }
+  .sec-head  { max-width: 640px; }
+  .sec-head p { margin-top: 18px; }
+
+  /* ---------- icons (Tabler, outline, uniform 1.75 stroke) ---------- */
+  .ic { width: 1em; height: 1em; stroke: currentColor; fill: none; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  .ic-box {
+    width: 44px; height: 44px; border-radius: var(--r-ctl);
+    display: grid; place-items: center; font-size: 21px;
+    background: rgba(61,168,248,.10);
+    border: 1px solid rgba(61,168,248,.20);
+    color: var(--blue);
+  }
+  .ic-box.gold { background: rgba(255,200,17,.10); border-color: rgba(255,200,17,.22); color: var(--gold); }
+
+  /* ---------- controls ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    white-space: nowrap;
+    font-size: 14.5px; font-weight: 600; letter-spacing: -.005em;
+    padding: 12px 22px; border-radius: var(--r-ctl);
+    border: 1px solid transparent; cursor: pointer; text-decoration: none;
+    transition: background .18s var(--ease), border-color .18s var(--ease),
+                transform .18s var(--ease), color .18s var(--ease);
+  }
+  .btn .ic { font-size: 17px; }
+  .btn-primary { background: var(--blue-deep); color: #fff; }
+  .btn-primary:hover { background: #2183DC; }
+  .btn-ghost { background: transparent; color: var(--text); border-color: var(--line-2); }
+  .btn-ghost:hover { border-color: rgba(61,168,248,.55); background: rgba(61,168,248,.07); }
+  .btn-sm { padding: 9px 17px; font-size: 13.5px; }
+  .btn-lg { padding: 15px 28px; font-size: 15.5px; }
+  .btn:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; }
+
+  /* Translucent "glass" CTA, used for the demo buttons.
+     Both states are a tint over the section rather than a solid block, so the
+     aurora reads through them.
+     Note the label colours: a translucent gold fill over dark navy composites
+     to a murky olive (~#2a2a1d), so ink text would vanish. The label goes gold
+     instead, which is what actually reads as "the gold state".
+     Measured on composited pixels over the live aurora, worst of 10 phases:
+     rest 13.3-15.4:1 (white on ~#0f263e), hover 7.2-9.3:1 (gold on ~#2a2a1d).
+     Both beat the old solid blue fill, which was 4.92:1. */
+  .btn-glass {
+    background: rgba(61,168,248,.14);
+    border-color: rgba(61,168,248,.5);
+    color: #fff;
+    backdrop-filter: blur(8px) saturate(130%);
+    -webkit-backdrop-filter: blur(8px) saturate(130%);
+  }
+  .btn-glass:hover {
+    background: rgba(255,200,17,.14);
+    border-color: rgba(255,200,17,.62);
+    color: var(--gold);
+  }
+  .btn-glass:focus-visible { outline-color: var(--gold); }
+
+  /* no backdrop-filter, or the viewer asked for less transparency: go solid */
+  @media (prefers-reduced-transparency: reduce) {
+    .btn-glass { background: var(--blue-deep); border-color: var(--blue-deep); backdrop-filter: none; -webkit-backdrop-filter: none; }
+    .btn-glass:hover { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  }
+
+  .pill {
+    display: inline-flex; align-items: center; gap: 9px;
+    background: rgba(61,168,248,.08);
+    border: 1px solid rgba(61,168,248,.22);
+    border-radius: 999px; padding: 7px 16px 7px 13px;
+    font-size: 12.5px; font-weight: 500; color: var(--blue);
+  }
+  .pill .ic { font-size: 14px; }
+
+  /* ---------- surfaces ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 26px;
+    transition: border-color .25s var(--ease), transform .25s var(--ease), background .25s var(--ease);
+  }
+  .card-hover:hover { border-color: rgba(61,168,248,.34); background: var(--surface-2); }
+
+  .tile {
+    background: rgba(61,168,248,.06);
+    border: 1px solid rgba(61,168,248,.17);
+    border-radius: var(--r-ctl);
+    padding: 13px 14px;
+  }
+  .tile-gold { background: rgba(255,200,17,.055); border-color: rgba(255,200,17,.20); }
+  .tile-label { font-size: 10.5px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: var(--blue); margin-bottom: 5px; }
+  .tile-gold .tile-label { color: var(--gold); }
+  .tile p { font-size: 12.5px; line-height: 1.5; color: var(--text-2); }
+
+  /* ============================================================
+     NAV
+     ============================================================ */
+  .nav {
+    position: fixed; inset: 0 0 auto 0; z-index: 100;
+    background: rgba(7,12,20,.72);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-bottom: 1px solid transparent;
+    transition: border-color .25s var(--ease), background .25s var(--ease);
+  }
+  .nav.scrolled { background: rgba(7,12,20,.9); border-bottom-color: var(--line); }
+  .nav-in { height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex: none; }
+  .brand img { height: 27px; width: auto; }
+  .wordmark { font-size: 19px; font-weight: 700; letter-spacing: -.03em; color: var(--text); line-height: 1; }
+  .wordmark span { color: var(--blue); }
+
+  .nav-links { display: none; align-items: center; gap: 30px; }
+  .nav-link {
+    font-size: 14px; font-weight: 500; color: var(--text-2);
+    text-decoration: none; position: relative; padding-block: 4px;
+    transition: color .18s var(--ease);
+  }
+  .nav-link::after {
+    content: ''; position: absolute; left: 0; bottom: 0;
+    width: 100%; height: 1.5px; background: var(--blue);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform .25s var(--ease);
+  }
+  .nav-link:hover { color: var(--text); }
+  .nav-link:hover::after { transform: scaleX(1); }
+  .nav-link:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 4px; border-radius: 3px; }
+  .nav-cta { display: none; }
+
+  .burger {
+    display: grid; place-items: center;
+    width: 40px; height: 40px; font-size: 22px;
+    background: transparent; border: 1px solid var(--line-2);
+    border-radius: var(--r-ctl); color: var(--text); cursor: pointer;
+    transition: border-color .18s var(--ease), background .18s var(--ease);
+  }
+  .burger:hover { border-color: rgba(61,168,248,.5); background: rgba(61,168,248,.07); }
+  .burger:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; }
+  .burger .ic-close { display: none; }
+  .burger[aria-expanded="true"] .ic-open { display: none; }
+  .burger[aria-expanded="true"] .ic-close { display: block; }
+
+  .mob-menu { display: none; border-top: 1px solid var(--line); background: rgba(7,12,20,.97); padding: 8px var(--gut) 22px; }
+  .mob-menu.open { display: block; }
+  .mob-menu a.nav-link { display: block; padding: 13px 0; font-size: 16px; border-bottom: 1px solid var(--line); }
+  .mob-menu a.nav-link::after { display: none; }
+  .mob-menu .btn { width: 100%; margin-top: 18px; }
+
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+    .nav-cta   { display: inline-flex; }
+    .burger    { display: none; }
+    .mob-menu  { display: none !important; }
+  }
+
+  /* ============================================================
+     HERO  -  asymmetric split, real work as the visual
+     ============================================================ */
+  .hero {
+    position: relative; overflow: hidden;
+    padding-top: calc(var(--nav-h) + clamp(48px, 7vw, 84px));
+    padding-bottom: clamp(64px, 8vw, 104px);
+  }
+  /* static ambience: one glow + a fine grid. No canvas, no animation loop. */
+  .hero::before {
+    content: ''; position: absolute; z-index: 0; pointer-events: none;
+    width: min(1100px, 130%); aspect-ratio: 1;
+    top: -55%; left: 50%; transform: translateX(-50%);
+    background: radial-gradient(circle, rgba(61,168,248,.13) 0%, rgba(61,168,248,.04) 42%, transparent 68%);
+  }
+  .hero::after {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(125,166,214,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125,166,214,.05) 1px, transparent 1px);
+    background-size: 62px 62px;
+    -webkit-mask-image: radial-gradient(ellipse 85% 62% at 50% 28%, #000 20%, transparent 78%);
+            mask-image: radial-gradient(ellipse 85% 62% at 50% 28%, #000 20%, transparent 78%);
+  }
+  .hero-in { position: relative; z-index: 1; display: grid; gap: clamp(48px, 6vw, 68px); align-items: center; }
+  .hero-copy > * + * { margin-top: 22px; }
+  .hero-copy .lead { max-width: 45ch; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; padding-top: 6px; }
+  /* stacked CTAs should share one width rather than sitting ragged */
+  @media (max-width: 479px) {
+    .hero-actions { display: grid; grid-template-columns: 1fr; }
+    .hero-actions .btn { width: 100%; }
+  }
+
+  @media (min-width: 1000px) {
+    .hero-in { grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr); }
+  }
+
+  /* browser frame holding a real screenshot */
+  .frame {
+    border-radius: var(--r-card); overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--line-2);
+    box-shadow: 0 40px 90px -30px rgba(0,0,0,.9), 0 0 0 1px rgba(61,168,248,.05);
+  }
+  .frame-bar {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 14px;
+    background: rgba(125,166,214,.05);
+    border-bottom: 1px solid var(--line);
+  }
+  .frame-dots { display: flex; gap: 6px; flex: none; }
+  .frame-dots i { width: 9px; height: 9px; border-radius: 50%; background: rgba(125,166,214,.26); }
+  .frame-url {
+    flex: 1; min-width: 0; text-align: center;
+    font-size: 11.5px; color: var(--text-3);
+    background: rgba(7,12,20,.6); border-radius: var(--r-xs); padding: 4px 10px;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  }
+  .frame img { width: 100%; aspect-ratio: 16/10; object-fit: cover; object-position: top center; }
+
+  @media (min-width: 1200px) {
+    .hero-visual { margin-right: calc(-1 * clamp(24px, 5vw, 90px)); }
+  }
+
+  /* hero shot as a link down to the build */
+  .frame-link { display: block; position: relative; text-decoration: none; border-radius: var(--r-card); }
+  .frame-link .stage { transition: border-color .25s var(--ease), box-shadow .25s var(--ease); }
+  .frame-link:hover .stage,
+  .frame-link:focus-visible .stage { border-color: rgba(61,168,248,.55); }
+  .frame-link:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 6px; }
+
+  .shot-hint {
+    position: absolute; right: 18px; bottom: 18px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 9px 15px; border-radius: 999px;
+    background: var(--gold); color: var(--ink);
+    font-size: 13px; font-weight: 600; white-space: nowrap;
+    box-shadow: 0 10px 26px rgba(0,0,0,.55);
+    opacity: 0; transition: opacity .2s var(--ease);
+    pointer-events: none;
+  }
+  .shot-hint .ic { font-size: 15px; stroke-width: 2.2; }
+  .frame-link:hover .shot-hint,
+  .frame-link:focus-visible .shot-hint { opacity: 1; }
+
+  /* ============================================================
+     INCLUDED  -  hairline spec row, no cards
+     ============================================================ */
+  .included { display: grid; gap: 0; grid-template-columns: 1fr; }
+  .inc-item { padding: 22px 0; border-top: 1px solid var(--line); }
+  .inc-item:first-child { border-top: 0; }
+  .inc-item .ic { font-size: 19px; color: var(--blue); margin-bottom: 12px; }
+  .inc-item h3 { font-size: 15.5px; margin-bottom: 5px; }
+  .inc-item p { font-size: 13.5px; line-height: 1.6; color: var(--text-3); }
+  .inc-item.is-gold .ic, .inc-item.is-gold h3 { color: var(--gold); }
+
+  @media (min-width: 700px) {
+    .included { grid-template-columns: repeat(3, 1fr); column-gap: 32px; }
+    .inc-item { border-top: 1px solid var(--line); padding: 26px 0 4px; }
+    .inc-item:first-child { border-top: 1px solid var(--line); }
+  }
+  @media (min-width: 1040px) {
+    .included { grid-template-columns: repeat(5, 1fr); column-gap: 28px; }
+  }
+
+  /* ============================================================
+     SERVICES  -  asymmetric bento, exactly 7 cells
+     ============================================================ */
+  .bento { display: grid; grid-template-columns: 1fr; gap: 14px; }
+  .bento .card { display: flex; flex-direction: column; }
+  .bento h3 { margin: 16px 0 8px; }
+  .bento p  { font-size: 14px; line-height: 1.65; color: var(--text-3); }
+  .bento .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+
+  .inc-list { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; }
+  .inc-list li {
+    position: relative; padding-left: 24px;
+    font-size: 13.5px; line-height: 1.55; color: var(--text-2);
+  }
+  .inc-list li::before {
+    content: ''; position: absolute; left: 4px; top: .55em;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--blue); opacity: .7;
+  }
+  @media (min-width: 560px) { .inc-list { grid-template-columns: 1fr 1fr; column-gap: 20px; } }
+
+  /* ---- shader backdrop (services) ------------------------------------
+     A WebGL "pulsing border" ring sits behind the section. Its base colour
+     is near-black, so `mix-blend-mode: screen` drops the black out entirely
+     and leaves only the blue glow: no dark rectangle edge, nothing to line
+     up with the section bounds. Masked soft at top and bottom so it melts
+     into the neighbouring bands, and kept under the content at z-index 0. */
+  .sec-shader { overflow: hidden; }
+  .sec-shader > .wrap { position: relative; z-index: 1; }
+  #svc-shader {
+    position: absolute; z-index: 0;
+    /* Bled past the section so the CSS blur has no visible cut-off edge; the
+       parent clips it, so this cannot cause page overflow.
+       width/height are explicit on purpose: <canvas> is a replaced element,
+       so insets alone do NOT stretch it - it silently falls back to its
+       intrinsic 300x150 and renders as a tile in the corner. */
+    top: -60px; left: -60px;
+    width: calc(100% + 120px);
+    height: calc(100% + 120px);
+    pointer-events: none;
+    opacity: .5;
+    /* The raw shader draws a hard travelling highlight. Unblurred it crosses
+       the headline as a bright streak and eats text contrast. Blurring turns
+       it into a soft moving wash, which is both easier to read against and
+       the more expensive-looking result. */
+    filter: blur(28px) saturate(125%);
+    mix-blend-mode: screen;
+    /* Fade the horizontal arcs out at top and bottom: it melts into the
+       neighbouring bands instead of drawing a hard line across the section
+       boundary, and it keeps the travelling light off the headline. What
+       reads is the two vertical arcs running down the outer margins, clear
+       of the text column entirely. */
+    /* Hold it off the section head (the only text not sitting on an opaque
+       card), then let it run at full strength around the grid below. */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, transparent 11%, #000 25%, #000 92%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, transparent 11%, #000 25%, #000 92%, transparent 100%);
+  }
+  /* single column on small screens: text runs full width, so pull the bloom
+     down and back rather than letting it sit under the section head */
+  @media (max-width: 719px) {
+    #svc-shader { opacity: .5; filter: blur(30px); }
+  }
+
+  .sec-close {
+    margin-top: 32px; padding-top: 28px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px;
+  }
+  .sec-close p { font-size: 14.5px; color: var(--text-2); max-width: 46ch; }
+
+  /* cell visual variation */
+  .cell-feature {
+    background:
+      radial-gradient(120% 130% at 100% 0%, rgba(61,168,248,.16) 0%, transparent 58%),
+      var(--surface);
+  }
+  .cell-feature::after {
+    content: ''; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+    background-image:
+      linear-gradient(rgba(125,166,214,.055) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125,166,214,.055) 1px, transparent 1px);
+    background-size: 34px 34px;
+    -webkit-mask-image: linear-gradient(200deg, #000, transparent 62%);
+            mask-image: linear-gradient(200deg, #000, transparent 62%);
+  }
+  .cell-feature { position: relative; }
+  .cell-feature > * { position: relative; z-index: 1; }
+  .cell-gold {
+    background: radial-gradient(110% 120% at 0% 100%, rgba(255,200,17,.055) 0%, transparent 52%), var(--surface);
+    border-color: rgba(255,200,17,.19);
+  }
+  .cell-gold.card-hover:hover { border-color: rgba(255,200,17,.4); }
+
+  @media (min-width: 720px) {
+    .bento { grid-template-columns: repeat(6, 1fr); }
+    .c1 { grid-column: span 6; }
+    .c2 { grid-column: span 6; }
+    .c3, .c4 { grid-column: span 3; }
+    .c5 { grid-column: span 6; }
+    .c6, .c7 { grid-column: span 3; }
+  }
+  @media (min-width: 1000px) {
+    .bento { grid-template-columns: repeat(12, 1fr); }
+    .c1 { grid-column: span 7; }
+    .c2 { grid-column: span 5; }
+    .c3 { grid-column: span 4; }
+    .c4 { grid-column: span 4; }
+    .c5 { grid-column: span 4; }
+    .c6 { grid-column: span 6; }
+    .c7 { grid-column: span 6; }
+  }
+
+  /* ============================================================
+     WORK  -  full showcase rows
+     ============================================================ */
+  .work-row { display: grid; gap: clamp(32px, 5vw, 56px); align-items: center; }
+  .work-row + .work-row { margin-top: clamp(64px, 8vw, 104px); }
+  .work-copy > * + * { margin-top: 16px; }
+  .work-copy p { max-width: 46ch; }
+  .work-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--text-3);
+  }
+  .work-tag b { color: var(--blue); font-weight: 600; }
+  .work-meta { display: flex; flex-wrap: wrap; gap: 8px; padding-top: 4px; }
+  /* the chips are metadata, the CTA is an action: give it its own breathing
+     room rather than letting it read as another chip */
+  .work-cta { margin-top: 22px; align-self: start; }
+  .chip {
+    font-size: 12.5px; color: var(--text-2);
+    border: 1px solid var(--line); border-radius: 999px; padding: 5px 13px;
+    background: rgba(125,166,214,.04);
+  }
+
+  /* desktop shot with the mobile shot overlapping its corner */
+  .shot { position: relative; padding-bottom: 34px; padding-left: 30px; }
+
+  /* STAGE
+     A demo build is somebody else's brand. Dropping a cream-and-gold
+     restaurant screenshot straight onto this navy page is an abrupt colour
+     jump, so each showcase sits on a mat: a neutral surface border, a soft
+     brand glow behind it, and the same browser chrome used in the hero.
+     The mat is the barrier; the chrome says "this is a website, not our page". */
+  .stage {
+    position: relative; z-index: 1;
+    padding: clamp(9px, 1.2vw, 14px);
+    border-radius: var(--r-card);
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line-2);
+    box-shadow:
+      0 34px 74px -28px rgba(0,0,0,.88),
+      inset 0 1px 0 rgba(255,255,255,.055);
+  }
+  /* kept inside the container: a negative horizontal inset here pushed the
+     document past the viewport at tablet widths */
+  .shot::before {
+    content: ''; position: absolute; z-index: 0; inset: 5% 0 9%;
+    background: radial-gradient(68% 58% at 50% 46%, rgba(61,168,248,.19), transparent 74%);
+    pointer-events: none;
+  }
+  /* inside a stage the frame is the inner element, so the stage carries the
+     shadow and the frame keeps only a hairline */
+  .stage .frame { border-radius: var(--r-ctl); box-shadow: none; border-color: var(--line-2); }
+
+  .shot-mob {
+    position: absolute; z-index: 2; left: 0; bottom: 0; width: clamp(92px, 18%, 138px);
+    padding: 5px;
+    border-radius: 14px;
+    background: linear-gradient(180deg, var(--surface-2), var(--surface));
+    border: 1px solid var(--line);
+    box-shadow: 0 20px 44px -14px rgba(0,0,0,.92);
+  }
+  .shot-mob img { border-radius: var(--r-xs); }
+  .shot-mob img { width: 100%; aspect-ratio: 1/2; object-fit: cover; object-position: top center; display: block; }
+
+  /* below 600px the inset phone shrinks to illegible clutter, so drop it
+     and give the desktop shot the full column */
+  @media (max-width: 599px) {
+    .shot { padding-left: 0; padding-bottom: 0; }
+    .shot-mob { display: none; }
+  }
+
+  @media (min-width: 940px) {
+    .work-row      { grid-template-columns: minmax(0, 1fr) minmax(0, 1.28fr); }
+    /* mirror the track sizes too, so the shot keeps the wide column in both
+       rows and the two rows read as a matched pair */
+    .work-row.flip { grid-template-columns: minmax(0, 1.28fr) minmax(0, 1fr); }
+    .work-row.flip .work-copy { order: 2; }
+    .work-row.flip .shot      { order: 1; padding-left: 0; padding-right: 30px; }
+    .work-row.flip .shot-mob  { left: auto; right: 0; }
+  }
+
+  /* ---- aurora backdrop (work section) --------------------------------
+     Adapted from the 21st.dev Aurora Background component, rebuilt in plain
+     CSS. Three things changed on purpose:
+       1. Palette. The stock blobs are purple-600 / fuchsia-600 / indigo-700
+          over violet radials. That is the AI-default violet this site
+          deliberately avoids, and it is nowhere in the brand guide. These
+          are the brand blues.
+       2. The 50-80 twinkling star divs are gone. A starfield says nothing
+          about a web design studio, and 80 permanently-animating nodes is
+          real compositing cost for decoration.
+       3. No framer-motion and no JS at all. Three elements animating only
+          `transform`, which the compositor handles on its own.
+     ------------------------------------------------------------------- */
+  .sec-aurora { overflow: hidden; }
+  .sec-aurora > .wrap { position: relative; z-index: 1; }
+
+  .aurora {
+    position: absolute; inset: 0; z-index: 0;
+    overflow: hidden; pointer-events: none;
+    /* single knob for the whole effect: raise toward 1 for more glow,
+       lower toward 0 for less. Scales all three blobs together. */
+    --aurora-strength: .6;
+    opacity: var(--aurora-strength);
+    mix-blend-mode: screen;
+    /* melt into the neighbouring bands instead of ending on a hard line */
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 17%, #000 83%, transparent 100%);
+            mask-image: linear-gradient(180deg, transparent 0%, #000 17%, #000 83%, transparent 100%);
+  }
+  .aurora i {
+    position: absolute; display: block;
+    aspect-ratio: 1; border-radius: 50%;
+    filter: blur(90px);
+    will-change: transform;
+  }
+  .aurora .a1 { width: 46%; top: -15%; left: -9%;     background: #1A72C6; opacity: .40; }
+  /* a2 sits bottom-right, which is where the flipped row's copy lives, so it
+     is the dimmest of the three: at .26 the body text measured 4.58:1, only
+     just over the AA floor */
+  .aurora .a2 { width: 40%; bottom: -20%; right: -10%; background: #3DA8F8; opacity: .17; }
+  .aurora .a3 { width: 34%; top: 33%; left: 40%;      background: #16457C; opacity: .38; }
+
+  @media (prefers-reduced-motion: no-preference) {
+    /* very long, offset cycles so the drift never reads as a loop */
+    .aurora .a1 { animation: aur-a 38s ease-in-out infinite alternate; }
+    .aurora .a2 { animation: aur-b 46s ease-in-out infinite alternate; }
+    .aurora .a3 { animation: aur-c 54s ease-in-out infinite alternate; }
+  }
+  @keyframes aur-a {
+    from { transform: translate3d(-3%, -2%, 0) scale(1);    }
+    to   { transform: translate3d(7%, 4%, 0)   scale(1.18); }
+  }
+  @keyframes aur-b {
+    from { transform: translate3d(4%, 2%, 0)   scale(1.12); }
+    to   { transform: translate3d(-6%, -3%, 0) scale(1);    }
+  }
+  @keyframes aur-c {
+    from { transform: translate3d(2%, -3%, 0)  scale(1);    }
+    to   { transform: translate3d(-5%, 3%, 0)  scale(1.22); }
+  }
+  @media (max-width: 719px) {
+    .aurora { --aurora-strength: .42; }
+    .aurora i { filter: blur(64px); }
+  }
+
+  /* ============================================================
+     PROCESS  -  numbered steps on a connecting rule
+     ============================================================ */
+  .steps { display: grid; gap: 36px; grid-template-columns: 1fr; counter-reset: step; }
+  .step { position: relative; padding-top: 30px; border-top: 1px solid var(--line); }
+  .step-n {
+    position: absolute; top: -1px; left: 0;
+    display: flex; align-items: center; gap: 9px;
+    padding-right: 12px; background: var(--ink);
+    transform: translateY(-50%);
+    font-size: 12px; font-weight: 700; letter-spacing: .1em; color: var(--blue);
+  }
+  .step-n .ic { font-size: 15px; }
+  .step h3 { margin-bottom: 9px; }
+  .step p  { font-size: 14px; line-height: 1.7; color: var(--text-3); }
+  @media (min-width: 820px) { .steps { grid-template-columns: repeat(3, 1fr); gap: 40px; } }
+
+  /* ============================================================
+     ABOUT  -  split, hairline list, no cards
+     ============================================================ */
+  .about { display: grid; gap: clamp(40px, 5vw, 64px); align-items: start; }
+  .about-copy > * + * { margin-top: 20px; }
+  .price { color: var(--gold); font-weight: 600; }
+
+  .pts { display: grid; }
+  .pt { display: grid; grid-template-columns: auto 1fr; gap: 15px; padding: 22px 0; border-top: 1px solid var(--line); }
+  .pt:first-child { border-top: 0; padding-top: 0; }
+  .pt .ic-dot {
+    width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center;
+    background: rgba(61,168,248,.13); color: var(--blue); font-size: 14px; margin-top: 1px;
+  }
+  .pt.is-gold .ic-dot { background: rgba(255,200,17,.13); color: var(--gold); }
+  .pt h3 { font-size: 15.5px; margin-bottom: 5px; }
+  .pt p  { font-size: 13.5px; line-height: 1.65; color: var(--text-3); }
+  @media (min-width: 940px) { .about { grid-template-columns: minmax(0,1.05fr) minmax(0,.95fr); } }
+
+  /* ============================================================
+     CONTACT
+     ============================================================ */
+  .contact { display: grid; gap: clamp(40px, 5vw, 64px); align-items: start; }
+  @media (min-width: 940px) { .contact { grid-template-columns: minmax(0,.85fr) minmax(0,1.15fr); } }
+
+  .next { display: grid; margin-top: 30px; }
+  .next-item { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 18px 0; border-top: 1px solid var(--line); }
+  .next-item:first-child { border-top: 0; padding-top: 0; }
+  .next-item .ic { font-size: 18px; color: var(--blue); margin-top: 3px; }
+  .next-item h3 { font-size: 15px; margin-bottom: 3px; }
+  .next-item p { font-size: 13.5px; line-height: 1.6; color: var(--text-3); }
+
+  .form { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); padding: clamp(22px, 3.5vw, 32px); }
+  .field { display: grid; gap: 7px; margin-bottom: 16px; }
+  .field label { font-size: 13px; font-weight: 500; color: var(--text-2); }
+  .field .hint { font-size: 12px; color: var(--text-3); }
+  .input {
+    width: 100%; background: rgba(7,12,20,.55);
+    border: 1px solid var(--line-2); border-radius: var(--r-ctl);
+    padding: 12px 14px; font-size: 14.5px; color: var(--text);
+    transition: border-color .18s var(--ease), background .18s var(--ease);
+  }
+  .input::placeholder { color: var(--text-3); }
+  .input:hover { border-color: rgba(125,166,214,.34); }
+  .input:focus { outline: none; border-color: var(--blue); background: rgba(7,12,20,.8); }
+  .input:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 2px; }
+  textarea.input { resize: vertical; min-height: 118px; }
+  .field-row { display: grid; gap: 16px; }
+  @media (min-width: 560px) { .field-row { grid-template-columns: 1fr 1fr; } }
+
+  .err {
+    display: none; align-items: center; gap: 6px;
+    font-size: 12.5px; color: #FF9B9B;
+  }
+  .err .ic { font-size: 14px; }
+  .field.invalid .err { display: flex; }
+  .field.invalid .input { border-color: rgba(255,120,120,.6); }
+
+  .form-note { font-size: 12.5px; color: var(--text-3); text-align: center; margin-top: 14px; }
+  .form-note a { color: var(--text-2); }
+
+  .sent { display: none; text-align: center; padding: 26px 6px; }
+  .sent .ic { font-size: 40px; color: var(--blue); margin: 0 auto 16px; }
+  .sent h3 { font-size: 20px; margin-bottom: 10px; }
+  .sent p { font-size: 14px; color: var(--text-3); max-width: 40ch; margin-inline: auto; }
+  .form.done .form-body { display: none; }
+  .form.done .sent { display: block; }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  .foot { border-top: 1px solid var(--line); padding: clamp(48px, 6vw, 68px) 0 30px; background: var(--ink-2); }
+  .foot-grid { display: grid; gap: 40px; grid-template-columns: 1fr; }
+  @media (min-width: 780px) { .foot-grid { grid-template-columns: 2fr 1fr 1.2fr; gap: 48px; } }
+  .foot h4 { font-size: 11.5px; font-weight: 600; letter-spacing: .11em; text-transform: uppercase; color: var(--text-3); margin-bottom: 16px; }
+  .foot-list { display: grid; gap: 11px; }
+  /* :not(.btn) so the footer CTA keeps its own white label and contrast */
+  .foot-list a:not(.btn), .foot-list span { font-size: 14px; color: var(--text-2); text-decoration: none; transition: color .18s var(--ease); }
+  .foot-list a:not(.btn):hover { color: var(--text); }
+  .foot-list a:focus-visible { outline: 2px solid var(--blue-2); outline-offset: 3px; border-radius: 3px; }
+  .foot-contact { display: inline-flex; align-items: center; gap: 9px; }
+  .foot-contact .ic { font-size: 16px; color: var(--blue); }
+  .foot-bar {
+    margin-top: clamp(40px, 5vw, 56px); padding-top: 24px; border-top: 1px solid var(--line);
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;
+    font-size: 13px; color: var(--text-3);
+  }
+
+  /* ============================================================
+     MOTION  -  MOTION_INTENSITY 4. Everything below is opt-out.
+     Reveal = sequence/hierarchy on scroll. Hover = feedback.
+     ============================================================ */
+  .reveal { opacity: 1; }
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      opacity: 0; transform: translateY(22px);
+      transition: opacity .6s var(--ease), transform .6s var(--ease);
+      transition-delay: calc(var(--d, 0) * 90ms);
+    }
+    .reveal.in { opacity: 1; transform: none; }
+
+    .btn-primary:hover, .btn-ghost:hover { transform: translateY(-1px); }
+    .btn:active { transform: translateY(0) scale(.985); }
+    .card-hover:hover { transform: translateY(-3px); }
+
+    .frame-link .stage { transition: transform .3s var(--ease), border-color .25s var(--ease); }
+    .frame-link:hover .stage, .frame-link:focus-visible .stage { transform: translateY(-5px); }
+    .frame-link:active .stage { transform: translateY(-1px); }
+    .shot-hint { transform: translateY(7px); transition: opacity .2s var(--ease), transform .25s var(--ease); }
+    .frame-link:hover .shot-hint, .frame-link:focus-visible .shot-hint { transform: none; }
+
+    .hero-copy > *, .hero-visual {
+      opacity: 0; animation: rise .7s var(--ease) forwards;
+    }
+    .hero-copy > *:nth-child(1) { animation-delay: .05s; }
+    .hero-copy > *:nth-child(2) { animation-delay: .13s; }
+    .hero-copy > *:nth-child(3) { animation-delay: .21s; }
+    .hero-copy > *:nth-child(4) { animation-delay: .29s; }
+    .hero-visual { animation-delay: .22s; }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+
+  .skip {
+    position: absolute; left: -9999px; top: 0; z-index: 200;
+    background: var(--blue-deep); color: #fff; padding: 12px 20px; border-radius: var(--r-ctl);
+    text-decoration: none; font-size: 14px; font-weight: 600;
+  }
+  .skip:focus { left: var(--gut); top: 12px; }
+  </style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ══════════════ NAV ══════════════ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#top" aria-label="AlvSolutions home">
+      <img src="Brand_Assets/derived/alv-mark.png" alt="" width="42" height="27" />
+      <span class="wordmark">Alv<span>Solutions</span></span>
+    </a>
+
+    <nav class="nav-links" aria-label="Primary">
+      <a class="nav-link" href="#services">Services</a>
+      <a class="nav-link" href="#work">Work</a>
+      <a class="nav-link" href="#process">Process</a>
+      <a class="nav-link" href="#about">About</a>
+    </nav>
+
+    <a class="btn btn-primary btn-sm nav-cta" href="#contact">Start a project</a>
+
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="mob-menu">
+      <svg class="ic ic-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6l16 0" /> <path d="M4 12l16 0" /> <path d="M4 18l16 0" /></svg>
+      <svg class="ic ic-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12" /> <path d="M6 6l12 12" /></svg>
+    </button>
+  </div>
+
+  <div class="mob-menu" id="mob-menu">
+    <a class="nav-link" href="#services">Services</a>
+    <a class="nav-link" href="#work">Work</a>
+    <a class="nav-link" href="#process">Process</a>
+    <a class="nav-link" href="#about">About</a>
+    <a class="btn btn-primary" href="#contact">Start a project</a>
+  </div>
+</header>
+
+<main id="main">
+<span id="top"></span>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section class="hero">
+  <div class="wrap hero-in">
+
+    <div class="hero-copy">
+      <span class="pill">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" /></svg>
+        Web design in San Antonio, Texas
+      </span>
+
+      <h1>Websites that bring in <span class="accent">work</span>.</h1>
+
+      <p class="lead">
+        I build fast, professional sites for small businesses. Flat pricing,
+        and you are live in about a week.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="#contact">
+          Start a project
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /></svg>
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#work">See recent builds</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <!-- the whole shot is the link down to the build it belongs to -->
+      <a class="frame-link" href="#work" aria-label="Jump to the Hacienda Grill build">
+        <div class="stage">
+          <div class="frame">
+            <div class="frame-bar">
+              <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="frame-url">Hacienda Grill &middot; demo build</div>
+            </div>
+            <img src="Portfolio/web/hacienda-grill-1440.jpg"
+                 srcset="Portfolio/web/hacienda-grill-720.jpg 720w, Portfolio/web/hacienda-grill-1440.jpg 1440w"
+                 sizes="(min-width: 1000px) 55vw, 100vw"
+                 width="1440" height="900" fetchpriority="high"
+                 alt="Hacienda Grill website homepage, a demo restaurant site built by AlvSolutions" />
+          </div>
+        </div>
+        <!-- deliberately NOT "View build": that label belongs to the buttons in
+             the work section, which open the demo. This one scrolls. -->
+        <span class="shot-hint" aria-hidden="true">
+          See this build
+          <svg class="ic" viewBox="0 0 24 24"><path d="M12 5l0 14" /> <path d="M18 13l-6 6" /> <path d="M6 13l6 6" /></svg>
+        </span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════ WHAT'S INCLUDED ══════════════ -->
+<section class="sec sec-tight band sec-line" aria-label="What every build includes">
+  <div class="wrap">
+    <div class="included">
+
+      <div class="inc-item is-gold reveal" style="--d:0">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.5 7.5a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /> <path d="M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3" /></svg>
+        <h3>From $500 flat</h3>
+        <p>One price agreed up front. No hidden fees, no retainer traps.</p>
+      </div>
+
+      <div class="inc-item reveal" style="--d:1">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 7v5l3 3" /></svg>
+        <h3>5 to 10 business days</h3>
+        <p>Most sites go live inside two weeks of our first conversation.</p>
+      </div>
+
+      <div class="inc-item reveal" style="--d:2">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.657 18c-2.572 0 -4.657 -2.007 -4.657 -4.483c0 -2.475 2.085 -4.482 4.657 -4.482c.393 -1.762 1.794 -3.2 3.675 -3.773c1.88 -.572 3.956 -.193 5.444 1c1.488 1.19 2.162 3.007 1.77 4.769h.99c1.913 0 3.464 1.56 3.464 3.486c0 1.927 -1.551 3.487 -3.465 3.487h-11.878" /></svg>
+        <h3>Hosting and domain</h3>
+        <p>Set up and handled for you. Nothing technical to manage.</p>
+      </div>
+
+      <div class="inc-item reveal" style="--d:3">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14" /> <path d="M11 4h2" /> <path d="M12 17v.01" /></svg>
+        <h3>Built for phones first</h3>
+        <p>Most of your customers arrive on a phone. That is where it is designed.</p>
+      </div>
+
+      <div class="inc-item reveal" style="--d:4">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M15 15l3.35 3.35" /> <path d="M9 15l-3.35 3.35" /> <path d="M15 9l3.35 -3.35" /> <path d="M9 9l-3.35 -3.35" /></svg>
+        <h3>Support after launch</h3>
+        <p>You get my number, not a ticket queue. Updates whenever you need them.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<section class="sec sec-shader" id="services">
+  <canvas id="svc-shader" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom: 44px;">
+      <h2>Everything you need to run a business online.</h2>
+      <p class="lead">From a single landing page to the print and apparel that carry the same brand.</p>
+    </div>
+
+    <div class="bento">
+
+      <article class="card card-hover cell-feature c1 reveal" style="--d:0">
+        <div class="ic-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16" /> <path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -12" /> <path d="M8 4v4" /></svg>
+        </div>
+        <h3>Business websites</h3>
+        <p>A branded site that represents your business around the clock, structured so a visitor knows what you do and how to reach you within seconds of landing.</p>
+        <ul class="inc-list">
+          <li>Home, services, about and contact</li>
+          <li>Contact and quote forms that reach your inbox</li>
+          <li>Google Maps, hours and click to call</li>
+          <li>Photo galleries for your own work</li>
+        </ul>
+      </article>
+
+      <article class="card card-hover c2 reveal" style="--d:1">
+        <div class="ic-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 3v12h-5c-.023 -3.681 .184 -7.406 5 -12m0 12v6h-1v-3m-10 -14v17m-3 -17v3a3 3 0 1 0 6 0v-3" /></svg>
+        </div>
+        <h3>Restaurant and catering pages</h3>
+        <p>A page built around your food business. Pick one or bundle both.</p>
+        <div class="tiles">
+          <div class="tile">
+            <div class="tile-label">Menu page</div>
+            <p>Full menu, specials and photos</p>
+          </div>
+          <div class="tile tile-gold">
+            <div class="tile-label">Catering page</div>
+            <p>Packages, pricing and inquiry form</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card card-hover c3 reveal" style="--d:2">
+        <div class="ic-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.5 21h-5.5a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v6" /> <path d="M16 3v4" /> <path d="M8 3v4" /> <path d="M4 11h16" /> <path d="M15 19l2 2l4 -4" /></svg>
+        </div>
+        <h3>Booking integration</h3>
+        <p>Let clients book appointments straight from your site, 24/7. No phone tag, no back and forth.</p>
+      </article>
+
+      <article class="card card-hover c4 reveal" style="--d:3">
+        <div class="ic-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 0 -9 9" /> <path d="M3.6 9h16.8" /> <path d="M3.6 15h7.9" /> <path d="M11.5 3a17 17 0 0 0 0 18" /> <path d="M12.5 3a16.984 16.984 0 0 1 2.574 8.62" /> <path d="M15 18a3 3 0 1 0 6 0a3 3 0 1 0 -6 0" /> <path d="M20.2 20.2l1.8 1.8" /></svg>
+        </div>
+        <h3>Search visibility</h3>
+        <p>Clean structure, real page titles and fast load times, so Google can actually find and rank you.</p>
+      </article>
+
+      <article class="card card-hover cell-gold c5 reveal" style="--d:4">
+        <div class="ic-box gold">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 12a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" /> <path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M15 15l3.35 3.35" /> <path d="M9 15l-3.35 3.35" /> <path d="M15 9l3.35 -3.35" /> <path d="M9 9l-3.35 -3.35" /></svg>
+        </div>
+        <h3>Ongoing support</h3>
+        <p>I do not disappear after launch. Updates, fixes and changes whenever your business needs them.</p>
+      </article>
+
+      <article class="card card-hover c6 reveal" style="--d:5">
+        <div class="ic-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 12h3v4h-3l0 -4" /> <path d="M10 6h-6a1 1 0 0 0 -1 1v12a1 1 0 0 0 1 1h16a1 1 0 0 0 1 -1v-12a1 1 0 0 0 -1 -1h-6" /> <path d="M10 4a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1z" /> <path d="M14 16h3" /> <path d="M14 12h3" /></svg>
+        </div>
+        <h3>Business cards</h3>
+        <p>Designed to match the site exactly, so your brand looks the same on screen and in hand.</p>
+        <div class="tiles">
+          <div class="tile">
+            <div class="tile-label">Simple</div>
+            <p>Essential info, quality stock</p>
+          </div>
+          <div class="tile tile-gold">
+            <div class="tile-label">Premium</div>
+            <p>Thick stock, refined design</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="card card-hover c7 reveal" style="--d:6">
+        <div class="ic-box">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4l6 2v5h-3v8a1 1 0 0 1 -1 1h-10a1 1 0 0 1 -1 -1v-8h-3v-5l6 -2a3 3 0 0 0 6 0" /></svg>
+        </div>
+        <h3>Employee shirt design</h3>
+        <p>Your team is your brand on the move. Shirts that look sharp and keep you recognisable on every job.</p>
+        <div class="tiles">
+          <div class="tile">
+            <div class="tile-label">Standard</div>
+            <p>Logo, brand colors, comfort fit</p>
+          </div>
+          <div class="tile tile-gold">
+            <div class="tile-label">Premium</div>
+            <p>Front, back and sleeve design</p>
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="sec-close reveal">
+      <p>Not sure which of these you need? Tell me what the business does and I will say so plainly.</p>
+      <a class="btn btn-ghost" href="#contact">
+        Start a project
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ WORK ══════════════ -->
+<section class="sec band sec-line sec-aurora" id="work">
+  <div class="aurora" aria-hidden="true"><i class="a1"></i><i class="a2"></i><i class="a3"></i></div>
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom: clamp(48px, 6vw, 72px);">
+      <span class="eyebrow">Recent builds</span>
+      <h2 style="margin-top: 14px;">Two demo sites, built end to end.</h2>
+      <p class="lead">Made to show what a finished site actually looks like before you commit to one.</p>
+    </div>
+
+    <article class="work-row reveal">
+      <div class="work-copy">
+        <span class="work-tag"><b>Demo build</b> &middot; Restaurant</span>
+        <h3 style="font-size: clamp(24px, 2.6vw, 32px); font-weight: 700;">Hacienda Grill</h3>
+        <p class="body-3">
+          A full restaurant site: menu with photography, hours, location and a
+          reservation form. The menu is tabbed rather than a printed PDF, so it
+          stays readable on a phone at the table.
+        </p>
+        <div class="work-meta">
+          <span class="chip">Tabbed menu</span>
+          <span class="chip">Reservations</span>
+          <span class="chip">Hours and location</span>
+        </div>
+        <!-- TODO: swap href for the live URL when the build is hosted -->
+        <a class="btn btn-glass work-cta"
+           href="Demo%20Restaurant/index.html" target="_blank" rel="noopener">
+          View build
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7l-10 10" /> <path d="M8 7l9 0l0 9" /></svg>
+        </a>
+      </div>
+      <div class="shot">
+        <div class="stage">
+          <div class="frame">
+            <div class="frame-bar">
+              <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="frame-url">Hacienda Grill &middot; demo build</div>
+            </div>
+            <img src="Portfolio/web/hacienda-grill-1440.jpg"
+                 srcset="Portfolio/web/hacienda-grill-720.jpg 720w, Portfolio/web/hacienda-grill-1440.jpg 1440w"
+                 sizes="(min-width: 940px) 58vw, 100vw"
+                 width="1440" height="900" loading="lazy" decoding="async"
+                 alt="Hacienda Grill homepage on desktop" />
+          </div>
+        </div>
+        <div class="shot-mob">
+          <img src="Portfolio/web/hacienda-grill-mobile.jpg" width="430" height="860" loading="lazy" decoding="async"
+               alt="Hacienda Grill homepage on mobile" />
+        </div>
+      </div>
+    </article>
+
+    <article class="work-row flip reveal">
+      <div class="work-copy">
+        <span class="work-tag"><b>Demo build</b> &middot; Auto services</span>
+        <h3 style="font-size: clamp(24px, 2.6vw, 32px); font-weight: 700;">Lucid Detailing</h3>
+        <p class="body-3">
+          A mobile detailing site built around booking. Services and pricing are
+          laid out plainly, a gallery carries the before and after work, and the
+          booking call to action follows you down the page.
+        </p>
+        <div class="work-meta">
+          <span class="chip">Service pricing</span>
+          <span class="chip">Booking flow</span>
+          <span class="chip">Gallery</span>
+        </div>
+        <!-- TODO: swap href for the live URL when the build is hosted -->
+        <a class="btn btn-glass work-cta"
+           href="Demo%20Detailer/index.html" target="_blank" rel="noopener">
+          View build
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M17 7l-10 10" /> <path d="M8 7l9 0l0 9" /></svg>
+        </a>
+      </div>
+      <div class="shot">
+        <div class="stage">
+          <div class="frame">
+            <div class="frame-bar">
+              <div class="frame-dots" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="frame-url">Lucid Detailing &middot; demo build</div>
+            </div>
+            <img src="Portfolio/web/lucid-detailing-1440.jpg"
+                 srcset="Portfolio/web/lucid-detailing-720.jpg 720w, Portfolio/web/lucid-detailing-1440.jpg 1440w"
+                 sizes="(min-width: 940px) 58vw, 100vw"
+                 width="1440" height="900" loading="lazy" decoding="async"
+                 alt="Lucid Detailing homepage on desktop" />
+          </div>
+        </div>
+        <div class="shot-mob">
+          <img src="Portfolio/web/lucid-detailing-mobile.jpg" width="430" height="860" loading="lazy" decoding="async"
+               alt="Lucid Detailing homepage on mobile" />
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+<!-- ══════════════ PROCESS ══════════════ -->
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom: clamp(48px, 6vw, 68px);">
+      <h2>How a project runs.</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal" style="--d:0">
+        <span class="step-n">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h8" /> <path d="M8 13h6" /> <path d="M9 18h-3a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-3l-3 3l-3 -3" /></svg>
+          01
+        </span>
+        <h3>Tell me what you need</h3>
+        <p>We talk through your business, your customers and what the site has to do. I ask the questions that decide the rest of the build.</p>
+      </div>
+
+      <div class="step reveal" style="--d:1">
+        <span class="step-n">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" /> <path d="M14 5a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" /> <path d="M4 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" /> <path d="M14 15a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v4a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1l0 -4" /></svg>
+          02
+        </span>
+        <h3>I design and build it</h3>
+        <p>You see the site as it comes together, not just at the end. Revisions are part of the price, not an upsell.</p>
+      </div>
+
+      <div class="step reveal" style="--d:2">
+        <span class="step-n">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 13a8 8 0 0 1 7 7a6 6 0 0 0 3 -5a9 9 0 0 0 6 -8a3 3 0 0 0 -3 -3a9 9 0 0 0 -8 6a6 6 0 0 0 -5 3" /> <path d="M7 14a6 6 0 0 0 -3 6a6 6 0 0 0 6 -3" /> <path d="M15 9m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /></svg>
+          03
+        </span>
+        <h3>We go live</h3>
+        <p>I handle the domain, the hosting and the launch. Then I stay reachable for the updates that come after.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════ ABOUT ══════════════ -->
+<section class="sec band sec-line" id="about">
+  <div class="wrap about">
+
+    <div class="about-copy reveal">
+      <h2>Not just a website.<br />A business asset.</h2>
+      <p class="lead">
+        I am a San Antonio based web designer focused on one thing: getting local
+        businesses online with a site that actually looks good and works.
+      </p>
+      <p class="body-3" style="max-width: 52ch;">
+        No agency overhead, no three month timelines. You get a direct line to the
+        person building your site, and I stay with you after launch through a simple
+        monthly plan. Sites start at <span class="price">$500 flat</span>.
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#contact">
+          Start a project
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="pts reveal" style="--d:1">
+      <div class="pt">
+        <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span>
+        <div>
+          <h3>Fast turnaround</h3>
+          <p>Done in days, not months. Your site is delivered in 5 to 10 business days so you can start getting found online right away.</p>
+        </div>
+      </div>
+      <div class="pt">
+        <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span>
+        <div>
+          <h3>Local to San Antonio</h3>
+          <p>A real person, not a ticket. You can call, meet in person, and work with someone who knows your city.</p>
+        </div>
+      </div>
+      <div class="pt is-gold">
+        <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10" /></svg></span>
+        <div>
+          <h3>Priced for small business</h3>
+          <p>Here to help, not to gouge. One flat price agreed before I start, with no hidden fees and no surprises on your invoice.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section class="sec" id="contact">
+  <div class="wrap contact">
+
+    <div class="reveal">
+      <h2>Let's talk about your site.</h2>
+      <p class="lead" style="margin-top: 18px;">
+        Tell me what your business does and what you need. Free quote, no pressure.
+      </p>
+
+      <div class="next">
+        <div class="next-item">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" /> <path d="M3 7l9 6l9 -6" /></svg>
+          <div>
+            <h3>I reply within a day</h3>
+            <p>Usually the same afternoon.</p>
+          </div>
+        </div>
+        <div class="next-item">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 9h8" /> <path d="M8 13h6" /> <path d="M9 18h-3a3 3 0 0 1 -3 -3v-8a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v8a3 3 0 0 1 -3 3h-3l-3 3l-3 -3" /></svg>
+          <div>
+            <h3>A short call</h3>
+            <p>Fifteen minutes to understand the business and what the site has to do.</p>
+          </div>
+        </div>
+        <div class="next-item">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11.46 20.846a12 12 0 0 1 -7.96 -14.846a12 12 0 0 0 8.5 -3a12 12 0 0 0 8.5 3a12 12 0 0 1 -.09 7.06" /> <path d="M15 19l2 2l4 -4" /></svg>
+          <div>
+            <h3>A flat quote and a date</h3>
+            <p>One price and a launch day, both agreed before any work starts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Client-side validation, then hands off to the mail client.
+         To route through a form service instead, set action/method on the
+         form and delete the mailto handler in the script below. -->
+    <form class="form reveal" id="quote-form" novalidate style="--d:1">
+      <div class="form-body">
+        <div class="field-row">
+          <div class="field" data-field>
+            <label for="f-name">Your name</label>
+            <input class="input" id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jordan Alvarez" />
+            <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></svg>Please enter your name</span>
+          </div>
+          <div class="field" data-field>
+            <label for="f-email">Email address</label>
+            <input class="input" id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@yourbusiness.com" />
+            <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></svg>Please enter a valid email address</span>
+          </div>
+        </div>
+
+        <div class="field" data-field>
+          <label for="f-business">Business name</label>
+          <input class="input" id="f-business" name="business" type="text" autocomplete="organization" required placeholder="Alvarez Roofing" />
+          <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></svg>Please enter your business name</span>
+        </div>
+
+        <div class="field" data-field>
+          <label for="f-project">What do you need?</label>
+          <span class="hint">What your business does, and what the site has to do for it.</span>
+          <textarea class="input" id="f-project" name="project" rows="4" required placeholder="We are a roofing company in Alamo Heights. We need a site that shows our work and lets people request an estimate."></textarea>
+          <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" /> <path d="M12 8v4" /> <path d="M12 16h.01" /></svg>Please tell me a little about the project</span>
+        </div>
+
+        <button class="btn btn-primary btn-lg" type="submit" style="width: 100%;">
+          Send project details
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l14 0" /> <path d="M13 18l6 -6" /> <path d="M13 6l6 6" /></svg>
+        </button>
+
+        <p class="form-note">
+          Or email me directly at
+          <a href="mailto:laurenttsautos@gmail.com">laurenttsautos@gmail.com</a>
+        </p>
+      </div>
+
+      <div class="sent" role="status" aria-live="polite">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" /> <path d="M9 12l2 2l4 -4" /></svg>
+        <h3>Your project details are ready to send</h3>
+        <p>
+          Your mail app should have opened with the details filled in. If it did not,
+          email <a href="mailto:laurenttsautos@gmail.com" style="color: var(--blue);">laurenttsautos@gmail.com</a> directly.
+        </p>
+      </div>
+    </form>
+
+  </div>
+</section>
+</main>
+
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-grid">
+
+      <div>
+        <a class="brand" href="#top" style="margin-bottom: 16px;" aria-label="AlvSolutions home">
+          <img src="Brand_Assets/derived/alv-mark.png" alt="" width="42" height="27" />
+          <span class="wordmark">Alv<span>Solutions</span></span>
+        </a>
+        <p class="body-3" style="max-width: 30ch;">
+          Professional business websites, built and supported in San Antonio, Texas.
+        </p>
+      </div>
+
+      <div>
+        <h4>Site</h4>
+        <div class="foot-list">
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#process">Process</a>
+          <a href="#about">About</a>
+        </div>
+      </div>
+
+      <div>
+        <h4>Get in touch</h4>
+        <div class="foot-list">
+          <a class="foot-contact" href="mailto:laurenttsautos@gmail.com">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10" /> <path d="M3 7l9 6l9 -6" /></svg>
+            laurenttsautos@gmail.com
+          </a>
+          <span class="foot-contact">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0 -6 0" /> <path d="M17.657 16.657l-4.243 4.243a2 2 0 0 1 -2.827 0l-4.244 -4.243a8 8 0 1 1 11.314 0" /></svg>
+            San Antonio, Texas
+          </span>
+          <a class="btn btn-primary btn-sm" href="#contact" style="margin-top: 8px; justify-self: start;">Start a project</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot-bar">
+      <span>&copy; 2026 AlvSolutions. All rights reserved.</span>
+      <span>Built and supported in San Antonio.</span>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function () {
+  'use strict';
+
+  /* ---- mobile menu ---------------------------------------------------- */
+  var burger = document.getElementById('burger');
+  var menu   = document.getElementById('mob-menu');
+
+  function setMenu(open) {
+    menu.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  }
+  burger.addEventListener('click', function () {
+    setMenu(burger.getAttribute('aria-expanded') !== 'true');
+  });
+  menu.addEventListener('click', function (e) {
+    if (e.target.closest('a')) setMenu(false);
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); burger.focus(); }
+  });
+
+  /* ---- nav border on scroll -------------------------------------------
+     A sentinel + IntersectionObserver, so there is no scroll listener
+     running on every frame.                                              */
+  var nav = document.getElementById('nav');
+  var sentinel = document.createElement('div');
+  sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:60px;pointer-events:none;';
+  document.body.prepend(sentinel);
+  new IntersectionObserver(function (entries) {
+    nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+  }, { threshold: 0 }).observe(sentinel);
+
+  /* ---- scroll reveal --------------------------------------------------- */
+  var reveals = document.querySelectorAll('.reveal');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    reveals.forEach(function (el) { el.classList.add('in'); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+    reveals.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---- quote form ------------------------------------------------------ */
+  var form = document.getElementById('quote-form');
+
+  function validate(input) {
+    var field = input.closest('[data-field]');
+    var ok = input.checkValidity() && input.value.trim() !== '';
+    field.classList.toggle('invalid', !ok);
+    input.setAttribute('aria-invalid', String(!ok));
+    return ok;
+  }
+
+  form.querySelectorAll('.input').forEach(function (input) {
+    input.addEventListener('blur', function () { validate(input); });
+    input.addEventListener('input', function () {
+      if (input.closest('[data-field]').classList.contains('invalid')) validate(input);
+    });
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var inputs = Array.prototype.slice.call(form.querySelectorAll('.input'));
+    var firstBad = null;
+    inputs.forEach(function (input) { if (!validate(input) && !firstBad) firstBad = input; });
+    if (firstBad) { firstBad.focus(); return; }
+
+    var d = new FormData(form);
+    var body =
+      'Business: ' + d.get('business') + '\n' +
+      'Name: '     + d.get('name')     + '\n' +
+      'Email: '    + d.get('email')    + '\n\n' +
+      d.get('project');
+
+    window.location.href = 'mailto:laurenttsautos@gmail.com'
+      + '?subject=' + encodeURIComponent('Website project: ' + d.get('business'))
+      + '&body='    + encodeURIComponent(body);
+
+    form.classList.add('done');
+  });
+})();
+
+
+/* ══════════════════════════════════════════════════════════════════════
+   PULSING BORDER SHADER  -  services section backdrop
+
+   Shader adapted from Paper Shaders (Apache-2.0):
+   https://shaders.paper.design/pulsing-border
+   Ported from the React component to vanilla JS: this project has no
+   framework and no build step, and the original is imperative WebGL apart
+   from useRef/useEffect.
+
+   Kept from the original: off-screen and hidden-tab pausing, the 2MP pixel
+   budget, DPR cap, ResizeObserver relayout.
+   Added: shader compile/link checks with a silent bail, prefers-reduced-
+   motion (renders one still frame instead of animating), and pointer
+   handling stripped out since the cursor effect is off.
+   ══════════════════════════════════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var canvas = document.getElementById('svc-shader');
+  if (!canvas) return;
+
+  var VERT =
+    'attribute vec2 a_position;' +
+    'void main(){ gl_Position = vec4(a_position, 0.0, 1.0); }';
+
+  var FRAG = `#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+uniform vec3 u_colors[8];
+uniform vec4 u_scene;      // resolution.xy, time, colour count
+uniform vec4 u_shape;      // scale, intensity, paramA, warp
+uniform vec4 u_surface;    // detail, contrast, brightness, saturation
+uniform vec4 u_finish;     // hue, vignette, blur, grain
+uniform vec4 u_transform;  // seed, rotation, drift, OKLab toggle
+uniform vec4 u_space;      // offset.xy, pointer.xy
+
+#define u_resolution u_scene.xy
+#define u_time u_scene.z
+#define u_colorCount u_scene.w
+#define u_scale u_shape.x
+#define u_intensity u_shape.y
+#define u_paramA u_shape.z
+#define u_warp u_shape.w
+#define u_detail u_surface.x
+#define u_contrast u_surface.y
+#define u_brightness u_surface.z
+#define u_saturation u_surface.w
+#define u_hue u_finish.x
+#define u_vignette u_finish.y
+#define u_blur u_finish.z
+#define u_grain u_finish.w
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define u_seed u_transform.x
+#else
+#define u_seed mod(u_transform.x, 31.0)
+#endif
+#define u_rotate u_transform.y
+#define u_drift u_transform.z
+#define u_oklab u_transform.w
+#define u_offset u_space.xy
+
+float hash21(vec2 p) {
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+  p = mod(p, 31.0);
+#endif
+  p = fract(p * vec2(234.34, 435.345));
+  p += dot(p, p + 34.23);
+  return fract(p.x * p.y);
+}
+
+float grainHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(hash21(i), hash21(i + vec2(1.0, 0.0)), u.x),
+    mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), u.x),
+    u.y);
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 5; i++) {
+    v += a * noise(p);
+    p = p * 2.03 + vec2(17.0, 9.2);
+    a *= 0.5;
+  }
+  return v;
+}
+
+vec3 srgbToLinear(vec3 c) {
+  return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(0.04045, c));
+}
+vec3 linearToSrgb(vec3 c) {
+  return mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(1.0 / 2.4)) - 0.055,
+    step(0.0031308, c));
+}
+vec3 linToOklab(vec3 c) {
+  float l = 0.4122214708 * c.r + 0.5363325363 * c.g + 0.0514459929 * c.b;
+  float m = 0.2119034982 * c.r + 0.6806995451 * c.g + 0.1073969566 * c.b;
+  float s = 0.0883024619 * c.r + 0.2817188376 * c.g + 0.6299787005 * c.b;
+  l = pow(max(l, 0.0), 1.0 / 3.0);
+  m = pow(max(m, 0.0), 1.0 / 3.0);
+  s = pow(max(s, 0.0), 1.0 / 3.0);
+  return vec3(
+    0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+    1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+    0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s);
+}
+vec3 oklabToLin(vec3 c) {
+  float l = c.x + 0.3963377774 * c.y + 0.2158037573 * c.z;
+  float m = c.x - 0.1055613458 * c.y - 0.0638541728 * c.z;
+  float s = c.x - 0.0894841775 * c.y - 1.2914855480 * c.z;
+  l = l * l * l; m = m * m * m; s = s * s * s;
+  return vec3(
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s);
+}
+vec3 mixColour(vec3 a, vec3 b, float t) {
+  if (u_oklab > 0.5) {
+    vec3 la = linToOklab(srgbToLinear(a));
+    vec3 lb = linToOklab(srgbToLinear(b));
+    return clamp(linearToSrgb(oklabToLin(mix(la, lb, t))), 0.0, 1.0);
+  }
+  return mix(a, b, t);
+}
+
+vec3 palette(float x) {
+  float n = max(u_colorCount - 1.0, 1.0);
+  float f = clamp(x, 0.0, 1.0) * n;
+  vec3 col = u_colors[0];
+  for (int i = 0; i < 7; i++) {
+    if (float(i) < n)
+      col = mixColour(col, u_colors[i + 1],
+        smoothstep(0.0, 1.0, clamp(f - float(i), 0.0, 1.0)));
+  }
+  return col;
+}
+
+vec3 hueRotate(vec3 col, float a) {
+  const mat3 toYIQ = mat3(0.299, 0.596, 0.211,
+                          0.587, -0.274, -0.523,
+                          0.114, -0.322, 0.312);
+  const mat3 toRGB = mat3(1.0, 1.0, 1.0,
+                          0.956, -0.272, -1.106,
+                          0.621, -0.647, 1.703);
+  vec3 yiq = toYIQ * col;
+  float ca = cos(a), sa = sin(a);
+  yiq = vec3(yiq.x, yiq.y * ca - yiq.z * sa, yiq.y * sa + yiq.z * ca);
+  return toRGB * yiq;
+}
+
+vec3 shade(vec2 uv, vec2 p, float t) {
+  // The original hard-codes box = vec2(0.82, 0.47), which on a tall section
+  // puts the horizontal arcs straight through the headline. Deriving the box
+  // from the canvas instead keeps the ring hugging the section edge at every
+  // aspect ratio, so it frames the content rather than crossing it.
+  vec2 halfExtent =
+    0.5 * u_resolution / min(u_resolution.x, u_resolution.y) * u_scale;
+  vec2 box = halfExtent * 0.90;
+  vec2 d = abs(p) - box;
+  float outside = length(max(d, 0.0)) + min(max(d.x, d.y), 0.0);
+  float thickness = mix(0.018, 0.11, u_paramA);
+  float edge = 1.0 - smoothstep(thickness * 0.35, thickness, abs(outside));
+  float perimeter = atan(p.y * box.x, p.x * box.y) / 6.2831853 + 0.5;
+  float pulse = 0.5 + 0.5 * sin(perimeter * (5.0 + u_intensity * 9.0) - t * 1.8);
+  float trail = pow(pulse, mix(7.0, 2.0, u_intensity));
+  float innerGlow = exp(-abs(outside) * 24.0) * 0.32;
+  return mix(u_colors[0], palette(trail), clamp(edge + innerGlow, 0.0, 1.0));
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  vec2 screenUv = uv;
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_resolution.xy)
+    / min(u_resolution.x, u_resolution.y);
+
+  uv = p * min(u_resolution.x, u_resolution.y) / u_resolution.xy + 0.5;
+  p *= u_scale;
+  if (abs(u_rotate) > 0.0001) {
+    float cr = cos(u_rotate), sr = sin(u_rotate);
+    p = mat2(cr, -sr, sr, cr) * p;
+  }
+  p += u_offset;
+  if (u_drift > 0.0001)
+    p += u_drift * vec2(sin(u_time * 0.31), cos(u_time * 0.23));
+  if (u_warp > 0.0) {
+    p += u_warp * (vec2(
+      fbm(p * u_detail + u_seed),
+      fbm(p * u_detail + vec2(5.2, 1.3))) - 0.5);
+  }
+  vec3 col;
+  if (u_blur > 0.0) {
+    float e = u_blur;
+    float pe = e * u_scale;
+    vec2 uvE = vec2(e) * min(u_resolution.x, u_resolution.y) / u_resolution.xy;
+    col  = shade(uv, p, u_time) * 0.36;
+    col += shade(uv + vec2(uvE.x, 0.0), p + vec2(pe, 0.0), u_time) * 0.16;
+    col += shade(uv - vec2(uvE.x, 0.0), p - vec2(pe, 0.0), u_time) * 0.16;
+    col += shade(uv + vec2(0.0, uvE.y), p + vec2(0.0, pe), u_time) * 0.16;
+    col += shade(uv - vec2(0.0, uvE.y), p - vec2(0.0, pe), u_time) * 0.16;
+  } else {
+    col = shade(uv, p, u_time);
+  }
+  if (abs(u_contrast - 1.0) > 0.0001)
+    col = (col - 0.5) * u_contrast + 0.5;
+  if (abs(u_saturation - 1.0) > 0.0001) {
+    float luma = dot(col, vec3(0.299, 0.587, 0.114));
+    col = mix(vec3(luma), col, u_saturation);
+  }
+  if (abs(u_hue) > 0.0001)
+    col = hueRotate(col, u_hue);
+  if (abs(u_brightness) > 0.0001)
+    col += u_brightness;
+  if (u_vignette > 0.0001) {
+    float vd = length(screenUv - 0.5) * 1.41421356;
+    col *= 1.0 - u_vignette * smoothstep(0.35, 1.0, vd);
+  }
+  if (u_grain > 0.0001)
+    col += (grainHash(
+      gl_FragCoord.xy + vec2(u_seed * 17.0, u_seed * 31.0)) - 0.5) * u_grain;
+  gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+`;
+
+  /* Recipe colours. These already sit on the AlvSolutions palette:
+     near-black navy base, deep blue, brand cyan, near-white highlight. */
+  var U = {
+    colors: [
+      [0.0196078431, 0.0274509804, 0.0509803922],  // #05070D  base navy
+      [0.0705882353, 0.3803921569, 0.6274509804],  // #1261A0  deep blue
+      [0.2078431373, 0.7686274510, 0.9098039216],  // #35C4E8  brand cyan
+      [0.9490196078, 0.9843137255, 1.0],           // #F2FBFF  highlight
+      [0.9490196078, 0.9843137255, 1.0],
+      [0.9490196078, 0.9843137255, 1.0],
+      [0.9490196078, 0.9843137255, 1.0],
+      [0.9490196078, 0.9843137255, 1.0]
+    ],
+    // 3 stops, not 4: the 4th is a near-white highlight that blows out to
+    // grey glare on a dark navy page. Stopping at the brand cyan keeps the
+    // glow on-palette.
+    colorCount: 3,
+    scale: 1.26, intensity: 0.40, paramA: 0.30, warp: 0,
+    detail: 1.824, contrast: 1.005, brightness: 0, saturation: 1,
+    hue: 0, vignette: 0, blur: 0, grain: 0.042,
+    seed: 1, rotate: 0, offsetX: 0, offsetY: 0, drift: 0,
+    oklab: 0, timeScale: 0.575
+  };
+
+  var gl = canvas.getContext('webgl', { antialias: false });
+  if (!gl) { canvas.style.display = 'none'; return; }   // no WebGL: plain bg
+
+  function compile(type, src) {
+    var s = gl.createShader(type);
+    gl.shaderSource(s, src);
+    gl.compileShader(s);
+    if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) {
+      gl.deleteShader(s);
+      return null;
+    }
+    return s;
+  }
+
+  var vs = compile(gl.VERTEX_SHADER, VERT);
+  var fs = compile(gl.FRAGMENT_SHADER, FRAG);
+  if (!vs || !fs) { canvas.style.display = 'none'; return; }
+
+  var program = gl.createProgram();
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  gl.deleteShader(vs);
+  gl.deleteShader(fs);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    canvas.style.display = 'none';
+    return;
+  }
+  gl.useProgram(program);
+
+  var buf = gl.createBuffer();
+  gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+  gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
+  var loc = gl.getAttribLocation(program, 'a_position');
+  gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+
+  function u(name) { return gl.getUniformLocation(program, name); }
+  var uScene = u('u_scene'), uSpace = u('u_space');
+
+  var flat = [];
+  for (var i = 0; i < U.colors.length; i++) {
+    flat.push(U.colors[i][0], U.colors[i][1], U.colors[i][2]);
+  }
+  gl.uniform3fv(u('u_colors'), new Float32Array(flat));
+  gl.uniform4f(u('u_shape'), U.scale, U.intensity, U.paramA, U.warp);
+  gl.uniform4f(u('u_surface'), U.detail, U.contrast, U.brightness, U.saturation);
+  gl.uniform4f(u('u_finish'), U.hue, U.vignette, U.blur, U.grain);
+  gl.uniform4f(u('u_transform'), U.seed, U.rotate, U.drift, U.oklab);
+
+  var raf = 0, start = performance.now();
+  var visible = document.visibilityState === 'visible';
+  var inView = false;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function resize() {
+    var r = canvas.getBoundingClientRect();
+    // DPR is deliberately NOT applied: this layer is blurred 28px in CSS, so
+    // rendering above 1x is invisible work. The original's 2MP budget pegs
+    // software WebGL (SwiftShader) on machines without a GPU; 0.3MP looks
+    // identical through the blur and costs ~7x less per frame.
+    var rw = Math.max(1, Math.round(r.width));
+    var rh = Math.max(1, Math.round(r.height));
+    var k = Math.min(1, Math.sqrt(300000 / Math.max(1, rw * rh)));
+    var w = Math.max(1, Math.round(rw * k));
+    var h = Math.max(1, Math.round(rh * k));
+    if (canvas.width !== w || canvas.height !== h) {
+      canvas.width = w; canvas.height = h;
+      gl.viewport(0, 0, w, h);
+    }
+  }
+
+  function draw(timeSeconds) {
+    resize();
+    gl.uniform4f(uScene, canvas.width, canvas.height, timeSeconds, U.colorCount);
+    gl.uniform4f(uSpace, U.offsetX, U.offsetY, 0, 0);
+    gl.drawArrays(gl.TRIANGLES, 0, 3);
+  }
+
+  function frame(now) {
+    raf = 0;
+    if (!visible || !inView) return;
+    draw(((now - start) / 1000) * U.timeScale);
+    raf = requestAnimationFrame(frame);
+  }
+
+  function play() {
+    if (reduce.matches) { draw(0); return; }   // one still frame, no loop
+    if (raf === 0 && visible && inView) raf = requestAnimationFrame(frame);
+  }
+  function stop() {
+    if (raf !== 0) { cancelAnimationFrame(raf); raf = 0; }
+  }
+
+  // only run while the section is actually on screen
+  new IntersectionObserver(function (entries) {
+    inView = entries[0].isIntersecting;
+    if (inView) play(); else stop();
+  }).observe(canvas);
+
+  document.addEventListener('visibilitychange', function () {
+    visible = document.visibilityState === 'visible';
+    if (visible) play(); else stop();
+  });
+
+  if (typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(function () {
+      resize();
+      if (reduce.matches) draw(0);
+    }).observe(canvas);
+  }
+
+  // respond live if the user flips the reduced-motion setting
+  var onReduce = function () { stop(); play(); };
+  if (reduce.addEventListener) reduce.addEventListener('change', onReduce);
+  else if (reduce.addListener) reduce.addListener(onReduce);
+})();
+</script>
+
+</body>
+</html>

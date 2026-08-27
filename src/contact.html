@@ -1,0 +1,49 @@
+---
+layout: layouts/base.njk
+title: Contact
+description: Tell me what your business does and what you need. Free quote, no pressure. AlvSolutions, San Antonio, Texas.
+---
+
+{%- set ph = {
+  eyebrow: "Contact",
+  heading: "Tell me what<br />you need.",
+  lead: "A free quote, a flat price and a launch date — all agreed before any work starts. I reply within a day, usually the same afternoon.",
+  back: { label: "Packages", url: "/packages/", showIf: "package" },
+  crumbs: [{ label: "Contact" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+  {#- the pagehead already carries the heading and lead, so the shared contact
+      block leads with the practical question instead of repeating them -#}
+  {%- set contactHeading = "Start a project" %}
+  {%- set contactLead = "The more you tell me about the business, the more accurate the quote. There is no wrong amount of detail." %}
+  {% include "components/contact-section.njk" %}
+
+  <!-- ══════════════ WHAT TO SEND ══════════════ -->
+  <section class="sec band sec-line">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 30px;">
+        <h2 style="font-size: clamp(22px, 2.4vw, 28px);">Useful to have, not required</h2>
+        <p class="lead">
+          None of this stops us starting. If you have none of it, onboarding covers
+          me gathering it with you &mdash; it is a
+          <a href="/packages/#fees" style="color: var(--blue);">listed fee</a>, not a surprise.
+        </p>
+      </div>
+
+      <ul class="inc-list reveal" style="max-width: 780px;">
+        <li>Your logo, if you have one</li>
+        <li>Photos of your own work</li>
+        <li>Your services or menu, in any format</li>
+        <li>Hours and the address you want listed</li>
+        <li>A site you like the look of</li>
+        <li>Whether you take bookings today, and how</li>
+      </ul>
+    </div>
+  </section>
+
+  {% include "components/process-steps.njk" %}
+
+</main>

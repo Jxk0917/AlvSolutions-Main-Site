@@ -1,0 +1,120 @@
+---
+layout: layouts/base.njk
+title: Services
+description: Business websites, menu and service pages, catering pages, booking integration, website updates, search visibility, Google Ads management, business cards and shirt design.
+---
+
+{%- set ph = {
+  eyebrow: "Services",
+  heading: "Everything you need<br />to run a business online.",
+  lead: "From a single landing page to the search ads that fill the calendar and the print work that carries the same brand. Pick what you need — most businesses start with a website and add the rest as they grow.",
+  crumbs: [{ label: "Services" }],
+  actions: [
+    { label: "Start a project", url: "/contact/" },
+    { label: "See packages", url: "/packages/", style: "btn-ghost" }
+  ]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+
+  <section class="sec">
+    <div class="wrap">
+
+      {%- set web = services | byFamily("web") %}
+      <div class="family">
+        <div class="family-head reveal">
+          <h2>Websites</h2>
+          <span class="family-count">{{ web.length }} service{{ "s" if web.length != 1 }}</span>
+        </div>
+        <div class="svc-grid">
+          {%- for card in web %}
+          {%- set d = loop.index0 %}
+          {% include "components/service-card.njk" %}
+          {%- endfor %}
+        </div>
+      </div>
+
+      {%- set ads = services | byFamily("ads") %}
+      <div class="family">
+        <div class="family-head reveal">
+          <h2>Advertising</h2>
+          <span class="family-count">{{ ads.length }} service{{ "s" if ads.length != 1 }}</span>
+        </div>
+        <div class="svc-grid">
+          {%- for card in ads %}
+          {%- set d = loop.index0 %}
+          {% include "components/service-card.njk" %}
+          {%- endfor %}
+        </div>
+      </div>
+
+      {%- set print = services | byFamily("print") %}
+      <div class="family">
+        <div class="family-head reveal">
+          <h2>Print &amp; apparel</h2>
+          <span class="family-count">{{ print.length }} service{{ "s" if print.length != 1 }}</span>
+        </div>
+        <div class="svc-grid">
+          {%- for card in print %}
+          {%- set d = loop.index0 %}
+          {% include "components/service-card.njk" %}
+          {%- endfor %}
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══════════════ HOW PRICING WORKS ══════════════ -->
+  <section class="sec band sec-line">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 30px;">
+        <span class="eyebrow">How this is priced</span>
+        <h2 style="margin-top: 14px;">Two ways to buy any of it.</h2>
+      </div>
+
+      <div class="svc-grid reveal">
+        <div class="card">
+          <div class="ic-box">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+          </div>
+          <h3 style="margin-top: 18px;">As a package</h3>
+          <p class="body-3" style="margin-top: 8px;">
+            Three tiers from {{ packages.tiers[0].price | price | safe }}. Each bundles a
+            website with some of the services above, and works out cheaper than buying
+            the same pieces separately.
+          </p>
+          <a class="btn btn-ghost btn-sm" href="/packages/" style="margin-top: 18px;">
+            Compare packages
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+
+        <div class="card">
+          <div class="ic-box gold">
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
+          </div>
+          <h3 style="margin-top: 18px;">À la carte</h3>
+          <p class="body-3" style="margin-top: 8px;">
+            Add any one thing to a site you already have. Priced by what the job actually
+            takes, with the qualifying criteria published rather than quoted case by case.
+          </p>
+          <a class="btn btn-ghost btn-sm" href="/packages/add-ons/" style="margin-top: 18px;">
+            See add-on pricing
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  {% include "components/process-steps.njk" %}
+
+  {%- set ctaHeading = "Not sure which of these you need?" %}
+  {%- set ctaLead = "Tell me what the business does and I will say so plainly — including which of these you can skip." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

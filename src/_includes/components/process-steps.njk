@@ -1,0 +1,44 @@
+{#
+  The three steps, lifted verbatim from the home page so the two can never
+  drift. Numbered because this genuinely is a sequence — step 2 cannot happen
+  before step 1.
+
+  `processHeading` overrides the default, so the service pages can ask the
+  question the reader has just formed instead of repeating the home heading.
+#}
+<section class="sec" id="process">
+  <div class="wrap">
+    <div class="sec-head reveal" style="margin-bottom: clamp(48px, 6vw, 68px);">
+      <h2>{{ processHeading | default("How a project runs.") }}</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step reveal" style="--d:0">
+        <span class="step-n">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-message"/></svg>
+          01
+        </span>
+        <h3>Tell me what you need</h3>
+        <p>We talk through your business, your customers and what the site has to do. I ask the questions that decide the rest of the build.</p>
+      </div>
+
+      <div class="step reveal" style="--d:1">
+        <span class="step-n">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
+          02
+        </span>
+        <h3>I design and build it</h3>
+        <p>You see the site as it comes together, not just at the end. Revisions are part of the price, not an upsell.</p>
+      </div>
+
+      <div class="step reveal" style="--d:2">
+        <span class="step-n">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-rocket"/></svg>
+          03
+        </span>
+        <h3>We go live</h3>
+        <p>I handle the domain, the hosting and the launch. Then I stay reachable for the updates that come after.</p>
+      </div>
+    </div>
+  </div>
+</section>

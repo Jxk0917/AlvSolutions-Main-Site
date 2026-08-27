@@ -1,0 +1,95 @@
+{#
+  The whole contact block — copy, the three "what happens next" items, and the
+  form. Rendered on the home page and on /contact/ from this one file, so the
+  two can never drift.
+
+  The form still hands off to the mail client. To route it through a form
+  service instead: set action/method on <form> and delete the mailto handler at
+  the bottom of assets/main.js. That is the only change needed, in one place,
+  because this markup is no longer duplicated.
+#}
+<section class="sec" id="contact">
+  <div class="wrap contact">
+
+    <div class="reveal">
+      <h2>{{ contactHeading | default("Let's talk about your site.") }}</h2>
+      <p class="lead" style="margin-top: 18px;">
+        {{ contactLead | default("Tell me what your business does and what you need. Free quote, no pressure.") }}
+      </p>
+
+      <div class="next">
+        <div class="next-item">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mail"/></svg>
+          <div>
+            <h3>I reply within a day</h3>
+            <p>Usually the same afternoon.</p>
+          </div>
+        </div>
+        <div class="next-item">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-message"/></svg>
+          <div>
+            <h3>A short call</h3>
+            <p>Fifteen minutes to understand the business and what the site has to do.</p>
+          </div>
+        </div>
+        <div class="next-item">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield-check"/></svg>
+          <div>
+            <h3>A flat quote and a date</h3>
+            <p>One price and a launch day, both agreed before any work starts.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form class="form reveal" id="quote-form" novalidate style="--d:1">
+      <div class="form-body">
+        <div class="field-row">
+          <div class="field" data-field>
+            <label for="f-name">Your name</label>
+            <input class="input" id="f-name" name="name" type="text" autocomplete="name" required placeholder="Jordan Alvarez" />
+            <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Please enter your name</span>
+          </div>
+          <div class="field" data-field>
+            <label for="f-email">Email address</label>
+            <input class="input" id="f-email" name="email" type="email" autocomplete="email" required placeholder="you@yourbusiness.com" />
+            <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Please enter a valid email address</span>
+          </div>
+        </div>
+
+        <div class="field" data-field>
+          <label for="f-business">Business name</label>
+          <input class="input" id="f-business" name="business" type="text" autocomplete="organization" required placeholder="Alvarez Roofing" />
+          <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Please enter your business name</span>
+        </div>
+
+        <div class="field" data-field>
+          <label for="f-project">What do you need?</label>
+          <span class="hint">What your business does, and what the site has to do for it.</span>
+          <textarea class="input" id="f-project" name="project" rows="4" required placeholder="We are a roofing company in Alamo Heights. We need a site that shows our work and lets people request an estimate."></textarea>
+          <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Please tell me a little about the project</span>
+        </div>
+
+        <button class="btn btn-primary btn-lg" type="submit" style="width: 100%;">
+          Send project details
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </button>
+
+        <p class="form-note">
+          Or email me directly at
+          <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+        </p>
+      </div>
+
+      <div class="sent" role="status" aria-live="polite">
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-circle-check"/></svg>
+        <h3>Your project details are ready to send</h3>
+        <p>
+          Your mail app should have opened with the details filled in. If it did not,
+          email <a href="mailto:{{ site.email }}" style="color: var(--blue);">{{ site.email }}</a> directly.
+        </p>
+      </div>
+    </form>
+
+  </div>
+</section>

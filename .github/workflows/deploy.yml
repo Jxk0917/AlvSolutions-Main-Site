@@ -1,0 +1,63 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Least privilege that still lets deploy-pages mint its OIDC token.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; queue instead of cancelling so a finished
+# build always reaches production.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # --omit=dev is load-bearing, not an optimisation. canvas and puppeteer
+      # are devDependencies used only by the local shot-*.mjs capture tooling;
+      # a plain `npm ci` would compile canvas from source and download a
+      # Chromium build on every deploy. Only @11ty/eleventy is needed to build.
+      - run: npm ci --omit=dev
+
+      # Where the site is served from. The pages link root-absolutely and
+      # HtmlBasePlugin rewrites them to sit under this prefix.
+      #
+      #   Project subpath : PATH_PREFIX: AlvSolutions-Main-Site
+      #   Custom domain   : PATH_PREFIX: "/"   (+ src/CNAME must exist)
+      #
+      # Bare, no slashes. Currently serving from the github.io project URL
+      # until alvsolutions.com DNS is pointed at GitHub Pages.
+      - run: npm run build
+        env:
+          PATH_PREFIX: AlvSolutions-Main-Site
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

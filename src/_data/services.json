@@ -69,12 +69,14 @@
         {
           "label": "Simple",
           "price": 150,
-          "note": "A list you already have written, under 20 items."
+          "note": "A list you already have written, under 20 items.",
+          "addon": { "class": "Page add-on", "price": 125, "packages": ["standard", "complete"] }
         },
         {
           "label": "Complex",
           "price": 275,
-          "note": "20+ items, categories, prices and photography."
+          "note": "20+ items, categories, prices and photography.",
+          "addon": { "class": "Power feature", "price": 225, "packages": ["standard", "complete"] }
         }
       ],
       "factors": [
@@ -116,7 +118,6 @@
         }
       ]
     },
-    "packageNote": "As a page add-on it is <b>$125</b> inside a package. The prices above are for adding one to a site on its own.",
     "faq": [
       {
         "q": "What if I do not sell food?",
@@ -159,12 +160,14 @@
         {
           "label": "Simple",
           "price": 150,
-          "note": "An enquiry form and your contact details."
+          "note": "An enquiry form and your contact details.",
+          "addon": { "class": "Power feature", "price": 225, "packages": ["standard", "complete"] }
         },
         {
           "label": "Complex",
           "price": 275,
-          "note": "Packages, pricing tiers and a detailed request form."
+          "note": "Packages, pricing tiers and a detailed request form.",
+          "addon": { "class": "Power feature", "price": 225, "packages": ["standard", "complete"] }
         }
       ],
       "factors": [
@@ -199,7 +202,6 @@
         }
       ]
     },
-    "packageNote": "As a power feature the quote and catering request system is <b>$225</b> inside a package.",
     "faq": [
       {
         "q": "How is this different from the contact form?",
@@ -239,12 +241,14 @@
         {
           "label": "Standard",
           "price": 175,
-          "note": "One service type on a platform you already use."
+          "note": "One service type on a platform you already use.",
+          "addon": { "class": "Power feature", "price": 225, "packages": ["standard"], "includedIn": ["complete"] }
         },
         {
           "label": "Complex",
           "price": 300,
-          "note": "Multiple services, staff or locations, configured for you."
+          "note": "Multiple services, staff or locations, configured for you.",
+          "addon": { "class": "Power feature", "price": 225, "packages": ["standard"], "includedIn": ["complete"] }
         }
       ],
       "factors": [
@@ -293,7 +297,6 @@
         "note": "Added to either option above."
       }
     },
-    "packageNote": "As a power feature online booking is <b>$225</b> inside a package, and it is included outright in Complete.",
     "packageKey": "booking",
     "faq": [
       {
@@ -435,16 +438,17 @@
           "label": "Basic",
           "price": 85,
           "note": "Front design, print-ready files.",
+          "addon": { "includedIn": ["complete"] },
           "shot": {
             "caption": "One face. Logo, name and the three ways to reach you.",
             "faces": [
               {
                 "label": "Front",
                 "w": 800,
-                "h": 367,
+                "h": 457,
                 "src": "/assets/showcase/card-basic-front-800.jpg",
                 "small": "/assets/showcase/card-basic-front-400.jpg",
-                "alt": "The basic card: logo on the left, then name, phone number, address and website."
+                "alt": "The basic card: logo on the left, then name, phone number, city and website on a dark navy background."
               }
             ]
           }
@@ -453,24 +457,25 @@
           "label": "Premium",
           "price": 165,
           "note": "Front and back, thick stock, QR code, delivered.",
+          "addon": {},
           "shot": {
             "caption": "Front is the logo on its own. Flip it for your details and a QR code to your site.",
             "faces": [
               {
                 "label": "Front",
                 "w": 800,
-                "h": 398,
+                "h": 457,
                 "src": "/assets/showcase/card-premium-front-800.jpg",
                 "small": "/assets/showcase/card-premium-front-400.jpg",
-                "alt": "The premium card, front: the full AlvSolutions logo lockup centred on white."
+                "alt": "The premium card, front: the full AlvSolutions logo lockup centred on a dark navy background with a gold underline."
               },
               {
                 "label": "Back",
                 "w": 800,
-                "h": 413,
+                "h": 457,
                 "src": "/assets/showcase/card-premium-back-800.jpg",
                 "small": "/assets/showcase/card-premium-back-400.jpg",
-                "alt": "The premium card, back: a QR code beside the logo, with name, phone number, address and website on navy."
+                "alt": "The premium card, back: a scannable QR code beside the logo, with name, phone number, city and website on the right."
               }
             ]
           }
@@ -515,7 +520,6 @@
         }
       ]
     },
-    "packageNote": "A basic card design is included in the Complete package.",
     "packageKey": "card",
     "faq": [
       {

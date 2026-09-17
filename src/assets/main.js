@@ -63,6 +63,8 @@
      A standard tablist: click or arrow-key between tiers, with the last tab
      being Compare. The markup already ships panel 0 visible and the rest
      `hidden`, so there is no flash of every panel before this runs.        */
+  var ptierReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   document.querySelectorAll('.ptier').forEach(function (group) {
     var tabs   = Array.prototype.slice.call(group.querySelectorAll('[role="tab"]'));
     var panels = Array.prototype.slice.call(group.querySelectorAll('[role="tabpanel"]'));
@@ -72,7 +74,24 @@
         t.setAttribute('aria-selected', String(n === i));
         t.tabIndex = n === i ? 0 : -1;
       });
-      panels.forEach(function (p, n) { p.hidden = n !== i; });
+
+      var next = panels[i];
+      panels.forEach(function (p, n) { if (n !== i) p.hidden = true; });
+
+      /* The incoming panel fades and lifts in rather than snapping into
+         place, so picking Complex reads as a state change, not a reload.
+         Forcing a reflow between adding and removing `ptier-pre` is what
+         makes the browser register the "before" frame instead of
+         collapsing both into one and skipping the transition entirely. */
+      if (ptierReduceMotion) {
+        next.hidden = false;
+      } else {
+        next.classList.add('ptier-pre');
+        next.hidden = false;
+        void next.offsetWidth;
+        next.classList.remove('ptier-pre');
+      }
+
       if (focus) tabs[i].focus();
     }
 

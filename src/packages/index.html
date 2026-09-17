@@ -42,44 +42,8 @@ description: Three website packages for San Antonio small businesses. Foundation
   </section>
 
 
-  <!-- ══════════════ COMPARISON CHART ══════════════ -->
-  <section class="sec sec-line" id="compare">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 36px;">
-        <h2>What changes between them.</h2>
-        <p class="lead">Scroll the table sideways on a phone. The feature column stays put.</p>
-      </div>
-
-      {#- columns and rows are derived from packages.json, so a card and its
-          column can never disagree about what a tier includes -#}
-      {%- set cols = [] %}
-      {%- for t in packages.tiers %}
-      {%- set cols = (cols.push({ label: t.name, sub: (t.price | price) + " one-time", popular: t.popular }), cols) %}
-      {%- endfor %}
-
-      {%- set rows = [] %}
-      {%- for f in packages.features %}
-      {%- set vals = [] %}
-      {%- for t in packages.tiers %}{% set vals = (vals.push(t.has[f.key]), vals) %}{% endfor %}
-      {%- set rows = (rows.push({ label: f.label, values: vals }), rows) %}
-      {%- endfor %}
-
-      {%- set caption = "What each build package includes" %}
-      <div class="reveal">
-        {% include "components/price-matrix.njk" %}
-      </div>
-
-      <p class="body-3 reveal" style="margin-top: 18px; max-width: 64ch;">
-        Standard and Complete let you choose which extras go in.
-        <a href="/packages/add-ons/" style="color: var(--blue);">The add-ons page</a>
-        lists all fifteen, and every one of them can also be bought on its own later.
-      </p>
-    </div>
-  </section>
-
-
   <!-- ══════════════ TWO WAYS TO CHOOSE ══════════════ -->
-  <section class="sec band sec-line">
+  <section class="sec sec-line">
     <div class="wrap">
       <div class="sec-head reveal" style="margin-bottom: 30px;">
         <h2>Two ways to fill a package.</h2>
@@ -111,6 +75,42 @@ description: Three website packages for San Antonio small businesses. Foundation
           <a class="btn btn-ghost btn-sm" href="/packages/for-your-business/">See the four builds</a>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════ COMPARISON CHART ══════════════ -->
+  <section class="sec band sec-line" id="compare">
+    <div class="wrap">
+      <div class="sec-head reveal" style="margin-bottom: 36px;">
+        <h2>What changes between them.</h2>
+        <p class="lead">Scroll the table sideways on a phone. The feature column stays put.</p>
+      </div>
+
+      {#- columns and rows are derived from packages.json, so a card and its
+          column can never disagree about what a tier includes -#}
+      {%- set cols = [] %}
+      {%- for t in packages.tiers %}
+      {%- set cols = (cols.push({ label: t.name, sub: (t.price | price) + " one-time", popular: t.popular }), cols) %}
+      {%- endfor %}
+
+      {%- set rows = [] %}
+      {%- for f in packages.features %}
+      {%- set vals = [] %}
+      {%- for t in packages.tiers %}{% set vals = (vals.push(t.has[f.key]), vals) %}{% endfor %}
+      {%- set rows = (rows.push({ label: f.label, values: vals }), rows) %}
+      {%- endfor %}
+
+      {%- set caption = "What each build package includes" %}
+      <div class="reveal">
+        {% include "components/price-matrix.njk" %}
+      </div>
+
+      <p class="body-3 reveal" style="margin-top: 18px; max-width: 64ch;">
+        Standard and Complete let you choose which extras go in.
+        <a href="/packages/add-ons/" style="color: var(--blue);">The add-ons page</a>
+        lists all fifteen, and every one of them can also be bought on its own later.
+      </p>
     </div>
   </section>
 

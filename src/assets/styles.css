@@ -509,28 +509,28 @@
   }
   .rail-foot .ic { flex: none; font-size: 17px; color: var(--blue); margin-top: 2px; }
 
-  /* ---- the four trade builds, as a row of small targets ---- */
-  .trades { margin-top: 34px; padding-top: 28px; border-top: 1px solid var(--line); }
-  .trades-h { font-size: 15px; font-weight: 700; color: var(--text-2); margin-bottom: 16px; }
-  .trade-row { display: grid; gap: 10px; grid-template-columns: 1fr; }
+  /* ---- the four trade builds, as a row of targets ---- */
+  .trades { margin-top: 38px; padding-top: 30px; border-top: 1px solid var(--line); }
+  .trades-h { font-size: 16.5px; font-weight: 700; color: var(--text-2); margin-bottom: 18px; }
+  .trade-row { display: grid; gap: 14px; grid-template-columns: 1fr; }
   @media (min-width: 560px) { .trade-row { grid-template-columns: repeat(2, 1fr); } }
   @media (min-width: 900px) { .trade-row { grid-template-columns: repeat(4, 1fr); } }
 
   .trade {
-    display: flex; align-items: center; gap: 11px;
-    padding: 13px 16px;
-    background: var(--ink);
-    border: 1px solid var(--line);
+    display: flex; align-items: center; gap: 13px;
+    padding: 18px 20px;
+    background: var(--surface);
+    border: 1px solid var(--line-2);
     border-radius: var(--r-ctl);
     text-decoration: none;
     transition: border-color .2s var(--ease), background .2s var(--ease);
   }
-  .trade:hover { border-color: rgba(255,200,17,.45); background: rgba(255,200,17,.05); }
+  .trade:hover { border-color: rgba(255,200,17,.45); background: rgba(255,200,17,.08); }
   .trade:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; }
-  .trade .ic { font-size: 19px; color: var(--blue); }
-  .trade-name { flex: 1; min-width: 0; font-size: 14px; font-weight: 600; }
+  .trade .ic { font-size: 23px; color: var(--blue); }
+  .trade-name { flex: 1; min-width: 0; font-size: 15.5px; font-weight: 600; }
   .trade-price {
-    font-family: var(--font-head); font-size: 15px; font-weight: 800;
+    font-family: var(--font-head); font-size: 17px; font-weight: 800;
     letter-spacing: -.02em; color: var(--gold); font-variant-numeric: tabular-nums;
   }
 

@@ -511,10 +511,17 @@
    Used wherever a page has to hand the reader a genuine choice of route.
    Two columns, never three: a fork with three prongs is a grid. */
 
-.forks { display: grid; gap: 16px; grid-template-columns: 1fr; align-items: start; }
+.forks { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
 @media (min-width: 720px) { .forks { grid-template-columns: repeat(2, 1fr); } }
-.fork h3 { margin: 18px 0 8px; font-size: 17px; }
-.fork .btn { margin-top: 18px; }
+.fork {
+  padding: clamp(28px, 3vw, 36px);
+  background: var(--surface-2);
+  border-color: var(--line-2);
+}
+.fork .ic-box { width: 56px; height: 56px; border-radius: var(--r-card); font-size: 27px; }
+.fork h3 { margin: 22px 0 10px; font-size: clamp(19px, 2vw, 22px); }
+.fork p.body-3 { font-size: 15.5px; }
+.fork .btn { margin-top: 22px; }
 
 /* ---------- service hub ---------- */
 
@@ -552,6 +559,18 @@
   border: 1px solid var(--line);
   border-radius: var(--r-card);
   padding: clamp(18px, 2.2vw, 24px);
+}
+
+/* Switching tabs fades and lifts the incoming panel in, driven by main.js
+   toggling `ptier-pre` before the browser paints the un-hidden panel.
+   transform/opacity only, so it stays cheap on the reveal-heavy pages this
+   sits on. */
+.ptier-panel {
+  transition: opacity .24s var(--ease), transform .24s var(--ease);
+}
+.ptier-panel.ptier-pre { opacity: 0; transform: translateY(7px); }
+@media (prefers-reduced-motion: reduce) {
+  .ptier-panel { transition: none; }
 }
 
 .ptier-tabs {
@@ -730,6 +749,38 @@
 }
 .svc-pnote .ic { flex: none; font-size: 16px; color: var(--blue); margin-top: 2px; }
 .svc-pnote b { color: var(--text); font-weight: 700; }
+/* Same note, reused per tier inside the price picker: it swaps with the tab
+   instead of sitting once, statically, below the whole picker. */
+.ptier-panel .svc-pnote { margin-top: 18px; }
+
+/* Per-tier package fit: which package(s) can take this exact tier as one of
+   their picks, how many picks of that kind the package already grants, and
+   what it costs to add beyond that. Lives inside the tier panel so it swaps
+   with Simple/Complex the same way the price does. */
+.ptier-addon {
+  margin-top: 18px;
+  padding: 15px 18px;
+  background: rgba(61,168,248,.07);
+  border: 1px solid rgba(61,168,248,.26);
+  border-radius: var(--r-ctl);
+}
+.ptier-addon-lead {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 12.5px; font-weight: 700; color: var(--text-2);
+}
+.ptier-addon-lead .ic { font-size: 15px; color: var(--blue); }
+.ptier-addon-list { margin-top: 11px; display: grid; gap: 1px; background: rgba(125,166,214,.16); border-radius: var(--r-xs); overflow: hidden; }
+.ptier-addon-list li {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 9px 12px;
+  background: var(--ink);
+  font-size: 13.5px;
+}
+.pk-name { color: var(--text); font-weight: 600; }
+.pk-detail { color: var(--text-3); text-align: right; }
+.pk-detail.pk-gold { color: var(--gold); font-weight: 600; }
+.ptier-addon-price { margin-top: 12px; font-size: 13px; line-height: 1.6; color: var(--text-3); }
+.ptier-addon-price b { color: var(--text); font-weight: 700; }
 
 /* ---------- faq ---------- */
 

@@ -33,7 +33,7 @@ eleventyComputed:
       {%- set rows = (rows.push({ label: f.label, value: f.values[li], example: f.example }), rows) -%}
     {%- endfor -%}
     {%- set tiers = (tiers.push({ label: l.label, price: l.price, unit: l.unit,
-                                  note: l.note, shot: l.shot, rows: rows }), tiers) -%}
+                                  note: l.note, shot: l.shot, rows: rows, addon: l.addon }), tiers) -%}
   {%- endfor -%}
 {%- endif -%}
 {%- set ptid = svc.slug -%}
@@ -134,7 +134,7 @@ eleventyComputed:
           </div>
           {%- endif %}
 
-          {%- if svc.packageNote %}
+          {%- if svc.packageNote and not tiers.length %}
           <p class="svc-pnote reveal">
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
             <span>{{ svc.packageNote | safe }}</span>

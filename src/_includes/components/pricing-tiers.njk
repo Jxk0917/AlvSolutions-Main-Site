@@ -47,6 +47,56 @@
 {%- endif -%}
 {%- endmacro -%}
 
+{#- Looks up one package tier by slug (as used in services.json's
+    `addon.packages` / `addon.includedIn`) against the global packages data. -#}
+{%- macro pkgName(slug) -%}
+{%- for pt in packages.tiers -%}{% if pt.slug == slug %}{{ pt.name }}{% endif %}{%- endfor -%}
+{%- endmacro -%}
+
+{#- How many picks of this addon's class (page add-on → pages, power feature
+    → power) that package's price already includes, so "1 of 3" always
+    reflects the real pool rather than a guessed number. -#}
+{%- macro pickCount(slug, cls) -%}
+{%- set key = "power" if cls == "Power feature" else "pages" -%}
+{%- for pt in packages.tiers -%}{% if pt.slug == slug and pt.picks %}{{ pt.picks[key] }}{% endif %}{%- endfor -%}
+{%- endmacro -%}
+
+{#- Per-tier "how this fits in a package" block. `a` is the tier's own
+    `addon` object, so switching tabs (Simple/Complex, Basic/Premium…)
+    switches this along with the price above it. -#}
+{%- macro addonNote(a) -%}
+{%- if a -%}
+{%- set incl = a.includedIn or [] -%}
+{%- set paid = a.packages or [] -%}
+{%- set classLC = (a.class or "") | lower -%}
+{%- if incl.length or paid.length -%}
+<div class="ptier-addon">
+  <p class="ptier-addon-lead">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+    <span>Fits into a package</span>
+  </p>
+  <ul class="ptier-addon-list">
+    {%- for slug in incl %}
+    <li><span class="pk-name">{{ pkgName(slug) }}</span><span class="pk-detail pk-gold">Included outright</span></li>
+    {%- endfor %}
+    {%- for slug in paid %}
+    {%- set n = pickCount(slug, a.class) | int %}
+    <li><span class="pk-name">{{ pkgName(slug) }}</span><span class="pk-detail">{{ ("1 of " + n + " " + classLC + "s") if n > 1 else ("1 " + classLC) }} included</span></li>
+    {%- endfor %}
+  </ul>
+  {%- if paid.length %}
+  <p class="ptier-addon-price">Beyond your included picks, adding it costs <b>{{ a.price | price | safe }}</b> as a {{ classLC }}.</p>
+  {%- endif %}
+</div>
+{%- else -%}
+<p class="svc-pnote">
+  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+  <span>Not offered as a package add-on. Available only as its own purchase, at the price above.</span>
+</p>
+{%- endif -%}
+{%- endif -%}
+{%- endmacro -%}
+
 <div class="ptier reveal">
 
   <div class="ptier-tabs" role="tablist" aria-label="Pricing options">
@@ -82,6 +132,8 @@
       </div>
       {%- if t.note %}<p class="ptier-note">{{ t.note }}</p>{% endif %}
     </div>
+
+    {{ addonNote(t.addon) }}
 
     {{ shot(t.shot, "(min-width: 1000px) 380px, 88vw") }}
 

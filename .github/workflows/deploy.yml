@@ -44,7 +44,7 @@ jobs:
       # until alvsolutions.co DNS is pointed at GitHub Pages.
       - run: npm run build
         env:
-          PATH_PREFIX:"/"
+          PATH_PREFIX: "/"
 
       - uses: actions/configure-pages@v5
 

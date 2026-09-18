@@ -1,16 +1,17 @@
-# AlvSolutions
+# ALVSolutions
 
-The company site. Eleventy, no framework, no CSS build step — the same setup as
-the Sherpa site.
+The company site for **ALVSolutions** (https://alvsolutions.co) — professional
+websites built around how a business gets customers. Eleventy, no framework,
+no CSS build step — the same setup as the Sherpa site.
 
 ## Working on it
 
 ```bash
-npx @11ty/eleventy          # one-off build into _site/
-npm run serve               # Eleventy dev server with watching
-node serve.mjs              # plain static server for _site/ (no rebuilds)
-node check-site.mjs         # every internal link + the PLACEHOLDER count
-node compare-build.mjs      # regression check against the pre-Eleventy page
+npm install            # once, after cloning
+npm run build          # one-off build into _site/ (same as npx @11ty/eleventy)
+npm run serve          # Eleventy dev server with watching
+node serve.mjs         # plain static server for _site/ (no rebuilds)
+node check-site.mjs    # every internal link + the PLACEHOLDER count
 ```
 
 `serve.mjs` and `npm run serve` both use port 3000. **Check whether one is
@@ -29,7 +30,7 @@ src/
   policies.html           plain-English terms + FAQ
   services/               index.html (hub) + service.njk → 8 pages
   work.html about.html contact.html
-  stub.njk                → the legal pages
+  legal/                  privacy.html, terms.html
   _data/                  site · packages · careplans · bundles · addons
                           standalone · policies · services · stubs
   _includes/layouts       base.njk
@@ -105,15 +106,20 @@ download a Chromium build on every deploy.
 Pages from a private repo. A future *client* site that must stay closed-source
 needs Cloudflare Pages or Netlify instead.
 
-### Switching to alvsolutions.com
+### Switching to alvsolutions.co
+
+The canonical domain is **https://alvsolutions.co** — every canonical URL,
+Open Graph tag and the JSON-LD block in `layouts/base.njk` already point there
+via `site.url` in `_data/site.json`, regardless of where the build is actually
+served from. What has not happened yet is pointing DNS and GitHub Pages at it.
 
 The site currently builds with `PATH_PREFIX: AlvSolutions-Main-Site` so it
 renders at the github.io project subpath. `HtmlBasePlugin` rewrites every
 root-absolute link, so nothing is hardcoded and the switch is two edits:
 
 1. Set `PATH_PREFIX: "/"` in `.github/workflows/deploy.yml`.
-2. Add `src/CNAME` containing `alvsolutions.com`, and register it with
-   `gh api -X PUT repos/Jxk0917/AlvSolutions-Main-Site/pages -f cname=alvsolutions.com`.
+2. Add `src/CNAME` containing `alvsolutions.co`, and register it with
+   `gh api -X PUT repos/Jxk0917/AlvSolutions-Main-Site/pages -f cname=alvsolutions.co`.
    The CNAME file alone does **not** set the Pages domain on an Actions deploy.
 
 Do both only after DNS resolves, or Pages serves the domain before the
@@ -121,10 +127,6 @@ certificate exists.
 
 ## Not done yet
 
-- **`index.html` in the project root** is the pre-Eleventy original. The home
-  page has now been rewired (its cells link to the service pages and its icons
-  come from the sprite), so this baseline no longer matches anything and
-  `compare-build.mjs` has nothing useful to say. Both can be deleted.
 - **The contact form still opens a mailto.** It is one shared component now, so
   switching to a form endpoint means editing `contact-section.njk` and the
   handler at the bottom of `assets/main.js` — two places, once.

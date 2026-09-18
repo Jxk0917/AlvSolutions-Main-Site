@@ -41,7 +41,7 @@ jobs:
       #   Custom domain   : PATH_PREFIX: "/"   (+ src/CNAME must exist)
       #
       # Bare, no slashes. Currently serving from the github.io project URL
-      # until alvsolutions.com DNS is pointed at GitHub Pages.
+      # until alvsolutions.co DNS is pointed at GitHub Pages.
       - run: npm run build
         env:
           PATH_PREFIX: AlvSolutions-Main-Site

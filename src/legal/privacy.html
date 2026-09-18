@@ -1,0 +1,143 @@
+---
+layout: layouts/base.njk
+permalink: /legal/privacy/
+title: Privacy Policy
+description: What ALVSolutions collects through the contact form, how it is used, and who it may be shared with.
+---
+
+{%- set ph = {
+  heading: "Privacy policy.",
+  lead: "What the site collects when you reach out, and what happens to it after that.",
+  crumbs: [{ label: "Legal" }, { label: "Privacy" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+  <section class="sec">
+    <div class="wrap wrap-mid">
+
+      <p class="legal-updated">Last updated September 17, 2026</p>
+      <p class="legal-intro">
+        This policy covers {{ site.name }} ({{ site.url }}) and describes the information
+        collected when you use the contact form on this site, why it's collected, and who
+        it may be shared with. It does not cover the demo sites linked from the
+        <a href="/work/">portfolio</a> page, which present fictional businesses and are not
+        part of this policy.
+      </p>
+
+      <div class="legal-section" id="what-we-collect">
+        <h2>Information the contact form collects</h2>
+        <p>When you fill out the Start a Project form, the following information may be submitted:</p>
+        <ul>
+          <li>Your name</li>
+          <li>Your business name</li>
+          <li>Your email address</li>
+          <li>Your phone number</li>
+          <li>Your city or service area</li>
+          <li>Your business type</li>
+          <li>Your existing website, if you have one</li>
+          <li>Your project goals</li>
+          <li>Your budget range</li>
+          <li>Your timeline</li>
+          <li>Any project notes you add</li>
+          <li>The package or plan you selected, if any</li>
+        </ul>
+        <p>Nothing is collected automatically. If a field is left blank, it is simply not sent.</p>
+      </div>
+
+      <div class="legal-section" id="how-we-use-it">
+        <h2>How this information is used</h2>
+        <p>Information submitted through the form is used to:</p>
+        <ul>
+          <li>Respond to your inquiry</li>
+          <li>Evaluate what your project needs</li>
+          <li>Prepare an estimate or proposal</li>
+          <li>Communicate with you about your project</li>
+          <li>Manage the working relationship if you become a client</li>
+        </ul>
+        <p>It is not used for anything beyond that, and it is not sold.</p>
+      </div>
+
+      <div class="legal-section" id="how-it-is-sent">
+        <h2>How form submissions are sent</h2>
+        <p>
+          Submitting the form opens your own email application with the details already filled
+          in, and the message is sent directly from your device to {{ site.email }}. Form
+          submissions may also be processed by a third-party form delivery provider used to
+          securely transmit inquiries to {{ site.name }}. Either way, the information reaches
+          the same inbox and is used the same way described above.
+        </p>
+      </div>
+
+      <div class="legal-section" id="cookies-and-tracking">
+        <h2>Cookies and tracking</h2>
+        <p>
+          This site does not run Google Analytics, Meta Pixel, advertising pixels, or any
+          other marketing tracker. No visitor behavior is tracked or profiled. If that changes,
+          this policy will be updated to say so before anything is added.
+        </p>
+      </div>
+
+      <div class="legal-section" id="sharing">
+        <h2>Sharing your information</h2>
+        <p>
+          Your information is not sold or rented. It may be shared with service providers only
+          as reasonably necessary to operate this website or {{ site.name }}, or to deliver a
+          service you have requested — for example, the form delivery provider mentioned above,
+          once one is in place. {{ site.name }} does not currently use a CRM, mailing list, or
+          marketing automation platform.
+        </p>
+      </div>
+
+      <div class="legal-section" id="retention">
+        <h2>How long information is kept</h2>
+        <p>
+          Inquiry information is kept for as long as reasonably necessary to respond to you,
+          evaluate your project, prepare a quote, or maintain the client relationship if you
+          proceed. Information is deleted or archived once it's no longer needed for those
+          purposes.
+        </p>
+      </div>
+
+      <div class="legal-section" id="security">
+        <h2>Security</h2>
+        <p>
+          Reasonable measures are taken to protect the information submitted through this site.
+          No method of storage or transmission over the internet is completely secure, so this
+          cannot be guaranteed as absolute.
+        </p>
+      </div>
+
+      <div class="legal-section" id="your-choices">
+        <h2>Your choices</h2>
+        <p>
+          You can ask what information is held about you, ask for it to be corrected, or ask
+          for it to be deleted, at any time, by emailing {{ site.email }}.
+        </p>
+      </div>
+
+      <div class="legal-section" id="changes">
+        <h2>Changes to this policy</h2>
+        <p>
+          This policy may be updated as the site and its tools change — most likely when the
+          contact form moves to a form delivery provider. The date at the top of this page
+          reflects the most recent update.
+        </p>
+      </div>
+
+      <div class="legal-section" id="contact">
+        <h2>Contact</h2>
+        <p>
+          Questions about this policy or your information can go to
+          <a href="mailto:{{ site.email }}">{{ site.email }}</a>.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  {%- set ctaHeading = "Questions before you send anything?" %}
+  {%- set ctaLead = "Ask first. I would rather answer a question than have you wonder about it after you hit submit." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

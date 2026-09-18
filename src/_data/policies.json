@@ -1,5 +1,5 @@
 {
-  "_comment": "Plain-language, public. These are the commercial terms, written to be read rather than to be survived. The legal stubs under /legal/ are a different thing and still unwritten.",
+  "_comment": "Plain-language, public. These are the commercial terms, written to be read rather than to be survived. The full versions live at /legal/privacy/ and /legal/terms/.",
 
   "policies": [
     {
@@ -18,19 +18,31 @@
       "slug": "payment",
       "icon": "tag",
       "title": "Half to start, half at launch",
-      "body": "A 50% deposit secures your project and the remaining 50% is due at launch. Care plans are billed automatically each month to a card on file."
+      "body": "A 50% deposit secures your project. The remaining 50% is due once you approve the finished site, and before it is published to your live domain. Care plans are billed automatically each month to a card on file."
     },
     {
       "slug": "cancel",
       "icon": "shield-check",
       "title": "Pause or cancel, and the site is still yours",
-      "body": "If you stop your care plan, I stop hosting the site. Nothing is deleted and nothing is held back. I will help you move it to your own hosting."
+      "body": "Care plans have a 3-month minimum, then you can cancel any time with 30 days' notice. Cancellation takes effect at the end of your current billing period, and that period is not refunded. After that I stop hosting, maintaining and monitoring the site. Nothing is deleted and nothing is held back — I will help you move it to hosting you control, though any third-party cost to do that is yours."
     },
     {
       "slug": "scope",
       "icon": "alert",
       "title": "I flag before I charge",
       "body": "If your project runs past what your package includes, you get a quote and a chance to approve it before any extra work starts. No surprise invoices, ever."
+    },
+    {
+      "slug": "warranty",
+      "icon": "circle-check",
+      "title": "30 days covered after launch",
+      "body": "Every completed site includes a 30-day launch warranty, starting the day it goes live on your domain. Bugs, broken functionality and layout issues within the original approved scope are fixed at no charge. New features, redesigns and changes made outside ALVSolutions are not covered."
+    },
+    {
+      "slug": "third-party",
+      "icon": "building",
+      "title": "Outside services are billed by their own provider",
+      "body": "Things like domains, booking platforms, premium plugins or fonts, and payment processing fees are paid by you directly, unless a service is specifically included in your project agreement. I never sign you up for or pay for one of these without checking with you first."
     },
     {
       "slug": "assets",
@@ -55,15 +67,19 @@
     },
     {
       "q": "What happens if I stop paying for hosting?",
-      "a": "The site is yours. If payment lapses for an extended period I stop hosting it, but I will always reach out well before that happens, and I will help you move it somewhere else if that is what you want."
+      "a": "An overdue balance may affect hosting or service availability, but the site is suspended, not deleted. I will always reach out well before that happens. Restoring it just needs the outstanding balance paid in full, plus a flat $75 reactivation fee."
     },
     {
       "q": "Why is a care plan required?",
-      "a": "Because a site nobody hosts, backs up or patches is not a working site, and I am not willing to hand over something that will quietly break. The plan covers hosting, SSL, backups, monitoring and small edits, starting at $45 a month with a 3-month minimum."
+      "a": "Because a site nobody hosts, backs up or patches is not a working site, and I am not willing to hand over something that will quietly break. The plan covers hosting, SSL, backups, monitoring and small edits, starting at $45 a month with a 3-month minimum, then cancel any time with 30 days' notice."
     },
     {
       "q": "What counts as a revision round?",
       "a": "One consolidated list of changes, submitted within 5 business days of delivery. Ten notes in one message is one round. Ten messages over three weeks is not."
+    },
+    {
+      "q": "What's covered after my site goes live?",
+      "a": "Every completed site includes a 30-day launch warranty starting the day it is published to your domain. Bugs, broken functionality and layout issues caused by my work, within the scope we originally agreed on, are fixed at no charge. New features, new content, redesigns, extra revisions and issues caused by other services or your own edits are not covered."
     }
   ]
 }

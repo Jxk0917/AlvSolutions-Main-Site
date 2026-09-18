@@ -3,16 +3,49 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{% if title %}{{ title }} | AlvSolutions{% else %}AlvSolutions | Professional Business Websites in San Antonio{% endif %}</title>
-  <meta name="description" content="{{ description | default('Fast, professional websites for San Antonio small businesses. One-time builds from $650, live in one to two weeks, with hosting and support on a care plan from $45 a month.') }}" />
+
+  {#- Centralised here so a brand rename or domain switch is one edit in
+      site.json rather than a search-and-replace across every meta tag. -#}
+  {%- set metaTitle = title and (title + " | " + site.name) or (site.name + " | Professional Websites for Local Businesses") %}
+  {%- set metaDesc = description | default("Professional websites built around how your business gets customers. Flat-price builds from " + site.startingPrice + ", live in " + site.turnaround + ", with hosting and support from " + site.carePlanFrom + ". " + site.city + ".") %}
+  {%- set canonicalUrl = site.url + page.url %}
+
+  <title>{{ metaTitle }}</title>
+  <meta name="description" content="{{ metaDesc }}" />
   <meta name="theme-color" content="#070C14" />
-  <meta property="og:title" content="{% if title %}{{ title }} | AlvSolutions{% else %}AlvSolutions | Professional Business Websites{% endif %}" />
-  <meta property="og:description" content="{{ description | default('Fast, professional websites for San Antonio small businesses. One-time builds from $650, live in one to two weeks.') }}" />
+  <link rel="canonical" href="{{ canonicalUrl }}" />
+
+  <meta property="og:title" content="{{ metaTitle }}" />
+  <meta property="og:description" content="{{ metaDesc }}" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="/assets/brand/og-image.png" />
+  <meta property="og:url" content="{{ canonicalUrl }}" />
+  <meta property="og:site_name" content="{{ site.name }}" />
+  <meta property="og:image" content="{{ site.url }}/assets/brand/og-image.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ metaTitle }}" />
+  <meta name="twitter:description" content="{{ metaDesc }}" />
+
+  {#- Sitewide business identity. Deliberately omits telephone, address and
+      sameAs: ALVSolutions has no public phone, street address or social
+      profiles yet, and inventing any of them is worse than leaving them out. #}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "{{ site.name }}",
+    "url": "{{ site.url }}",
+    "email": "{{ site.email }}",
+    "image": "{{ site.url }}/assets/brand/og-image.png",
+    "logo": "{{ site.url }}/assets/brand/alv-badge-256.png",
+    "description": "{{ site.tagline }}",
+    "areaServed": {
+      "@type": "City",
+      "name": "{{ site.city }}"
+    }
+  }
+  </script>
   <!-- Brand kit favicon: white mark on Deep Blue, legible in light and dark tabs.
        PNG fallback for browsers without SVG favicons. -->
   <link rel="icon" href="/assets/brand/alv-favicon.svg" type="image/svg+xml" />

@@ -1,0 +1,167 @@
+---
+layout: layouts/base.njk
+permalink: /legal/terms/
+title: Terms of Service
+description: Domain and site ownership, payment, scope, care plan cancellation, third-party services, and the 30-day launch warranty, in full.
+---
+
+{%- set ph = {
+  heading: "Terms of service.",
+  lead: "The fuller version of the policies page: ownership, payment, scope, cancellation and warranty, written in plain English.",
+  crumbs: [{ label: "Legal" }, { label: "Terms" }]
+} -%}
+{% include "components/pagehead.njk" %}
+
+<main id="main">
+  <section class="sec">
+    <div class="wrap wrap-mid">
+
+      <p class="legal-updated">Last updated September 17, 2026</p>
+      <p class="legal-intro">
+        These terms describe how {{ site.name }} works with clients. They apply to
+        website projects and care plans agreed with {{ site.name }}. For any project,
+        the specifics are also confirmed directly with you before work starts; these
+        terms are the general rules behind that agreement, not a substitute for it.
+      </p>
+
+      <div class="legal-section" id="domain-ownership">
+        <h2>1. Domain ownership</h2>
+        <p>
+          You purchase and own your own domain, in your own name. {{ site.name }} may
+          configure DNS and connect your domain to your completed site, but ownership of
+          the domain always remains with you.
+        </p>
+      </div>
+
+      <div class="legal-section" id="website-ownership">
+        <h2>2. Website ownership</h2>
+        <p>
+          Once your project has been paid in full, the completed website belongs to you,
+          subject to any third-party licenses or services used to build or run it (for
+          example, fonts, plugins, or platforms with their own terms).
+        </p>
+      </div>
+
+      <div class="legal-section" id="google-business-profile">
+        <h2>3. Google Business Profile</h2>
+        <p>
+          Your Google Business Profile stays under your own Google account.
+          {{ site.name }} may assist with setup, optimization and submission, but Google
+          controls its own verification requirements and timelines, and no timeline can
+          be promised on {{ site.name }}'s behalf.
+        </p>
+      </div>
+
+      <div class="legal-section" id="payment">
+        <h2>4. Payment structure</h2>
+        <p>Projects require a 50% deposit to reserve and start the project.</p>
+        <p>
+          The remaining 50% balance is due once the website is approved and before it is
+          published to your live domain. "Launch" means the point where the completed
+          site has received your final approval, the remaining balance has been paid, and
+          {{ site.name }} publishes the site to your live domain or an approved production
+          host.
+        </p>
+      </div>
+
+      <div class="legal-section" id="scope">
+        <h2>5. Scope and extra work</h2>
+        <p>
+          If requested work falls outside the package or scope you agreed to,
+          {{ site.name }} provides a quote before doing it. You approve that cost before
+          any additional work begins. There are no surprise charges.
+        </p>
+      </div>
+
+      <div class="legal-section" id="care-plan-cancellation">
+        <h2>6. Care plan cancellation</h2>
+        <p>
+          Care plans run for a 3-month minimum, after which you can cancel any time with
+          30 days' notice. Cancellation takes effect at the end of your current paid
+          billing period, and payments already processed for that period are non-refundable.
+        </p>
+        <p>
+          At the end of the billing period, {{ site.name }} stops providing hosting,
+          maintenance, monitoring and the included update service. The website remains
+          your property. {{ site.name }} may provide reasonable assistance transferring the
+          site to hosting you control or another provider, and any third-party hosting,
+          migration, platform or service cost after cancellation is your responsibility.
+        </p>
+      </div>
+
+      <div class="legal-section" id="third-party-services">
+        <h2>7. Third-party services</h2>
+        <p>
+          Unless a service is specifically included in your project agreement, third-party
+          services and subscriptions are paid by you directly. Examples include domains,
+          booking platforms, email services, premium plugins, premium fonts or media,
+          ecommerce services, delivery platforms, payment processing fees, and other
+          external software or services.
+        </p>
+        <p>
+          {{ site.name }} will not purchase or activate a paid third-party service on your
+          behalf without your approval first. Third-party providers may change their own
+          pricing, features, availability or terms at any time, independently of
+          {{ site.name }}.
+        </p>
+      </div>
+
+      <div class="legal-section" id="late-payment">
+        <h2>8. Late payment and hosting suspension</h2>
+        <p>
+          An overdue balance may affect hosting or other service availability. If hosting
+          is suspended for nonpayment, the site is suspended, not deleted. Restoring it
+          requires the full outstanding balance to be paid, plus a flat $75 reactivation
+          fee before hosting is restored.
+        </p>
+      </div>
+
+      <div class="legal-section" id="launch-warranty">
+        <h2>9. 30-day launch warranty</h2>
+        <p>
+          Every completed website includes a 30-day launch warranty starting on the date
+          the site is published to your live domain. The warranty covers bugs, broken
+          functionality, layout issues, and implementation errors caused by
+          {{ site.name }}, limited to items within the originally approved project scope.
+          Warranty fixes within that scope are completed at no additional charge.
+        </p>
+        <p>The warranty does not cover:</p>
+        <ul>
+          <li>New features or new content</li>
+          <li>Redesign requests or additional revisions</li>
+          <li>Changes you or someone else makes to the site</li>
+          <li>Third-party platform changes</li>
+          <li>Domain or DNS changes made outside {{ site.name }}</li>
+          <li>Unsupported integrations</li>
+          <li>Issues caused by external services outside {{ site.name }}'s control</li>
+        </ul>
+      </div>
+
+      <div class="legal-section" id="content-and-assets">
+        <h2>10. Client content and assets</h2>
+        <p>
+          If you don't yet have a logo, photos, or other content, {{ site.name }} may
+          recommend DIY options, use professional stock placeholders in the meantime, or
+          offer sourcing and design help as a separate, listed service. Logo design or paid
+          media is not included in a project unless it is specifically listed in your
+          package or agreement.
+        </p>
+      </div>
+
+      <div class="legal-section" id="questions">
+        <h2>Questions</h2>
+        <p>
+          These terms are meant to be readable, not exhaustive. If anything here is unclear
+          before you sign on, ask at <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+          and I'll explain it plainly.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  {%- set ctaHeading = "Anything here you want changed?" %}
+  {%- set ctaLead = "Ask before you sign, not after. If something on this page does not work for your business, say so and I will tell you straight whether it can move." %}
+  {% include "components/cta-band.njk" %}
+
+</main>

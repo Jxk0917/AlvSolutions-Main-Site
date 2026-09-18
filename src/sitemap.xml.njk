@@ -1,0 +1,23 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+{#- Built from collections.all, not a hand-maintained list, so a new page
+    only needs its own front matter to show up here too. `addAllPagesToCollections:
+    true` on service.njk's and stub.njk's pagination is what makes every one of
+    their generated pages show up in collections.all rather than just the first.
+
+    Deliberately excludes Demo Restaurant and Demo Detailer: they are
+    addPassthroughCopy'd straight to _site/ rather than rendered as Eleventy
+    templates, so they were never in collections.all to begin with, and that is
+    exactly what we want — they present fictional local businesses with
+    invented contact details and should not be indexed under this domain. -#}
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+{%- for p in collections.all %}
+  <url>
+    <loc>{{ site.url }}{{ p.url }}</loc>
+    <priority>{{ p.url | sitemapPriority }}</priority>
+  </url>
+{%- endfor %}
+</urlset>

@@ -166,6 +166,7 @@
                 transform .12s var(--ease), color .18s var(--ease);
   }
   .btn .ic { font-size: 18px; }
+  .btn:disabled { opacity: .6; cursor: not-allowed; pointer-events: none; }
 
   /* Primary: one per view. White on Deep Blue 4.92:1, ink on Gold 12.6:1. */
   .btn-primary { background: var(--blue-deep); color: #fff; }

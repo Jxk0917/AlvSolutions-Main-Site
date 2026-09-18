@@ -280,7 +280,7 @@
   background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--r-card);
-  padding: 24px;
+  padding: 22px;
 }
 .care.pop {
   border-color: rgba(255,200,17,.42);
@@ -288,7 +288,7 @@
 }
 .care-top {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-  gap: 8px 18px; padding-bottom: 16px; margin-bottom: 16px;
+  gap: 8px 18px; padding-bottom: 14px; margin-bottom: 14px;
   border-bottom: 1px solid var(--line);
 }
 .care-name { font-family: var(--font-head); font-size: 20px; font-weight: 800; }
@@ -298,12 +298,12 @@
 }
 .care.pop .care-price { color: var(--gold); }
 .care-per { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: var(--text-3); letter-spacing: 0; }
-.care-for { font-size: 14px; line-height: 1.6; color: var(--text-2); margin-bottom: 18px; }
+.care-for { font-size: 14px; line-height: 1.6; color: var(--text-2); margin-bottom: 14px; }
 .care .tier-list { margin-bottom: 0; }
 
 .care-note {
   display: flex; align-items: flex-start; gap: 10px;
-  margin-top: 18px; padding: 13px 16px;
+  margin-top: 14px; padding: 12px 15px;
   background: rgba(61,168,248,.07);
   border: 1px solid rgba(61,168,248,.26);
   border-radius: var(--r-ctl);
@@ -507,21 +507,49 @@
 .policy h2 { font-size: 17px; font-weight: 700; margin: 16px 0 9px; }
 .policy p { font-size: 14px; line-height: 1.7; color: var(--text-2); }
 
+/* ---------- legal (privacy / terms) ----------
+   Long-form prose, styled to read as a real page rather than a wall of text.
+   `.wrap-mid` already caps the width; this just sets the type. */
+
+.legal-updated { font-size: 13px; color: var(--text-3); margin-bottom: 8px; }
+.legal-intro { font-size: 15px; line-height: 1.75; color: var(--text-2); max-width: 68ch; }
+
+.legal-toc { display: grid; gap: 8px; margin: 28px 0 0; padding: 20px 22px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card); }
+.legal-toc p { font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-3); margin: 0 0 4px; }
+.legal-toc a { font-size: 14px; color: var(--text-2); text-decoration: none; }
+.legal-toc a:hover { color: var(--blue); }
+
+.legal-section { max-width: 68ch; padding-top: 36px; scroll-margin-top: calc(var(--nav-h) + 20px); }
+.legal-section + .legal-section { border-top: 1px solid var(--line); }
+.legal-section h2 { font-size: 19px; font-weight: 700; margin-bottom: 12px; }
+.legal-section h3 { font-family: var(--font-body); font-size: 14.5px; font-weight: 700; color: var(--text); margin: 18px 0 6px; }
+.legal-section p { font-size: 14.5px; line-height: 1.75; color: var(--text-2); margin-bottom: 12px; }
+.legal-section ul { margin: 0 0 12px; padding-left: 20px; display: grid; gap: 6px; }
+.legal-section li { font-size: 14.5px; line-height: 1.65; color: var(--text-2); }
+.legal-section a { color: var(--blue); }
+
 /* ---------- the two-card fork ----------
    Used wherever a page has to hand the reader a genuine choice of route.
    Two columns, never three: a fork with three prongs is a grid. */
 
-.forks { display: grid; gap: 22px; grid-template-columns: 1fr; align-items: start; }
+.forks { display: grid; gap: 16px; grid-template-columns: 1fr; }
 @media (min-width: 720px) { .forks { grid-template-columns: repeat(2, 1fr); } }
+
+/* Icon sits on the heading's line rather than above it, and the paragraph row
+   takes the slack so both cards end on the same baseline as their button. */
 .fork {
-  padding: clamp(28px, 3vw, 36px);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr auto;
+  column-gap: 13px;
+  padding: clamp(20px, 2vw, 26px);
   background: var(--surface-2);
   border-color: var(--line-2);
 }
-.fork .ic-box { width: 56px; height: 56px; border-radius: var(--r-card); font-size: 27px; }
-.fork h3 { margin: 22px 0 10px; font-size: clamp(19px, 2vw, 22px); }
-.fork p.body-3 { font-size: 15.5px; }
-.fork .btn { margin-top: 22px; }
+.fork .ic-box { width: 38px; height: 38px; border-radius: var(--r-ctl); font-size: 19px; }
+.fork h3 { align-self: center; margin: 0; font-size: clamp(18px, 1.8vw, 20px); }
+.fork p.body-3 { grid-column: 2; margin-top: 11px; font-size: 15px; }
+.fork .btn { grid-column: 2; justify-self: start; align-self: end; margin-top: 15px; }
 
 /* ---------- service hub ---------- */
 
@@ -564,13 +592,18 @@
 /* Switching tabs fades and lifts the incoming panel in, driven by main.js
    toggling `ptier-pre` before the browser paints the un-hidden panel.
    transform/opacity only, so it stays cheap on the reveal-heavy pages this
-   sits on. */
+   sits on. The package-fit block trails the price by a beat: the two things
+   that actually changed arrive in the order you read them. */
 .ptier-panel {
-  transition: opacity .24s var(--ease), transform .24s var(--ease);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
 }
-.ptier-panel.ptier-pre { opacity: 0; transform: translateY(7px); }
+.ptier-panel.ptier-pre { opacity: 0; transform: translateY(8px); }
+.ptier-panel .pkgfit {
+  transition: opacity .34s var(--ease) .08s, transform .34s var(--ease) .08s;
+}
+.ptier-panel.ptier-pre .pkgfit { opacity: 0; transform: translateY(9px); }
 @media (prefers-reduced-motion: reduce) {
-  .ptier-panel { transition: none; }
+  .ptier-panel, .ptier-panel .pkgfit { transition: none; }
 }
 
 .ptier-tabs {
@@ -753,34 +786,51 @@
    instead of sitting once, statically, below the whole picker. */
 .ptier-panel .svc-pnote { margin-top: 18px; }
 
-/* Per-tier package fit: which package(s) can take this exact tier as one of
-   their picks, how many picks of that kind the package already grants, and
-   what it costs to add beyond that. Lives inside the tier panel so it swaps
-   with Simple/Complex the same way the price does. */
-.ptier-addon {
+/* Per-tier package fit. The answer line carries the whole point — is this
+   tier included in a package, and which — and the rows under it are the
+   receipt: all three packages, in price order, so "not in Foundation" is
+   visible rather than merely absent. One tinted panel, hairline rows inside
+   it; a box nested in a box made the same information read as heavier than
+   it is. */
+.pkgfit {
   margin-top: 18px;
-  padding: 15px 18px;
-  background: rgba(61,168,248,.07);
-  border: 1px solid rgba(61,168,248,.26);
+  padding: 14px 16px 5px;
+  background: rgba(61,168,248,.055);
+  border: 1px solid rgba(61,168,248,.22);
   border-radius: var(--r-ctl);
 }
-.ptier-addon-lead {
-  display: flex; align-items: center; gap: 9px;
-  font-size: 12.5px; font-weight: 700; color: var(--text-2);
+.pkgfit-answer {
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 12px;
+  font-size: 14px; color: var(--text-2);
 }
-.ptier-addon-lead .ic { font-size: 15px; color: var(--blue); }
-.ptier-addon-list { margin-top: 11px; display: grid; gap: 1px; background: rgba(125,166,214,.16); border-radius: var(--r-xs); overflow: hidden; }
-.ptier-addon-list li {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 9px 12px;
-  background: var(--ink);
+.pkgfit-answer .ic { flex: none; font-size: 18px; color: var(--blue); }
+.pkgfit-answer b { color: var(--text); font-weight: 700; }
+.pkgfit-answer.is-none .ic { color: var(--text-3); opacity: .6; }
+
+.pkgfit-rows { display: grid; }
+.pkgfit-rows li {
+  display: grid; grid-template-columns: 17px 1fr auto; align-items: center; gap: 10px;
+  padding: 9px 0;
+  border-top: 1px solid var(--line);
   font-size: 13.5px;
 }
-.pk-name { color: var(--text); font-weight: 600; }
-.pk-detail { color: var(--text-3); text-align: right; }
-.pk-detail.pk-gold { color: var(--gold); font-weight: 600; }
-.ptier-addon-price { margin-top: 12px; font-size: 13px; line-height: 1.6; color: var(--text-3); }
-.ptier-addon-price b { color: var(--text); font-weight: 700; }
+.pkgfit-rows .ic { font-size: 16px; color: var(--blue); }
+.pkgfit-rows .is-no .ic { color: var(--text-3); opacity: .45; }
+/* Gold marks the one package that hands this over without spending a pick,
+   which is the same rule gold follows everywhere else on the site. */
+.pkgfit-rows .is-own .ic { color: var(--gold); }
+.pkgfit-pkg { color: var(--text); font-weight: 600; }
+.pkgfit-what { color: var(--text-3); text-align: right; }
+.pkgfit-rows .is-own .pkgfit-what { color: var(--gold); font-weight: 600; }
+.pkgfit-what b { color: var(--text); font-weight: 700; }
+/* Narrow: the two columns stop fitting on one line, so the detail drops under
+   the package name rather than wrapping mid-phrase and making one row taller
+   than its neighbours. */
+@media (max-width: 460px) {
+  .pkgfit-rows li { grid-template-columns: 17px 1fr; row-gap: 3px; }
+  .pkgfit-what { grid-column: 2; text-align: left; }
+}
 
 /* ---------- faq ---------- */
 

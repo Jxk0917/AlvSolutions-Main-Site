@@ -11,8 +11,10 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), '_site');
 
 /* The two demo builds are standalone sites copied in verbatim. They link
    relatively among their own files, which is correct for them and would be
-   wrong for this site, so they are not this checker's business. */
-const SKIP = new Set(['Demo Restaurant', 'Demo Detailer']);
+   wrong for this site, so they are not this checker's business.
+   Named by their _site/ output slug (eleventy.config.mjs passthrough), not
+   their source folder name — "Demo Restaurant" is copied to "demo-restaurant". */
+const SKIP = new Set(['demo-restaurant', 'demo-detailer']);
 
 function walk(dir, out = []) {
   for (const e of readdirSync(dir, { withFileTypes: true })) {

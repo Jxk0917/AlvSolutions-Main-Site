@@ -7,9 +7,11 @@
   ships in the markup; `hidden` on all but the first is the only thing that
   makes it a wizard, so with JS off the first step still renders and reads.
 
-  The form still hands off to the mail client. To route it through a form
-  service instead: set action/method on <form> and delete the submit handler at
-  the bottom of assets/main.js. `data-to` is the only place the address lives.
+  The form submits asynchronously to Formspree (fetch + FormData) from the
+  submit handler at the bottom of assets/main.js, which stays on this page
+  and shows the .sent panel below on success. `data-endpoint` is the only
+  place the Formspree URL lives; the destination inbox itself is configured
+  on the Formspree form, not here.
 #}
 <section class="sec" id="contact">
   <div class="wrap contact">
@@ -45,7 +47,7 @@
       </div>
     </div>
 
-    <form class="form reveal" id="quote-form" novalidate style="--d:1" data-to="{{ site.email }}">
+    <form class="form reveal" id="quote-form" novalidate style="--d:1" data-endpoint="https://formspree.io/f/mkjgnlve">
 
       {#- Position, then the bar. The step names live on the panels themselves
           (data-step-label) so the copy sits with the step it belongs to and the
@@ -284,6 +286,15 @@
             <textarea class="input" id="f-notes" name="notes" rows="3" maxlength="1200"
                       placeholder="A site you like the look of, a date that is fixed, anything that has gone wrong before."></textarea>
           </div>
+
+          <p class="wiz-alert" data-submit-error role="alert" hidden>
+            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
+            <span>
+              <span data-submit-error-text>Something went wrong sending your request.</span>
+              Nothing here was lost &mdash; try again, or email me directly at
+              <a href="mailto:{{ site.email }}">{{ site.email }}</a>.
+            </span>
+          </p>
         </section>
 
         <div class="wiz-nav">
@@ -296,7 +307,7 @@
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
           </button>
           <button class="btn btn-primary" type="submit" data-send hidden>
-            Send project details
+            <span data-send-label>Send project details</span>
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
           </button>
         </div>
@@ -312,7 +323,7 @@
         <h3 tabindex="-1" data-sent-head>Thanks<span data-firstname></span>. I have your project request.</h3>
         <p class="sent-lead">I will review everything and follow up within one business day with any questions and my recommended setup.</p>
         <p class="sent-note">
-          Your mail app should have opened with the details filled in. If it did not,
+          Your project details have been sent. If you do not hear back within a day,
           email <a href="mailto:{{ site.email }}">{{ site.email }}</a> directly.
         </p>
       </div>

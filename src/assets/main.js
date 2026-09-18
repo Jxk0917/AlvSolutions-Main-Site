@@ -152,6 +152,9 @@
   var backBtn = form.querySelector('[data-back]');
   var nextBtn = form.querySelector('[data-next]');
   var sendBtn = form.querySelector('[data-send]');
+  var sendLabel = form.querySelector('[data-send-label]');
+  var submitError = form.querySelector('[data-submit-error]');
+  var submitErrorText = form.querySelector('[data-submit-error-text]');
   var liveMsg = form.querySelector('[data-live]');
   var bar     = form.querySelector('.wiz-bar');
   var barFill = form.querySelector('[data-fill]');
@@ -159,6 +162,10 @@
   var stepName = form.querySelector('[data-step-name]');
   var LAST    = panels.length - 1;
   var reduce  = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var ENDPOINT = form.getAttribute('data-endpoint');
+  var SEND_LABEL_DEFAULT = sendLabel ? sendLabel.textContent : 'Send project details';
+  var submitting = false;  // guards double submission from a repeat click or Enter
 
   var at = 0;  // panel on screen
 
@@ -270,18 +277,25 @@
     el.classList.add('is-in');
   }
 
-  function focusPanel(panel) {
-    var head = panel.querySelector('.wiz-title');
-    if (head) head.focus({ preventScroll: true });
+  /* Puts the form back under the nav. Normally it only acts when the form has
+     drifted out of a comfortable band, so stepping between two panels of
+     similar height does not yank the page around; `force` overrides that for
+     the one case where the form's own height changes underneath the reader. */
+  function showForm(force) {
     var navH = parseInt(getComputedStyle(document.documentElement)
       .getPropertyValue('--nav-h'), 10) || 68;
     var top = form.getBoundingClientRect().top;
-    if (top < navH + 16 || top > window.innerHeight * 0.55) {
-      window.scrollTo({
-        top: window.pageYOffset + top - navH - 16,
-        behavior: reduce ? 'auto' : 'smooth'
-      });
-    }
+    if (!force && top >= navH + 16 && top <= window.innerHeight * 0.55) return;
+    window.scrollTo({
+      top: window.pageYOffset + top - navH - 16,
+      behavior: reduce ? 'auto' : 'smooth'
+    });
+  }
+
+  function focusPanel(panel) {
+    var head = panel.querySelector('.wiz-title');
+    if (head) head.focus({ preventScroll: true });
+    showForm(false);
   }
 
   function goTo(i, opts) {
@@ -405,32 +419,6 @@
     ]);
   }
 
-  /* ---- the message ---- */
-  function messageBody() {
-    var lines = [
-      'CONTACT',
-      'Name: ' + val('name'),
-      'Business: ' + val('business'),
-      'Email: ' + val('email'),
-      'Phone: ' + val('phone'),
-      'Service area: ' + val('city'),
-      'Current site: ' + (val('hasSite') === 'Yes' ? (val('siteUrl') || 'Yes') : 'None'),
-      '',
-      'BUSINESS',
-      'Type: ' + val('businessType')
-    ];
-    if (val('businessOther')) lines.push('What it does: ' + val('businessOther'));
-
-    lines.push('', 'THE SITE', 'Customers should be able to:');
-    goalList().forEach(function (g) { lines.push('  - ' + g); });
-    lines.push('Budget: ' + val('budget'));
-    lines.push('Timeline: ' + val('timeline'));
-    if (val('package')) lines.push('Package viewed: ' + val('package'));
-    if (val('notes')) lines.push('', 'NOTES', val('notes'));
-
-    return lines.join('\n');
-  }
-
   function finish() {
     var slot = form.querySelector('[data-firstname]');
     var first = val('name').split(/\s+/)[0];
@@ -438,6 +426,85 @@
     form.classList.add('done');
     var head = form.querySelector('[data-sent-head]');
     if (head) head.focus({ preventScroll: true });
+
+    /* The review panel is tall and the confirmation that replaces it is short,
+       so .done removes most of the form's height from under the reader and
+       leaves them parked on whatever section follows. Scroll unconditionally:
+       the layout just moved, so where they were is no longer where they were. */
+    showForm(true);
+  }
+
+  /* ---- submission (Formspree) ----
+     Async fetch, never a real navigation: a mailto redirect or a real POST to
+     Formspree's own success page would both take the visitor off this site,
+     which is exactly what the custom .sent panel above exists to avoid. */
+  function setSending(on) {
+    sendBtn.disabled = on;
+    if (sendLabel) sendLabel.textContent = on ? 'Sending…' : SEND_LABEL_DEFAULT;
+  }
+
+  function hideSubmitError() {
+    if (submitError) submitError.hidden = true;
+  }
+
+  function showSubmitError(reason) {
+    if (!submitError) return;
+    if (submitErrorText) submitErrorText.textContent = reason || 'Something went wrong sending your request.';
+    submitError.hidden = false;
+  }
+
+  /* Formspree's error body, when it sends one, is `{ errors: [{ field, message }] }`.
+     Anything else (a network failure, a non-JSON response) falls back to a
+     plain reason so the banner never shows "undefined". */
+  function formspreeReason(data) {
+    if (data && Array.isArray(data.errors) && data.errors.length) {
+      return 'Some of the information could not be sent (' + data.errors.map(function (er) {
+        return er.field ? (er.field + ': ' + er.message) : er.message;
+      }).join('; ') + ').';
+    }
+    return null;
+  }
+
+  function fail(reason) {
+    submitting = false;
+    setSending(false);
+    showSubmitError(reason);
+  }
+
+  /* Conditional fields (cleared but not removed by bindCond when their
+     question hides) and the picked-package flag should not reach Formspree
+     as blank noise. The visible form and its inputs are untouched — this
+     only trims the copy of the data being sent. */
+  function submitPayload() {
+    var data = new FormData(form);
+    ['siteUrl', 'businessOther', 'goalOther'].forEach(function (key) {
+      if (!(data.get(key) || '').trim()) data.delete(key);
+    });
+    if (!(data.get('package') || '').trim()) data.set('package', 'General inquiry');
+    return data;
+  }
+
+  function submitForm() {
+    if (submitting || !ENDPOINT) return;
+    submitting = true;
+    setSending(true);
+    hideSubmitError();
+
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: submitPayload()
+    }).then(function (res) {
+      if (res.ok) {
+        submitting = false;
+        setSending(false);
+        finish();
+        return;
+      }
+      res.json().then(function (data) { fail(formspreeReason(data)); }, function () { fail(null); });
+    }, function () {
+      fail(null);  // fetch itself rejected: offline, blocked, DNS, etc.
+    });
   }
 
   /* ---- wiring ---- */
@@ -505,10 +572,7 @@
         return;
       }
     }
-    window.location.href = 'mailto:' + (form.getAttribute('data-to') || '')
-      + '?subject=' + encodeURIComponent('Website project: ' + val('business'))
-      + '&body='    + encodeURIComponent(messageBody());
-    finish();
+    submitForm();
   });
 
   /* The package cards link to /contact/?package=standard, and the trade builds

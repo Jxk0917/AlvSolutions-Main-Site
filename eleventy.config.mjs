@@ -78,6 +78,18 @@ eleventyConfig.addPassthroughCopy({ "Demo Detailer": "demo-detailer" });
     (arr || []).find((x) => x[key] === value)
   );
 
+  // Sitemap priority by URL, not by page weight in any collection — the hub
+  // pages a first-time visitor actually navigates through outrank the two
+  // legal pages, which are real and indexed but not worth ranking alongside
+  // the offer itself.
+  eleventyConfig.addFilter("sitemapPriority", (url) => {
+    if (url === "/") return "1.0";
+    if (["/services/", "/packages/", "/pricing/", "/work/", "/about/", "/contact/"].includes(url)) return "0.8";
+    if (url === "/policies/") return "0.5";
+    if (url.startsWith("/legal/")) return "0.3";
+    return "0.6";
+  });
+
   // Services listed in a `related` array, resolved to their full objects and
   // kept in the order the page author wrote them.
   eleventyConfig.addFilter("resolve", (arr, all) =>

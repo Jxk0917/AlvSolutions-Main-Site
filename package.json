@@ -2,7 +2,7 @@
   "name": "alvsolutions-main-site",
   "version": "0.1.0",
   "private": true,
-  "description": "AlvSolutions company site — Eleventy static build.",
+  "description": "ALVSolutions company site — Eleventy static build.",
   "scripts": {
     "build": "eleventy",
     "serve": "eleventy --serve --port=3000"

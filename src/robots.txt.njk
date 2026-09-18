@@ -1,0 +1,10 @@
+---
+permalink: /robots.txt
+eleventyExcludeFromCollections: true
+---
+{#- Plain-text output: no layout, so this isn't wrapped in base.njk's HTML.
+    site.url is the one place the domain lives, same as everywhere else. -#}
+User-agent: *
+Allow: /
+
+Sitemap: {{ site.url }}/sitemap.xml

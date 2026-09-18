@@ -6,19 +6,26 @@
 import puppeteer from 'puppeteer';
 import { createCanvas, loadImage } from 'canvas';
 import { writeFileSync } from 'fs';
-import { pathToFileURL } from 'url';
-import { join } from 'path';
+import { pathToFileURL, fileURLToPath } from 'url';
+import { join, dirname } from 'path';
 
-const ROOT = 'C:/Users/alvar/Projects/ALVSolutions-Transfer';
+// Resolved from the script's own location, same as check-site.mjs and
+// serve.mjs, so this works from any checkout path or machine rather than
+// one hardcoded developer folder.
+const ROOT = dirname(fileURLToPath(import.meta.url));
 const OUT = join(ROOT, 'src/assets/portfolio');
 
 // `settle` is how long to wait before capturing. The hero animation needs
 // ~1.8s; Hacienda waits longer because its hero GIF is a montage and most of
 // the loop is a dark close-up. 6s lands on the lit grill-marks shot, which is
 // the only frame that works as a still.
+//
+// Reads from the BUILT site (_site/), not the passthrough source folders,
+// since the demo builds are copied there under their lowercase-hyphenated
+// output names (see eleventy.config.mjs addPassthroughCopy).
 const DEMOS = [
-  { slug: 'hacienda-grill', dir: '_site/Demo Restaurant/index.html', settle: 6000 },
-  { slug: 'lucid-detailing', dir: '_site/Demo Detailer/index.html', settle: 1800 },
+  { slug: 'hacienda-grill', dir: '_site/demo-restaurant/index.html', settle: 6000 },
+  { slug: 'lucid-detailing', dir: '_site/demo-detailer/index.html', settle: 1800 },
 ];
 
 const DESKTOP = { width: 1440, height: 900 };

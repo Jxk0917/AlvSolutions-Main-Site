@@ -1,7 +1,7 @@
 ---
 layout: layouts/base.njk
 title: Services
-description: Business websites, menu and services pages, catering and quote pages, booking integration, care plans, Google Business Profile setup, business cards and shirt design.
+description: Business websites, logo and brand design, menu and services pages, catering and quote pages, booking integration, care plans, Google Business Profile setup, business cards and shirt design.
 ---
 
 {%- set ph = {
@@ -22,13 +22,15 @@ description: Business websites, menu and services pages, catering and quote page
 
       {%- set fams = [
         { slug: "web",   name: "Websites" },
-        { slug: "care",  name: "Care and visibility" },
+        { slug: "brand", name: "Branding &amp; design", id: "branding-design" },
+        { slug: "care",  name: "Care &amp; visibility" },
         { slug: "print", name: "Print &amp; apparel" }
       ] %}
 
+      <div class="families">
       {%- for f in fams %}
       {%- set list = services | byFamily(f.slug) %}
-      <div class="family">
+      <div class="family{% if list.length == 2 %} family-half{% endif %}"{% if f.id %} id="{{ f.id }}"{% endif %}>
         <div class="family-head reveal">
           <h2>{{ f.name | safe }}</h2>
           <span class="family-count">{{ list.length }} service{{ "s" if list.length != 1 }}</span>
@@ -43,6 +45,7 @@ description: Business websites, menu and services pages, catering and quote page
         </div>
       </div>
       {%- endfor %}
+      </div>
 
     </div>
   </section>

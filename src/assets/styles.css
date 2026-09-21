@@ -387,7 +387,7 @@
   }
 
   /* ============================================================
-     SERVICES  -  asymmetric bento, exactly 7 cells
+     SERVICES  -  asymmetric bento, exactly 8 cells
      ============================================================ */
   .bento { display: grid; grid-template-columns: 1fr; gap: 14px; }
   .bento .card { display: flex; flex-direction: column; }
@@ -559,7 +559,8 @@
     .c2 { grid-column: span 6; }
     .c3, .c4 { grid-column: span 3; }
     .c5 { grid-column: span 6; }
-    .c6, .c7 { grid-column: span 3; }
+    .c6, .c8 { grid-column: span 3; }
+    .c7 { grid-column: span 6; }
   }
   @media (min-width: 1000px) {
     .bento { grid-template-columns: repeat(12, 1fr); }
@@ -568,8 +569,7 @@
     .c3 { grid-column: span 4; }
     .c4 { grid-column: span 4; }
     .c5 { grid-column: span 4; }
-    .c6 { grid-column: span 6; }
-    .c7 { grid-column: span 6; }
+    .c6, .c7, .c8 { grid-column: span 4; }
   }
 
   /* ============================================================

@@ -59,6 +59,23 @@
     if (params.has(a.dataset.showIf)) a.hidden = false;
   });
 
+  /* /contact/?service=<slug> gets a Back link to that service instead. The
+     slug-to-route list is rendered into the button by the template, so the
+     URLs come from the service data and nothing is hardcoded here. A package
+     link keeps the Packages button as it was. */
+  document.querySelectorAll('.js-back[data-services]').forEach(function (a) {
+    var slug = params.get('service');
+    if (!slug || params.has('package')) return;
+    var list;
+    try { list = JSON.parse(a.dataset.services); } catch (err) { return; }
+    var hit = list.filter(function (s) { return s.slug === slug; })[0];
+    if (!hit) return;
+    a.href = hit.url;
+    var name = a.querySelector('[data-back-label]');
+    if (name) name.textContent = hit.name;
+    a.hidden = false;
+  });
+
   /* ---- pricing tier picker ---------------------------------------------
      A standard tablist: click or arrow-key between tiers, with the last tab
      being Compare. The markup already ships panel 0 visible and the rest
@@ -193,7 +210,7 @@
 
   function validateField(box) {
     var ok = true;
-    if (!box.hidden && box.hasAttribute('data-req')) {
+    if (!box.closest('[hidden]') && box.hasAttribute('data-req')) {
       if (box.hasAttribute('data-group')) {
         ok = toArray(box.querySelectorAll('input')).some(function (i) { return i.checked; });
       } else {
@@ -398,6 +415,13 @@
     });
   }
 
+  function needList() {
+    var other = val('needOther');
+    return pickedList('needs').map(function (n) {
+      return n === 'Other' && other ? other : n;
+    });
+  }
+
   function buildReview() {
     fill('contact', [
       ['Name', val('name')],
@@ -412,10 +436,11 @@
       ['What it does', val('businessOther')]
     ]);
     fill('goals', [
+      ['What you need', needList()],
       ['Customers should be able to', goalList()],
       ['Budget', val('budget')],
       ['Timeline', val('timeline')],
-      ['Package viewed', val('package')]
+      ['Started from', val('package')]
     ]);
   }
 
@@ -477,7 +502,7 @@
      only trims the copy of the data being sent. */
   function submitPayload() {
     var data = new FormData(form);
-    ['siteUrl', 'businessOther', 'goalOther'].forEach(function (key) {
+    ['siteUrl', 'businessOther', 'goalOther', 'needOther'].forEach(function (key) {
       if (!(data.get(key) || '').trim()) data.delete(key);
     });
     if (!(data.get('package') || '').trim()) data.set('package', 'General inquiry');
@@ -602,6 +627,52 @@
     }
   }
 
+  /* Service pages link to /contact/?service=brand-starter-kit. The request
+     starts from that service: it is named in the tag above the form, and the
+     matching "What do you need?" option is already ticked. */
+  var services = {
+    'brand-asset-setup':     { label: 'Brand Asset Setup',     need: 'Existing logo / brand asset preparation' },
+    'brand-starter-kit':     { label: 'Brand Starter Kit',     need: 'Logo / branding' },
+    'custom-identity':       { label: 'Custom Identity',       need: 'Logo / branding' },
+    'social-web-banner-set': { label: 'Social/Web Banner Set', need: 'Social / web graphics' }
+  };
+  var svcWanted = new URLSearchParams(window.location.search).get('service');
+  var svc = svcWanted && services[svcWanted];
+  if (svc) {
+    form.elements.package.value = svc.label;
+    var svcTag = form.querySelector('.wiz-tag');
+    if (svcTag) {
+      svcTag.querySelector('[data-package-label]').textContent = svc.label;
+      svcTag.hidden = false;
+    }
+    toArray(form.querySelectorAll('input[name="needs"]')).forEach(function (box) {
+      if (box.value === svc.need) box.checked = true;
+    });
+  }
+
+  /* The "what should the website do" question only applies when the project
+     includes a website. Hiding it clears any answers so a branding-only
+     request never carries website goals into the email. */
+  var goalsBox = document.getElementById('c-goals');
+  var needBoxes = toArray(form.querySelectorAll('input[name="needs"]'));
+  function syncGoals() {
+    if (!goalsBox) return;
+    var on = needBoxes.some(function (b) {
+      return b.checked && (b.hasAttribute('data-web') || b.value === 'Other');
+    });
+    if (on === !goalsBox.hidden) return;
+    goalsBox.hidden = !on;
+    if (on) { replay(goalsBox); return; }
+    toArray(goalsBox.querySelectorAll('input[type="checkbox"]:checked')).forEach(function (b) {
+      b.checked = false;
+      b.dispatchEvent(new Event('change'));
+    });
+    toArray(goalsBox.querySelectorAll('.invalid')).forEach(function (el) { el.classList.remove('invalid'); });
+    syncAlert(goalsBox);
+  }
+  needBoxes.forEach(function (b) { b.addEventListener('change', syncGoals); });
+
   form.querySelectorAll('[data-cond]').forEach(bindCond);
+  syncGoals();
   paint();
 })();

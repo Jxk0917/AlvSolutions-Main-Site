@@ -22,7 +22,7 @@
     {%- elif p.kind == "care" %}
     <span class="svc-from">From {{ careplans.plans[0].price | price | safe }}/mo</span>
     {%- elif p.kind == "flat" %}
-    <span class="svc-from">{{ p.price | price | safe }}</span>
+    <span class="svc-from">{% if p.from %}From {% endif %}{{ p.price | price | safe }}</span>
     {%- elif p.kind == "soon" %}
     <span class="svc-from svc-soon">Coming soon</span>
     {%- endif %}

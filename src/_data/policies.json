@@ -48,7 +48,13 @@
       "slug": "assets",
       "icon": "photo",
       "title": "No logo or photos yet is fine",
-      "body": "I can point you at DIY options that work, build with professional stock photography as a placeholder and swap in your real content later, or handle it for you through logo sourcing."
+      "body": "I can point you at DIY options that work, build with professional stock photography as a placeholder and swap in your real content later, or handle it for you. Brand Asset Setup prepares a logo you already have, and the Brand Starter Kit creates a new one."
+    },
+    {
+      "slug": "brand",
+      "icon": "pencil",
+      "title": "Brand files are digital, and the checks are yours",
+      "body": "Logos and brand files are prepared for digital use. They can be a starting point for print, signs, vinyl, decals or embroidery, but the vendor making the item confirms whether they suit production. I do not perform trademark searches, so checking that a name or logo does not infringe existing rights is your responsibility. Work outside what I do in-house, such as detailed mascots or hand-drawn illustration, may need an outside specialist, and their cost is yours unless we agree otherwise in writing."
     }
   ],
 
@@ -59,7 +65,7 @@
     },
     {
       "q": "What if I do not have a logo or photos?",
-      "a": "Either I point you at something quick that works (Looka, Fiverr, Canva), or I build with professional stock photography as a placeholder and swap in your real content once it exists. Logo sourcing and setup assistance is a listed $75 if you would rather I just handled it."
+      "a": "Either I point you at something quick that works (Looka, Fiverr, Canva), or I build with professional stock photography as a placeholder and swap in your real content once it exists. If you would rather I handled the logo, Brand Asset Setup is $75 for a logo you already have, and the Brand Starter Kit is $250 for a new one."
     },
     {
       "q": "Can I edit my own site?",

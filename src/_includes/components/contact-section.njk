@@ -17,7 +17,7 @@
   <div class="wrap contact">
 
     <div class="reveal">
-      <h2>{{ contactHeading | default("Let's talk about your site.") }}</h2>
+      <h2>{{ contactHeading | default("Let's talk about your project.") }}</h2>
       <p class="lead" style="margin-top: 18px;">
         {{ contactLead | default("Tell me what your business does and what you need. Free quote, no pressure.") }}
       </p>
@@ -34,14 +34,14 @@
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-message"/></svg>
           <div>
             <h3>A short call</h3>
-            <p>Fifteen minutes to understand the business and what the site has to do.</p>
+            <p>Fifteen minutes to understand the business and what the project has to do.</p>
           </div>
         </div>
         <div class="next-item">
           <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-shield-check"/></svg>
           <div>
-            <h3>A flat quote and a date</h3>
-            <p>One price and a launch day, both agreed before any work starts.</p>
+            <h3>A clear quote and next steps</h3>
+            <p>The price and scope, agreed with you before any work starts.</p>
           </div>
         </div>
       </div>
@@ -149,7 +149,7 @@
         <!-- ══════════════ 2. BUSINESS ══════════════ -->
         <section class="wiz-panel" data-panel data-step-label="Business" role="group" aria-labelledby="wiz-h2" hidden>
           <h3 class="wiz-title" id="wiz-h2" tabindex="-1">About the business</h3>
-          <p class="wiz-sub">This sets which examples and which layout I start from.</p>
+          <p class="wiz-sub">This sets which examples I start from.</p>
 
           <p class="wiz-alert" data-alert role="alert" hidden>
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
@@ -186,9 +186,9 @@
         </section>
 
         <!-- ══════════════ 3. GOALS ══════════════ -->
-        <section class="wiz-panel" data-panel data-step-label="Goals" role="group" aria-labelledby="wiz-h3" hidden>
-          <h3 class="wiz-title" id="wiz-h3" tabindex="-1">What the site has to do</h3>
-          <p class="wiz-sub">These answers decide the pages, the buttons and the price.</p>
+        <section class="wiz-panel" data-panel data-step-label="Project" role="group" aria-labelledby="wiz-h3" hidden>
+          <h3 class="wiz-title" id="wiz-h3" tabindex="-1">Your project</h3>
+          <p class="wiz-sub">These answers decide the scope, the deliverables and the price.</p>
 
           <p class="wiz-alert" data-alert role="alert" hidden>
             <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
@@ -196,40 +196,69 @@
           </p>
 
           <fieldset class="fset" data-field data-req data-group>
-            <legend class="fset-lg">What do you want your website to help customers do?</legend>
+            <legend class="fset-lg">What do you need?</legend>
             <span class="hint">Pick as many as apply.</span>
             <div class="opt-pair">
-              <label class="opt"><input type="checkbox" name="goals" value="Call the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Call the business</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Request a quote" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Request a quote</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Book an appointment" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Book an appointment</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="View services" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View services</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="View a menu" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View a menu</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Access delivery / ordering" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Access delivery / ordering</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="View work / portfolio" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View work / portfolio</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Find the business location" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Find the business location</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Learn about the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Learn about the business</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Contact the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Contact the business</span></span></label>
-              <label class="opt"><input type="checkbox" name="goals" value="Other" data-cond="c-goal" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Other</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="New website" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">New website</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Website redesign" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Website redesign</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Logo / branding" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Logo / branding</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Existing logo / brand asset preparation" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Existing logo / brand asset preparation</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Social / web graphics" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Social / web graphics</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Booking integration" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Booking integration</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Quote / estimate functionality" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Quote / estimate functionality</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Menu / services" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Menu / services</span></span></label>
+              <label class="opt"><input type="checkbox" name="needs" value="Other" data-cond="c-need" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Other</span></span></label>
             </div>
-            <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick at least one thing the site should do</span>
+            <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick at least one thing you need</span>
           </fieldset>
 
-          <div class="field cond" id="c-goal" data-field data-req hidden>
-            <label for="f-goal-other">What else should it do?</label>
-            <input class="input" id="f-goal-other" name="goalOther" type="text" maxlength="200"
-                   aria-describedby="e-goal-other" placeholder="Let customers upload photos before a quote" />
-            <span class="err" id="e-goal-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what else the site should do</span>
+          <div class="field cond" id="c-need" data-field data-req hidden>
+            <label for="f-need-other">What else do you need?</label>
+            <input class="input" id="f-need-other" name="needOther" type="text" maxlength="200"
+                   aria-describedby="e-need-other" placeholder="Menu boards for the restaurant" />
+            <span class="err" id="e-need-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what else you need</span>
+          </div>
+
+          {#- The website-behaviour question only makes sense when part of the
+              project is a website, so it stays hidden for a branding-only
+              request. main.js toggles it from the options above. -#}
+          <div class="cond" id="c-goals" hidden>
+            <fieldset class="fset" data-field data-req data-group>
+              <legend class="fset-lg">What do you want your website to help customers do?</legend>
+              <span class="hint">Pick as many as apply.</span>
+              <div class="opt-pair">
+                <label class="opt"><input type="checkbox" name="goals" value="Call the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Call the business</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Request a quote" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Request a quote</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Book an appointment" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Book an appointment</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="View services" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View services</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="View a menu" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View a menu</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Access delivery / ordering" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Access delivery / ordering</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="View work / portfolio" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View work / portfolio</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Find the business location" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Find the business location</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Learn about the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Learn about the business</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Contact the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Contact the business</span></span></label>
+                <label class="opt"><input type="checkbox" name="goals" value="Other" data-cond="c-goal" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Other</span></span></label>
+              </div>
+              <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick at least one thing the site should do</span>
+            </fieldset>
+
+            <div class="field cond" id="c-goal" data-field data-req hidden>
+              <label for="f-goal-other">What else should it do?</label>
+              <input class="input" id="f-goal-other" name="goalOther" type="text" maxlength="200"
+                     aria-describedby="e-goal-other" placeholder="Let customers upload photos before a quote" />
+              <span class="err" id="e-goal-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what else the site should do</span>
+            </div>
           </div>
 
           <fieldset class="fset" data-field data-req data-group>
             <legend class="fset-lg">Budget</legend>
             <span class="hint">A range is enough. It steers the scope, it is not a commitment.</span>
             <div class="opt-grid">
-              <label class="opt opt-one"><input type="radio" name="budget" value="Under $650" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Under $650</span></span></label>
-              <label class="opt opt-one"><input type="radio" name="budget" value="$650 - $1,000" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$650 - $1,000</span></span></label>
-              <label class="opt opt-one"><input type="radio" name="budget" value="$1,000 - $1,500" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$1,000 - $1,500</span></span></label>
-              <label class="opt opt-one"><input type="radio" name="budget" value="$1,500 - $2,500" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$1,500 - $2,500</span></span></label>
-              <label class="opt opt-one"><input type="radio" name="budget" value="$2,500+" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$2,500+</span></span></label>
+              <label class="opt opt-one"><input type="radio" name="budget" value="Under $250" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Under $250</span></span></label>
+              <label class="opt opt-one"><input type="radio" name="budget" value="$250–$500" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$250–$500</span></span></label>
+              <label class="opt opt-one"><input type="radio" name="budget" value="$500–$1,000" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$500–$1,000</span></span></label>
+              <label class="opt opt-one"><input type="radio" name="budget" value="$1,000–$1,500" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$1,000–$1,500</span></span></label>
+              <label class="opt opt-one"><input type="radio" name="budget" value="$1,500+" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$1,500+</span></span></label>
               <label class="opt opt-one"><input type="radio" name="budget" value="Not sure yet" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Not sure yet</span></span></label>
             </div>
             <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick a budget range</span>
@@ -274,8 +303,8 @@
             </div>
             <div class="rev-group">
               <div class="rev-head">
-                <h4>Goals, budget and timing</h4>
-                <button class="rev-edit" type="button" data-edit="2">Edit<span class="vh"> your goals, budget and timing</span></button>
+                <h4>Project, budget and timing</h4>
+                <button class="rev-edit" type="button" data-edit="2">Edit<span class="vh"> your project, budget and timing</span></button>
               </div>
               <dl class="rev-list" data-rev="goals"></dl>
             </div>

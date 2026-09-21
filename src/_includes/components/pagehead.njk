@@ -46,9 +46,10 @@
       {%- if ph.back %}
       <a class="btn btn-ghost btn-back js-back"
          href="{{ ph.back.url }}"
-         {%- if ph.back.showIf %} hidden data-show-if="{{ ph.back.showIf }}"{% endif %}>
+         {%- if ph.back.showIf %} hidden data-show-if="{{ ph.back.showIf }}"{% endif %}
+         {%- if ph.back.services %} data-services="{{ ph.back.services | dump | escape }}"{% endif %}>
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
-        Back to {{ ph.back.label }}
+        Back to <span data-back-label>{{ ph.back.label }}</span>
       </a>
       {%- endif %}
       {%- for a in ph.actions %}

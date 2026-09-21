@@ -25,6 +25,7 @@
         { "label": "Menu and services pages",  "url": "/services/menu-service-page/" },
         { "label": "Catering and quote pages", "url": "/services/catering-quote-page/" },
         { "label": "Booking integration",      "url": "/services/booking-integration/" },
+        { "label": "Logo and brand design",    "url": "/services/#branding-design" },
         { "label": "Care plans",               "url": "/services/care-plans/" },
         { "label": "Google Business Profile",  "url": "/services/google-business-profile/" },
         { "label": "Business cards",           "url": "/services/business-cards/" },

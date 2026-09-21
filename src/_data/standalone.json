@@ -36,13 +36,27 @@
     ]
   },
   {
-    "slug": "brand-and-print",
-    "name": "Brand and print",
+    "slug": "brand-and-design",
+    "name": "Brand and design",
+    "icon": "pencil",
+    "blurb": "A usable logo and the files to go with your site.",
+    "items": [
+      { "name": "Brand Asset Setup",                 "price": 75,  "note": "You already have a logo. Web-ready files and a favicon, no redesign." },
+      { "name": "Brand Starter Kit",                 "price": 250, "note": "A straightforward new logo. Two concepts, one revision round, SVG and PNG, light and dark, favicon." },
+      { "name": "Additional logo concept",           "price": { "plus": 35 }, "note": "Added to the Brand Starter Kit." },
+      { "name": "Additional logo revision round",    "price": { "plus": 50 }, "note": "Added to the Brand Starter Kit." },
+      { "name": "Custom Identity",                   "price": { "from": 550 }, "note": "A more developed identity, quoted by complexity and deliverables." },
+      { "name": "Social/Web Banner Set",             "price": 60,  "note": "Google Business Profile cover, Facebook cover and one square graphic." },
+      { "name": "Outside specialist coordination",   "price": { "plus": 75 }, "note": "Only for work outside what I do in-house. You pay the specialist directly. A referral alone carries no charge." }
+    ]
+  },
+  {
+    "slug": "print-and-apparel",
+    "name": "Print and apparel",
     "icon": "card",
     "blurb": "The same brand as the site, on paper and on your team.",
     "items": [
-      { "name": "Logo sourcing and setup assistance","price": 75,  "note": "No logo yet? This is me handling it with you." },
-      { "name": "Business card, basic",              "price": 85,  "note": "Front design. Print-ready files for any printer." },
+      { "name": "Business card, basic",              "price": 85,  "note": "Front design. Files prepared for professional printing." },
       { "name": "Business card, premium",            "price": 165, "note": "Front and back, thick stock, QR code, delivered." },
       { "name": "T-shirt design",                    "price": { "soon": true }, "note": "Not open for orders yet. Ask and I will tell you when it is." }
     ]

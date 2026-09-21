@@ -4,10 +4,17 @@ title: Contact
 description: Tell me what your business does and what you need. Free quote, no pressure. ALVSolutions, San Antonio, Texas.
 ---
 
+{#- slug, name and route of every service, so a visitor who arrived from one
+    gets a Back link to it without main.js hardcoding any URL. -#}
+{%- set svcRoutes = [] -%}
+{%- for s in services -%}
+  {%- set svcRoutes = (svcRoutes.push({ slug: s.slug, name: s.name, url: ("/services/" + s.slug + "/") | url }), svcRoutes) -%}
+{%- endfor -%}
+
 {%- set ph = {
   heading: "Tell me what<br />you need.",
-  lead: "A free quote, a flat price and a launch date, all agreed before any work starts. I reply within a day, usually the same afternoon.",
-  back: { label: "Packages", url: "/packages/", showIf: "package" },
+  lead: "Tell me what you're working on. I'll review the project and send you a clear quote and next steps. I reply within a day, usually the same afternoon.",
+  back: { label: "Packages", url: "/packages/", showIf: "package", services: svcRoutes },
   crumbs: [{ label: "Contact" }]
 } -%}
 {% include "components/pagehead.njk" %}

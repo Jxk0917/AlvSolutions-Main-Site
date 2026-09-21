@@ -316,6 +316,212 @@
     "processHeading": "How booking gets wired in."
   },
   {
+    "slug": "brand-asset-setup",
+    "family": "brand",
+    "name": "Brand Asset Setup",
+    "icon": "adjust",
+    "promise": "Your existing logo, prepared so it works properly on a website.",
+    "blurb": "Already have a logo? I prepare it for the web. No redesign.",
+    "noProcess": true,
+    "intro": [
+      "Plenty of businesses already have a logo, but only as a screenshot, a small image or a Facebook profile picture. It looks fine there and soft or jagged on a website.",
+      "This is the tidy-up. I take the logo you have and prepare it to load quickly, sit properly on the page and show up as the little icon in a browser tab. The logo itself is not redesigned or restyled.",
+      "How far it can go depends on the artwork you send. A clean vector file gives the best result, a small image can only be prepared so far, and I will tell you which one you have before I start."
+    ],
+    "includes": [
+      "Web-ready logo files, prepared for your site",
+      "SVG and PNG versions, where your source artwork permits",
+      "Favicon package for browser tabs and home screens",
+      "Your logo exactly as it is, with no redesign"
+    ],
+    "pricing": {
+      "kind": "flat",
+      "price": 75,
+      "unit": "one-time, standalone",
+      "note": "For a logo you already have. If it needs rebuilding rather than preparing, the Brand Starter Kit is the next step."
+    },
+    "turnaroundNote": "Timing is agreed when you send the artwork. It depends mostly on the condition of the original file.",
+    "faq": [
+      {
+        "q": "What if I only have a low-quality image?",
+        "a": "I prepare what your artwork allows. A small or blurry image cannot be made sharp, and I will say so before I start. If the logo needs rebuilding, that is what the Brand Starter Kit is for."
+      },
+      {
+        "q": "Do I need this to order a website?",
+        "a": "No. If your logo is already in a usable shape, I use it as it is. This is for when it is not."
+      },
+      {
+        "q": "Will these files work for print, signs or embroidery?",
+        "a": "They are prepared for digital use. Digital files can be a starting point for print, signage, vinyl, decals or embroidery, but whether they suit physical production has to be confirmed with the vendor making the item, through their own proofing process."
+      }
+    ],
+    "related": [
+      "brand-starter-kit",
+      "social-web-banner-set",
+      "business-websites"
+    ]
+  },
+  {
+    "slug": "brand-starter-kit",
+    "family": "brand",
+    "name": "Brand Starter Kit",
+    "icon": "pencil",
+    "promise": "A straightforward, professional logo for a business that does not have one yet.",
+    "blurb": "Need a straightforward new logo? Two concepts, delivered web-ready.",
+    "noProcess": true,
+    "intro": [
+      "For the business with a name and no mark. This is a clean, considered logo built from type and simple shapes: a wordmark, a monogram, a typography-based mark or a simple geometric or custom symbol.",
+      "You get two genuinely different concepts to choose between, not one idea in two colors. Pick a direction, send one round of revisions and I finish it and deliver the files.",
+      "It is designed to sit next to a website, so it has to read at small sizes, on light and dark backgrounds and as a favicon.",
+      "If what you have in mind is more elaborate, such as a detailed emblem or a fuller set of variants, that is Custom Identity."
+    ],
+    "includes": [
+      "Two distinct logo concepts",
+      "One round of revisions on the concept you choose",
+      "Primary logo",
+      "SVG and PNG files",
+      "Light and dark variants",
+      "Icon or symbol version, where it applies",
+      "Favicon package"
+    ],
+    "pricing": {
+      "kind": "flat",
+      "price": 250,
+      "unit": "one-time, standalone",
+      "note": "Two concepts and one revision round are included. A round is one consolidated list of changes.",
+      "extras": [
+        { "label": "Additional concept", "price": 35 },
+        { "label": "Additional revision round", "price": 50 }
+      ]
+    },
+    "turnaroundNote": "Timing is agreed when we start. It depends on how quickly you choose a concept and send your revision notes.",
+    "faq": [
+      {
+        "q": "What kind of logos does this cover?",
+        "a": "Wordmarks, monograms, typography-based marks and simple geometric or custom symbols. Detailed mascots, hand-drawn illustration and specialized lettering are outside what I do in-house."
+      },
+      {
+        "q": "What if I want more concepts or more revisions?",
+        "a": "An additional concept is $35 and an additional revision round is $50. Either is agreed with you before I start on it."
+      },
+      {
+        "q": "Can you check that my name and logo are not already trademarked?",
+        "a": "No. I do not perform trademark searches or trademark clearance, and I cannot tell you a name or mark is free to use. Confirming that it does not infringe existing rights is your responsibility, and an attorney is the right person to ask."
+      },
+      {
+        "q": "Can the files go straight to a printer, sign maker or embroiderer?",
+        "a": "The files are prepared for digital use and can be a starting point for physical production. I do not supply validated Pantone, CMYK, vinyl, thread or embroidery specifications, so final suitability is confirmed with the vendor through their own proofing process."
+      }
+    ],
+    "related": [
+      "brand-asset-setup",
+      "social-web-banner-set",
+      "business-websites"
+    ]
+  },
+  {
+    "slug": "custom-identity",
+    "family": "brand",
+    "name": "Custom Identity",
+    "icon": "sparkle",
+    "promise": "A more developed, custom identity for a business that needs more than a simple mark.",
+    "blurb": "Need something more custom? Developed marks and expanded variants, quoted to fit.",
+    "noProcess": true,
+    "intro": [
+      "For the business whose identity has to do more work: a constructed mark rather than a simple wordmark, an emblem or badge, a logo that adapts cleanly across sizes and layouts.",
+      "It is scoped to the job. We talk through what you need, I quote it and you approve the figure before I start.",
+      "The work is done in-house and built for digital use: your website, social profiles, listings and the files that go with them."
+    ],
+    "includes": [
+      "A custom-constructed mark, more developed than the Starter Kit",
+      "Emblems or badges, where they suit the business",
+      "Responsive logo variants, where appropriate",
+      "Expanded lockups and variants",
+      "Broader digital asset preparation",
+      "Concise usage guidance"
+    ],
+    "pricing": {
+      "kind": "flat",
+      "heading": "Priced to the project.",
+      "from": true,
+      "price": 550,
+      "note": "Custom Identity projects start at $550 and are quoted according to complexity and deliverables. You approve the figure before any work begins."
+    },
+    "callout": {
+      "title": "When it needs a specialist",
+      "body": "Detailed mascots, character or hand-drawn illustration and specialized lettering are outside what I do in-house. I can coordinate an outside designer for $75, and you pay the designer or platform directly. If you only want a referral and would rather manage them yourself, there is no coordination charge."
+    },
+    "turnaroundNote": "Timing is set in the quote, because it depends on the scope of the work.",
+    "faq": [
+      {
+        "q": "Why is it a starting price rather than a fixed one?",
+        "a": "Identity work varies a lot. A single developed mark and a full set of lockups and variants are different amounts of work, so I quote it once I understand the scope, and you approve it before I start. $550 is where it starts, not a fixed price or a ceiling."
+      },
+      {
+        "q": "What if I need a mascot or hand-drawn illustration?",
+        "a": "That is outside my in-house scope and may need an outside specialist. I can coordinate one for $75, which covers my project handling, while you pay the specialist or platform directly. If you would rather have a referral and manage them yourself, the $75 does not apply. Third-party costs are yours unless we agree otherwise in writing."
+      },
+      {
+        "q": "Is this a full brand guidelines package?",
+        "a": "No. It includes concise usage guidance covering how to use the logo and its variants, not a full brand manual."
+      },
+      {
+        "q": "Do you check that my name and logo are clear to use?",
+        "a": "No. I do not perform trademark searches or trademark clearance. Confirming that a name or mark does not infringe existing rights is your responsibility."
+      },
+      {
+        "q": "Will the files be ready for signage, vinyl, decals or embroidery?",
+        "a": "They can be prepared as digital files for those uses, but I do not supply validated production specifications. Final suitability is confirmed through the relevant vendor and their proofing process."
+      }
+    ],
+    "related": [
+      "brand-starter-kit",
+      "social-web-banner-set",
+      "business-websites"
+    ]
+  },
+  {
+    "slug": "social-web-banner-set",
+    "family": "brand",
+    "name": "Social/Web Banner Set",
+    "icon": "photo",
+    "promise": "Cover graphics for the places customers look you up, matched to your logo.",
+    "blurb": "Google Business Profile and Facebook covers, plus one square graphic.",
+    "noProcess": true,
+    "intro": [
+      "When someone looks you up, the first thing they see is often a cover image rather than your site. A blank or mismatched one makes a business look unfinished.",
+      "This set gives your Google Business Profile and Facebook page a matching cover, plus one square graphic you can reuse for posts. It is built around your existing logo and colors, so every profile reads as the same business."
+    ],
+    "includes": [
+      "Google Business Profile cover",
+      "Facebook cover",
+      "One square social graphic or template",
+      "Built from your existing logo and brand colors"
+    ],
+    "pricing": {
+      "kind": "flat",
+      "price": 60,
+      "unit": "one-time, standalone",
+      "note": "You need a usable logo first. If yours is not in good shape, start with Brand Asset Setup or the Brand Starter Kit."
+    },
+    "turnaroundNote": "Timing is agreed when you send your logo and any photos you want used.",
+    "faq": [
+      {
+        "q": "Do I need a logo before ordering?",
+        "a": "Yes, a usable one. If you have a logo that needs preparing, that is Brand Asset Setup. If you do not have one, that is the Brand Starter Kit."
+      },
+      {
+        "q": "Can I get other sizes or platforms?",
+        "a": "The set is the three pieces listed. Anything beyond them is a separate conversation, and I will tell you the price before I start."
+      }
+    ],
+    "related": [
+      "google-business-profile",
+      "brand-asset-setup",
+      "business-websites"
+    ]
+  },
+  {
     "slug": "care-plans",
     "family": "care",
     "name": "Care plans",
@@ -406,8 +612,8 @@
     ],
     "related": [
       "care-plans",
-      "business-websites",
-      "booking-integration"
+      "social-web-banner-set",
+      "business-websites"
     ],
     "processHeading": "How the listing gets set up."
   },
@@ -421,11 +627,11 @@
     "intro": [
       "A card designed separately from the website always looks like it. Different blue, different typeface, a logo at a slightly different weight. Small differences that add up to a business that looks improvised.",
       "Designing the card against the same brand as the site means the person who found you online and the person handed your card meet the same business.",
-      "Basic is design only: you get print-ready files and take them wherever you like. Premium is front and back on thick stock with a QR code, printed and delivered to you."
+      "Basic is design only: you get files prepared for professional printing to take to the printer you choose, who confirms final specifications and proofs. Premium is front and back on thick stock with a QR code, printed and delivered to you."
     ],
     "includes": [
       "Designed against your site's exact brand",
-      "Print-ready files at the right bleed and resolution",
+      "Files prepared for professional printing, with bleed and resolution set up",
       "Front, or front and back on premium",
       "QR code to your site on premium",
       "Printed and delivered on premium"
@@ -437,7 +643,7 @@
         {
           "label": "Basic",
           "price": 85,
-          "note": "Front design, print-ready files.",
+          "note": "Front design, files prepared for professional printing.",
           "addon": { "includedIn": ["complete"] },
           "shot": {
             "caption": "One face. Logo, name and the three ways to reach you.",
@@ -506,7 +712,7 @@
         {
           "label": "You receive",
           "values": [
-            "Print-ready files for any printer",
+            "Files prepared for professional printing",
             "Printed cards, delivered to you"
           ]
         },
@@ -524,7 +730,7 @@
     "faq": [
       {
         "q": "Do you handle the printing?",
-        "a": "Premium is delivered printed. Basic is design only: you get print-ready files and can take them to any printer you like."
+        "a": "Premium is delivered printed. Basic is design only: you get files prepared for professional printing and take them to the printer you choose. They confirm final specifications and proofs."
       }
     ],
     "related": [
@@ -549,7 +755,7 @@
     "includes": [
       "Logo, business name and brand colors",
       "Front, or front, back and sleeve",
-      "Artwork prepared to the printer's specification"
+      "Artwork prepared for your printer, with final proofing done through them"
     ],
     "pricing": {
       "kind": "soon"

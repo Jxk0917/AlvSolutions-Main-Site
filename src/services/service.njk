@@ -11,7 +11,7 @@ eleventyComputed:
   description: "{{ svc.promise }}"
 ---
 
-{%- set famLabel = { web: "Websites", care: "Care and visibility", print: "Print & apparel" } -%}
+{%- set famLabel = { web: "Websites", brand: "Branding & design", care: "Care & visibility", print: "Print & apparel" } -%}
 {%- set fam = famLabel[svc.family] -%}
 {%- set p = svc.pricing -%}
 
@@ -50,8 +50,9 @@ eleventyComputed:
   back: { label: "Services", url: "/services/" },
   crumbs: [{ label: "Services", url: "/services/" }, { label: svc.name }],
   actions: [
-    { label: "Start a project", url: "/contact/" },
-    { label: "See packages", url: "/packages/", style: "btn-ghost" }
+    { label: "Start a project", url: ("/contact/?service=" + svc.slug) if svc.family == "brand" else "/contact/" },
+    ({ label: "See price list", url: "/pricing/#brand-and-design", style: "btn-ghost" }) if svc.family == "brand"
+      else ({ label: "See packages", url: "/packages/", style: "btn-ghost" })
   ]
 } -%}
 {% include "components/pagehead.njk" %}
@@ -112,12 +113,19 @@ eleventyComputed:
 
           {%- elif p.kind == "flat" %}
           <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <h2 class="svc-h2">One price, one time.</h2>
+            <h2 class="svc-h2">{{ p.heading or "One price, one time." }}</h2>
           </div>
           <div class="aside-card reveal">
-            <span class="aside-price">{{ p.price | price | safe }}</span>
+            <span class="aside-price">{% if p.from %}<span class="money-pre">From</span> {% endif %}{{ p.price | price | safe }}</span>
             {%- if p.unit %}<span class="aside-unit">{{ p.unit }}</span>{% endif %}
             <p class="aside-note">{{ p.note }}</p>
+            {%- if p.extras %}
+            <ul class="aside-extras">
+              {%- for x in p.extras %}
+              <li><span>{{ x.label }}</span><b>+{{ x.price | price | safe }}</b></li>
+              {%- endfor %}
+            </ul>
+            {%- endif %}
             <a class="btn btn-ghost" href="/pricing/">See the full price list</a>
           </div>
 
@@ -183,6 +191,13 @@ eleventyComputed:
             </div>
             {%- endif %}
 
+            {%- if svc.callout %}
+            <div class="aside-card">
+              <h3>{{ svc.callout.title }}</h3>
+              <p class="aside-note" style="margin-top: 0;">{{ svc.callout.body }}</p>
+            </div>
+            {%- endif %}
+
             <div class="aside-card">
               <h3>Turnaround</h3>
               <p class="aside-note" style="margin-top: 0;">
@@ -204,8 +219,10 @@ eleventyComputed:
   </section>
 
 
+  {%- if not svc.noProcess %}
   {%- set processHeading = svc.processHeading or ("How " + svc.name | lower + " gets built.") %}
   {% include "components/process-steps.njk" %}
+  {%- endif %}
 
 
   <!-- ══════════════ FAQ ══════════════ -->

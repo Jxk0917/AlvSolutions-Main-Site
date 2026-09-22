@@ -14,6 +14,11 @@
   <meta name="description" content="{{ metaDesc }}" />
   <meta name="theme-color" content="#070C14" />
   <link rel="canonical" href="{{ canonicalUrl }}" />
+  {#- Utility pages like /connect/ (a QR/business-card landing page) opt out of
+      search indexing per-page without touching robots.txt or any other page. #}
+  {%- if noindex %}
+  <meta name="robots" content="noindex, follow" />
+  {%- endif %}
 
   <meta property="og:title" content="{{ metaTitle }}" />
   <meta property="og:description" content="{{ metaDesc }}" />
@@ -69,11 +74,15 @@
 <a class="skip" href="#main">Skip to content</a>
 
 {% include "components/icon-sprite.njk" %}
+{%- if not hideChrome %}
 {% include "components/nav.njk" %}
+{%- endif %}
 
 {{ content | safe }}
 
+{%- if not hideChrome %}
 {% include "components/footer.njk" %}
+{%- endif %}
 
 <script src="/assets/main.js" defer></script>
 {%- if shader %}

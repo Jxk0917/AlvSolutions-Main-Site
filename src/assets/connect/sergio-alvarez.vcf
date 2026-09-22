@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Alvarez;Sergio;;;
+FN:Sergio Alvarez
+ORG:ALVSolutions
+TITLE:Founder
+EMAIL;TYPE=INTERNET,WORK:sergio@alvsolutions.co
+URL:https://alvsolutions.co
+END:VCARD

@@ -1,0 +1,64 @@
+---
+layout: layouts/base.njk
+title: Connect
+description: Sergio Alvarez's digital contact card for ALVSolutions. Start a project, visit the site, send an email, or save the contact directly to your phone.
+hideChrome: true
+noindex: true
+---
+
+<main id="main" class="connect-page">
+  <section class="connect">
+
+    <div class="connect-card reveal">
+      <a class="brand connect-brand" href="/" aria-label="{{ site.name }} home">
+        <img src="/assets/brand/alv-mark-reverse.svg" alt="" width="48" height="31" />
+        <span class="wordmark">Alv<span>Solutions</span></span>
+      </a>
+
+      <div class="connect-id">
+        <h1>Sergio Alvarez</h1>
+        <p class="connect-role">Founder, ALVSolutions</p>
+      </div>
+
+      <div class="connect-actions">
+        <a class="btn btn-primary btn-lg" href="/contact/">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-rocket"/></svg>
+          Start a Project
+        </a>
+        <a class="btn btn-ghost btn-lg" href="/">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-browser"/></svg>
+          Visit ALVSolutions
+        </a>
+        <a class="btn btn-ghost btn-lg" href="mailto:sergio@alvsolutions.co">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mail"/></svg>
+          Email Me
+        </a>
+        <a class="btn btn-ghost btn-lg" href="/assets/connect/sergio-alvarez.vcf" download="Sergio-Alvarez-ALVSolutions.vcf"
+           aria-label="Save Sergio Alvarez's contact as a vCard file">
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-card"/></svg>
+          Save Contact
+        </a>
+      </div>
+
+      {#- Mailto is the primary path. This is only for a device with no mail
+          app associated — a quiet, secondary way to read or copy the address
+          by hand. Clipboard API when available; the address stays visible
+          and selectable either way, so it works with JS off too. #}
+      <p class="connect-fallback">
+        No email app? Copy
+        <button type="button" class="connect-copy" data-copy-email="sergio@alvsolutions.co"
+                aria-label="Copy email address sergio@alvsolutions.co">
+          <svg class="ic connect-copy-ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clipboard"/></svg>
+          <svg class="ic connect-copy-ic connect-copy-ic-done" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
+          <span class="connect-copy-text">sergio@alvsolutions.co</span>
+        </button>
+        <span class="vh" role="status" aria-live="polite" data-copy-status></span>
+      </p>
+
+      <p class="connect-tagline">Professional websites built around how your business gets customers.</p>
+    </div>
+
+    <p class="connect-foot">&copy; 2026 {{ site.name }}</p>
+
+  </section>
+</main>

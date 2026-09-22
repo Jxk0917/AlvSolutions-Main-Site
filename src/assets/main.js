@@ -1,35 +1,43 @@
 (function () {
   'use strict';
 
-  /* ---- mobile menu ---------------------------------------------------- */
+  /* ---- mobile menu -----------------------------------------------------
+     Guarded: pages with hideChrome (e.g. /connect/) render no nav at all,
+     so burger/menu are null there and everything below has to be skippable
+     without throwing — an unguarded throw here would stop every script
+     that follows in this file, including the scroll reveal. */
   var burger = document.getElementById('burger');
   var menu   = document.getElementById('mob-menu');
 
-  function setMenu(open) {
-    menu.classList.toggle('open', open);
-    burger.setAttribute('aria-expanded', String(open));
-    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  if (burger && menu) {
+    function setMenu(open) {
+      menu.classList.toggle('open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    }
+    burger.addEventListener('click', function () {
+      setMenu(burger.getAttribute('aria-expanded') !== 'true');
+    });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); burger.focus(); }
+    });
   }
-  burger.addEventListener('click', function () {
-    setMenu(burger.getAttribute('aria-expanded') !== 'true');
-  });
-  menu.addEventListener('click', function (e) {
-    if (e.target.closest('a')) setMenu(false);
-  });
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); burger.focus(); }
-  });
 
   /* ---- nav border on scroll -------------------------------------------
      A sentinel + IntersectionObserver, so there is no scroll listener
      running on every frame.                                              */
   var nav = document.getElementById('nav');
-  var sentinel = document.createElement('div');
-  sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:60px;pointer-events:none;';
-  document.body.prepend(sentinel);
-  new IntersectionObserver(function (entries) {
-    nav.classList.toggle('scrolled', !entries[0].isIntersecting);
-  }, { threshold: 0 }).observe(sentinel);
+  if (nav) {
+    var sentinel = document.createElement('div');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:60px;pointer-events:none;';
+    document.body.prepend(sentinel);
+    new IntersectionObserver(function (entries) {
+      nav.classList.toggle('scrolled', !entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(sentinel);
+  }
 
   /* ---- "back to x" links -----------------------------------------------
      Each one's href is a sensible default (the index page it belongs to).
@@ -134,6 +142,28 @@
       var flipped = fig.classList.toggle('flipped');
       btn.setAttribute('aria-pressed', String(flipped));
       label.textContent = flipped ? btn.dataset.b : btn.dataset.a;
+    });
+  });
+
+  /* ---- copy email (connect page mailto fallback) ------------------------
+     navigator.clipboard is unavailable over http:// and in some older
+     browsers, so the button is left fully wired either way — a click just
+     does nothing if the API isn't there, and the email stays visible and
+     selectable by hand, which is the actual fallback. */
+  document.querySelectorAll('[data-copy-email]').forEach(function (btn) {
+    var status = btn.parentElement.querySelector('[data-copy-status]');
+    var resetTimer;
+    btn.addEventListener('click', function () {
+      if (!navigator.clipboard || !navigator.clipboard.writeText) return;
+      navigator.clipboard.writeText(btn.dataset.copyEmail).then(function () {
+        btn.classList.add('is-copied');
+        if (status) status.textContent = 'Copied';
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(function () {
+          btn.classList.remove('is-copied');
+          if (status) status.textContent = '';
+        }, 2000);
+      }).catch(function () { /* permission denied or unsupported: no-op, address stays visible */ });
     });
   });
 

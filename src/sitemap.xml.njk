@@ -11,13 +11,19 @@ eleventyExcludeFromCollections: true
     addPassthroughCopy'd straight to _site/ rather than rendered as Eleventy
     templates, so they were never in collections.all to begin with, and that is
     exactly what we want — they present fictional local businesses with
-    invented contact details and should not be indexed under this domain. -#}
+    invented contact details and should not be indexed under this domain.
+
+    Also excludes any page with `noindex: true` in its own front matter (e.g.
+    /connect/, the QR business-card landing page) — same reasoning as its
+    <meta name="robots"> tag, just applied here too, so the two never drift. -#}
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 {%- for p in collections.all %}
+{%- if not p.data.noindex %}
   <url>
     <loc>{{ site.url }}{{ p.url }}</loc>
     <priority>{{ p.url | sitemapPriority }}</priority>
   </url>
+{%- endif %}
 {%- endfor %}
 </urlset>

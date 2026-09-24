@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ALVSolutions launch story</title>
+<style>
+  /* Instagram Story, 1080 x 1920. Rendered by Social_Launch/tools/render-story.mjs.
+     Uses the brand kit in place (fonts, reverse mark). Nothing here is copied
+     into or written back to Brand_Assets or the website source.
+
+     Safe zones (Instagram UI overlays the top ~250px and bottom ~340px):
+       all essential content sits between y = 270 and y = 1580.
+     Link sticker space: y 1170 to 1450, centred. Left empty on purpose. */
+
+  @font-face { font-family: "Manrope"; src: url("../../Brand_Assets/ALVS Fonts/Geist/ManRope/Manrope-VariableFont_wght.ttf"); font-weight: 200 800; }
+  @font-face { font-family: "Geist";   src: url("../../Brand_Assets/ALVS Fonts/Geist/Geist-VariableFont_wght.ttf");           font-weight: 100 900; }
+
+  :root {
+    --ink: #070C14;
+    --mist: #EDF2F8;
+    --cloud: #B4C2D2;
+    --slate: #8698AC;
+    --blue: #3DA8F8;
+    --gold: #FFC811;
+  }
+
+  html, body { margin: 0; background: var(--ink); }
+
+  .story {
+    position: relative;
+    width: 1080px; height: 1920px;
+    overflow: hidden;
+    background: var(--ink);
+    color: var(--mist);
+    font-family: "Geist", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Atmosphere: the website hero's own device, one glow plus a fine masked grid. */
+  .glow {
+    position: absolute; pointer-events: none;
+    width: 1500px; height: 1500px; left: 50%; transform: translateX(-50%);
+  }
+  .glow.top  { top: -760px; background: radial-gradient(circle, rgba(61,168,248,.13) 0%, rgba(61,168,248,.04) 42%, transparent 68%); }
+  /* The only cue for the sticker: the light is brightest where it will land. */
+  .glow.stick { top: 560px; background: radial-gradient(circle, rgba(61,168,248,.17) 0%, rgba(61,168,248,.055) 36%, transparent 62%); }
+
+  .grid {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(125,166,214,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(125,166,214,.05) 1px, transparent 1px);
+    background-size: 62px 62px;
+    -webkit-mask-image: radial-gradient(ellipse 90% 46% at 50% 68%, #000 10%, transparent 78%);
+            mask-image: radial-gradient(ellipse 90% 46% at 50% 68%, #000 10%, transparent 78%);
+  }
+
+  .stack { position: absolute; left: 0; right: 0; text-align: center; }
+
+  /* Stacked lockup: real reverse mark over live Manrope ExtraBold wordmark,
+     built the way the brand sheet's Main Logo panel is. */
+  .logo { top: 286px; display: flex; flex-direction: column; align-items: center; }
+  .logo img { width: 300px; height: auto; display: block; }
+  .logo .word { margin-top: 34px; font-family: "Manrope", sans-serif; font-weight: 800; font-size: 96px; line-height: 1; letter-spacing: -0.03em; }
+  .logo .word .s { color: var(--blue); }
+
+  .headline {
+    top: 740px; margin: 0;
+    font-family: "Manrope", sans-serif; font-weight: 800;
+    font-size: 76px; line-height: 1.1; letter-spacing: -0.03em;
+    color: var(--mist);
+  }
+
+  .rule { position: absolute; left: 50%; top: 972px; width: 72px; height: 4px; margin-left: -36px; border-radius: 2px; background: var(--gold); }
+
+  .support {
+    top: 1030px; margin: 0;
+    font-size: 44px; font-weight: 500; line-height: 1.2; letter-spacing: -0.012em;
+    color: var(--cloud);
+  }
+
+  .services {
+    top: 1508px; margin: 0;
+    font-size: 30px; font-weight: 500; line-height: 1.2; letter-spacing: 0.005em;
+    color: var(--slate);
+  }
+  .services i { font-style: normal; color: var(--blue); margin: 0 0.55em; }
+
+  /* QA overlay, only visible with ?guides */
+  .guides { display: none; }
+  .show-guides .guides { display: block; }
+  .guides div { position: absolute; left: 0; right: 0; }
+  .g-top    { top: 0; height: 250px; background: rgba(255,60,60,.22); }
+  .g-bottom { top: 1580px; height: 340px; background: rgba(255,60,60,.22); }
+  .g-stick  { top: 1170px; height: 280px; left: 190px !important; right: 190px !important; background: rgba(255,200,17,.18); outline: 2px dashed rgba(255,200,17,.9); }
+</style>
+</head>
+<body>
+<main class="story" id="story">
+  <div class="glow top"></div>
+  <div class="glow stick"></div>
+  <div class="grid"></div>
+
+  <div class="stack logo">
+    <img src="../../Brand_Assets/logo/svg/alv-mark-reverse.svg" alt="">
+    <div class="word">Alv<span class="s">Solutions</span></div>
+  </div>
+
+  <h1 class="stack headline">Professional websites<br>built for your business.</h1>
+  <div class="rule"></div>
+  <p class="stack support">Now accepting new clients.</p>
+
+  <p class="stack services">Web Design<i>&bull;</i>Branding<i>&bull;</i>Business Solutions</p>
+
+  <div class="guides"><div class="g-top"></div><div class="g-bottom"></div><div class="g-stick"></div></div>
+</main>
+<script>if (location.search.includes("guides")) document.body.classList.add("show-guides");</script>
+</body>
+</html>

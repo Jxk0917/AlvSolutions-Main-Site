@@ -30,6 +30,9 @@ preloadImage: /assets/portfolio/hacienda-grill-1440.jpg
         </a>
         <a class="btn btn-ghost btn-lg" href="#work">See recent builds</a>
       </div>
+
+      {%- set fsVariant = "announce" %}
+      {% include "components/founders-special.njk" %}
     </div>
 
     <div class="hero-visual">
@@ -232,7 +235,7 @@ preloadImage: /assets/portfolio/hacienda-grill-1440.jpg
   <div class="wrap">
     <div class="sec-head reveal" style="margin-bottom: 36px;">
       <h2>Three packages, or one built for your trade.</h2>
-      <p class="lead">Every price is published. The build is one-time, the care plan is monthly, and both are on the packages page rather than behind a call.</p>
+      <p class="lead">Every standard price is published. The build is one-time, the care plan is monthly, and both are on the packages page rather than behind a call.</p>
     </div>
 
     <div class="rail reveal">
@@ -250,6 +253,9 @@ preloadImage: /assets/portfolio/hacienda-grill-1440.jpg
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-refresh"/></svg>
       <span>Every build also takes a care plan, from {{ careplans.plans[0].price | price | safe }} a month. It covers hosting, SSL, backups and edits, with a 3-month minimum.</span>
     </p>
+
+    {%- set fsVariant = "callout" %}
+    {% include "components/founders-special.njk" %}
 
     <div class="trades reveal">
       <h3 class="trades-h">Or start from a build made for your trade</h3>
@@ -405,7 +411,7 @@ preloadImage: /assets/portfolio/hacienda-grill-1440.jpg
       <div class="pt">
         <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
         <div>
-          <h3>Every price published</h3>
+          <h3>Every standard price published</h3>
           <p>Packages, add-ons and the small jobs are all on the site with numbers next to them. If a job grows, you approve the figure before I start it.</p>
         </div>
       </div>

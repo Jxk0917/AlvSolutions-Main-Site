@@ -8,6 +8,9 @@
   "startingPrice": "$650",
   "carePlanFrom": "$45/mo",
 
+  "_foundersSpecial": "Public Founders Special spots still open. Edit this one number by hand as clients secure a spot (agreement signed AND 50% deposit received); every Founders Special panel on the site reads it. Set to 0 to hide the promotion everywhere.",
+  "foundersSpecial": { "spots": 3 },
+
   "nav": [
     { "label": "Home",       "url": "/" },
     { "label": "Services",   "url": "/services/" },

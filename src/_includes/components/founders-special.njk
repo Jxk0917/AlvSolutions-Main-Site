@@ -1,0 +1,50 @@
+{#
+  Founders Special. Two shapes of one offer, set with `fsVariant` before including:
+    "announce"  the compact panel in the home hero
+    "callout"   the full statement beside the packages
+
+  The open-spot count is read from site.foundersSpecial.spots, so the chip in
+  every placement is one hand edit in site.json. A spot is only taken once the
+  Client Services Agreement is signed AND the 50% deposit has arrived; nobody
+  updates the number on an inquiry. Setting it to 0 renders nothing at all.
+
+  Both CTAs point at the plain contact route on purpose. No price, percentage
+  or extra term appears here: the founding-client figure is quoted per project.
+#}
+{%- set fsSpots = site.foundersSpecial.spots %}
+{%- if fsSpots %}
+{%- set fsChip = fsSpots + " spot" + ("s" if fsSpots != 1) + " available" %}
+
+{%- if fsVariant == "announce" %}
+<aside class="founders founders-announce" aria-label="Founders Special">
+  <div class="founders-head">
+    <p class="founders-title">Founders Special</p>
+    <span class="founders-chip">{{ fsChip }}</span>
+  </div>
+  <p class="founders-text">To celebrate the launch of ALVSolutions, the first 3 new clients can receive special founding-client pricing.</p>
+  <a class="btn btn-ghost" href="/contact/">Start a project</a>
+</aside>
+
+{%- else %}
+<section class="founders founders-callout reveal" aria-labelledby="founders-heading">
+  <div class="founders-offer">
+    <div class="founders-head">
+      <h2 id="founders-heading">Founders Special</h2>
+      <span class="founders-chip">{{ fsChip }}</span>
+    </div>
+    <p class="lead">ALVSolutions is officially open for business.</p>
+    <p class="body-2">To kick things off, I'm offering special founding-client pricing to the first 3 new clients who start a project with ALVSolutions.</p>
+    <p class="body-2">You'll receive the same professional service, project scope, and support, just at special founding-client pricing.</p>
+  </div>
+
+  <div class="founders-terms">
+    <p class="founders-limit">Limited to 3 new-client spots.</p>
+    <p class="rail-foot">
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
+      <span>A spot is secured once the Client Services Agreement is signed and the required 50% project deposit is received.</span>
+    </p>
+    <a class="btn btn-primary" href="/contact/">Start your project</a>
+  </div>
+</section>
+{%- endif %}
+{%- endif %}

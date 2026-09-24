@@ -510,6 +510,55 @@
   }
   .rail-foot .ic { flex: none; font-size: 17px; color: var(--blue); margin-top: 2px; }
 
+  /* ============================================================
+     FOUNDERS SPECIAL  -  the launch offer, in two shapes
+     Assembled from the pricing rail's own parts: the gold-washed surface
+     and gold badge the recommended tier uses, the tinted note from
+     .rail-foot, and the standard buttons. Gold marks the one highlighted
+     thing. No figure or discount is stated; that is quoted per project.
+     .founders-announce = compact hero panel, .founders-callout = full
+     statement beside the packages. The spot count comes from site.json.
+     ============================================================ */
+  .founders {
+    background: linear-gradient(180deg, rgba(255,200,17,.055), transparent 46%), var(--surface);
+    border: 1px solid rgba(255,200,17,.42);
+    border-radius: var(--r-card);
+  }
+  .founders-head { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .founders-chip {
+    flex: none; white-space: nowrap;
+    font-size: 12px; font-weight: 600; line-height: 1.5;
+    color: var(--ink); background: var(--gold);
+    border-radius: 999px; padding: 3px 11px;
+  }
+
+  /* hero panel: sits under the hero buttons, so its own button is Ghost and
+     the hero's Primary stays the dominant action */
+  .hero-copy > .founders-announce { margin-top: 34px; }
+  .founders-announce { display: grid; gap: 10px; justify-items: start; max-width: 520px; padding: 20px 22px 22px; }
+  .founders-title { font-family: var(--font-head); font-size: 18.5px; font-weight: 700; letter-spacing: -.012em; line-height: 1.35; }
+  .founders-text { font-size: 14.5px; line-height: 1.65; color: var(--text-2); max-width: 46ch; }
+  .founders-announce .btn { margin-top: 6px; }
+  @media (max-width: 479px) { .founders-announce .btn { width: 100%; } }
+
+  /* callout: the offer on the left, the terms and the action on the right;
+     stacked on a phone, with the terms under a hairline */
+  .founders-callout { margin-top: 34px; padding: clamp(22px, 3vw, 34px); }
+  .founders-callout h2 { font-size: clamp(24px, 2.6vw, 32px); }
+  .founders-offer > * + * { margin-top: 16px; }
+  .founders-terms {
+    display: grid; gap: 16px; align-content: center; justify-items: start;
+    margin-top: 26px; padding-top: 24px; border-top: 1px solid var(--line-2);
+  }
+  .founders-terms .rail-foot { margin: 0; }
+  .founders-limit { font-family: var(--font-head); font-size: 17px; font-weight: 700; color: var(--text); }
+  @media (max-width: 479px) { .founders-terms .btn { width: 100%; } }
+  @media (min-width: 900px) {
+    .founders-callout { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+    .founders-offer { padding-right: clamp(28px, 4vw, 52px); }
+    .founders-terms { margin-top: 0; padding-top: 0; padding-left: clamp(28px, 4vw, 52px); border-top: 0; border-left: 1px solid var(--line-2); }
+  }
+
   /* ---- the four trade builds, as a row of targets ---- */
   .trades { margin-top: 38px; padding-top: 30px; border-top: 1px solid var(--line); }
   .trades-h { font-size: 16.5px; font-weight: 700; color: var(--text-2); margin-bottom: 18px; }
@@ -1061,6 +1110,7 @@
     .hero-copy > *:nth-child(2) { animation-delay: .13s; }
     .hero-copy > *:nth-child(3) { animation-delay: .21s; }
     .hero-copy > *:nth-child(4) { animation-delay: .29s; }
+    .hero-copy > *:nth-child(5) { animation-delay: .37s; }
     .hero-visual { animation-delay: .22s; }
   }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }

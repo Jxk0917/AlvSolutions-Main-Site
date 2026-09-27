@@ -1,0 +1,119 @@
+/* ============================================================
+   ALVSolutions - Screen Light controls (Phase 2, locked)
+
+   Namespaced --alv-/.alv- throughout: the legacy src/assets/styles.css
+   already owns bare .btn, .tag and unscoped :focus-visible rules for the
+   old blue/gold system that untouched interior pages still use.
+   ============================================================ */
+.alv-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--sl-ink1);
+  color: var(--sl-room);
+  font: 600 15px/1 var(--sl-f-text);
+  white-space: nowrap;
+  text-decoration: none;
+  transition: transform 300ms var(--sl-e-out), box-shadow 300ms var(--sl-e-out), background-color 200ms;
+}
+.alv-btn--sm {
+  min-height: 40px;
+  padding: 0 18px;
+  font-size: 14px;
+}
+.alv-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px -14px rgb(var(--sl-L) / 0.42);
+}
+.alv-btn:active {
+  transform: translateY(0) scale(0.98);
+  background: #dad9d5;
+  box-shadow: 0 4px 10px -6px rgb(var(--sl-L) / 0.3);
+}
+.alv-btn:focus-visible {
+  outline: 2px solid var(--sl-ink1);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--sl-void), 0 0 0 6px var(--sl-void);
+}
+
+.alv-tlink {
+  color: var(--sl-ink1);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.26em;
+  text-decoration-color: rgb(var(--sl-L) / 0.4);
+  transition: text-decoration-color 200ms;
+  border-radius: 2px;
+}
+.alv-tlink:hover {
+  text-decoration-color: var(--sl-ink1);
+}
+.alv-tlink:focus-visible {
+  outline: 2px solid var(--sl-ink1);
+  outline-offset: 2px;
+}
+
+/* Selected/hover state for a nav-style link: a short light line above it. */
+.alv-lit-sel {
+  position: relative;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--sl-ink3);
+  text-decoration: none;
+  font-size: 14.5px;
+  font-weight: 500;
+  transition: color 250ms;
+}
+.alv-lit-sel:hover,
+.alv-lit-sel[aria-current] {
+  color: var(--sl-ink1);
+}
+.alv-lit-sel::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: -1px;
+  width: 0;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--sl-ink1);
+  transform: translateX(-50%);
+  transition: width 450ms var(--sl-e-out);
+}
+.alv-lit-sel[aria-current]::before {
+  width: 28px;
+}
+.alv-lit-sel:focus-visible {
+  outline: 2px solid var(--sl-ink1);
+  outline-offset: 2px;
+  border-radius: 8px;
+}
+
+.alv-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  cursor: pointer;
+  background: transparent;
+  color: var(--sl-ink1);
+  border: 1px solid var(--sl-line2);
+  font: 500 14px/1 var(--sl-f-text);
+  list-style: none;
+}
+.alv-pill::-webkit-details-marker {
+  display: none;
+}
+.alv-pill::marker {
+  content: "";
+}
+.alv-pill:focus-visible {
+  outline: 2px solid var(--sl-ink1);
+  outline-offset: 2px;
+}

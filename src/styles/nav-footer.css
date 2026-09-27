@@ -1,0 +1,164 @@
+/* ============================================================
+   ALVSolutions - shared nav + footer (Phase 4B foundation)
+
+   Screen Light chrome around whatever old- or new-styled content a page
+   still has. Height uses --alv-nav-h (72px, its own token - see tokens.css),
+   not the legacy --nav-h (68px) that old interior pages size their top
+   padding against. That leaves a ~4px seam where the new nav overlaps
+   old content until those pages are restyled; deliberate for this pass.
+   ============================================================ */
+.alv-nav {
+  position: fixed;
+  z-index: 200;
+  inset: 0 0 auto 0;
+  background: linear-gradient(rgb(11 11 11 / 0.94), rgb(11 11 11 / 0.72) 60%, rgb(11 11 11 / 0));
+  font-family: var(--sl-f-text);
+}
+.alv-nav-in {
+  height: var(--alv-nav-h);
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.alv-nav-mark {
+  flex: none;
+  text-decoration: none;
+  border-radius: 4px;
+}
+.alv-nav-links {
+  display: flex;
+  gap: 4px;
+  margin-left: auto;
+}
+.alv-nav-cta {
+  margin-left: 4px;
+}
+
+.alv-menu {
+  position: relative;
+}
+.alv-menu-panel {
+  position: fixed;
+  inset: var(--alv-nav-h) 0 0 0;
+  z-index: 190;
+  background: var(--sl-room);
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 48px var(--sl-gutter);
+}
+.alv-menu-panel nav {
+  display: grid;
+  gap: 4px;
+  margin-bottom: 20px;
+}
+.alv-menu-panel a:not(.alv-btn) {
+  font-family: var(--sl-f-brand);
+  font-weight: 600;
+  font-size: clamp(30px, 8vw, 44px);
+  letter-spacing: -0.03em;
+  color: var(--sl-ink2);
+  text-decoration: none;
+  padding: 6px 0;
+  justify-self: start;
+}
+.alv-menu-panel a:not(.alv-btn):hover,
+.alv-menu-panel a:not(.alv-btn):focus-visible {
+  color: var(--sl-ink1);
+}
+.alv-menu-panel .alv-btn {
+  justify-self: start;
+  margin-top: 8px;
+}
+.alv-menu-foot {
+  margin-top: 20px;
+  font-size: 15px;
+  color: var(--sl-ink3);
+  font-family: var(--sl-f-text);
+}
+
+@media (min-width: 761px) {
+  .alv-menu {
+    display: none;
+  }
+}
+@media (max-width: 760px) {
+  .alv-nav-links,
+  .alv-nav-cta {
+    display: none;
+  }
+  .alv-nav-in {
+    gap: 10px;
+  }
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.alv-foot {
+  border-top: 1px solid var(--sl-line);
+  background: var(--sl-room);
+  padding-block: 40px 56px;
+}
+.alv-foot-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) repeat(3, minmax(0, 1fr));
+  gap: 28px 40px;
+  align-items: start;
+}
+.alv-foot p {
+  font-size: 14.5px;
+  color: var(--sl-ink3);
+}
+.alv-foot nav {
+  display: grid;
+  gap: 6px;
+  font-size: 14.5px;
+}
+.alv-foot nav a {
+  color: var(--sl-ink2);
+  text-decoration: none;
+}
+.alv-foot nav a:hover,
+.alv-foot nav a:focus-visible {
+  color: var(--sl-ink1);
+}
+.alv-foot-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--sl-ink2);
+  text-decoration: none;
+}
+.alv-foot-contact:hover,
+.alv-foot-contact:focus-visible {
+  color: var(--sl-ink1);
+}
+.alv-foot-small {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  font-size: 13px;
+  color: var(--sl-ink3);
+}
+.alv-foot-small a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--sl-line2);
+  text-underline-offset: 0.2em;
+}
+.alv-foot-small a:hover,
+.alv-foot-small a:focus-visible {
+  color: var(--sl-ink1);
+}
+
+@media (max-width: 760px) {
+  .alv-foot-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .alv-foot-grid > :first-child {
+    grid-column: 1 / -1;
+  }
+}

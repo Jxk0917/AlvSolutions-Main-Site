@@ -4,6 +4,21 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <!-- Motion environment, read before first paint so no transition ever
+       runs and is then snapped off: mirrors src/motion/env.ts's own
+       storage key and reduced-motion check. -->
+  <script>
+    (function () {
+      var r = document.documentElement;
+      try {
+        var pref = localStorage.getItem("alv-motion");
+        if (pref === "off" || (pref !== "on" && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
+          r.className += " no-motion";
+        }
+      } catch (e) {}
+    })();
+  </script>
+
   {#- Centralised here so a brand rename or domain switch is one edit in
       site.json rather than a search-and-replace across every meta tag. -#}
   {%- set metaTitle = title and (title + " | " + site.name) or (site.name + " | Professional Websites for Local Businesses") %}
@@ -62,12 +77,21 @@
        cannot discover either file until the stylesheet has finished parsing. -->
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Manrope-Variable.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Geist-Variable.woff2" crossorigin />
+
+  <!-- Approved Phase 1 typography, used by the shared nav/footer/identity.
+       Self-hosted alongside the legacy pair above; interior page content
+       still renders in Manrope/Geist until it is migrated. -->
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Bricolage-Grotesque-Variable.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Instrument-Sans-Variable.woff2" crossorigin />
+  <!-- Italic is self-hosted and available via @font-face (the signing
+       treatment), but it's used sparingly enough not to earn a preload. -->
   {%- if preloadImage %}
   <link rel="preload" as="image" href="{{ preloadImage }}" />
   {%- endif %}
 
   <link rel="stylesheet" href="/assets/styles.css" />
   <link rel="stylesheet" href="/assets/pages.css" />
+  <link rel="stylesheet" href="/assets/dist/site.css" />
 </head>
 <body>
 
@@ -85,6 +109,7 @@
 {%- endif %}
 
 <script src="/assets/main.js" defer></script>
+<script src="/assets/dist/site.js" defer></script>
 {%- if shader %}
 <script src="/assets/shader.js" defer></script>
 {%- endif %}

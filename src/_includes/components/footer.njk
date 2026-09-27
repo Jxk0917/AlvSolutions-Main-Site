@@ -1,50 +1,38 @@
 {#
-  Four columns: the brand block carries the contact details (they used to be a
-  column of their own, which does not survive going from one link group to
-  three), then Services, Pricing and Company from site.footerGroups.
+  Site-wide footer (Phase 4B foundation): carries the fuller site structure
+  the primary nav intentionally leaves out. Reuses the existing production
+  data (site.footerGroups, site.legalLinks, site.tagline, site.email,
+  site.city) rather than duplicating business information. Screen Light
+  styling only.
 #}
-<footer class="foot">
+{% from "components/identity.njk" import wordmark %}
+<footer class="alv-foot">
   <div class="wrap">
-    <div class="foot-grid">
-
-      <div class="foot-brand">
-        <a class="brand" href="/" style="margin-bottom: 16px;" aria-label="{{ site.name }} home">
-          <img src="/assets/brand/alv-mark-reverse.svg" alt="" width="42" height="27" />
-          <span class="wordmark">Alv<span>Solutions</span></span>
-        </a>
-        <p class="body-3" style="max-width: 32ch;">{{ site.tagline }}</p>
-
-        <div class="foot-list" style="margin-top: 20px;">
-          <a class="foot-contact" href="mailto:{{ site.email }}">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-mail"/></svg>
-            {{ site.email }}
-          </a>
-          <span class="foot-contact">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-pin"/></svg>
-            {{ site.city }}
-          </span>
-          <a class="btn btn-primary btn-sm" href="/contact/" style="margin-top: 8px; justify-self: start;">Start a project</a>
-        </div>
+    <div class="alv-foot-grid">
+      <div>
+        <a class="alv-nav-mark" href="/" aria-label="{{ site.name }}, home">{{ wordmark("nav") }}</a>
+        <p style="margin-top: 12px; max-width: 32ch;">{{ site.tagline }}</p>
+        <p style="margin-top: 12px;">
+          <a class="alv-foot-contact" href="mailto:{{ site.email }}">{{ site.email }}</a><br />
+          {{ site.city }}
+        </p>
       </div>
 
       {%- for group in site.footerGroups %}
-      <div>
-        <h4>{{ group.title }}</h4>
-        <div class="foot-list">
-          {%- for link in group.links %}
-          <a href="{{ link.url }}">{{ link.label }}</a>
-          {%- endfor %}
-        </div>
-      </div>
+      <nav aria-label="{{ group.title }}">
+        <p style="color: var(--sl-ink2); font-weight: 600; margin-bottom: 4px;">{{ group.title }}</p>
+        {%- for link in group.links %}
+        <a href="{{ link.url }}">{{ link.label }}</a>
+        {%- endfor %}
+      </nav>
       {%- endfor %}
-
     </div>
 
-    <div class="foot-bar">
+    <div class="alv-foot-small">
       <span>&copy; 2026 {{ site.name }}. All rights reserved.</span>
-      <span class="foot-legal">
+      <span>
         {%- for link in site.legalLinks %}
-        <a href="{{ link.url }}">{{ link.label }}</a>
+        <a href="{{ link.url }}">{{ link.label }}</a>{% if not loop.last %} · {% endif %}
         {%- endfor %}
       </span>
       <span>Built and supported in San Antonio.</span>

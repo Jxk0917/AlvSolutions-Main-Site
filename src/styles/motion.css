@@ -1,0 +1,8 @@
+/* Colour is not motion: without motion the new chrome still changes state,
+   at once, rather than leaving old easing running against the user's wishes. */
+.no-motion *,
+.no-motion *::before,
+.no-motion *::after {
+  transition-duration: 0s !important;
+  transition-delay: 0s !important;
+}

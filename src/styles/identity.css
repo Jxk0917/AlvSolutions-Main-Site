@@ -1,0 +1,83 @@
+/* ============================================================
+   ALVSolutions - identity primitives (Phase 1, locked)
+
+   Ported from phase1-final.css / phase2-screen-light.css. The width-axis
+   and reveal custom properties that drive the opening motion (--alv-w,
+   --alv-wght, --sol-*) are left out here: without the motion timeline
+   running, the wordmark just needs to render correctly at rest.
+   ============================================================ */
+.alv-wm {
+  font-family: var(--sl-f-brand);
+  font-weight: 620;
+  font-optical-sizing: auto;
+  letter-spacing: -0.038em;
+  line-height: 1;
+  color: var(--sl-ink1);
+  white-space: nowrap;
+  display: inline-block;
+}
+.alv-wm--nav {
+  font-size: 19px;
+  letter-spacing: -0.02em;
+}
+.alv-wm--hero {
+  font-size: clamp(56px, 12vw, 172px);
+}
+.alv-wm-alv {
+  display: inline-block;
+  font-stretch: 75%;
+  font-weight: 700;
+}
+.alv-wm-sol {
+  display: inline-block;
+}
+
+/* The compact form: the same face closed to its narrowest width, a step
+   heavier so the narrower letters hold their weight at small sizes. */
+.alv-mark {
+  font-family: var(--sl-f-brand);
+  font-weight: 700;
+  font-stretch: 75%;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: currentColor;
+  white-space: nowrap;
+}
+.alv-mark--l {
+  font-size: clamp(64px, 9vw, 116px);
+}
+.alv-mark--m {
+  font-size: 30px;
+}
+
+/* The maker signature: "Built by" in roman, "ALVSolutions" in italic. */
+.alv-sign {
+  --alv-sign-quiet: var(--sl-ink3);
+  --alv-sign-voice: var(--sl-ink1);
+  display: inline-block;
+  line-height: 1.2;
+  white-space: nowrap;
+  font-size: 15px;
+}
+.alv-sign-line {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.36em;
+}
+.alv-sign-by {
+  font-family: var(--sl-f-text);
+  font-weight: 400;
+  color: var(--alv-sign-quiet);
+}
+.alv-sign-name {
+  font-family: var(--sl-f-text);
+  font-style: italic;
+  font-weight: 560;
+  font-size: 1.1em;
+  letter-spacing: -0.012em;
+  color: var(--alv-sign-voice);
+}
+.alv-sign--foot {
+  font-size: 14px;
+}

@@ -1,0 +1,11 @@
+{#
+  Reusable Phase 1 identity primitives: the live-set wordmark, its compact
+  ALV form, and the italic signing treatment used to credit ALVSolutions on
+  work that carries someone else's name. Same type throughout, never a
+  symbol, and never a client's colour.
+#}
+{% macro wordmark(size="nav") %}<span class="alv-wm alv-wm--{{ size }}"><span class="alv-wm-alv">ALV</span><span class="alv-wm-sol">Solutions</span></span>{% endmacro %}
+
+{% macro mark(size="m") %}<span class="alv-mark alv-mark--{{ size }}">ALV</span>{% endmacro %}
+
+{% macro signature(size="foot") %}<span class="alv-sign alv-sign--{{ size }}"><span class="alv-sign-line"><span class="alv-sign-by">Built by</span><span class="alv-sign-name">ALVSolutions</span></span></span>{% endmacro %}

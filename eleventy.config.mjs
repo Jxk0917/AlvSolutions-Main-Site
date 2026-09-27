@@ -28,7 +28,9 @@ export default function (eleventyConfig) {
         entryPoints: { site: "src/scripts/site.ts" },
         outdir: "src/assets/dist",
         bundle: true,
-        format: "esm",
+        // iife, not esm: the site loads this as a plain <script defer>,
+        // the same convention as the existing assets/main.js.
+        format: "iife",
         target: "es2020",
         logLevel: "warning",
       }),
@@ -36,6 +38,9 @@ export default function (eleventyConfig) {
         entryPoints: { site: "src/styles/site.css" },
         outdir: "src/assets/dist",
         bundle: true,
+        // Font url()s are absolute browser paths into /assets/fonts, not
+        // files esbuild should resolve on disk relative to src/styles.
+        external: ["/assets/*"],
         logLevel: "warning",
       }),
     ]);

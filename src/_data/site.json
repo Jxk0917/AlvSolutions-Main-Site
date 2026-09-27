@@ -11,6 +11,13 @@
   "_foundersSpecial": "Public Founders Special spots still open. Edit this one number by hand as clients secure a spot (agreement signed AND 50% deposit received); every Founders Special panel on the site reads it. Set to 0 to hide the promotion everywhere.",
   "foundersSpecial": { "spots": 3 },
 
+  "primaryNav": [
+    { "label": "Work",          "anchor": "work" },
+    { "label": "What I build",  "anchor": "build" },
+    { "label": "How it works",  "anchor": "process" },
+    { "label": "Prices",        "anchor": "prices" }
+  ],
+
   "nav": [
     { "label": "Home",       "url": "/" },
     { "label": "Services",   "url": "/services/" },

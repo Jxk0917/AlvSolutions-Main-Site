@@ -38,10 +38,12 @@ jobs:
       # HtmlBasePlugin rewrites them to sit under this prefix.
       #
       #   Project subpath : PATH_PREFIX: AlvSolutions-Main-Site
-      #   Custom domain   : PATH_PREFIX: "/"   (+ src/CNAME must exist)
+      #   Custom domain   : PATH_PREFIX: "/"
       #
-      # Bare, no slashes. Currently serving from the github.io project URL
-      # until alvsolutions.co DNS is pointed at GitHub Pages.
+      # Bare, no slashes. Serving from alvsolutions.co at the domain root —
+      # the custom domain is registered in the repo's Pages settings (not a
+      # src/CNAME file), which is how Actions-based ("workflow" build type)
+      # Pages deploys bind a custom domain.
       - run: npm run build
         env:
           PATH_PREFIX: "/"

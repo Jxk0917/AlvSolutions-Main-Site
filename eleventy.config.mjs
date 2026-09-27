@@ -1,4 +1,5 @@
 import { HtmlBasePlugin } from "@11ty/eleventy";
+import esbuild from "esbuild";
 
 // Where the site will be served from. Pages link root-absolutely, so serving
 // from anywhere other than a domain root needs every URL rewritten.
@@ -17,6 +18,28 @@ export default function (eleventyConfig) {
   // pathPrefix. Without it pathPrefix only affects the `url` filter and
   // every hand-written /assets/... link stays broken.
   eleventyConfig.addPlugin(HtmlBasePlugin);
+
+  // esbuild bundles TS/CSS entry points into src/assets/dist before Eleventy
+  // reads the tree, so the existing addPassthroughCopy("src/assets") below
+  // picks the output up like any other static asset — no separate copy step.
+  eleventyConfig.on("eleventy.before", async () => {
+    await Promise.all([
+      esbuild.build({
+        entryPoints: { site: "src/scripts/site.ts" },
+        outdir: "src/assets/dist",
+        bundle: true,
+        format: "esm",
+        target: "es2020",
+        logLevel: "warning",
+      }),
+      esbuild.build({
+        entryPoints: { site: "src/styles/site.css" },
+        outdir: "src/assets/dist",
+        bundle: true,
+        logLevel: "warning",
+      }),
+    ]);
+  });
 
   // styles.css / main.js / shader.js and the images, copied untouched.
   // Eleventy only processes *.html/*.njk; everything else in the input tree

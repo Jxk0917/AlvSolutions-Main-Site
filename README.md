@@ -90,46 +90,40 @@ a marked "coming soon" is honest where an invented number is not.
 
 ## Deployment
 
-Live at **https://jxk0917.github.io/AlvSolutions-Main-Site/** — repo
-`Jxk0917/AlvSolutions-Main-Site`, public.
+Live at **https://alvsolutions.co** — repo `Jxk0917/AlvSolutions-Main-Site`,
+public.
 
 Every push to `main` triggers `.github/workflows/deploy.yml`: Eleventy build →
 `upload-pages-artifact` → `deploy-pages`. About 30 seconds end to end. There is
 nothing to run by hand.
 
 **CI installs with `npm ci --omit=dev`, and that flag is load-bearing.**
-`canvas` and `puppeteer` are devDependencies used only by the local `shot-*.mjs`
-capture tooling. A plain `npm ci` makes CI compile canvas from source and
-download a Chromium build on every deploy.
+`canvas`, `puppeteer` and `typescript` are devDependencies used only for local
+tooling (the `shot-*.mjs` capture scripts and `npm run typecheck`). A plain
+`npm ci` makes CI compile canvas from source and download a Chromium build on
+every deploy. Anything the production build itself needs at runtime (esbuild,
+gsap) lives in `dependencies`, not `devDependencies`, precisely because
+`--omit=dev` would strip it otherwise.
 
 **The repo is public because it has to be.** GitHub's free plan refuses to serve
 Pages from a private repo. A future *client* site that must stay closed-source
 needs Cloudflare Pages or Netlify instead.
 
-### Switching to alvsolutions.co
+### Custom domain
 
-The canonical domain is **https://alvsolutions.co** — every canonical URL,
-Open Graph tag and the JSON-LD block in `layouts/base.njk` already point there
-via `site.url` in `_data/site.json`, regardless of where the build is actually
-served from. What has not happened yet is pointing DNS and GitHub Pages at it.
+The canonical domain is **https://alvsolutions.co**, already live. `PATH_PREFIX`
+is `"/"` in `.github/workflows/deploy.yml`, and the custom domain is registered
+in the repo's GitHub Pages settings (`cname: alvsolutions.co`, `build_type:
+workflow`) rather than via a `src/CNAME` file — that's how a domain binds for
+an Actions-based Pages deploy. DNS (apex A records to GitHub Pages, `www` CNAME
+to `jxk0917.github.io`) and the HTTPS certificate are both live.
 
-The site currently builds with `PATH_PREFIX: AlvSolutions-Main-Site` so it
-renders at the github.io project subpath. `HtmlBasePlugin` rewrites every
-root-absolute link, so nothing is hardcoded and the switch is two edits:
-
-1. Set `PATH_PREFIX: "/"` in `.github/workflows/deploy.yml`.
-2. Add `src/CNAME` containing `alvsolutions.co`, and register it with
-   `gh api -X PUT repos/Jxk0917/AlvSolutions-Main-Site/pages -f cname=alvsolutions.co`.
-   The CNAME file alone does **not** set the Pages domain on an Actions deploy.
-
-Do both only after DNS resolves, or Pages serves the domain before the
-certificate exists.
+For a project-subpath preview instead, build with
+`PATH_PREFIX=Repo-Name npx @11ty/eleventy` (bare, no slashes — a leading slash
+makes Git Bash rewrite it into a Windows path).
 
 ## Not done yet
 
 - **The contact form still opens a mailto.** It is one shared component now, so
   switching to a form endpoint means editing `contact-section.njk` and the
   handler at the bottom of `assets/main.js` — two places, once.
-- **`PATH_PREFIX`** is wired for GitHub Pages but unset. For a project subpath,
-  build with `PATH_PREFIX=Repo-Name npx @11ty/eleventy` (bare, no slashes — a
-  leading slash makes Git Bash rewrite it into a Windows path).

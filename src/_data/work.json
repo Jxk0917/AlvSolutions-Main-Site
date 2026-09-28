@@ -1,0 +1,66 @@
+{
+  "_comment": "Authoritative source for ALVSolutions' portfolio/demo builds. Content here is pulled from the existing work.html/index.html copy and screenshots — no new claims invented. Not wired into work.html/index.html this pass; those keep their own markup for now. This exists so a future homepage work reel, a redesigned /work/, and demo-link rendering can all read one source instead of retyping this in three places.",
+
+  "disclosure": "Fictional concept website created by ALVSolutions for portfolio demonstration.",
+
+  "projects": [
+    {
+      "slug": "hacienda-grill",
+      "name": "Hacienda Grill",
+      "category": "Restaurant",
+      "bundle": "restaurant",
+      "fictional": true,
+      "description": "A full restaurant site: menu with photography, hours, location and a reservation form. The menu is tabbed rather than a printed PDF, so it stays readable on a phone at the table.",
+      "features": ["Tabbed menu", "Reservations", "Hours and location"],
+      "demoUrl": "/demo-restaurant/",
+      "screenshots": {
+        "desktop": {
+          "src": "/assets/portfolio/hacienda-grill-1440.jpg",
+          "small": "/assets/portfolio/hacienda-grill-720.jpg",
+          "width": 1440,
+          "height": 900,
+          "alt": "Hacienda Grill homepage on desktop"
+        },
+        "mobile": {
+          "src": "/assets/portfolio/hacienda-grill-mobile.jpg",
+          "width": 430,
+          "height": 860,
+          "alt": "Hacienda Grill homepage on mobile"
+        }
+      },
+      "reelCrop": null,
+      "clientLight": null
+    },
+    {
+      "slug": "lucid-detailing",
+      "name": "Lucid Detailing",
+      "category": "Auto services",
+      "bundle": "detailer",
+      "fictional": true,
+      "description": "A mobile detailing site built around booking. Services and pricing are laid out plainly, a gallery carries the before and after work, and the booking call to action follows you down the page.",
+      "features": ["Service pricing", "Booking flow", "Gallery"],
+      "demoUrl": "/demo-detailer/",
+      "screenshots": {
+        "desktop": {
+          "src": "/assets/portfolio/lucid-detailing-1440.jpg",
+          "small": "/assets/portfolio/lucid-detailing-720.jpg",
+          "width": 1440,
+          "height": 900,
+          "alt": "Lucid Detailing homepage on desktop"
+        },
+        "mobile": {
+          "src": "/assets/portfolio/lucid-detailing-mobile.jpg",
+          "width": 430,
+          "height": 860,
+          "alt": "Lucid Detailing homepage on mobile"
+        }
+      },
+      "reelCrop": {
+        "desktopAspectRatio": "1440 / 780",
+        "mobileAspectRatio": "430 / 560",
+        "note": "Stops above the demo's fictional statistics bar. Values carried from the locked exploration's Screen Light room (.dev--luc / .dev--phone.dev--luc in phase2-screen-light.css) for whenever a homepage reel needs this crop again."
+      },
+      "clientLight": null
+    }
+  ]
+}

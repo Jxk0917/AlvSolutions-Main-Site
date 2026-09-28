@@ -240,8 +240,8 @@ preloadImage: /assets/portfolio/hacienda-grill-1440.jpg
 
     <div class="rail reveal">
       {%- for t in packages.tiers %}
-      <a class="rail-item{% if t.popular %} pop{% endif %}" href="/packages/#{{ t.slug }}">
-        {%- if t.popular %}<span class="rail-badge">Most popular</span>{% endif %}
+      <a class="rail-item{% if t.recommended %} pop{% endif %}" href="/packages/#{{ t.slug }}">
+        {%- if t.recommended %}<span class="rail-badge">Recommended</span>{% endif %}
         <span class="rail-name">{{ t.name }}</span>
         <span class="rail-price">{{ t.price | price | safe }}</span>
         <span class="rail-note">{{ t.has.pages }} pages &middot; {{ t.has.revisions }} revision round{{ "s" if t.has.revisions != "1" }}</span>
@@ -405,7 +405,7 @@ preloadImage: /assets/portfolio/hacienda-grill-1440.jpg
         <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
         <div>
           <h3>Local to San Antonio</h3>
-          <p>A real person, not a ticket. You can call, meet in person, and work with someone who knows your city.</p>
+          <p>A real person, not a ticket. You work with the same person the whole time, and they know your city.</p>
         </div>
       </div>
       <div class="pt">

@@ -46,7 +46,7 @@
       "slug": "standard",
       "name": "Standard",
       "price": 1050,
-      "popular": true,
+      "recommended": true,
       "for": "A business with something to show: a service list, a gallery, an appointment book.",
       "builds": "foundation",
       "picks": { "pages": 3, "power": 1 },

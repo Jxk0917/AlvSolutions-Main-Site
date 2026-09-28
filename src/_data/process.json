@@ -1,0 +1,26 @@
+{
+  "_comment": "The three-step ALVSolutions process. process-steps.njk reads this, so the sequence exists in one place instead of being retyped per page. `note` is a payment/status caption for each step, kept here for the future homepage — the current process-steps.njk component has no slot for it yet and wasn't given one this pass.",
+
+  "sentence": "Tell me what you need. I design and build it. We go live.",
+
+  "steps": [
+    {
+      "clause": "Tell me what you need.",
+      "detail": "We talk through the business, your customers and what the site has to do. I ask the questions that decide the rest of the build.",
+      "note": "Free quote, no pressure",
+      "icon": "message"
+    },
+    {
+      "clause": "I design and build it.",
+      "detail": "You see the site as it comes together, not only at the end. Revision rounds are part of the price, not an upsell.",
+      "note": "50% deposit secures the project",
+      "icon": "grid"
+    },
+    {
+      "clause": "We go live.",
+      "detail": "We go live. You own the domain. I connect it to your site, set up the hosting and handle the launch, then stay available for the updates that come after.",
+      "note": "Remaining 50% due at your approval, before publishing",
+      "icon": "rocket"
+    }
+  ]
+}

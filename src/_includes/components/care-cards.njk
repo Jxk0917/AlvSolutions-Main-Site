@@ -6,7 +6,7 @@
 #}
 <div class="cares">
   {%- for p in careplans.plans %}
-  <article class="care{% if p.popular %} pop{% endif %} reveal" style="--d:{{ loop.index0 }}">
+  <article class="care{% if p.recommended %} pop{% endif %} reveal" style="--d:{{ loop.index0 }}">
     <div class="care-top">
       <h3 class="care-name">{{ p.name }}</h3>
       <span class="care-price">

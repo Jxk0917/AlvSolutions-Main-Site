@@ -1,7 +1,6 @@
 {#
-  The three steps, lifted verbatim from the home page so the two can never
-  drift. Numbered because this genuinely is a sequence — step 2 cannot happen
-  before step 1.
+  The three steps. Authoritative content lives in src/_data/process.json, so
+  it exists in one place rather than being retyped per page.
 
   `processHeading` overrides the default, so the service pages can ask the
   question the reader has just formed instead of repeating the home heading.
@@ -13,32 +12,16 @@
     </div>
 
     <div class="steps">
-      <div class="step reveal" style="--d:0">
+      {%- for s in process.steps %}
+      <div class="step reveal" style="--d:{{ loop.index0 }}">
         <span class="step-n">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-message"/></svg>
-          01
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>
+          0{{ loop.index }}
         </span>
-        <h3>Tell me what you need</h3>
-        <p>We talk through your business, your customers and what the site has to do. I ask the questions that decide the rest of the build.</p>
+        <h3>{{ s.clause }}</h3>
+        <p>{{ s.detail }}</p>
       </div>
-
-      <div class="step reveal" style="--d:1">
-        <span class="step-n">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
-          02
-        </span>
-        <h3>I design and build it</h3>
-        <p>You see the site as it comes together, not just at the end. Revisions are part of the price, not an upsell.</p>
-      </div>
-
-      <div class="step reveal" style="--d:2">
-        <span class="step-n">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-rocket"/></svg>
-          03
-        </span>
-        <h3>We go live</h3>
-        <p>I handle the domain, the hosting and the launch. Then I stay reachable for the updates that come after.</p>
-      </div>
+      {%- endfor %}
     </div>
   </div>
 </section>

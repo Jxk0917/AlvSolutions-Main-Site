@@ -14,8 +14,8 @@
 <div class="tiers">
   {%- for t in packages.tiers %}
   {%- set prev = packages.tiers | find("slug", t.builds) %}
-  <article class="tier{% if t.popular %} pop{% endif %} reveal" id="{{ t.slug }}" style="--d:{{ loop.index0 }}">
-    {%- if t.popular %}<span class="tier-badge">Most popular</span>{% endif %}
+  <article class="tier{% if t.recommended %} pop{% endif %} reveal" id="{{ t.slug }}" style="--d:{{ loop.index0 }}">
+    {%- if t.recommended %}<span class="tier-badge">Recommended</span>{% endif %}
 
     <h3 class="tier-name">{{ t.name }}</h3>
     <p class="tier-for">{{ t.for }}</p>
@@ -80,7 +80,7 @@
     </div>
     {%- endif %}
 
-    <a class="btn {% if t.popular %}btn-gold{% else %}btn-ghost{% endif %} tier-cta" href="/contact/?package={{ t.slug }}">
+    <a class="btn {% if t.recommended %}btn-gold{% else %}btn-ghost{% endif %} tier-cta" href="/contact/?package={{ t.slug }}">
       Start with {{ t.name }}
     </a>
   </article>

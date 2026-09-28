@@ -94,7 +94,7 @@ description: Three website packages for San Antonio small businesses. Foundation
           column can never disagree about what a tier includes -#}
       {%- set cols = [] %}
       {%- for t in packages.tiers %}
-      {%- set cols = (cols.push({ label: t.name, sub: (t.price | price) + " one-time", popular: t.popular }), cols) %}
+      {%- set cols = (cols.push({ label: t.name, sub: (t.price | price) + " one-time", recommended: t.recommended }), cols) %}
       {%- endfor %}
 
       {%- set rows = [] %}

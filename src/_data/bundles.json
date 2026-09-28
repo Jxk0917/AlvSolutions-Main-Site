@@ -2,8 +2,10 @@
   {
     "slug": "detailer",
     "name": "The Detailer",
+    "shortName": "Detailer",
     "price": 1050,
     "basedOn": "Standard",
+    "relation": "picks",
     "icon": "sparkle",
     "trades": "Mobile detailing, ceramic coating, paint correction",
     "for": "Work that is judged on the photographs, and booked on a phone.",
@@ -17,8 +19,10 @@
   {
     "slug": "home-service-pro",
     "name": "The Home Service Pro",
+    "shortName": "Home Service",
     "price": 1050,
     "basedOn": "Standard",
+    "relation": "picks",
     "icon": "tools",
     "trades": "Lawn care, landscaping, pressure washing, handyman",
     "for": "Jobs that start with a quote, not a checkout.",
@@ -32,8 +36,10 @@
   {
     "slug": "salon",
     "name": "The Salon",
+    "shortName": "Salon",
     "price": 1050,
     "basedOn": "Standard",
+    "relation": "picks",
     "icon": "scissors",
     "trades": "Nails, hair, lashes, barbers",
     "for": "A chair that only earns when it is full.",
@@ -47,8 +53,10 @@
   {
     "slug": "restaurant",
     "name": "The Restaurant",
+    "shortName": "Restaurant",
     "price": 1450,
     "basedOn": "Complete",
+    "relation": "fixed",
     "icon": "menu",
     "trades": "Restaurants, food trucks, bakeries, cafes",
     "for": "A menu that changes, read at the table on a phone.",

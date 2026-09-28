@@ -21,7 +21,7 @@
       "slug": "grow",
       "name": "Grow",
       "price": 95,
-      "popular": true,
+      "recommended": true,
       "builds": "Host",
       "for": "A business that wants the site and the Google listing both worked on.",
       "includes": [

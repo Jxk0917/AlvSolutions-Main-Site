@@ -4,7 +4,7 @@
   horizontal-scroll behaviour and the sticky first column are solved once.
 
   Called with:
-    cols  = [{ label, sub, popular }]
+    cols  = [{ label, sub, recommended }]
     rows  = [{ label, values: [...], example }]
     caption (optional, visually hidden)
 
@@ -18,7 +18,7 @@
       <tr>
         <th scope="col" class="mx-corner"><span class="vh">Feature</span></th>
         {%- for c in cols %}
-        <th scope="col"{% if c.popular %} class="col-pop"{% endif %}>
+        <th scope="col"{% if c.recommended %} class="col-pop"{% endif %}>
           {{ c.label }}
           {%- if c.sub %}<span class="mx-sub">{{ c.sub | safe }}</span>{% endif %}
         </th>
@@ -30,7 +30,7 @@
       <tr{% if r.example %} class="mx-eg"{% endif %}>
         <th scope="row">{{ r.label }}</th>
         {%- for v in r.values %}
-        {%- set pop = cols[loop.index0].popular %}
+        {%- set pop = cols[loop.index0].recommended %}
         <td{% if pop %} class="col-pop"{% endif %}>
           {#- order matters: `v` falsy is the last branch, so a missing key
               renders as "not included" rather than as the string "undefined" #}

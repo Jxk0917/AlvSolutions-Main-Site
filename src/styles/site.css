@@ -1,6 +1,7 @@
 @import "./tokens.css";
 @import "./fonts.css";
 @import "./motion.css";
+@import "./utilities.css";
 @import "./identity.css";
 @import "./controls.css";
 @import "./nav-footer.css";

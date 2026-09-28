@@ -1,0 +1,21 @@
+{#
+  CLOSE: the room returns to ALVSolutions - the name the page opened with,
+  standing in the light it opened with. Statically the light rests on; the
+  light coming up is Phase 4E ([data-room=close], [data-close-mark]).
+#}
+{% from "components/identity.njk" import wordmark %}
+<section class="room h-close" id="start" aria-labelledby="start-h" data-room="close">
+  <div class="room-light" aria-hidden="true"><span class="key-cone"></span><span class="key-pool"></span></div>
+  <div class="h-close-copy">
+    <h2 id="start-h" class="lit-display h-close-h" data-lit>Tell me what the business does.</h2>
+    <p>Free quote, no pressure. I review the project and send you a clear quote and next steps.</p>
+    <div class="h-close-row">
+      <a class="alv-btn" href="/contact/">Start a project</a>
+      <a class="alv-tlink" href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </div>
+  </div>
+  <div class="h-close-mark" aria-hidden="true" data-close-mark>
+    {{ wordmark("close", "h-close-wm") }}
+    <span class="h-close-refl">{{ wordmark("close") }}</span>
+  </div>
+</section>

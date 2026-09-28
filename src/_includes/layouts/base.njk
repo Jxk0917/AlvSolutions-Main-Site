@@ -27,7 +27,7 @@
 
   <title>{{ metaTitle }}</title>
   <meta name="description" content="{{ metaDesc }}" />
-  <meta name="theme-color" content="#070C14" />
+  <meta name="theme-color" content="{{ themeColor or '#070C14' }}" />
   <link rel="canonical" href="{{ canonicalUrl }}" />
   {#- Utility pages like /connect/ (a QR/business-card landing page) opt out of
       search indexing per-page without touching robots.txt or any other page. #}
@@ -75,8 +75,14 @@
   <!-- Self-hosted variable fonts: Manrope for headings, Geist for body. Preloaded
        because they are declared inside styles.css, so without this the browser
        cannot discover either file until the stylesheet has finished parsing. -->
+  {#- `legacy: false` in a page's front matter marks it as migrated to the
+      Screen Light system: it skips the legacy stylesheets, fonts and main.js,
+      whose global body/heading/selection rules would otherwise fight it. -#}
+  {%- set useLegacy = legacy !== false %}
+  {%- if useLegacy %}
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Manrope-Variable.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Geist-Variable.woff2" crossorigin />
+  {%- endif %}
 
   <!-- Approved Phase 1 typography, used by the shared nav/footer/identity.
        Self-hosted alongside the legacy pair above; interior page content
@@ -89,13 +95,18 @@
   <link rel="preload" as="image" href="{{ preloadImage }}" />
   {%- endif %}
 
+  {%- if useLegacy %}
   <link rel="stylesheet" href="/assets/styles.css" />
   <link rel="stylesheet" href="/assets/pages.css" />
+  {%- endif %}
   <link rel="stylesheet" href="/assets/dist/site.css" />
+  {%- if pageCss %}
+  <link rel="stylesheet" href="/assets/dist/{{ pageCss }}.css" />
+  {%- endif %}
 </head>
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
+<a class="alv-skip" href="#main">Skip to content</a>
 
 {% include "components/icon-sprite.njk" %}
 {%- if not hideChrome %}
@@ -108,7 +119,9 @@
 {% include "components/footer.njk" %}
 {%- endif %}
 
+{%- if useLegacy %}
 <script src="/assets/main.js" defer></script>
+{%- endif %}
 <script src="/assets/dist/site.js" defer></script>
 {%- if shader %}
 <script src="/assets/shader.js" defer></script>

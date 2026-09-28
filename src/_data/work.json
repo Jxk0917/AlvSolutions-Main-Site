@@ -1,11 +1,49 @@
 {
-  "_comment": "Authoritative source for ALVSolutions' portfolio/demo builds. Content here is pulled from the existing work.html/index.html copy and screenshots — no new claims invented. Not wired into work.html/index.html this pass; those keep their own markup for now. This exists so a future homepage work reel, a redesigned /work/, and demo-link rendering can all read one source instead of retyping this in three places.",
+  "_comment": "Authoritative source for ALVSolutions' portfolio/demo builds. Project facts are pulled from the existing work.html copy and screenshots — no new claims invented. The homepage reads `chapters` (its four-part work story, in reading order) and resolves each chapter's project from `projects`. work.html still carries its own markup until /work/ is migrated. `reelKey` names the screen objects the held reel animates (hacD, hacP, lucD, lucP).",
 
   "disclosure": "Fictional concept website created by ALVSolutions for portfolio demonstration.",
+
+  "chapters": [
+    {
+      "id": "hacienda",
+      "project": "hacienda-grill",
+      "shots": ["desktop"],
+      "nav": { "long": "Hacienda Grill", "short": "Hacienda" },
+      "body": "A full restaurant site: menu with photography, hours, location and a reservation form.",
+      "features": true,
+      "signed": true
+    },
+    {
+      "id": "hacienda-phone",
+      "project": "hacienda-grill",
+      "shots": ["mobile"],
+      "nav": { "long": "On a phone", "short": "Phone" },
+      "tag": "Hacienda Grill, on a phone",
+      "heading": "Readable at the table.",
+      "body": "The menu is tabbed rather than a printed PDF, so it stays readable on a phone at the table."
+    },
+    {
+      "id": "lucid",
+      "project": "lucid-detailing",
+      "shots": ["desktop", "mobile"],
+      "nav": { "long": "Lucid Detailing", "short": "Lucid" },
+      "features": true,
+      "signed": true
+    },
+    {
+      "id": "both",
+      "projects": ["hacienda-grill", "lucid-detailing"],
+      "nav": { "long": "Side by side", "short": "Both" },
+      "heading": "A restaurant and a detailer don't win customers the same way.",
+      "body": "So their websites aren't built the same way. Yours starts from how your business works.",
+      "link": { "label": "How a site is put together", "href": "#build" }
+    }
+  ],
 
   "projects": [
     {
       "slug": "hacienda-grill",
+      "reelKey": "hac",
       "name": "Hacienda Grill",
       "category": "Restaurant",
       "bundle": "restaurant",
@@ -33,6 +71,7 @@
     },
     {
       "slug": "lucid-detailing",
+      "reelKey": "luc",
       "name": "Lucid Detailing",
       "category": "Auto services",
       "bundle": "detailer",

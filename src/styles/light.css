@@ -1,0 +1,121 @@
+/* ============================================================
+   ALVSolutions - Screen Light primitives (Phase 2, locked)
+
+   Ported from the exploration's phase2-screen-light.css: type in light,
+   the room and its key light, and a screen standing in the room. Tokens
+   renamed to the production --sl- set; nothing else changed.
+
+   One key light, always from above. It goes where attention goes, and it
+   hands the room over to the work. Client light touches surfaces, never
+   type. The --kx/--kw/--ki/--kpy (key) and --p/--q/--c/--s (screen)
+   variables are what the Room engine writes; a static page sets the
+   resting values directly.
+   ============================================================ */
+@property --ek { syntax: "<number>"; inherits: true; initial-value: 0; }
+
+/* ---- Type in light ------------------------------------------- */
+.lit-display {
+  --hi: color-mix(in srgb, var(--sl-ink1) calc(var(--lit, 1) * 100%), var(--sl-shade));
+  background: radial-gradient(ellipse 125% 280% at calc(var(--lx, 50) * 1%) -60%, var(--hi) 0%, var(--hi) 52%, var(--sl-shade) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.lit-body {
+  color: color-mix(in srgb, var(--sl-ink1) calc(var(--lit, 1) * 70%), var(--sl-ink3));
+}
+@media (forced-colors: active) {
+  .lit-display { background: none; color: CanvasText; }
+}
+
+/* ---- The room ------------------------------------------------ */
+.room {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  height: 100dvh;
+  min-height: 600px;
+  background: var(--sl-room);
+  --kx: 50; --kw: 50; --ki: 0; --kpy: 82;
+}
+.room-light { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.room-light > span { position: absolute; inset: 0; }
+/* ALVSolutions' key: a cone falling on the wall from above... */
+.key-cone {
+  background: radial-gradient(ellipse calc(var(--kw) * 0.52%) 96% at calc(var(--kx) * 1%) -14%,
+    rgb(var(--sl-L) / calc(0.15 * var(--ki))) 0%,
+    rgb(var(--sl-L) / calc(0.075 * var(--ki))) 34%,
+    rgb(var(--sl-L) / calc(0.022 * var(--ki))) 60%, transparent 92%);
+}
+/* ...and the pool it makes where it reaches the floor. */
+.key-pool {
+  background: radial-gradient(ellipse calc(var(--kw) * 0.44%) 7.5% at calc(var(--kx) * 1%) calc(var(--kpy) * 1%),
+    rgb(var(--sl-L) / calc(0.14 * var(--ki))) 0%, rgb(var(--sl-L) / calc(0.07 * var(--ki))) 45%, rgb(var(--sl-L) / calc(0.015 * var(--ki))) 75%, transparent 100%);
+}
+/* A screen's light in the room: its overall colour tints the space around
+   it, and each side throws its own colour sideways. Sized with its depth. */
+.bounce {
+  --s: 1;
+  background:
+    radial-gradient(ellipse calc(var(--s) * 46%) calc(var(--s) * 52%) at calc(var(--x) * 1%) calc(var(--y) * 1% - var(--s) * 16%),
+      rgb(var(--e-all, var(--sl-L)) / calc(0.17 * var(--q, 0))), transparent 72%),
+    radial-gradient(ellipse calc(var(--s) * 24%) calc(var(--s) * 40%) at calc(var(--x) * 1% - var(--s) * 26%) calc(var(--y) * 1% - var(--s) * 20%),
+      rgb(var(--e-left, var(--sl-L)) / calc(0.1 * var(--q, 0))), transparent 72%),
+    radial-gradient(ellipse calc(var(--s) * 24%) calc(var(--s) * 40%) at calc(var(--x) * 1% + var(--s) * 26%) calc(var(--y) * 1% - var(--s) * 20%),
+      rgb(var(--e-right, var(--sl-L)) / calc(0.1 * var(--q, 0))), transparent 72%);
+}
+/* Environmental falloff: the room is darkest at its edges. */
+.room::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(130% 100% at 50% 34%, transparent 48%, rgb(3 3 3 / 0.7) 100%);
+}
+
+/* ---- A screen, standing in the room --------------------------- */
+.dev {
+  position: absolute; left: 0; top: 0; z-index: 10; display: block;
+  width: var(--dw, 44%); padding: 0; margin: 0; border: 0; background: none; text-align: left;
+  transform-origin: 50% 100%; will-change: transform, opacity; visibility: hidden;
+}
+.dev-glass {
+  position: relative; display: block; overflow: hidden; border-radius: 10px; background: #040404; aspect-ratio: 1440 / 900;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 40px 70px -34px rgb(0 0 0 / 0.95);
+}
+.dev--phone .dev-glass { aspect-ratio: 430 / 800; border-radius: 18px; }
+.dev-glass > img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.dev-glass > span { position: absolute; inset: 0; pointer-events: none; }
+/* Power: an unpowered screen is dark glass. */
+.dev-off { background: #030303; opacity: calc(1 - var(--p, 0)); }
+/* Dark glass reflects the lit screen beside it. */
+.dev-sheen { background: linear-gradient(var(--sd, to right), rgb(var(--sc, var(--sl-L)) / calc(var(--sa, 0) * 0.5)), transparent 62%); mix-blend-mode: screen; }
+/* The key catches the top edge, and glints on the glass when it is dark. */
+.dev-catch {
+  background: linear-gradient(180deg, rgb(var(--sl-L) / calc(0.075 * var(--c, 0))), transparent 34%);
+  opacity: calc(1 - var(--p, 0) * 0.75);
+}
+.dev-catch::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / calc(0.65 * var(--c, 0))) 50%, transparent 96%);
+}
+/* Grounding: a contact shadow where it meets the floor... */
+.dev-contact {
+  position: absolute; left: 5%; right: 5%; top: 100%; height: 14px; transform: translateY(-7px); z-index: -1;
+  background: radial-gradient(50% 50% at 50% 50%, rgb(0 0 0 / 0.95), transparent 72%);
+}
+/* ...and what its lower pixels throw onto the floor in front of it, with a
+   short reflection in the dark floor. */
+.dev-floor {
+  position: absolute; top: 100%; left: -35%; right: -35%; height: 70%; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 48% 44% at 50% 4%, rgb(var(--e-bottom, var(--sl-L)) / calc(0.5 * var(--q, 0))), transparent 76%);
+}
+.dev-refl {
+  position: absolute; top: 3px; left: 20.59%; width: 58.82%; aspect-ratio: 1440 / 900;
+  object-fit: cover; object-position: top; transform: scaleY(-1); opacity: calc(0.22 * var(--p, 0));
+  filter: blur(5px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 72%, rgb(0 0 0 / 0.9) 100%);
+  mask-image: linear-gradient(to bottom, transparent 72%, rgb(0 0 0 / 0.9) 100%);
+}
+.dev--phone .dev-refl { aspect-ratio: 430 / 800; }

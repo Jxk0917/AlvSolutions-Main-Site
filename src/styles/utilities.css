@@ -1,0 +1,43 @@
+/* ============================================================
+   ALVSolutions - shared layout utilities
+
+   What the shared chrome needs from a page, so it no longer depends on the
+   legacy stylesheet (which a migrated page does not load).
+   ============================================================ */
+.alv-wrap {
+  width: 100%;
+  max-width: var(--alv-wrap-max);
+  margin-inline: auto;
+  padding-inline: var(--alv-wrap-pad);
+}
+
+.alv-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.alv-skip {
+  position: absolute;
+  left: 16px;
+  top: -60px;
+  z-index: 300;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: var(--sl-ink1);
+  color: var(--sl-room);
+  font: 600 15px/1.2 var(--sl-f-text);
+  text-decoration: none;
+}
+.alv-skip:focus {
+  top: 12px;
+}
+.alv-skip:focus-visible {
+  outline: 2px solid var(--sl-ink1);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--sl-void), 0 0 0 6px var(--sl-void);
+}

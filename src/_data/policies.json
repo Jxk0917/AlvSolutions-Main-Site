@@ -33,6 +33,12 @@
       "body": "If your project runs past what your package includes, you get a quote and a chance to approve it before any extra work starts. No surprise invoices, ever."
     },
     {
+      "slug": "revisions",
+      "icon": "list",
+      "title": "A revision round is one list",
+      "body": "One consolidated set of changes, submitted within 5 business days of delivery. Ten notes in one message is one round."
+    },
+    {
       "slug": "warranty",
       "icon": "circle-check",
       "title": "30 days covered after launch",

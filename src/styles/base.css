@@ -1,0 +1,80 @@
+/* ============================================================
+   ALVSolutions - base for migrated (Screen Light) pages
+
+   The reset and page defaults the legacy stylesheet used to provide.
+   Loaded only by pages that set `legacy: false`, so it never competes
+   with the legacy rules on pages that still use them. Moves into site.css
+   once every page is migrated.
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  background: var(--sl-room);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--alv-nav-h) + 8px);
+}
+/* Smooth only when the OS allows it (which holds even without the head
+   script) and the in-page preference has not switched motion off. */
+@media (prefers-reduced-motion: no-preference) {
+  html:not(.no-motion) {
+    scroll-behavior: smooth;
+  }
+}
+body {
+  margin: 0;
+  background: var(--sl-room);
+  color: var(--sl-ink2);
+  font: 400 16.5px/1.6 var(--sl-f-text);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+/* A trace of grain, only to stop the long dark falloffs from banding. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+p,
+h1,
+h2,
+h3,
+h4,
+ol,
+ul,
+figure,
+dl,
+dd {
+  margin: 0;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+a {
+  color: inherit;
+}
+button,
+input {
+  font: inherit;
+  color: inherit;
+}
+::selection {
+  background: rgb(var(--sl-L) / 0.24);
+  color: var(--sl-ink1);
+}
+
+/* One focus treatment: a light ring between two dark ones, so it holds on
+   darkness, on white buttons and on any client's pixels. */
+:focus-visible {
+  outline: 2px solid var(--sl-ink1);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--sl-void), 0 0 0 6px var(--sl-void);
+}

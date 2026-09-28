@@ -1,10 +1,7 @@
 /* ============================================================
    ALVSolutions - identity primitives (Phase 1, locked)
 
-   Ported from phase1-final.css / phase2-screen-light.css. The width-axis
-   and reveal custom properties that drive the opening motion (--alv-w,
-   --alv-wght, --sol-*) are left out here: without the motion timeline
-   running, the wordmark just needs to render correctly at rest.
+   Ported from phase1-final.css / phase2-screen-light.css.
    ============================================================ */
 .alv-wm {
   font-family: var(--sl-f-brand);
@@ -23,13 +20,26 @@
 .alv-wm--hero {
   font-size: clamp(56px, 12vw, 172px);
 }
+/* Parts driven by the opening motion. Every property reads a custom property
+   that is unset at rest, and an unset variable falls back to the inherited
+   or initial value - full width, 620 weight, no transform, no mask. So at
+   rest ALV and Solutions are one even word; the 75%/700 compact form is only
+   the first frame of the motion, never the resting state. */
 .alv-wm-alv {
   display: inline-block;
-  font-stretch: 75%;
-  font-weight: 700;
+  font-stretch: var(--alv-w);
+  font-weight: var(--alv-wght);
 }
 .alv-wm-sol {
   display: inline-block;
+  letter-spacing: var(--sol-ls);
+  opacity: var(--sol-op);
+  transform: translateX(var(--sol-x));
+  -webkit-mask-image: linear-gradient(90deg, #000 var(--sol-m), transparent calc(var(--sol-m) + 0.9em));
+  mask-image: linear-gradient(90deg, #000 var(--sol-m), transparent calc(var(--sol-m) + 0.9em));
+}
+[data-wm] {
+  transform: translateX(var(--shift));
 }
 
 /* The compact form: the same face closed to its narrowest width, a step

@@ -82,13 +82,26 @@
     display: none;
   }
 }
+/* Narrow: as the locked design, the links fold into Menu and the CTA stays,
+   pushed right. Below ~420px the wordmark, CTA and Menu cannot share one
+   row, so the CTA folds too; the menu panel still carries it. */
 @media (max-width: 760px) {
-  .alv-nav-links,
-  .alv-nav-cta {
+  .alv-nav-links {
     display: none;
+  }
+  .alv-nav-cta {
+    margin-left: auto;
   }
   .alv-nav-in {
     gap: 10px;
+  }
+}
+@media (max-width: 420px) {
+  .alv-nav-cta {
+    display: none;
+  }
+  .alv-menu {
+    margin-left: auto;
   }
 }
 

@@ -3,8 +3,11 @@
   ALV form, and the italic signing treatment used to credit ALVSolutions on
   work that carries someone else's name. Same type throughout, never a
   symbol, and never a client's colour.
+
+  wordmark(size, cls, attrs): `cls` adds classes, `attrs` adds raw
+  attributes (e.g. data-wm for the opening motion's hook).
 #}
-{% macro wordmark(size="nav") %}<span class="alv-wm alv-wm--{{ size }}"><span class="alv-wm-alv">ALV</span><span class="alv-wm-sol">Solutions</span></span>{% endmacro %}
+{% macro wordmark(size="nav", cls="", attrs="") %}<span class="alv-wm alv-wm--{{ size }}{% if cls %} {{ cls }}{% endif %}"{% if attrs %} {{ attrs | safe }}{% endif %}><span class="alv-wm-alv">ALV</span><span class="alv-wm-sol">Solutions</span></span>{% endmacro %}
 
 {% macro mark(size="m") %}<span class="alv-mark alv-mark--{{ size }}">ALV</span>{% endmacro %}
 

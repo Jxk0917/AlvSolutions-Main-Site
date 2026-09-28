@@ -1,0 +1,134 @@
+{#
+  PRICES: the locked price list read ACROSS - the same facts on the same
+  rows for Foundation, Standard and Complete - built from packages.json.
+
+  Statically it is a real form: a native radio group (name="package") in the
+  column heads, Standard checked, submitting by GET to /contact/ so the
+  wizard receives ?package=<tier> with no JS. The moving light that follows
+  the choice is Phase 4E ([data-tier-light], [data-col]).
+
+  Care plans, extras and the Founders Special belong here, in the offer -
+  never in the hero.
+#}
+{%- set rowKeys = ["pages", "revisions", "seo", "addons", "power"] %}
+{%- set foundation = packages.tiers[0] %}
+{%- set pageAddons = addons.classes | find("slug", "page-add-ons") %}
+{%- set powerFeatures = addons.classes | find("slug", "power-features") %}
+<section class="h-prices h-wrap" id="prices" aria-labelledby="prices-h">
+  <div class="h-prices-head">
+    <h2 id="prices-h" class="h-h2">One flat price, agreed before any work starts.</h2>
+    <p class="h-lede">Three packages. Everything each one covers is written down before I begin, and if the job grows you approve the figure first.</p>
+  </div>
+
+  <form class="h-cmp-form" action="/contact/" method="get">
+    <fieldset class="h-cmp-set">
+      <legend class="alv-sr-only">Choose a package</legend>
+      <div class="h-cmp" role="table" aria-label="Packages compared" data-cmp>
+        <span class="h-tier-light" aria-hidden="true" data-tier-light></span>
+        <div role="rowgroup">
+          <div class="h-cmp-row h-cmp-head" role="row">
+            <span class="h-cmp-corner" role="columnheader"><span class="alv-sr-only">Package</span></span>
+            {%- for t in packages.tiers %}
+            <div class="h-cmp-col" role="columnheader" data-col="{{ t.slug }}">
+              <label class="h-tier" data-tier="{{ t.slug }}">
+                <input class="h-tier-input" type="radio" name="package" value="{{ t.slug }}"{% if t.recommended %} checked{% endif %} />
+                <span class="h-tier-mark">{% if t.recommended %}Recommended{% endif %}</span>
+                <span class="h-tier-name">{{ t.name }}</span>
+                <span class="h-tier-price">{{ t.price | price | safe }}</span>
+                <span class="h-tier-for">{{ t.for }}</span>
+                <span class="h-tier-state" aria-hidden="true"><span class="h-state-on">Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ t.name }}</span></span></span>
+              </label>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+
+        <div class="h-cmp-body" role="rowgroup">
+          {%- for key in rowKeys %}
+          {%- set f = packages.features | find("key", key) %}
+          <div class="h-cmp-row" role="row">
+            <span class="h-cmp-label" role="rowheader">{{ f.label }}</span>
+            {%- for t in packages.tiers %}
+            {%- set v = t.has[key] %}
+            <span class="h-cmp-cell" role="cell" data-col="{{ t.slug }}">
+              {%- if v === true %}Included
+              {%- elif v %}{{ v }}
+              {%- else %}<span class="h-cmp-none" aria-hidden="true"></span><span class="alv-sr-only">Not included</span>{% endif -%}
+            </span>
+            {%- endfor %}
+          </div>
+          {%- endfor %}
+
+          <div class="h-cmp-row h-cmp-row--adds" role="row">
+            <span class="h-cmp-label" role="rowheader">Also included</span>
+            {%- for t in packages.tiers %}
+            {%- set prev = packages.tiers | find("slug", t.builds) %}
+            <div class="h-cmp-cell" role="cell" data-col="{{ t.slug }}" data-name="{{ t.name }}">
+              <ul>
+                {%- if prev %}<li>Everything in {{ prev.name }}</li>{% endif %}
+                {%- for f in packages.features %}
+                {%- set v = t.has[f.key] %}
+                {%- if f.key != "pages" and not (f.key in rowKeys) and v and (not prev or prev.has[f.key] !== v) %}
+                <li>{{ f.label }}{% if v !== true and v != "Included" %}<span class="h-cmp-note">{{ v }}</span>{% endif %}</li>
+                {%- endif %}
+                {%- endfor %}
+              </ul>
+            </div>
+            {%- endfor %}
+          </div>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="h-prices-act">
+      <button class="alv-btn" type="submit">Start with this package</button>
+      <p>Every build takes a care plan, from {{ careplans.plans[0].price | price | safe }} a month.</p>
+    </div>
+  </form>
+
+  {#- Every package builds on Foundation ("Everything in Foundation, plus:"
+      per the tier cards), so whatever is true of Foundation and does not vary
+      by tier (pages/revisions/seo/addons/power are excluded above because
+      each of those differs, or is already its own row) holds for all three.
+      No separate "always included" list exists in production data, so this
+      reads it from the one place that is true: Foundation's own facts. #}
+  <div class="h-every">
+    <p>In every package:</p>
+    <ul>
+      {%- for f in packages.features %}
+      {%- if not (f.key in rowKeys) and foundation.has[f.key] %}
+      <li>{{ f.label }}</li>
+      {%- endif %}
+      {%- endfor %}
+    </ul>
+  </div>
+
+  <div class="h-care">
+    <div class="h-care-head">
+      <h3>Every build takes a care plan.</h3>
+      <p>{{ careplans.required }}</p>
+      <p>{{ careplans.minimum }}</p>
+    </div>
+    {%- for p in careplans.plans %}
+    <div class="h-plan">
+      <p class="h-plan-name">{{ p.name }}<span>{{ p.price | price | safe }} a month</span></p>
+      <p class="h-plan-for">{{ p.for }}</p>
+      <ul>
+        {%- if p.builds %}<li>Everything in {{ p.builds }}</li>{% endif %}
+        {%- for i in p.includes %}<li>{{ i }}</li>{% endfor %}
+      </ul>
+    </div>
+    {%- endfor %}
+  </div>
+
+  <p class="h-extras">
+    <span>Need more than a package includes?</span>
+    <span>Extra pages <b>{{ pageAddons.price | price | safe }}</b> each</span>
+    <span>Power features <b>{{ powerFeatures.price | price | safe }}</b> each</span>
+    <a class="alv-tlink" href="/packages/">Every package in detail</a>
+    <a class="alv-tlink" href="/pricing/">The full price list</a>
+  </p>
+
+  {%- set fsVariant = "home" %}
+  {% include "components/founders-special.njk" %}
+</section>

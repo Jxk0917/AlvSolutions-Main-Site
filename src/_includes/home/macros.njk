@@ -1,0 +1,21 @@
+{#
+  A screen standing in the room (the locked Screen Light `.dev`), rendered
+  from a work.json project and one of its shots ("desktop" or "mobile").
+  data-obj (hacD, hacP, lucD, lucP) is the hook the held reel animates; a
+  project's reelCrop sets the glass proportions so Lucid stops above its
+  fictional statistics bar.
+#}
+{% macro device(p, shot, sizes) %}
+{%- set s = p.screenshots[shot] %}
+{%- set phone = shot == "mobile" %}
+{%- set crop = "" %}
+{%- if p.reelCrop %}{% set crop = p.reelCrop.mobileAspectRatio if phone else p.reelCrop.desktopAspectRatio %}{% endif %}
+<div class="dev dev--{{ 'phone' if phone else 'desk' }}" data-obj="{{ p.reelKey }}{{ 'P' if phone else 'D' }}">
+  <div class="dev-floor" aria-hidden="true"><img class="dev-refl" src="{{ s.src }}" alt="" loading="lazy" decoding="async"{% if crop %} style="aspect-ratio: {{ crop }}"{% endif %} /></div>
+  <span class="dev-contact" aria-hidden="true"></span>
+  <div class="dev-glass"{% if crop %} style="aspect-ratio: {{ crop }}"{% endif %}>
+    <img src="{{ s.src }}"{% if s.small %} srcset="{{ s.small }} 720w, {{ s.src }} {{ s.width }}w" sizes="{{ sizes or '(min-width: 761px) 58vw, 100vw' }}"{% endif %} width="{{ s.width }}" height="{{ s.height }}" alt="{{ s.alt }}" loading="lazy" decoding="async" />
+    <span class="dev-off"></span><span class="dev-sheen"></span><span class="dev-catch"></span>
+  </div>
+</div>
+{%- endmacro %}

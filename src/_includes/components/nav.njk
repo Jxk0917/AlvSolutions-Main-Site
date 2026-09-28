@@ -13,7 +13,7 @@
 {% from "components/identity.njk" import wordmark %}
 {%- set anchorPrefix = "" if page.url == "/" else "/" %}
 <header class="alv-nav" data-nav>
-  <div class="wrap alv-nav-in">
+  <div class="alv-wrap alv-nav-in">
     <a class="alv-nav-mark" href="/" aria-label="{{ site.name }}, home">
       {{ wordmark("nav") }}
     </a>

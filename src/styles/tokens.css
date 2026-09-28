@@ -30,4 +30,11 @@
      that still sizes its top padding against it, and gets restyled later
      rather than patched now. */
   --alv-nav-h: 72px;
+
+  /* Content measure for the shared chrome (.alv-wrap). The defaults equal the
+     legacy .wrap exactly, so interior pages still align with their legacy
+     content; a migrated page sets its own (the homepage uses the locked
+     1320px Screen Light measure). */
+  --alv-wrap-max: 1240px;
+  --alv-wrap-pad: clamp(20px, 4vw, 32px);
 }

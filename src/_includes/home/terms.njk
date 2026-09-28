@@ -1,0 +1,24 @@
+{#
+  WHAT YOU CAN HOLD ME TO. The homepage selection of production policies,
+  read from policies.json by slug so no policy is worded twice.
+#}
+{%- set homePolicies = ["domain", "google", "payment", "scope", "cancel", "revisions"] %}
+<section class="h-terms h-wrap" id="terms" aria-labelledby="terms-h">
+  <div class="h-terms-head">
+    <div>
+      <h2 id="terms-h" class="h-h2">What you can hold me to.</h2>
+      <p class="h-lede">ALVSolutions is new, so there are no reviews to show you yet. These are the terms every project runs on instead.</p>
+    </div>
+    <p class="h-one">A direct line to the person building your site. A real person, not a ticket.</p>
+  </div>
+  <div class="h-terms-grid">
+    {%- for slug in homePolicies %}
+    {%- set pol = policies.policies | find("slug", slug) %}
+    <div class="h-term">
+      <h3>{{ pol.title }}</h3>
+      <p>{{ pol.body }}</p>
+    </div>
+    {%- endfor %}
+  </div>
+  <p class="h-terms-more"><a class="alv-tlink" href="/policies/">Every policy, in full</a></p>
+</section>

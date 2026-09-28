@@ -1,0 +1,99 @@
+{#
+  HERO + WORK: in the locked design, one room held while you scroll - the
+  words first, then the room handed to each piece of work. This is its
+  static resting form: the hero stands in the key light, then the four work
+  chapters follow in reading order, each an <article> carrying its own
+  story and its own screens, all present in the HTML.
+
+  Hooks for the held reel (Phase 4E): data-room, .room-light/.bounce,
+  .h-fly/[data-intro]/[data-wm], [data-copy], [data-panel], [data-obj],
+  [data-go], [data-work-live] and the .h-track steps.
+#}
+{% from "components/identity.njk" import wordmark, signature %}
+{% from "home/macros.njk" import device %}
+<section class="h-work" id="top" aria-label="ALVSolutions and its work">
+  <div class="room h-room" data-room="work">
+    <div class="room-light" aria-hidden="true">
+      <span class="key-cone"></span>
+      <span class="key-pool"></span>
+      {%- for p in work.projects %}
+      <span class="bounce" data-for="{{ p.reelKey }}D"></span>
+      <span class="bounce" data-for="{{ p.reelKey }}P"></span>
+      {%- endfor %}
+    </div>
+
+    <div class="h-fly" data-fly aria-hidden="true">
+      <div class="wm-stage" data-intro>{{ wordmark("hero", "", "data-wm") }}</div>
+    </div>
+
+    <div class="h-col">
+      <div class="h-copy" data-copy>
+        <h1 class="lit-display h-h1" data-lit>Built around your business.</h1>
+        <p class="lit-body h-lede" data-lit>Websites for small businesses in San Antonio, built around how your customers find you and buy from you. One flat price, live in {{ site.turnaround }}.</p>
+        <div class="h-ctas">
+          <a class="alv-btn" href="/contact/">Start a project</a>
+          <a class="alv-tlink" href="#work" data-go="1">See the work</a>
+        </div>
+      </div>
+    </div>
+
+    <nav class="h-steps" id="work" aria-label="The work">
+      <ol>
+        {%- for ch in work.chapters %}
+        <li><a class="alv-lit-sel" href="#work-{{ ch.id }}" data-go="{{ loop.index }}"><span class="long">{{ ch.nav.long }}</span><span class="short">{{ ch.nav.short }}</span></a></li>
+        {%- endfor %}
+      </ol>
+    </nav>
+
+    {%- for ch in work.chapters %}
+    {%- if ch.project %}{% set p = work.projects | find("slug", ch.project) %}{% else %}{% set p = null %}{% endif %}
+    <article class="h-panel{% if ch.projects %} h-pair{% endif %}" id="work-{{ ch.id }}" data-panel="{{ loop.index }}" aria-labelledby="w{{ loop.index }}">
+      <div class="h-panel-copy">
+        {%- if ch.tag %}
+        <p class="alv-tag">{{ ch.tag }}</p>
+        {%- elif p %}
+        <p class="alv-tag">Demo build, {{ p.category | lower }}</p>
+        {%- endif %}
+        <h2 id="w{{ loop.index }}" class="h-panel-h">{{ ch.heading or p.name }}</h2>
+        <p class="h-panel-body">{{ ch.body or p.description }}</p>
+        {%- if ch.features %}
+        <ul class="h-feats">
+          {%- for f in p.features %}<li>{{ f }}</li>{% endfor %}
+        </ul>
+        {%- endif %}
+        {%- if ch.signed %}
+        <p class="h-honest">{{ work.disclosure }}</p>
+        <p class="h-sign">{{ signature("panel") }}</p>
+        <a class="alv-tlink h-view" href="{{ p.demoUrl }}" target="_blank" rel="noopener">View build<span class="alv-sr-only">: {{ p.name }}, opens in a new tab</span></a>
+        {%- endif %}
+        {%- if ch.link %}
+        <a class="alv-tlink" href="{{ ch.link.href }}" data-pair-link>{{ ch.link.label }}</a>
+        {%- endif %}
+      </div>
+
+      <div class="h-panel-work">
+        {%- if p %}
+        {%- for shot in ch.shots %}{{ device(p, shot) }}{% endfor %}
+        {%- else %}
+        {%- for slug in ch.projects %}
+        {%- set q = work.projects | find("slug", slug) %}
+        {%- set s = q.screenshots.desktop %}
+        <figure class="h-pair-shot">
+          <div class="dev-glass"{% if q.reelCrop %} style="aspect-ratio: {{ q.reelCrop.desktopAspectRatio }}"{% endif %}>
+            <img src="{{ s.small or s.src }}" width="{{ s.width }}" height="{{ s.height }}" alt="{{ s.alt }}" loading="lazy" decoding="async" />
+          </div>
+          <figcaption>{{ q.name }}, {{ q.category | lower }}</figcaption>
+        </figure>
+        {%- endfor %}
+        {%- endif %}
+      </div>
+    </article>
+    {%- endfor %}
+
+    <p class="alv-sr-only" aria-live="polite" data-work-live></p>
+  </div>
+  <div class="h-track" aria-hidden="true">
+    <span data-step="0"></span>
+    {%- for ch in work.chapters %}<span data-step="{{ loop.index }}"></span>{% endfor %}
+  </div>
+</section>

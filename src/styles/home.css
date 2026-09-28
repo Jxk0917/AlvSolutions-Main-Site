@@ -409,3 +409,131 @@
   .h-care { grid-template-columns: 1fr; }
   .h-terms-head, .h-terms-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   ENHANCED (Phase 4E-A): the opening and the held work reel
+   Everything below is scoped under classes the homepage's head script
+   sets before first paint, and only when JS is running with motion
+   allowed (home/prepaint.njk):
+     .alv-enhance   the page is being enhanced (either layout)
+     .alv-opening   the once-per-session opening is about to play
+     .alv-reel      the work is held in one room (PORTRAIT / WIDE)
+     [data-geo]     which geometry the room uses
+   A failsafe removes them if the enhancement never takes over, so the
+   static page above is always what remains.
+
+   Nothing here removes content from the accessibility tree: inactive
+   chapters are faded and moved, never display:none or visibility:hidden.
+   ============================================================ */
+
+/* ---- The signature signs as its chapter arrives --------------- */
+.alv-enhance .h-panel .alv-sign:not(.is-signed) .alv-sign-line { clip-path: inset(0 100% 0 0); transform: translateX(-4px); }
+
+/* ---- The hero words rise into the light ----------------------- */
+.alv-enhance .h-copy { opacity: var(--copy, 1); transform: translateY(calc((1 - var(--copy, 1)) * 60px)); }
+.alv-opening .h-copy { --copy: 0; }
+
+/* ---- The opening: the name, opening, then flying to the nav ---- */
+.h-fly { position: absolute; left: 0; top: 0; z-index: 250; transform-origin: 0 0; will-change: transform; }
+.alv-opening .h-fly { display: block; }
+.alv-opening .h-fly.is-home { visibility: hidden; }
+.alv-opening [data-intro]:not(.is-ready) [data-wm] { visibility: hidden; }
+/* The room stops isolating its layers so the name can pass over the nav. */
+.alv-opening .h-room { isolation: auto; }
+.alv-opening .alv-nav-mark:not(.is-home) { opacity: 0; }
+.alv-opening .alv-nav-in > :not(.alv-nav-mark) { opacity: var(--nav, 0); }
+
+/* ---- Flat (narrow, or too short to hold a room) ---------------- */
+/* Screens wait in the dark and power on as they arrive; their light
+   reaches the floor in front of them. */
+.alv-enhance:not(.alv-reel) .h-room .dev { --p: 0.32; }
+.alv-enhance:not(.alv-reel) .h-room .dev-floor { display: block; }
+.alv-enhance:not(.alv-reel) .h-room .dev-refl { display: none; }
+
+/* ---- Held: one room, held while you scroll -------------------- */
+.alv-reel .h-room {
+  position: sticky; top: 0;
+  height: 100svh; min-height: 560px;
+  padding: 0; overflow: hidden;
+  --ki: 0; /* dark until the light comes up */
+}
+.alv-reel .h-room > .room-light,
+.alv-reel .h-room::after { height: auto; bottom: 0; -webkit-mask-image: none; mask-image: none; }
+.alv-reel .h-track { display: block; position: relative; margin-top: -100svh; pointer-events: none; }
+.alv-reel .h-track > span { display: block; height: 100lvh; }
+
+/* The composition frame: the locked geometry, capped at 1600 x 1000 and
+   centred on very large displays. --fy is the frame's inset from the top. */
+.alv-reel .h-room { --fy: calc((100% - min(100%, 1000px)) / 2); }
+
+/* The column the words stand in: the hero first, then each chapter's story. */
+.alv-reel .h-col,
+.alv-reel .h-panel-copy {
+  position: absolute; z-index: 20;
+  left: var(--h-pad); top: calc(var(--fy) + 84px); bottom: calc(var(--fy) + 76px);
+  width: min(36vw, 540px);
+}
+.alv-reel .h-col { display: grid; align-items: center; pointer-events: none; }
+.alv-reel .h-copy { min-height: 0; padding: 0; pointer-events: auto; }
+.alv-reel .h-copy.is-away { pointer-events: none; }
+.alv-reel .h-copy:focus-within { --copy: 1 !important; pointer-events: auto; }
+
+/* Each chapter covers the room; only its story and its screens show. */
+.alv-reel .h-panel { position: absolute; inset: 0; z-index: auto; display: block; padding: 0; pointer-events: none; }
+.alv-reel .h-panel-work { position: static; }
+.alv-reel .h-panel-copy {
+  align-content: center; pointer-events: none;
+  opacity: 0; transform: translateY(26px);
+  transition: opacity 350ms var(--sl-e-out), transform 500ms var(--sl-e-out);
+}
+/* A project's story arrives with its light, not before it. */
+.alv-reel .h-panel.is-on .h-panel-copy {
+  opacity: 1; transform: none; pointer-events: auto;
+  transition: opacity 700ms var(--sl-e-out) 950ms, transform 900ms var(--sl-e-out) 950ms;
+}
+/* Whatever has keyboard focus is always shown, at once. */
+.alv-reel .h-panel:focus-within .h-panel-copy { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0s; }
+
+/* The screens: placed and lit by the room engine (inline transform,
+   opacity and light), sized against the composition frame. */
+.alv-reel .h-room .dev {
+  position: absolute; left: 0; top: 0; right: auto; bottom: auto; margin: 0;
+  width: var(--dw); opacity: 0; pointer-events: none; will-change: transform, opacity;
+}
+.alv-reel .h-panel-work .dev--desk + .dev--phone { right: auto; bottom: auto; width: var(--dw); }
+.alv-reel .h-room .dev-floor { display: block; }
+.alv-reel[data-geo="wide"] .h-room .dev--desk { --dw: calc(min(100%, 1600px) * 0.44); }
+.alv-reel[data-geo="wide"] .h-room .dev--phone { --dw: calc(min(100%, 1600px) * 0.145); }
+.alv-reel[data-geo="portrait"] .h-room .dev--desk { --dw: 88%; }
+.alv-reel[data-geo="portrait"] .h-room .dev--phone { --dw: 34%; }
+
+/* The work's own index: at the foot of the room once the work has the
+   light, and always as soon as it has focus. */
+.alv-reel .h-steps {
+  position: absolute; z-index: 40; margin: 0;
+  left: var(--h-pad); bottom: calc(var(--fy) + 22px);
+  opacity: 0; pointer-events: none; transition: opacity 500ms;
+}
+.alv-reel .h-room.is-working .h-steps,
+.alv-reel .h-steps:focus-within { opacity: 1; pointer-events: auto; transition: opacity 500ms 300ms; }
+
+/* PORTRAIT: the locked stacked geometry - words at the top, work beneath. */
+.alv-reel[data-geo="portrait"] .h-col,
+.alv-reel[data-geo="portrait"] .h-panel-copy { top: calc(var(--alv-nav-h) + 12px); bottom: auto; right: var(--h-pad); width: auto; }
+.alv-reel[data-geo="portrait"] .h-col { align-items: start; }
+.alv-reel[data-geo="portrait"] .h-panel-copy { align-content: start; }
+.alv-reel[data-geo="portrait"] .h-steps { bottom: 12px; }
+
+/* The pair: the one moment the story sits above the work, centred. Its
+   static screenshots stay for assistive technology; the room's own screens
+   show the pair to sighted readers. */
+.alv-reel .h-pair .h-panel-copy {
+  left: 50%; right: auto; bottom: auto; top: calc(var(--fy) + 96px);
+  width: min(820px, calc(100% - 2 * var(--sl-gutter)));
+  translate: -50% 0; justify-items: center; text-align: center;
+}
+.alv-reel[data-geo="portrait"] .h-pair .h-panel-copy { top: calc(var(--alv-nav-h) + 12px); }
+.alv-reel .h-pair .h-panel-work {
+  position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}

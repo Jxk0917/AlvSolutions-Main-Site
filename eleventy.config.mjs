@@ -25,13 +25,16 @@ export default function (eleventyConfig) {
   eleventyConfig.on("eleventy.before", async () => {
     await Promise.all([
       esbuild.build({
-        entryPoints: { site: "src/scripts/site.ts" },
+        // site: shared on every page. home: the homepage's opening and
+        // reel (GSAP), loaded only through the page's `pageJs` front matter.
+        entryPoints: { site: "src/scripts/site.ts", home: "src/scripts/home.ts" },
         outdir: "src/assets/dist",
         bundle: true,
-        // iife, not esm: the site loads this as a plain <script defer>,
+        // iife, not esm: the site loads these as plain <script defer>,
         // the same convention as the existing assets/main.js.
         format: "iife",
         target: "es2020",
+        minify: true,
         logLevel: "warning",
       }),
       esbuild.build({

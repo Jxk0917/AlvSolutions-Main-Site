@@ -18,6 +18,9 @@
       } catch (e) {}
     })();
   </script>
+  {%- if prepaint %}
+  {% include prepaint %}
+  {%- endif %}
 
   {#- Centralised here so a brand rename or domain switch is one edit in
       site.json rather than a search-and-replace across every meta tag. -#}
@@ -123,6 +126,9 @@
 <script src="/assets/main.js" defer></script>
 {%- endif %}
 <script src="/assets/dist/site.js" defer></script>
+{%- if pageJs %}
+<script src="/assets/dist/{{ pageJs }}.js" defer></script>
+{%- endif %}
 {%- if shader %}
 <script src="/assets/shader.js" defer></script>
 {%- endif %}

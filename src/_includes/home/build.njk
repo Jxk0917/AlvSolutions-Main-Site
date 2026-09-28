@@ -1,19 +1,21 @@
 {#
-  WHAT I BUILD. The locked design shows one business at a time behind a
-  picker; statically, all four are here in full, and the business row is a
-  set of anchors to them. bundles.json is the authority for every sentence,
-  price and part. A "picks" build is a package with its picks made; a
-  "fixed" build (the restaurant) is its own curated bundle and says so.
+  WHAT I BUILD. A concise business selector, not an inventory. bundles.json
+  is the authority for every sentence, price and part. A "picks" build is a
+  package with its picks made; a "fixed" build (the restaurant) is its own
+  curated bundle and says so. Full inclusions live at
+  /packages/for-your-business/; the full catalogue lives at
+  /packages/add-ons/ — neither is repeated here.
 
-  Hooks for the animated picker (Phase 4E): .h-trades [data-trade],
+  Each business shows at most 3 defining parts (power features first, then
+  page add-ons), derived from bundles.json, with a route to the rest.
+
+  Hooks for the animated picker (Phase 4E-B): .h-trades [data-trade],
   .h-fit [data-fit].
 #}
-{%- set rowKeys = ["pages", "revisions", "addons", "power"] %}
-{%- set foundation = packages.tiers[0] %}
 <section class="h-build h-wrap" id="build" aria-labelledby="build-h">
   <div class="h-build-head">
     <h2 id="build-h" class="h-h2">Built from the parts your business actually uses.</h2>
-    <p class="h-lede">Every site starts on the same foundation. Then it is fitted to the way your customers find you, decide and buy. Choose a business to see its site.</p>
+    <p class="h-lede">Every site starts on the same foundation, then it's fitted to how your customers find you, decide and buy.</p>
   </div>
 
   <nav class="h-trades" aria-label="Type of business">
@@ -24,6 +26,14 @@
 
   <div class="h-fits">
     {%- for b in bundles %}
+    {%- set powers = [] %}
+    {%- set pages = [] %}
+    {%- for i in b.includes %}
+    {%- if i.kind == "power" %}{% set powers = (powers.push(i), powers) %}{% else %}{% set pages = (pages.push(i), pages) %}{% endif %}
+    {%- endfor %}
+    {%- set ordered = powers.concat(pages) %}
+    {%- set shown = ordered.slice(0, 3) %}
+    {%- set remaining = ordered.length - shown.length %}
     <article class="h-fit" id="build-{{ b.slug }}" data-fit="{{ b.slug }}" aria-labelledby="fit-{{ b.slug }}">
       <div class="h-fit-why">
         <h3 id="fit-{{ b.slug }}" class="h-fit-name">{{ b.name }}</h3>
@@ -34,47 +44,23 @@
           <b>{{ b.price | price | safe }}</b>
         </p>
         <div class="h-fit-act">
-          <a class="alv-btn alv-btn--sm" href="/contact/?package={{ b.slug }}">Start with {{ b.name }}</a>
-          <a class="alv-tlink" href="#prices">Compare the packages</a>
+          <a class="alv-btn alv-btn--sm" href="/contact/?package={{ b.slug }}">Start with this build</a>
+          <a class="alv-tlink" href="/packages/for-your-business/#{{ b.slug }}">Explore this build</a>
         </div>
       </div>
       <div class="h-fit-what">
-        <p class="h-fit-label">What a {{ b.shortName | lower }} site adds</p>
         <ul class="h-fit-parts">
-          {%- for i in b.includes %}
+          {%- for i in shown %}
           <li><span class="h-part">{{ i.name }}</span><span class="h-part-kind">{{ "Power feature" if i.kind == "power" else "Page add-on" }}</span></li>
           {%- endfor %}
         </ul>
+        {%- if remaining > 0 %}
+        <a class="alv-tlink h-fit-more" href="/packages/for-your-business/#{{ b.slug }}">+{{ remaining }} more</a>
+        {%- endif %}
       </div>
     </article>
     {%- endfor %}
   </div>
 
-  <div class="h-core">
-    <p class="h-fit-label">On every site</p>
-    <ul class="h-core-list">
-      {%- for f in packages.features %}
-      {%- if not (f.key in rowKeys) and foundation.has[f.key] %}
-      <li>{{ f.label }}</li>
-      {%- endif %}
-      {%- endfor %}
-    </ul>
-  </div>
-
-  <details class="h-all">
-    <summary>Every page and feature I build</summary>
-    <div class="h-all-grid">
-      {%- for g in addons.classes %}
-      <div>
-        <h3>{{ g.name }}<span>{{ g.price | price | safe }} {{ g.unit }}</span></h3>
-        <ul>
-          {%- for i in g.items %}<li>{{ i.name }}</li>{% endfor %}
-        </ul>
-      </div>
-      {%- endfor %}
-    </div>
-    <p class="h-all-more"><a class="alv-tlink" href="/packages/add-ons/">What each one does</a></p>
-  </details>
-
-  <p class="h-also"><b>Beyond the site:</b> <a class="alv-tlink" href="/services/google-business-profile/">Google Business Profile setup</a> in your own account, <a class="alv-tlink" href="/services/brand-asset-setup/">logo preparation</a> or a new <a class="alv-tlink" href="/services/brand-starter-kit/">brand starter kit</a>, and <a class="alv-tlink" href="/services/business-cards/">business cards</a> designed to match. <a class="alv-tlink" href="/contact/">Ask about any of them</a></p>
+  <p class="h-also">Beyond the site: logos, business cards and Google Business Profile setup. <a class="alv-tlink" href="/services/">Every service</a></p>
 </section>

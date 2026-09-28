@@ -6,6 +6,7 @@
       "slug": "domain",
       "icon": "cloud",
       "title": "You own your domain",
+      "short": "You own your domain.",
       "body": "You buy and hold your own domain, in your own name. I point it at your site. Nobody has to ask me for permission to move it, including you."
     },
     {
@@ -18,24 +19,28 @@
       "slug": "payment",
       "icon": "tag",
       "title": "Half to start, half at launch",
+      "short": "Half to start.",
       "body": "A 50% deposit secures your project. The remaining 50% is due once you approve the finished site, and before it is published to your live domain. Care plans are billed automatically each month to a card on file."
     },
     {
       "slug": "cancel",
       "icon": "shield-check",
       "title": "Pause or cancel, and the site is still yours",
+      "short": "Cancel any time after 3 months.",
       "body": "Care plans have a 3-month minimum, then you can cancel any time with 30 days' notice. Cancellation takes effect at the end of your current billing period, and that period is not refunded. After that I stop hosting, maintaining and monitoring the site. Nothing is deleted and nothing is held back — I will help you move it to hosting you control, though any third-party cost to do that is yours."
     },
     {
       "slug": "scope",
       "icon": "alert",
       "title": "I flag before I charge",
+      "short": "No surprise invoices.",
       "body": "If your project runs past what your package includes, you get a quote and a chance to approve it before any extra work starts. No surprise invoices, ever."
     },
     {
       "slug": "revisions",
       "icon": "list",
       "title": "A revision round is one list",
+      "short": "One list is one revision round.",
       "body": "One consolidated set of changes, submitted within 5 business days of delivery. Ten notes in one message is one round."
     },
     {

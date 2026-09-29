@@ -1,0 +1,234 @@
+/* ============================================================
+   ALVSolutions - interior pages (Phase 4B foundation)
+
+   Shared Screen Light shell for every non-cinematic page (/work/,
+   /builds/, /pricing/, /services/, /about/, /policies/, /legal/*,
+   /contact/). Home stays the only theatrical page: no opening sequence,
+   no held/pinned room, no reel. A section here is only as tall as its
+   content.
+
+   Components below are promoted from home.css's visual language (the
+   blueprint screen, price ticket, commitment sheet, fact strip) under an
+   `.int-` prefix rather than renaming home.css's own `.h-` classes, so the
+   locked homepage file is never touched by this migration.
+   ============================================================ */
+@import "./base.css";
+@import "./light.css";
+
+:root {
+  /* Same content measure the shared nav/footer already align to
+     (site.json's legacy pages use --alv-wrap-max instead; interior pages
+     opt into the Screen Light measure explicitly). */
+  --int-measure: 1240px;
+}
+
+.int-wrap {
+  width: 100%;
+  max-width: calc(var(--int-measure) + 2 * var(--sl-gutter));
+  margin: 0 auto;
+  padding-inline: var(--sl-gutter);
+}
+
+.int-ic {
+  width: 20px; height: 20px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+.int-h2 {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(30px, 3.6vw, 48px); line-height: 1.04; letter-spacing: -0.032em; color: var(--sl-ink1);
+  padding-bottom: 0.04em; text-wrap: balance;
+}
+.int-lede { font-size: 16.5px; color: var(--sl-ink2); max-width: 52ch; }
+
+/* ============================================================
+   HEADER BAND
+   A short lit room at the top of every interior page: one key light, an
+   H1 no taller than about 60px, one sentence. A detail page (a build, a
+   branding tier, GBP) adds its own object into `.int-head-obj`.
+   ============================================================ */
+.int-head {
+  position: relative; isolation: isolate;
+  padding-block: calc(var(--alv-nav-h) + clamp(48px, 8vh, 88px)) clamp(40px, 6vh, 64px);
+  --kx: 24; --kw: 40; --ki: 1; --kpy: 94;
+}
+.int-head > .key-cone, .int-head > .key-pool { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.int-head-in {
+  display: grid; gap: 16px; max-width: 62ch;
+}
+.int-crumbs { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 4px; padding: 0; list-style: none; font-size: 13px; color: var(--sl-ink3); }
+.int-crumbs li { display: flex; align-items: center; gap: 6px; }
+.int-crumbs li:not(:first-child)::before { content: "/"; color: var(--sl-line2); }
+.int-crumbs a { color: var(--sl-ink3); text-decoration: none; }
+.int-crumbs a:hover, .int-crumbs a:focus-visible { color: var(--sl-ink1); }
+.int-crumbs [aria-current] { color: var(--sl-ink2); }
+.int-head-h1 {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(38px, 4.6vw, 60px); line-height: 1; letter-spacing: -0.038em; padding-bottom: 0.06em;
+  color: var(--sl-ink1); max-width: 18ch; text-wrap: balance;
+}
+.int-head-lede { font-size: 17px; color: var(--sl-ink2); max-width: 46ch; }
+.int-head-act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; margin-top: 4px; }
+/* Detail pages: the page's own object stands beside the words. */
+.int-head--obj { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr); gap: 32px clamp(32px, 5vw, 88px); align-items: center; }
+.int-head-obj { min-width: 0; }
+
+/* ============================================================
+   INDEX GRID
+   A grid of objects that route deeper (/work/, /builds/, /services/).
+   ============================================================ */
+.int-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(20px, 3vw, 32px);
+  padding-block: clamp(48px, 7vh, 80px);
+}
+.int-card {
+  display: grid; gap: 14px; align-content: start;
+  padding: clamp(22px, 2.6vw, 30px); border-radius: 10px;
+  background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 40px 70px -34px rgb(0 0 0 / 0.9);
+  text-decoration: none; color: inherit;
+  transition: box-shadow 300ms var(--sl-e-out), transform 300ms var(--sl-e-out);
+}
+.int-card:hover, .int-card:focus-visible {
+  transform: translateY(-3px);
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.18), 0 44px 78px -34px rgb(0 0 0 / 0.95);
+}
+.int-card-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 20px; letter-spacing: -0.018em; color: var(--sl-ink1); }
+.int-card-body { font-size: 15px; color: var(--sl-ink2); }
+.int-card-meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--sl-ink3); }
+
+/* ============================================================
+   BLUEPRINT SCREEN
+   The build's own parts as slots. Reused on any page that shows a build's
+   picks: /builds/<slug>/, and later the homepage's What I Build (which
+   keeps its own `.h-bp` at rest; this is the interior-page equivalent).
+   ============================================================ */
+.int-bp {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; align-content: start; gap: 18px;
+  min-height: clamp(220px, 20vw, 300px); padding: clamp(20px, 2.4vw, 32px);
+  border-radius: 10px; background: #0c0c0c;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 40px 70px -34px rgb(0 0 0 / 0.95);
+}
+.int-bp::after {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.5) 50%, transparent 96%);
+}
+.int-bp-base {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
+  padding-bottom: 14px; border-bottom: 1px dashed rgb(var(--sl-L) / 0.14);
+  font-size: 13px; color: var(--sl-ink3);
+}
+.int-bp-base span { font-weight: 600; color: var(--sl-ink2); }
+.int-slot-group { display: grid; gap: 8px; }
+.int-slot-label { font-size: 12.5px; color: var(--sl-ink3); }
+.int-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.int-slot {
+  display: flex; align-items: flex-end; min-height: 60px; padding: 11px 13px;
+  border-radius: 6px; background: rgb(var(--sl-L) / 0.03); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.11);
+  font-family: var(--sl-f-brand); font-weight: 580; font-optical-sizing: auto;
+  font-size: clamp(14px, 1.15vw, 16.5px); line-height: 1.2; letter-spacing: -0.01em; color: var(--sl-ink1);
+}
+.int-slots--power .int-slot {
+  align-items: center; min-height: 52px; background: rgb(var(--sl-L) / 0.075);
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.26), inset 0 1px 0 rgb(var(--sl-L) / 0.4);
+}
+.int-slots--power .int-slot::before {
+  content: ""; flex: none; width: 3px; height: 22px; margin-right: 12px; border-radius: 2px; background: var(--sl-ink1);
+}
+
+/* ============================================================
+   PRICE TICKET
+   The price and what it is, read as one ticket. Reused wherever a page
+   shows a single price (a build's card, a branding tier).
+   ============================================================ */
+.int-ticket {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;
+  width: min(100%, 440px); margin-top: 6px; padding-top: 16px; border-top: 1px solid var(--sl-line2);
+}
+.int-ticket b {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(28px, 2.4vw, 36px);
+  letter-spacing: -0.03em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.int-ticket span { font-size: 14.5px; color: var(--sl-ink2); max-width: 30ch; }
+
+/* ============================================================
+   COMMITMENT SHEET
+   A signed sheet of plain-language commitments. Reused on /policies/ and
+   /about/ (styled like Home's Trust sheet).
+   ============================================================ */
+.int-sheet {
+  position: relative; display: grid; gap: clamp(24px, 3.4vh, 36px);
+  padding: clamp(24px, 3.2vw, 44px); border-radius: 12px;
+  background: radial-gradient(ellipse 70% 90% at 22% -20%, rgb(var(--sl-L) / 0.05), transparent 70%), #0e0e0e;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 50px 90px -50px rgb(0 0 0 / 0.9);
+}
+.int-sheet::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.5) 50%, transparent 96%);
+}
+.int-commits { display: grid; gap: 18px; margin: 0; padding: 0; list-style: none; }
+.int-commit {
+  display: flex; align-items: flex-start; gap: 14px;
+  font-size: 15.5px; color: var(--sl-ink2);
+}
+.int-commit .int-ic { color: var(--sl-ink2); margin-top: 2px; }
+.int-commit b { display: block; font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.014em; color: var(--sl-ink1); margin-bottom: 2px; }
+
+/* ============================================================
+   FACT STRIP
+   Two or three standing facts, side by side rather than stacked sentences.
+   ============================================================ */
+.int-facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px clamp(28px, 5vw, 64px);
+  margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--sl-line);
+}
+.int-fact { font-size: 14.5px; color: var(--sl-ink2); max-width: 60ch; }
+.int-fact-k { display: block; margin-bottom: 6px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+
+/* ============================================================
+   FAQ DISCLOSURE
+   Plain <details>/<summary> pairs, no JS required to open or close.
+   ============================================================ */
+.int-faq { display: grid; gap: 0; border-top: 1px solid var(--sl-line); }
+.int-faq-item { border-bottom: 1px solid var(--sl-line); }
+.int-faq-item summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 18px 0; cursor: pointer;
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: 16.5px; letter-spacing: -0.012em; color: var(--sl-ink1);
+  list-style: none;
+}
+.int-faq-item summary::-webkit-details-marker { display: none; }
+.int-faq-item summary::after {
+  content: ""; flex: none; width: 10px; height: 10px; border-right: 1.5px solid var(--sl-ink3); border-bottom: 1.5px solid var(--sl-ink3);
+  transform: rotate(45deg); transition: transform 250ms var(--sl-e-out);
+}
+.int-faq-item[open] summary::after { transform: rotate(-135deg); }
+.int-faq-item p { padding-bottom: 20px; font-size: 15px; color: var(--sl-ink2); max-width: 64ch; }
+
+/* ============================================================
+   CTA BAND
+   A compact close for every interior page: no big waiting screen, unlike
+   Home's Close. Words in the key light, one or two actions.
+   ============================================================ */
+.int-cta {
+  position: relative; isolation: isolate;
+  display: grid; gap: 20px; justify-items: start;
+  padding-block: clamp(56px, 8vh, 96px);
+  --kx: 30; --kw: 56; --ki: 1; --kpy: 96;
+}
+.int-cta > .key-cone, .int-cta > .key-pool { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.int-cta-h {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(30px, 3.4vw, 46px); line-height: 1.02; letter-spacing: -0.036em; max-width: 16ch;
+  padding-bottom: 0.06em; color: var(--sl-ink1);
+}
+.int-cta p { font-size: 16px; color: var(--sl-ink2); max-width: 44ch; }
+.int-cta-act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 24px; }
+
+@media (max-width: 900px) {
+  .int-head--obj { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .int-facts { grid-template-columns: minmax(0, 1fr); }
+}

@@ -1,0 +1,72 @@
+---
+layout: layouts/base.njk
+legacy: false
+pageCss: interior
+---
+{#
+  Shared shell for every non-cinematic page (Phase 4B foundation): a short
+  lit header band, the page's own content, then a compact CTA band. Home
+  stays the only theatrical page - no opening sequence, no held room, no
+  pinning - so this layout never sets `alv-reel`/`alv-opening` and never
+  loads home's JS or CSS bundle.
+
+  Front matter contract for a page using this layout:
+    head = { crumbs: [{label, url}], heading, lede, actions: [{label,url}],
+              obj: <precompiled HTML for the page's own object, optional> }
+    cta  = { heading, lede, actions: [{label,url}] } (falls back to the
+              site-wide default below when omitted)
+
+  `content` is the page's own body, rendered between the header band and
+  the CTA band.
+#}
+<main id="main">
+  <section class="int-head{% if head.obj %} int-head--obj{% endif %} int-wrap">
+    <span class="key-cone" aria-hidden="true"></span>
+    <span class="key-pool" aria-hidden="true"></span>
+    <div class="int-head-in">
+      {%- if head.crumbs %}
+      <nav class="int-crumbs" aria-label="Breadcrumb">
+        <ol style="display:contents;">
+          <li><a href="/">Home</a></li>
+          {%- for c in head.crumbs %}
+          <li>{% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}<span aria-current="page">{{ c.label }}</span>{% endif %}</li>
+          {%- endfor %}
+        </ol>
+      </nav>
+      {%- endif %}
+      <h1 class="int-head-h1">{{ head.heading | safe }}</h1>
+      {%- if head.lede %}
+      <p class="int-head-lede">{{ head.lede | safe }}</p>
+      {%- endif %}
+      {%- if head.actions %}
+      <div class="int-head-act">
+        {%- for a in head.actions %}
+        <a class="{{ 'alv-btn' if loop.first else 'alv-tlink' }}" href="{{ a.url }}">{{ a.label }}</a>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </div>
+    {%- if head.obj %}
+    <div class="int-head-obj">{{ head.obj | safe }}</div>
+    {%- endif %}
+  </section>
+
+  {{ content | safe }}
+
+  <section class="int-cta int-wrap">
+    <span class="key-cone" aria-hidden="true"></span>
+    <span class="key-pool" aria-hidden="true"></span>
+    <h2 class="int-cta-h">{{ cta.heading | default("Let's talk about your project.") }}</h2>
+    <p>{{ cta.lede | default("Tell me what the business does and what you need. Free quote, no pressure.") }}</p>
+    <div class="int-cta-act">
+      {%- if cta.actions %}
+      {%- for a in cta.actions %}
+      <a class="{{ 'alv-btn' if loop.first else 'alv-tlink' }}" href="{{ a.url }}">{{ a.label }}</a>
+      {%- endfor %}
+      {%- else %}
+      <a class="alv-btn" href="/contact/">Start a project</a>
+      <a class="alv-tlink" href="/pricing/">See pricing</a>
+      {%- endif %}
+    </div>
+  </section>
+</main>

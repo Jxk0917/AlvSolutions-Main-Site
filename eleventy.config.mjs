@@ -38,9 +38,10 @@ export default function (eleventyConfig) {
         logLevel: "warning",
       }),
       esbuild.build({
-        // site: shared on every page. home: the migrated homepage only,
-        // loaded through the page's `pageCss` front matter.
-        entryPoints: { site: "src/styles/site.css", home: "src/styles/home.css" },
+        // site: shared on every page. home: the migrated homepage only.
+        // interior: every other migrated (Screen Light) page. Both load
+        // only through the page's `pageCss` front matter.
+        entryPoints: { site: "src/styles/site.css", home: "src/styles/home.css", interior: "src/styles/interior.css" },
         outdir: "src/assets/dist",
         bundle: true,
         // Font url()s are absolute browser paths into /assets/fonts, not

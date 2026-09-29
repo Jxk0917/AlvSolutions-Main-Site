@@ -1,9 +1,8 @@
 {#
-  Site-wide navigation (Phase 4B foundation): the approved five-destination
-  philosophy - Work, What I build, How it works, Prices, Start a project.
-  On the homepage these are in-page anchors; on every interior page they
-  point back at the corresponding homepage section. "Start a project"
-  always goes to the /contact/ wizard, never a homepage anchor.
+  Site-wide navigation (Phase 4B foundation): the approved destination
+  philosophy - Work, What I build, Services, Pricing, Start a project - as
+  real routes (site.primaryNav), the same on every page including Home.
+  "Start a project" always goes to the /contact/ wizard.
 
   The mobile menu is a native <details>, so it opens and closes with no JS
   at all; site.ts only adds Escape-to-close with focus returned to "Menu".
@@ -11,7 +10,6 @@
   Screen Light styling only. No client colour ever reaches this identity.
 #}
 {% from "components/identity.njk" import wordmark %}
-{%- set anchorPrefix = "" if page.url == "/" else "/" %}
 <header class="alv-nav" data-nav>
   <div class="alv-wrap alv-nav-in">
     <a class="alv-nav-mark" href="/" aria-label="{{ site.name }}, home">
@@ -20,7 +18,7 @@
 
     <nav class="alv-nav-links" aria-label="Primary">
       {%- for item in site.primaryNav %}
-      <a class="alv-lit-sel" href="{{ anchorPrefix }}#{{ item.anchor }}">{{ item.label }}</a>
+      <a class="alv-lit-sel" href="{{ item.url }}">{{ item.label }}</a>
       {%- endfor %}
     </nav>
 
@@ -31,7 +29,7 @@
       <div class="alv-menu-panel">
         <nav aria-label="Mobile">
           {%- for item in site.primaryNav %}
-          <a href="{{ anchorPrefix }}#{{ item.anchor }}">{{ item.label }}</a>
+          <a href="{{ item.url }}">{{ item.label }}</a>
           {%- endfor %}
         </nav>
         <a class="alv-btn" href="/contact/">Start a project</a>

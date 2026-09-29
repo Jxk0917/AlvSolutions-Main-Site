@@ -1,32 +1,31 @@
 {#
-  HOW A PROJECT RUNS, from process.json. In the locked design the three
-  clauses are held as one sentence and lit one by one, with only the current
-  step's detail shown. Statically, the sentence rests fully lit (its end
-  state) and every step keeps its detail and payment note visible.
+  HOW A PROJECT RUNS: one project, one line. The three clauses read across
+  as one sentence; beneath each, a station on a single rail with its detail
+  and its payment note, from process.json. The notes are the payment
+  timeline, so the section shows how money moves through a project too.
 
-  Hooks for the held sentence (Phase 4E): [data-proc-stage], [data-process],
-  .h-p / .h-p-title / .h-p-detail, and the .h-proc-track steps.
+  Statically (no JS, or reduced motion) every clause is lit and the room is
+  on. With motion (src/home/process.ts) each clause lights as the visitor
+  scrolls past its [data-mark]; nothing is pinned and nothing waits.
 #}
-<section class="h-process" id="process" aria-labelledby="process-h">
-  <div class="h-proc-stage" data-proc-stage>
-    <span class="key-cone" aria-hidden="true"></span>
-    <span class="key-pool" aria-hidden="true"></span>
-    <div class="h-wrap h-proc-inner">
-      <h2 id="process-h" class="h-proc-h">How a project runs.</h2>
-      <ol class="h-proc" data-process>
-        {%- for s in process.steps %}
-        <li class="h-p">
-          <h3 class="h-p-title">{{ s.clause }} </h3>
-          <div class="h-p-detail">
-            <p class="h-p-body">{{ s.detail }}</p>
-            <p class="h-p-meta">{{ s.note }}</p>
-          </div>
-        </li>
-        {%- endfor %}
-      </ol>
-    </div>
-  </div>
-  <div class="h-proc-track" aria-hidden="true">
-    {%- for s in process.steps %}<span data-pstep="{{ loop.index0 }}"></span>{% endfor %}
-  </div>
+<section class="h-process h-wrap" id="process" aria-labelledby="process-h">
+  <span class="key-cone" aria-hidden="true"></span>
+  <span class="key-pool" aria-hidden="true"></span>
+  <h2 id="process-h" class="h-proc-h">How a project runs.</h2>
+  <ol class="h-line">
+    {%- for s in process.steps %}
+    <li class="h-stn" data-stn>
+      <h3 class="h-stn-clause">{{ s.clause }}</h3>
+      <span class="h-stn-node" aria-hidden="true"><i></i></span>
+      <div class="h-stn-body">
+        <svg class="h-ic" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>
+        <p>{{ s.detail }}</p>
+        <p class="alv-tag h-stn-note">{{ s.note }}</p>
+      </div>
+    </li>
+    {%- endfor %}
+  </ol>
+  {%- for s in process.steps %}
+  <span class="h-proc-mark" data-mark style="--m: {{ loop.index0 }}" aria-hidden="true"></span>
+  {%- endfor %}
 </section>

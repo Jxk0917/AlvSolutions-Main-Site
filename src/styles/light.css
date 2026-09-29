@@ -40,17 +40,25 @@
 }
 .room-light { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .room-light > span { position: absolute; inset: 0; }
-/* ALVSolutions' key: a cone falling on the wall from above... */
+/* ALVSolutions' key: a cone falling on the wall from above. Its gradient
+   shape is fixed; --kx/--kw/--ki only ever move it, scale it and dim it
+   via transform/opacity, so a travelling spotlight never repaints a
+   full-room background every frame — it composites, the same as the
+   screens it lights. */
 .key-cone {
-  background: radial-gradient(ellipse calc(var(--kw) * 0.52%) 96% at calc(var(--kx) * 1%) -14%,
-    rgb(var(--sl-L) / calc(0.15 * var(--ki))) 0%,
-    rgb(var(--sl-L) / calc(0.075 * var(--ki))) 34%,
-    rgb(var(--sl-L) / calc(0.022 * var(--ki))) 60%, transparent 92%);
+  transform: translateX(calc((var(--kx, 50) - 50) * 1%)) scaleX(calc(var(--kw, 50) / 100));
+  opacity: var(--ki, 0);
+  background: radial-gradient(ellipse 52% 96% at 50% -14%,
+    rgb(var(--sl-L) / 0.15) 0%, rgb(var(--sl-L) / 0.075) 34%, rgb(var(--sl-L) / 0.022) 60%, transparent 92%);
+  will-change: transform, opacity;
 }
 /* ...and the pool it makes where it reaches the floor. */
 .key-pool {
-  background: radial-gradient(ellipse calc(var(--kw) * 0.44%) 7.5% at calc(var(--kx) * 1%) calc(var(--kpy) * 1%),
-    rgb(var(--sl-L) / calc(0.14 * var(--ki))) 0%, rgb(var(--sl-L) / calc(0.07 * var(--ki))) 45%, rgb(var(--sl-L) / calc(0.015 * var(--ki))) 75%, transparent 100%);
+  transform: translate(calc((var(--kx, 50) - 50) * 1%), calc((var(--kpy, 50) - 50) * 1%)) scaleX(calc(var(--kw, 50) / 100));
+  opacity: var(--ki, 0);
+  background: radial-gradient(ellipse 44% 7.5% at 50% 50%,
+    rgb(var(--sl-L) / 0.14) 0%, rgb(var(--sl-L) / 0.07) 45%, rgb(var(--sl-L) / 0.015) 75%, transparent 100%);
+  will-change: transform, opacity;
 }
 /* A screen's light in the room: its overall colour tints the space around
    it, and each side throws its own colour sideways. Sized with its depth. */

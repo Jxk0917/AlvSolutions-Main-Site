@@ -64,18 +64,30 @@ export class Reel {
 
   /* ------------------------------------------------------------ states */
 
+  // stackedStates() walks offsetTop/offsetHeight across every panel — a
+  // forced layout read. The geometry it produces only changes with the
+  // viewport, not with which chapter is current, so it is cached here and
+  // only recomputed by setLayout()/measure() (resize). Without this, every
+  // scroll-driven chapter change in portrait re-forced a full layout read
+  // mid-scroll, which is what made scrolling feel like it caught on mini
+  // barriers.
+  private cachedStates: RoomState[] | null = null;
+
   private states(): RoomState[] {
+    if (this.cachedStates) return this.cachedStates;
     if (this.geo === "portrait") {
-      return stackedStates({
+      this.cachedStates = stackedStates({
         room: this.roomEl,
         copy: this.copy,
         panels: this.panels.slice(0, 3).map((p) => $(".h-panel-copy", p)),
         pair: $(".h-panel-copy", this.panels[3]),
         dev: (id) => this.room.element(id),
       });
+    } else {
+      const W = this.roomEl.offsetWidth, H = this.roomEl.offsetHeight;
+      this.cachedStates = WIDE_STATES.map((s) => toRoom(s, W, H));
     }
-    const W = this.roomEl.offsetWidth, H = this.roomEl.offsetHeight;
-    return WIDE_STATES.map((s) => toRoom(s, W, H));
+    return this.cachedStates;
   }
 
   stateFor(n: number): RoomState {
@@ -105,6 +117,7 @@ export class Reel {
   setLayout(layout: Layout, geo: Geo): void {
     const html = document.documentElement;
     this.geo = geo;
+    this.cachedStates = null;
     if (layout === "held") {
       const entering = this.layout !== "held";
       html.classList.add("alv-reel");

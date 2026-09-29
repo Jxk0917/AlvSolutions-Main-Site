@@ -12,6 +12,11 @@ import { Reel } from "../home/reel";
 import { Opening } from "../home/opening";
 import { geoFor, layoutFor, watchResize } from "../home/reel-geometry";
 import { finishIntro } from "../identity/motions";
+import { Trades } from "../home/trades";
+import { Process } from "../home/process";
+import { Prices } from "../home/prices";
+import { initClose } from "../home/close";
+import { initFounders, initSheet } from "../home/moments";
 
 declare global {
   interface Window {
@@ -52,6 +57,23 @@ async function boot(): Promise<void> {
   reel.setLayout(layoutFor(innerWidth, innerHeight, motionOn()), geoFor(innerWidth, innerHeight));
   const opening = new Opening(reel, fly, stage, nav, navMark);
 
+  // The rest of the room below the reel. None of it pins or holds the page:
+  // everything follows native scrolling or answers a click. Each degrades
+  // on its own if its section is missing, so none of it gates the reel.
+  const $ = (sel: string): HTMLElement | null => document.querySelector<HTMLElement>(sel);
+  const build = $("#build");
+  if (build) new Trades(build);
+  const procRoot = $("#process");
+  const proc = procRoot ? new Process(procRoot) : null;
+  const pricesRoot = $("#prices");
+  const prices = pricesRoot ? new Prices(pricesRoot) : null;
+  const founders = $("#founders");
+  if (founders) initFounders(founders);
+  const terms = $("#terms");
+  if (terms) initSheet(terms);
+  const close = $(".h-close");
+  if (close) initClose(close);
+
   // Every screen's own light; the opening waits a moment for it, not forever.
   await Promise.race([reel.lightScreens(), wait(900)]);
 
@@ -71,6 +93,7 @@ async function boot(): Promise<void> {
   watchResize((w, h) => {
     opening.skip();
     reel.setLayout(layoutFor(w, h, motionOn()), geoFor(w, h));
+    prices?.refresh();
   });
 
   onMotionChange((on) => {
@@ -80,6 +103,7 @@ async function boot(): Promise<void> {
       reel.signAll();
     }
     reel.setLayout(layoutFor(innerWidth, innerHeight, on), geoFor(innerWidth, innerHeight));
+    proc?.setMotion(on);
   });
 }
 

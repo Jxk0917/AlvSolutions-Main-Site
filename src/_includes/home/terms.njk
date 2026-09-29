@@ -1,23 +1,37 @@
 {#
-  WHAT YOU CAN HOLD ME TO. Short, spaced promises — not full policy
-  explanations. Each line reads policies.json's `short` field (falling back
-  to `title` if a slug has none), so nothing here is worded twice: the full
-  body for every policy lives at /policies/.
+  WHAT YOU CAN HOLD ME TO: terms, signed. One sheet of commitments from the
+  person building the site, signed at the foot with the same signature that
+  credits the work in the reel. Each line reads policies.json's `short`
+  (falling back to `title`) and its `icon`; nothing is worded twice, and the
+  full body of every policy lives at /policies/.
+
+  "payment" is deliberately not listed here: Process now carries the payment
+  timeline. The policy itself is unchanged.
+
+  With motion, the signature signs as the sheet arrives (src/home/moments.ts);
+  otherwise it rests signed.
 #}
-{%- set homePolicies = ["domain", "payment", "scope", "revisions", "cancel"] %}
+{% from "components/identity.njk" import signature %}
+{%- set homePolicies = ["domain", "scope", "revisions", "cancel"] %}
 <section class="h-terms h-wrap" id="terms" aria-labelledby="terms-h">
-  <div class="h-terms-head">
-    <div>
-      <h2 id="terms-h" class="h-h2">What you can hold me to.</h2>
-      <p class="h-lede">ALVSolutions is new, so there are no reviews to show you yet. These are the terms every project runs on instead.</p>
-    </div>
-    <p class="h-one">A direct line to the person building your site. A real person, not a ticket.</p>
+  <div class="h-terms-pre">
+    <h2 id="terms-h" class="h-h2">What you can hold me to.</h2>
+    <p class="h-lede">ALVSolutions is new, so there are no reviews to show you yet. These are the terms every project runs on instead.</p>
   </div>
-  <ul class="h-promises">
-    {%- for slug in homePolicies %}
-    {%- set pol = policies.policies | find("slug", slug) %}
-    <li>{{ pol.short or pol.title }}</li>
-    {%- endfor %}
-  </ul>
-  <p class="h-terms-more"><a class="alv-tlink" href="/policies/">Every policy, in full</a></p>
+
+  <div class="h-sheet" data-sheet>
+    <ul class="h-commits">
+      {%- for slug in homePolicies %}
+      {%- set pol = policies.policies | find("slug", slug) %}
+      <li class="h-commit"><svg class="h-ic" aria-hidden="true"><use href="#i-{{ pol.icon }}"/></svg><span>{{ pol.short or pol.title }}</span></li>
+      {%- endfor %}
+    </ul>
+    <div class="h-sheet-foot">
+      <p class="h-one">A direct line to the person building your site. A real person, not a ticket.</p>
+      <div class="h-sheet-sig">
+        {{ signature("sheet") }}
+        <a class="alv-tlink" href="/policies/">Every policy, in full</a>
+      </div>
+    </div>
+  </div>
 </section>

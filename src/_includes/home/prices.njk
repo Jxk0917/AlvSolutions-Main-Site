@@ -1,15 +1,16 @@
 {#
-  PRICES: a decision point, not the price book. Three rows only — pages,
-  revision rounds, picks — read across Foundation/Standard/Complete from
+  PRICES: a decision point, not the price book. Three rows only - pages,
+  revision rounds, picks - read across Foundation/Standard/Complete from
   packages.json. Care, extras and the full comparison route to their
   dedicated pages rather than repeating here.
 
   Statically it is a real form: a native radio group (name="package") in the
   column heads, Standard checked, submitting by GET to /contact/ so the
-  wizard receives ?package=<tier> with no JS. The moving light that follows
-  the choice is Phase 4E-B ([data-tier-light], [data-col]).
+  wizard receives ?package=<tier> with no JS. The three heads stand on one
+  floor line and the room's own key light falls on the chosen one: :has()
+  at rest, src/home/prices.ts (the same .key-cone/.key-pool) with JS.
 
-  Founders Special belongs here, in the offer — never in the hero.
+  The Founders Special follows as its own section (index.html).
 #}
 {%- set rowKeys = ["pages", "revisions", "seo", "addons", "power"] %}
 {%- set foundation = packages.tiers[0] %}
@@ -23,9 +24,10 @@
     <fieldset class="h-cmp-set">
       <legend class="alv-sr-only">Choose a package</legend>
       <div class="h-cmp" role="table" aria-label="Packages compared" data-cmp>
-        <span class="h-tier-light" aria-hidden="true" data-tier-light></span>
+        <span class="key-cone" aria-hidden="true"></span>
+        <span class="key-pool" aria-hidden="true"></span>
         <div role="rowgroup">
-          <div class="h-cmp-row h-cmp-head" role="row">
+          <div class="h-cmp-row h-cmp-head" role="row" data-cmp-head>
             <span class="h-cmp-corner" role="columnheader"><span class="alv-sr-only">Package</span></span>
             {%- for t in packages.tiers %}
             <div class="h-cmp-col" role="columnheader" data-col="{{ t.slug }}">
@@ -70,24 +72,19 @@
 
     <div class="h-prices-act">
       <button class="alv-btn" type="submit">Start with this package</button>
-      <p>Every build takes a care plan, from {{ careplans.plans[0].price | price | safe }} a month.</p>
+      <a class="alv-tlink" href="/packages/">Full comparison</a>
     </div>
   </form>
 
-  {#- Every package builds on Foundation ("Everything in Foundation, plus:"
-      per the tier cards), so whatever is true of Foundation and does not
-      vary by tier (pages/revisions/seo/addons/power are excluded — each
-      either differs or is already a row above) holds for all three. No
-      separate "always included" list exists in production data, so this
-      reads it from the one place that is true: Foundation's own facts. #}
+  {#- Every package builds on Foundation, so whatever is true of Foundation
+      and does not vary by tier (the row keys above are excluded) holds for
+      all three: read from Foundation's own facts, not a separate list. #}
   {%- set baseline = [] %}
   {%- for f in packages.features %}
   {%- if not (f.key in rowKeys) and foundation.has[f.key] %}{% set baseline = (baseline.push(f.label), baseline) %}{% endif %}
   {%- endfor %}
-  <p class="h-baseline"><span>Every package:</span> {{ baseline | join(", ") }}. <a class="alv-tlink" href="/packages/">Full comparison</a></p>
-
-  <p class="h-care-line">Every build takes a care plan: Host {{ careplans.plans[0].price | price | safe }}/mo, Grow {{ careplans.plans[1].price | price | safe }}/mo. {{ careplans.minimum }} <a class="alv-tlink" href="/packages/#care">Care plan details</a></p>
-
-  {%- set fsVariant = "home" %}
-  {% include "components/founders-special.njk" %}
+  <div class="h-facts">
+    <p class="h-fact"><span class="h-fact-k">Every package</span>{{ baseline | join(", ") }}.</p>
+    <p class="h-fact"><span class="h-fact-k">Every build takes a care plan</span>Host {{ careplans.plans[0].price | price | safe }}/mo, Grow {{ careplans.plans[1].price | price | safe }}/mo. {{ careplans.minimum }} <a class="alv-tlink" href="/packages/#care">Care plan details</a></p>
+  </div>
 </section>

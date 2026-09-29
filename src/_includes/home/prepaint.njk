@@ -1,10 +1,11 @@
 <script>
   /* Homepage, before first paint. Decides whether the work reel is held and
-     whether the opening plays, so neither flashes in after the page has
-     drawn. Mirrors src/home/reel-geometry.ts (layoutFor / geoFor) and the
-     session key in src/home/opening.ts. Without JS none of this runs and the
-     static page is untouched. If the enhancement has not taken over within
-     4.5s (script blocked, failed or very slow) the static page comes back. */
+     whether the opening plays, so neither flashes in or jumps after the
+     page has drawn. Mirrors
+     src/home/reel-geometry.ts (layoutFor / geoFor) and the session key in
+     src/home/opening.ts. Without JS none of this runs and the static page
+     is untouched. If the enhancement has not taken over within 4.5s
+     (script blocked, failed or very slow) the static page comes back. */
   (function () {
     var r = document.documentElement;
     if (/\bno-motion\b/.test(r.className)) return;

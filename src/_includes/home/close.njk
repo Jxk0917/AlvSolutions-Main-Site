@@ -1,21 +1,28 @@
 {#
-  CLOSE: the room returns to ALVSolutions - the name the page opened with,
-  standing in the light it opened with. Statically the light rests on; the
-  light coming up is Phase 4E ([data-room=close], [data-close-mark]).
+  CLOSE: the hero, answered. The page opened with ALVSolutions' words in the
+  key light and the work waiting in the dark beside them; it ends the same
+  way, with one screen waiting. The reel showed two client screens; this is
+  the next one, unbuilt: dark glass catching the key on its top edge,
+  standing on the floor line that is the footer's top edge. Pointing at or
+  focusing "Start a project" powers it faintly on (CSS only).
+
+  The key rises as the ending arrives (src/home/close.ts); at rest, and with
+  motion off, it is simply up.
 #}
-{% from "components/identity.njk" import wordmark %}
 <section class="room h-close" id="start" aria-labelledby="start-h" data-room="close">
   <div class="room-light" aria-hidden="true"><span class="key-cone"></span><span class="key-pool"></span></div>
-  <div class="h-close-copy">
-    <h2 id="start-h" class="lit-display h-close-h" data-lit>Tell me what the business does.</h2>
-    <p>Free quote, no pressure. I review the project and send you a clear quote and next steps.</p>
-    <div class="h-close-row">
-      <a class="alv-btn" href="/contact/">Start a project</a>
-      <a class="alv-tlink" href="mailto:{{ site.email }}">{{ site.email }}</a>
+  <div class="h-close-in h-wrap">
+    <div class="h-close-copy">
+      <h2 id="start-h" class="lit-display h-close-h" data-lit>Tell me what the business does.</h2>
+      <p>Free quote, no pressure. I review the project and send you a clear quote and next steps.</p>
+      <div class="h-close-row">
+        <a class="alv-btn" href="/contact/" data-close-cta>Start a project</a>
+        <a class="alv-tlink" href="mailto:{{ site.email }}">{{ site.email }}</a>
+      </div>
     </div>
-  </div>
-  <div class="h-close-mark" aria-hidden="true" data-close-mark>
-    {{ wordmark("close", "h-close-wm") }}
-    <span class="h-close-refl">{{ wordmark("close") }}</span>
+    <div class="h-next" aria-hidden="true">
+      <span class="dev-contact"></span>
+      <div class="dev-glass h-next-glass"><span class="h-next-glow"></span><span class="dev-catch"></span></div>
+    </div>
   </div>
 </section>

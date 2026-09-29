@@ -21,7 +21,7 @@
       { "name": "Booking integration, standard",     "price": 175, "note": "One service type on a platform you already use." },
       { "name": "Booking integration, complex",      "price": 300, "note": "Multiple services, staff or locations, configured for you." },
       { "name": "Booking with payment or deposits",  "price": { "plus": 150 }, "note": "Added to either booking option above." },
-      { "name": "Delivery platform links",           "price": 50,  "note": "DoorDash, Uber Eats and the rest, wired in." },
+      { "name": "Delivery links section",             "price": 50,  "note": "DoorDash, Uber Eats and the rest, wired in." },
       { "name": "Online ordering, full integration", "price": { "from": 400 }, "note": "Quoted individually. The platform and your menu size decide it." }
     ]
   },

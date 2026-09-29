@@ -1,5 +1,5 @@
 {
-  "_comment": "Two classes of extra, each at one flat price. Packages include a number of picks from these lists (packages.json → tiers[].picks); anything beyond that is bought at the price below. A price is stated once per class, not repeated on every tile.",
+  "_comment": "Three classes of extra, each at one flat price. Packages include a number of picks from page-add-ons and power-features (packages.json → tiers[].picks); anything beyond that is bought at the price below. Small enhancements are not part of the pick system — they are a flat add at any tier, package or standalone. A price is stated once per class, not repeated on every tile.",
 
   "classes": [
     {
@@ -26,13 +26,22 @@
       "unit": "each",
       "blurb": "Something the site does, rather than something it shows. These are builds, not pages.",
       "items": [
-        { "slug": "online-booking",    "name": "Online booking",        "icon": "calendar", "blurb": "Customers book a slot from the site, at nine at night, without calling you.", "service": "booking-integration" },
-        { "slug": "quote-request",     "name": "Quote / catering requests","icon": "clipboard","blurb": "A form that asks the questions you need answered before you can quote.", "service": "catering-quote-page" },
+        { "slug": "online-booking",    "name": "Online booking",        "icon": "calendar", "blurb": "One booking provider you already use, integrated into the site's booking journey: the main destination and the buttons that lead to it.", "service": "booking-integration" },
+        { "slug": "quote-request",     "name": "Structured Quote / Request","icon": "clipboard","blurb": "A request form built around how you take quotes, estimates, catering bookings or service inquiries, structured to collect what you need to respond. Catering is this feature's restaurant-specific form.", "service": "catering-quote-page" },
         { "slug": "large-menu",        "name": "Large menu with categories","icon": "menu", "blurb": "20+ items, sectioned and filterable instead of one endless list.", "service": "menu-service-page" },
         { "slug": "self-editable",     "name": "Self-editable content", "icon": "pencil",   "blurb": "Change your own menu, services or gallery without calling me." },
         { "slug": "before-after-slider","name": "Before / after slider","icon": "adjust",   "blurb": "Drag across one photo to reveal the other. It stops people scrolling." },
-        { "slug": "delivery-links",    "name": "Delivery platform links","icon": "truck",   "blurb": "DoorDash, Uber Eats and the rest, wired into the buttons people look for." },
         { "slug": "multi-location",    "name": "Multi-location support","icon": "building", "blurb": "Separate hours, addresses and maps for every place you operate." }
+      ]
+    },
+    {
+      "slug": "small-enhancements",
+      "name": "Small enhancements",
+      "price": 50,
+      "unit": "each",
+      "blurb": "A small, self-contained addition to a build - not a power feature, and not a page of its own.",
+      "items": [
+        { "slug": "delivery-links", "name": "Delivery links section", "icon": "truck", "blurb": "A clean, responsive section of external links to your delivery platforms - DoorDash, Uber Eats and the rest, wired to the buttons people look for." }
       ]
     }
   ]

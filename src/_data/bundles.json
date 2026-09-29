@@ -27,10 +27,10 @@
     "trades": "Lawn care, landscaping, pressure washing, handyman",
     "for": "Jobs that start with a quote, not a checkout.",
     "includes": [
-      { "name": "Services page",        "kind": "page" },
-      { "name": "Project gallery",      "kind": "page" },
-      { "name": "Service area page",    "kind": "page" },
-      { "name": "Quote request system", "kind": "power" }
+      { "name": "Services page",           "kind": "page" },
+      { "name": "Project gallery",         "kind": "page" },
+      { "name": "Service area page",       "kind": "page" },
+      { "name": "Structured quote request","kind": "power" }
     ]
   },
   {
@@ -65,7 +65,7 @@
       { "name": "Photo gallery",         "kind": "page" },
       { "name": "About page",            "kind": "page" },
       { "name": "Testimonials page",     "kind": "page" },
-      { "name": "Delivery platform links","kind": "power" },
+      { "name": "Delivery links section", "kind": "included" },
       { "name": "A menu you update yourself", "kind": "power" }
     ]
   }

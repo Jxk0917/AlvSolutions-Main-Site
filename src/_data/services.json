@@ -160,14 +160,12 @@
         {
           "label": "Simple",
           "price": 150,
-          "note": "An enquiry form and your contact details.",
-          "addon": { "class": "Power feature", "price": 225, "packages": ["standard", "complete"] }
+          "note": "An enquiry form and your contact details. A separate, smaller scope than the Structured Quote / Request power feature, not a cheaper way to get it."
         },
         {
           "label": "Complex",
           "price": 275,
-          "note": "Packages, pricing tiers and a detailed request form.",
-          "addon": { "class": "Power feature", "price": 225, "packages": ["standard", "complete"] }
+          "note": "Packages, pricing tiers and a detailed request form. A separate, larger scope than the Structured Quote / Request power feature, not a bigger version of it."
         }
       ],
       "factors": [
@@ -206,6 +204,10 @@
       {
         "q": "How is this different from the contact form?",
         "a": "The contact form asks for a name and a message. This one asks the questions that decide whether you can take the job and what to charge for it: the date, the headcount, the specifics. It is the difference between an enquiry and a lead."
+      },
+      {
+        "q": "Does it calculate a price for the customer?",
+        "a": "No. It collects what you need to respond with a quote, estimate or catering booking - it does not calculate pricing, run a customer-configurable pricing engine, or take a deposit. Catering is this feature's restaurant-specific form; anything past that (full package pricing displayed on the page, payment collection) is quoted separately."
       }
     ],
     "related": [
@@ -241,14 +243,12 @@
         {
           "label": "Standard",
           "price": 175,
-          "note": "One service type on a platform you already use.",
-          "addon": { "class": "Power feature", "price": 225, "packages": ["standard"], "includedIn": ["complete"] }
+          "note": "One service type on a platform you already use. A separate, smaller scope than the Online Booking power feature, not a cheaper way to get it."
         },
         {
           "label": "Complex",
           "price": 300,
-          "note": "Multiple services, staff or locations, configured for you.",
-          "addon": { "class": "Power feature", "price": 225, "packages": ["standard"], "includedIn": ["complete"] }
+          "note": "Multiple services, staff or locations, configured for you. A separate, larger scope than the Online Booking power feature, not a bigger version of it."
         }
       ],
       "factors": [
@@ -306,6 +306,10 @@
       {
         "q": "Which platform should I use?",
         "a": "Tell me how you take bookings today and I will tell you plainly. Most single-service businesses are well served by Calendly's free tier; salons and multi-staff operations usually need something like Square or Vagaro."
+      },
+      {
+        "q": "Will you build or run my booking system for me?",
+        "a": "No. I integrate one provider you already use into the site's customer journey - the main booking destination and the buttons that lead to it. I am not building a scheduling platform or administering your booking system day to day, and that stays yours to run."
       }
     ],
     "related": [

@@ -1,3 +1,9 @@
+> **Current logo files: `ALVSolutions_Master_Logo/`.** That folder is the finished
+> master logo set (horizontal, stacked and symbol, light and dark, SVG + PNG) and has
+> its own README. Built by `tools/build-logo-system.mjs`. The `logo/` folder below is
+> the earlier blue kit: its "dark" / "light" file names mean the opposite of the new
+> set (they name the background), so do not mix the two.
+
 # AlvSolutions brand kit
 
 > **Superseded for the website.** The site now runs on the master identity: the

@@ -1,0 +1,53 @@
+/* ============================================================
+   WHAT I BUILD (/builds/, /builds/<slug>/)
+
+   The index reuses the packages sub-page's spotlit grid (doc.css, .pk2-*).
+   This file is the one build's page: the blueprint beside its price, the
+   package it starts from, and the other three builds. Everything else is
+   the shared interior kit (interior.css); nothing here is a new look.
+   ============================================================ */
+
+/* The index's card foot holds two links; keep them together. */
+.bd-links { display: flex; flex-wrap: wrap; gap: 6px 18px; }
+
+.bd-sec { padding-block: clamp(32px, 4vw, 56px); }
+.bd-sec > .int-h2 { margin-bottom: 20px; }
+.bd-lede { max-width: 62ch; margin: -6px 0 20px; color: var(--sl-ink2); }
+.bd-lede a { color: var(--sl-ink1); }
+
+.bd-grid {
+  display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 44px); align-items: start;
+}
+.bd-side { display: grid; gap: 26px; align-content: start; }
+.bd-for-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--sl-ink1); margin-bottom: 6px; }
+.bd-trades { font-weight: 600; color: var(--sl-ink1); margin-bottom: 4px; }
+.bd-for p:last-child { color: var(--sl-ink2); max-width: 36ch; }
+
+/* What the base package brings: label and value on hairline rows. */
+.bd-facts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(20px, 3vw, 44px); margin: 0; }
+.bd-fact {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+  padding: 13px 0; border-bottom: 1px solid var(--sl-line);
+}
+.bd-fact dt { font-size: 15px; color: var(--sl-ink2); }
+.bd-fact dd { margin: 0; font-size: 15px; font-weight: 600; color: var(--sl-ink1); text-align: right; }
+
+.bd-work p { max-width: 58ch; }
+
+.bd-others {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px;
+  margin: 0; padding: 0; list-style: none;
+}
+.bd-other { height: 100%; }
+.bd-other-top { display: flex; align-items: center; gap: 12px; }
+.bd-other-ic { flex: none; width: 24px; height: 24px; color: oklch(0.86 0.09 var(--hue, 245)); }
+
+@media (max-width: 820px) {
+  .bd-grid { grid-template-columns: minmax(0, 1fr); }
+  .bd-facts { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* /packages/ build cards: the link through to the build's own page sits
+   under its parts list, ahead of the card's Start link. */
+.pk-build-see { display: inline-block; margin-top: 12px; font-size: 14.5px; }

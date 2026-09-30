@@ -1,22 +1,24 @@
 {
-  "_comment": "Build packages are ONE-TIME prices. The monthly care plan is a separate, required product and lives in careplans.json — never fold one into the other. Row order in `features` is the row order of the comparison chart. A tier's `has` value renders as a tick for true, a dash for false, and the literal string for anything else.",
+  "_comment": "Build packages are ONE-TIME prices. The monthly care plan is a separate, required product and lives in careplans.json — never fold one into the other. Row order in `features` is the row order of the comparison chart. A tier's `has` value renders as a tick for true, a dash for false, and the literal string for anything else. `group` clusters the rows of the /packages/ comparison chart; rows of one group must stay adjacent.",
 
   "revisionRule": "A revision round is one consolidated list of changes, submitted within 5 business days of delivery.",
 
+  "pagesNote": "Page limits are totals. The pages you pick as add-ons fit inside the limit; they are not extra pages on top of it.",
+
   "features": [
-    { "key": "pages",     "label": "Pages" },
-    { "key": "custom",    "label": "Custom-coded, mobile-optimized" },
-    { "key": "form",      "label": "Contact form" },
-    { "key": "maps",      "label": "Google Maps embed" },
-    { "key": "hosting",   "label": "Hosting, SSL and backups" },
-    { "key": "seo",       "label": "On-page SEO" },
-    { "key": "addons",    "label": "Page add-ons included" },
-    { "key": "power",     "label": "Power features included" },
-    { "key": "gbp",       "label": "Google Business Profile setup" },
-    { "key": "schema",    "label": "Schema markup" },
-    { "key": "booking",   "label": "Booking integration" },
-    { "key": "card",      "label": "Business card design" },
-    { "key": "revisions", "label": "Revision rounds" }
+    { "key": "pages",     "label": "Pages, in total",                "group": "The site" },
+    { "key": "custom",    "label": "Custom-coded, mobile-optimized", "group": "The site" },
+    { "key": "form",      "label": "Contact form",                   "group": "The site" },
+    { "key": "maps",      "label": "Google Maps embed",              "group": "The site" },
+    { "key": "hosting",   "label": "Hosting, SSL and backups",       "group": "The site" },
+    { "key": "seo",       "label": "On-page SEO",                    "group": "Getting found" },
+    { "key": "gbp",       "label": "Google Business Profile setup",  "group": "Getting found" },
+    { "key": "schema",    "label": "Schema markup",                  "group": "Getting found" },
+    { "key": "addons",    "label": "Page add-ons included",          "group": "Extras included" },
+    { "key": "power",     "label": "Power features included",        "group": "Extras included" },
+    { "key": "booking",   "label": "Booking integration",            "group": "Extras included" },
+    { "key": "card",      "label": "Business card design",           "group": "Extras included" },
+    { "key": "revisions", "label": "Revision rounds",                "group": "Revisions" }
   ],
 
   "tiers": [

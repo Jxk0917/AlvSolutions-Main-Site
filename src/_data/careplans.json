@@ -10,6 +10,7 @@
       "name": "Host",
       "price": 45,
       "for": "A site that needs to stay online, current and secure.",
+      "short": "Hosting, SSL, daily backups and up to 15 minutes of edits a month.",
       "includes": [
         "Hosting, SSL and daily backups",
         "Uptime monitoring",
@@ -24,6 +25,7 @@
       "recommended": true,
       "builds": "Host",
       "for": "A business that wants the site and the Google listing both worked on.",
+      "short": "Everything in Host, plus 4 updates a month, Google Business Profile posts and a monthly report.",
       "includes": [
         "4 updates a month",
         "3-business-day turnaround",

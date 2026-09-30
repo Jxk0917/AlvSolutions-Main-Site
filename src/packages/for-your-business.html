@@ -1,95 +1,32 @@
 ---
-layout: layouts/base.njk
 permalink: /packages/for-your-business/
-title: Built for your business
-description: Four website builds with the extras already chosen — detailing $1,050, home services $1,050, salons $1,050, restaurants $1,450. The same packages, configured for the trade.
+eleventyExcludeFromCollections: true
 ---
-
-{%- set ph = {
-  heading: "Four builds with<br />the picks already made.",
-  lead: "Every one of these is a build package from the previous page with its extras already chosen, because after enough detailing sites you stop asking a detailer whether they want a before-and-after gallery. Same package, same price, none of the deciding.",
-  back: { label: "Packages", url: "/packages/" },
-  crumbs: [{ label: "Packages", url: "/packages/" }, { label: "Built for your business" }],
-  actions: [
-    { label: "Start a project", url: "/contact/" }
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
-
-<main id="main">
-
-  <!-- ══════════════ THE FOUR BUILDS ══════════════ -->
-  <section class="sec">
-    <div class="wrap">
-      <p class="legend reveal">
-        <span><i class="slot" aria-hidden="true"></i> Page add-on</span>
-        <span><i class="slot slot-hi" aria-hidden="true"></i> Power feature</span>
-      </p>
-
-      {% include "components/bundle-cards.njk" %}
-    </div>
-  </section>
-
-
-  <!-- ══════════════ SOMETHING ELSE ══════════════ -->
-  <section class="sec band sec-line">
-    <div class="wrap wrap-mid">
-      <div class="custom-card reveal">
-        <div class="ic-box gold">
-          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-sparkle"/></svg>
-        </div>
-        <h2>Something else?</h2>
-        <p class="lead">
-          Every build above starts from the same three packages. If your trade is not one
-          of the four, you are not on the wrong page. Start from a package and pick
-          exactly what you need.
-        </p>
-        <div class="hero-actions">
-          <a class="btn btn-primary" href="/packages/">See the packages</a>
-          <a class="btn btn-ghost" href="/packages/add-ons/">See what you can pick</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ══════════════ WHY THESE FOUR ══════════════ -->
-  <section class="sec sec-line">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2>Why these four.</h2>
-        <p class="lead">They are the trades where the same three or four things decide whether the site works, and where guessing wrong costs you real bookings.</p>
-      </div>
-
-      <div class="pts reveal" style="max-width: 760px;">
-        <div class="pt">
-          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <div>
-            <h3>The proof is visual</h3>
-            <p>Detailing, landscaping and salon work are all bought off photographs. A gallery is not decoration on those sites, it is the sales page, which is why every one of these builds has one.</p>
-          </div>
-        </div>
-        <div class="pt">
-          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <div>
-            <h3>The next step is a booking or a quote</h3>
-            <p>A salon needs a slot booked. A landscaper needs enough detail to price the job. Those are different buttons doing different work, and each build carries the right one.</p>
-          </div>
-        </div>
-        <div class="pt">
-          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <div>
-            <h3>The content changes</h3>
-            <p>A restaurant menu moves more than any other page on any other site here, which is why the restaurant build is the one that comes with a menu you can edit yourself.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  {%- set ctaHeading = "Close, but not quite one of these?" %}
-  {%- set ctaLead = "Tell me what the business does. Most of the time the answer is one of these four with one swap, and I will say which." %}
-  {% include "components/cta-band.njk" %}
-
-</main>
+{#-
+  LEGACY ROUTE. The four industry builds moved to /builds/ (and one page each
+  at /builds/<slug>/). This route is live on the production site, so it stays
+  until the redirect phase and is kept as a stub, not a second copy of the
+  content: no layout, noindex, canonical to /builds/, and a plain link.
+  Replace it with a real redirect (and delete this file) in that phase.
+  Old deep links: /packages/for-your-business/#<slug> -> /builds/<slug>/
+-#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>This page has moved | {{ site.name }}</title>
+  <meta name="robots" content="noindex, follow" />
+  <link rel="canonical" href="{{ site.url }}/builds/" />
+  <meta http-equiv="refresh" content="0; url=/builds/" />
+  <meta name="theme-color" content="#0B0B0B" />
+  <link rel="icon" href="/assets/brand/alv-favicon.svg" type="image/svg+xml" />
+  <style>
+    body { margin: 0; min-height: 100vh; display: grid; place-content: center; gap: 12px; padding: 24px; background: #0b0b0b; color: #b9b8b4; font: 400 17px/1.6 system-ui, sans-serif; }
+    a { color: #f2f1ee; }
+  </style>
+</head>
+<body>
+  <p>The four builds now live on <a href="/builds/">What I build</a>.</p>
+</body>
+</html>

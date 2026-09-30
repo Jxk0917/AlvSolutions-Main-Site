@@ -31,7 +31,7 @@ writeFileSync(host, `<!doctype html><html><head><style>
   p { margin: 22px 0 0; font: 450 28px/1.4 Geist; color: #B4C2D2; }
 </style></head><body><div id="og">
   <div class="lockup"><img src="${url("Brand_Assets/logo/svg/alv-mark-reverse.svg")}" alt=""><b>Alv<span>Solutions</span></b></div>
-  <div><h1>Websites that bring in work.</h1><p>Flat pricing from $500. San Antonio, Texas.</p></div>
+  <div><h1>Websites that bring in work.</h1><p>Flat pricing from $650. San Antonio, Texas.</p></div>
 </div></body></html>`);
 
 const browser = await puppeteer.launch({ headless: "new", args: ["--no-sandbox", "--disable-setuid-sandbox"] });

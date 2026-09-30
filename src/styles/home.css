@@ -14,6 +14,8 @@
    ============================================================ */
 @import "./base.css";
 @import "./light.css";
+@import "./offer.css";
+@import "./process.css";
 
 :root {
   /* The locked Screen Light measure; the shared nav and footer align to it
@@ -36,7 +38,7 @@
   padding-bottom: 0.04em;
 }
 .h-lede { font-size: 17.5px; max-width: 52ch; color: var(--sl-ink2); }
-.h-h2, .h-panel-h, .h-close-h, .h-fit-line { text-wrap: balance; }
+.h-h2, .h-panel-h, .h-close-h { text-wrap: balance; }
 
 /* Reel scaffolding: present for the enhanced reel, inert at rest. */
 .h-fly, .h-track { display: none; }
@@ -123,6 +125,68 @@
 /* Both screens stand on one floor, whatever their crop. */
 .h-pair .h-panel-work { width: 100%; max-width: 1080px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); align-items: end; }
 .h-pair-shot { display: grid; gap: 12px; text-align: left; }
+
+/* A bezel around every demo screen in the hero and the side-by-side
+   showcase: a thin near-black frame with a crisp light rim, so each build
+   reads as a device standing in the room rather than an image bleeding
+   into it. Scoped to the hero; the shared .dev-glass in light.css is
+   unchanged. The screen's own light and key catch stay inside the frame. */
+.h-work .dev-glass {
+  border: 7px solid #121212; border-radius: 14px;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -34px rgb(0 0 0 / 0.95);
+}
+.h-work .dev--phone .dev-glass { border-width: 7px; border-radius: 30px; }
+
+/* The desktop and the phone: each screen sits in its own small device.
+   The desktop is a window, a slim title bar with three lights and an
+   address field; the phone has its island, home bar and side keys. They
+   power on with the screen: --p is the room's own power value, so as a
+   screen wakes, a lit bar draws across the desktop's title bar and the
+   phone's lens comes on. Static (no reel), the bar has nothing to draw. */
+.h-work .dev--desk .dev-glass { display: flex; flex-direction: column; }
+.h-work .dev--desk .dev-glass > img { flex: 1 1 0; height: auto; min-height: 0; }
+.dev-chrome {
+  position: relative; z-index: 1; flex: none; display: flex; align-items: center; gap: 5px;
+  height: 22px; padding-inline: 10px 45px;
+  background: #151515; box-shadow: inset 0 -1px 0 rgb(var(--sl-L) / 0.09);
+}
+.dev-chrome > i { flex: none; width: 5px; height: 5px; border-radius: 50%; background: rgb(var(--sl-L) / 0.2); }
+.dev-chrome > b {
+  flex: none; width: min(34%, 240px); height: 55%; margin-inline: auto; border-radius: 99px;
+  background: rgb(var(--sl-L) / 0.07); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.06);
+}
+.dev-load {
+  position: absolute; z-index: 3; left: 0; right: 0; top: 20px; height: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); pointer-events: none;
+  transform-origin: 0 50%; transform: scaleX(0); opacity: 0;
+}
+.alv-reel .dev-load { transform: scaleX(var(--p, 0)); opacity: clamp(0, calc((1 - var(--p, 0)) * 5), 1); }
+
+.h-work .dev--phone .dev-glass { display: flex; flex-direction: column; }
+.h-work .dev--phone .dev-glass > img { flex: 1 1 0; height: auto; min-height: 0; }
+/* The phone's top band: the island sits in its own strip, so it never
+   covers the page's logo or menu. */
+.dev-island {
+  position: relative; z-index: 1; flex: none; height: 26px; background: #060606; pointer-events: none;
+}
+.dev-island::before {
+  content: ""; position: absolute; top: 6px; left: 50%; width: 30%; height: 14px; translate: -50% 0; border-radius: 99px;
+  background: #000; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07);
+}
+.dev-island::after {
+  content: ""; position: absolute; top: 11px; left: calc(50% + 15% - 12px); width: 4px; height: 4px; border-radius: 50%;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); opacity: var(--p, 1);
+}
+.dev-home {
+  position: absolute; z-index: 3; bottom: 7px; left: 50%; width: 34%; height: 3px; translate: -50% 0; border-radius: 3px;
+  background: rgb(var(--sl-L) / 0.55); box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25); opacity: calc(var(--p, 1) * 0.9); pointer-events: none;
+}
+.dev--phone { --key: #1b1b1b; }
+.dev--phone::before, .dev--phone::after {
+  content: ""; position: absolute; width: 3px; border-radius: 2px; background: var(--key); box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08);
+}
+.dev--phone::before { right: -3px; top: 24%; height: 13%; }
+.dev--phone::after { left: -3px; top: 20%; height: 9%; }
 .h-pair-shot figcaption { font-size: 13.5px; color: var(--sl-ink3); }
 
 /* ============================================================
@@ -145,17 +209,8 @@
   fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
 }
 /* Sections that carry their own key light. */
-.h-build-stage > .key-cone, .h-build-stage > .key-pool,
-.h-process > .key-cone, .h-process > .key-pool,
-.h-founders > .key-cone, .h-founders > .key-pool,
-.h-cmp > .key-cone, .h-cmp > .key-pool {
+.h-card--lead > .key-cone {
   position: absolute; inset: 0; z-index: -1; pointer-events: none;
-}
-/* The key catching the top edge of a surface, as it does every screen. */
-.h-bp::after,
-.h-sheet::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.5) 50%, transparent 96%);
 }
 @keyframes h-rise {
   from { opacity: 0; transform: translateY(12px); }
@@ -163,383 +218,382 @@
 }
 
 /* ============================================================
-   WHAT I BUILD: the build on the bench
-   One business at a time: its problem and price in the words, its parts
-   as slots in a blueprint screen. At rest (no JS) every business stands
-   stacked, each on its own bench.
+   WHAT IT TAKES: the parts of running a business online
+   Dark glass surfaces around the one the key light falls on: the
+   website, the centre of everything else. Each card is one link to the
+   page that owns the detail; pointing at one catches the key on its top
+   edge.
    ============================================================ */
-.h-build { padding-block: clamp(72px, 10vh, 112px) clamp(40px, 6vh, 64px); }
-.h-build-h { max-width: 19ch; margin-bottom: clamp(28px, 4vh, 44px); }
+.h-offer { padding-block: clamp(80px, 11vh, 128px) clamp(48px, 7vh, 80px); }
+.h-offer-head { display: grid; gap: 16px; margin-bottom: clamp(28px, 4vh, 44px); }
+.h-offer-head .h-h2 { max-width: 17ch; }
 
-/* Dark until a trade is chosen; trades.ts moves the key over it. */
-.h-build-stage { position: relative; isolation: isolate; --kx: 12; --kw: 30; --ki: 0; --kpy: 96; }
-
-.h-trades { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px; border-bottom: 1px solid var(--sl-line); }
-.h-trades .alv-lit-sel {
-  display: flex; align-items: center; gap: 12px;
-  padding: 20px 12px 20px 0; border-radius: 10px 10px 0 0;
-  transition: color 300ms, opacity 300ms;
+.h-offer-grid {
+  display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr));
+  gap: 12px; margin: 0; padding: 0; list-style: none;
 }
-/* The lit edge lies on the floor line under the chosen trade. */
-.h-trades .alv-lit-sel::before { left: 0; top: auto; bottom: -1px; transform: none; }
-.h-trade-ic { width: 22px; height: 22px; }
-.h-trade-name {
-  font-family: var(--sl-f-brand); font-weight: 600; font-size: clamp(19px, 1.8vw, 25px);
-  letter-spacing: -0.02em; line-height: 1.1; color: var(--sl-ink2); transition: color 300ms;
-}
-.h-trades .alv-lit-sel:hover,
-.h-trades .alv-lit-sel:focus-visible,
-.h-trades .alv-lit-sel[aria-selected="true"] { color: var(--sl-ink1); }
-.h-trades .alv-lit-sel:hover .h-trade-name,
-.h-trades .alv-lit-sel:focus-visible .h-trade-name,
-.h-trades .alv-lit-sel[aria-selected="true"] .h-trade-name { color: var(--sl-ink1); }
-.h-trades .alv-lit-sel[aria-selected="true"]::before { width: 100%; }
-.h-trades[role="tablist"]:has([aria-selected="true"]) .alv-lit-sel:not([aria-selected="true"]):not(:hover):not(:focus-visible) { opacity: 0.5; }
-
-.h-fit {
-  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-  gap: 32px clamp(32px, 5vw, 88px); align-items: end;
-  padding-top: clamp(36px, 5vh, 56px);
-}
-.h-fit + .h-fit { margin-top: 56px; border-top: 1px solid var(--sl-line); }
-/* JS shows one build (trades.ts sets [hidden] on the rest). Our own .h-fit
-   display would beat the UA's [hidden] rule, so it is stated here. */
-.h-fit[hidden] { display: none !important; }
-.h-fits:has([hidden]) .h-fit:not([hidden]) { margin-top: 0; border-top: 0; }
-/* The same room reorganising: words settle, then the parts slot in. */
-.h-fits:has([hidden]) .h-fit:not([hidden]) .h-fit-copy { animation: h-rise 480ms var(--sl-e-out) both; }
-.h-fits:has([hidden]) .h-fit:not([hidden]) .h-slot { animation: h-rise 420ms var(--sl-e-out) both; animation-delay: calc(140ms + var(--i, 0) * 55ms); }
-.no-motion .h-fit .h-fit-copy,
-.no-motion .h-fit .h-slot { animation: none !important; }
-
-.h-fit-copy { display: grid; gap: 16px; align-content: end; justify-items: start; padding-bottom: 52px; }
-.h-fit-name {
-  display: flex; align-items: center; gap: 10px;
-  font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.012em; color: var(--sl-ink2);
-}
-.h-fit-trades { margin-top: -8px; font-size: 14px; color: var(--sl-ink3); }
-/* Behind the tabs the chosen tab already names the business: its heading
-   stays for assistive technology, and the trades line leads visually. */
-.h-fits:has([hidden]) .h-fit-name {
-  position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap;
-}
-.h-fits:has([hidden]) .h-fit-trades { margin-top: 0; }
-.h-fit-line {
-  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
-  font-size: clamp(32px, 3.4vw, 50px); line-height: 1.03; letter-spacing: -0.034em; max-width: 14ch;
-  padding-bottom: 0.06em; color: var(--sl-ink1);
-}
-/* The price and what it is, read as one ticket. */
-.h-ticket {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px;
-  width: min(100%, 440px); margin-top: 6px; padding-top: 16px; border-top: 1px solid var(--sl-line2);
-}
-.h-ticket b {
-  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(30px, 2.6vw, 38px);
-  letter-spacing: -0.03em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums;
-}
-.h-ticket span { font-size: 14.5px; color: var(--sl-ink2); max-width: 30ch; }
-.h-fit-act { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; }
-.h-fit-act .alv-tlink { font-size: 15px; }
-
-/* The blueprint screen: the build's own parts as slots. */
-.h-bench { position: relative; margin: 0; padding-bottom: 52px; }
-.h-bp {
+.h-card {
   position: relative; isolation: isolate; overflow: hidden;
-  display: grid; align-content: start; gap: 18px;
-  min-height: clamp(260px, 21vw, 320px); padding: clamp(20px, 2.4vw, 32px);
-  border-radius: 10px; background: #0c0c0c;
-  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 40px 70px -34px rgb(0 0 0 / 0.95);
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  min-height: 212px; padding: clamp(22px, 2.2vw, 30px);
+  border-radius: 10px; background: #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+  transition: background-color 400ms var(--sl-e-out), box-shadow 400ms var(--sl-e-out);
 }
-/* A disclosed demo stands faint behind the blueprint: its colour is real. */
-.h-bp-shot {
-  position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%;
-  object-fit: cover; object-position: top; opacity: 0.2;
-  -webkit-mask-image: linear-gradient(to bottom, #000 20%, transparent 92%);
-  mask-image: linear-gradient(to bottom, #000 20%, transparent 92%);
+/* Each card's own light (--h1 -> --h2, hue angles from offer.njk): a
+   spectral top edge, and a faint wash falling from its upper corner. Both
+   brighten a step under attention; the type stays white. */
+.h-card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 2%, oklch(0.84 0.09 var(--h1, 0)) 30%, oklch(0.84 0.09 var(--h2, 0)) 70%, transparent 98%);
+  opacity: 0.4; transition: opacity 400ms var(--sl-e-out);
 }
-.h-bp-base {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px;
-  padding-bottom: 14px; border-bottom: 1px dashed rgb(var(--sl-L) / 0.14);
-  font-size: 13px; color: var(--sl-ink3);
+.h-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 0%, oklch(0.7 0.12 var(--h1, 0) / 0.075), transparent 72%),
+    radial-gradient(ellipse 65% 50% at 100% 0%, oklch(0.7 0.12 var(--h2, 0) / 0.045), transparent 72%);
+  opacity: 0.85; transition: opacity 400ms var(--sl-e-out);
 }
-.h-bp-base span { font-weight: 600; color: var(--sl-ink2); }
-.h-slot-group { display: grid; gap: 8px; }
-.h-slot-label { font-size: 12.5px; color: var(--sl-ink3); }
-.h-slots { display: grid; grid-template-columns: repeat(auto-fit, minmax(128px, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
-.h-slot {
-  display: flex; align-items: flex-end; min-height: 60px; padding: 11px 13px;
-  border-radius: 6px; background: rgb(var(--sl-L) / 0.03); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.11);
-  font-family: var(--sl-f-brand); font-weight: 580; font-optical-sizing: auto;
-  font-size: clamp(14px, 1.15vw, 16.5px); line-height: 1.2; letter-spacing: -0.01em; color: var(--sl-ink1);
-}
-/* A power feature is the part that does work: brighter, with a lit edge. */
-.h-slots--power .h-slot {
-  align-items: center; min-height: 52px; background: rgb(var(--sl-L) / 0.075);
-  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.26), inset 0 1px 0 rgb(var(--sl-L) / 0.4);
-}
-.h-slots--power .h-slot::before {
-  content: ""; flex: none; width: 3px; height: 22px; margin-right: 12px; border-radius: 2px; background: var(--sl-ink1);
-}
-/* The floor the screen stands on: neutral key light, or the demo's own
-   sampled light (--e, --eq from trades.ts) where one exists. */
-.h-bench-floor {
-  position: absolute; z-index: -1; left: -12%; right: -12%; top: calc(100% - 52px); height: 110px; pointer-events: none;
-  background: radial-gradient(ellipse 44% 46% at 50% 0%, rgb(var(--e, var(--sl-L)) / 0.26), transparent 74%);
-  opacity: calc(0.35 + 0.65 * var(--eq, 0));
-  transition: opacity 600ms var(--sl-e-out);
-}
-.h-bench-cap { position: absolute; left: 0; bottom: 6px; display: flex; align-items: center; gap: 12px; font-size: 14px; }
-
-.h-also { margin-top: 28px; font-size: 15px; color: var(--sl-ink3); max-width: 72ch; }
-.h-also .alv-tlink { color: var(--sl-ink2); }
-
-/* ============================================================
-   HOW A PROJECT RUNS: one project, one line
-   The sentence reads across; each clause has its station on one rail,
-   with its detail and its payment note. At rest everything is lit and
-   the room is on. Armed (process.ts, motion on), what has not been
-   reached is dimmed and lights as the visitor scrolls past it.
-   ============================================================ */
-.h-process {
-  position: relative; isolation: isolate;
-  padding-block: clamp(64px, 9vh, 104px);
-  --kx: 82; --kw: 44; --ki: 0.7; --kpy: 97;
-}
-.h-process > .key-cone, .h-process > .key-pool { transition: opacity 900ms var(--sl-e-out); }
-.h-process.is-armed:not(.is-live) { --ki: 0; }
-.h-proc-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.012em; color: var(--sl-ink2); margin-bottom: clamp(18px, 2.6vh, 28px); }
-
-.h-line {
-  --gap: clamp(24px, 3vw, 48px);
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-rows: auto auto auto; column-gap: var(--gap);
-  margin: 0; padding: 0; list-style: none;
-}
-.h-stn { grid-row: span 3; display: grid; grid-template-rows: subgrid; }
-.h-stn-clause {
-  align-self: end; padding-bottom: 22px;
-  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
-  font-size: clamp(28px, 3vw, 46px); line-height: 1.04; letter-spacing: -0.034em; color: var(--sl-ink1);
-  transition: opacity 600ms var(--sl-e-out);
-}
-.h-stn-node { position: relative; height: 9px; }
-.h-stn-node::before {
-  content: ""; position: absolute; left: 0; top: 0; width: 9px; height: 9px; border-radius: 50%;
-  background: var(--sl-ink1); transition: opacity 600ms var(--sl-e-out);
-}
-/* The rail: a hairline to the next station, and the light filling it. */
-.h-stn-node::after,
-.h-stn-node > i { content: ""; position: absolute; left: 18px; right: calc(8px - var(--gap)); top: 4px; height: 1px; }
-.h-stn-node::after { background: var(--sl-line2); }
-.h-stn-node > i { background: var(--sl-ink1); transform-origin: 0 50%; transition: transform 700ms var(--sl-e-out); }
-.h-stn:last-child .h-stn-node::after,
-.h-stn:last-child .h-stn-node > i { display: none; }
-.h-stn-body {
-  display: grid; gap: 10px; align-content: start; justify-items: start; max-width: 34ch;
-  padding-top: 20px; transition: opacity 600ms var(--sl-e-out);
-}
-.h-stn-body .h-ic { color: var(--sl-ink2); }
-.h-stn-body p { font-size: 15.5px; color: var(--sl-ink2); }
-.h-stn-body .h-stn-note { margin-top: 2px; padding-block: 5px; font-size: 13px; line-height: 1.35; color: var(--sl-ink1); text-wrap: balance; }
-
-.h-line.is-armed .h-stn:not(.is-lit) .h-stn-clause { opacity: 0.26; }
-.h-line.is-armed .h-stn:not(.is-lit) .h-stn-body { opacity: 0.4; }
-.h-line.is-armed .h-stn:not(.is-lit) .h-stn-node::before { opacity: 0.3; }
-.h-line.is-armed .h-stn-node > i { transform: scaleX(0); }
-.h-line.is-armed .h-stn.is-past .h-stn-node > i { transform: scaleX(1); }
-
-/* Where each clause is reached: spread down the section, read by an
-   IntersectionObserver as they pass a line in the viewport. */
-.h-proc-mark { position: absolute; left: 0; top: calc(12% + var(--m, 0) * 33%); width: 1px; height: 1px; pointer-events: none; }
-
-/* ============================================================
-   PRICES: recognisable, re-lit
-   A price list read across. The three heads stand on one floor line,
-   and the room's key light falls on the chosen one: the :has() cone at
-   rest, the moving key (prices.ts) with motion.
-   ============================================================ */
-.h-prices { padding-block: clamp(64px, 9vh, 96px) clamp(40px, 6vh, 64px); }
-.h-prices-head { display: grid; gap: 16px; margin-bottom: clamp(24px, 4vh, 40px); }
-.h-prices-head .h-h2 { max-width: 16ch; }
-
-.h-cmp-set { border: 0; margin: 0; padding: 0; min-width: 0; }
-.h-cmp { position: relative; isolation: isolate; --kx: 50; --kw: 40; --ki: 0.95; --kpy: 30; }
-.h-cmp-row { display: grid; grid-template-columns: minmax(150px, 0.8fr) repeat(3, minmax(0, 1fr)); column-gap: clamp(14px, 2vw, 28px); }
-.h-cmp-head { border-bottom: 1px solid var(--sl-line2); }
-.h-cmp-body .h-cmp-row + .h-cmp-row { border-top: 1px solid var(--sl-line); }
-.h-cmp-body .h-cmp-row > * { padding: 15px 0; }
-.h-cmp-label { font-size: 14.5px; color: var(--sl-ink3); }
-.h-cmp-cell { font-size: 15.5px; color: var(--sl-ink2); }
-.h-cmp-none { display: inline-block; width: 16px; height: 1px; background: var(--sl-ink3); vertical-align: middle; }
-
-.h-cmp-col { position: relative; }
-.h-tier {
-  position: relative; width: 100%; display: grid; gap: 6px; align-content: start; justify-items: start; text-align: left;
-  padding: 22px 0 20px; border-radius: 12px; cursor: pointer;
-}
-/* The radio stays in the page for keyboard and assistive technology; the
-   whole column head is its visible label. */
-.h-tier-input { position: absolute; top: 26px; left: 0; width: 1px; height: 1px; margin: 0; opacity: 0; }
-.h-tier:has(.h-tier-input:focus-visible) {
-  outline: 2px solid var(--sl-ink1); outline-offset: 6px;
-  box-shadow: 0 0 0 4px var(--sl-void), 0 0 0 8px var(--sl-void);
-}
-.h-tier-mark { font-size: 13px; line-height: 1.3; color: var(--sl-ink2); min-height: 1.3em; }
-.h-tier-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 24px; letter-spacing: -0.022em; color: var(--sl-ink1); transition: color 300ms; }
-.h-tier-price { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(40px, 4.2vw, 62px); letter-spacing: -0.036em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; margin: 4px 0; transition: color 300ms; }
-.h-tier-for { font-size: 15px; color: var(--sl-ink2); min-height: 3.2em; }
-.h-tier-state { position: relative; margin-top: 8px; padding-top: 12px; font-size: 14.5px; color: var(--sl-ink2); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.25em; }
-.h-tier:hover .h-tier-state { color: var(--sl-ink1); text-decoration-color: var(--sl-ink1); }
-.h-state-on { display: none; }
-.h-tier:has(:checked) .h-state-on { display: inline; }
-.h-tier:has(:checked) .h-state-off { display: none; }
-.h-tier:has(:checked) .h-tier-state { color: var(--sl-ink1); text-decoration: none; font-weight: 600; }
-.h-tier:has(:checked) .h-tier-state::before { content: ""; position: absolute; left: 0; top: 0; width: 28px; height: 2px; border-radius: 2px; background: var(--sl-ink1); }
-/* The chosen package reads as chosen; the others recede a step. */
-.h-cmp:has(:checked) .h-cmp-col:not(:has(:checked)) :is(.h-tier-name, .h-tier-price) { color: var(--sl-ink2); }
-.h-cmp:has([value="foundation"]:checked) .h-cmp-cell[data-col="foundation"],
-.h-cmp:has([value="standard"]:checked) .h-cmp-cell[data-col="standard"],
-.h-cmp:has([value="complete"]:checked) .h-cmp-cell[data-col="complete"] { color: var(--sl-ink1); }
-
-/* At rest: a still cone on the checked column, driven by :checked alone. */
-.h-cmp-col:has(:checked)::before {
-  content: ""; position: absolute; z-index: -1; left: -22%; right: -22%; top: -140px; bottom: 0; pointer-events: none;
-  background: radial-gradient(ellipse 44% 80% at 50% 0%, rgb(var(--sl-L) / 0.095), rgb(var(--sl-L) / 0.03) 55%, transparent 100%);
-}
-.h-cmp-col:has(:checked)::after,
-.alv-enhance .h-cmp-col.is-lit::after {
-  content: ""; position: absolute; left: 14%; right: 14%; top: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgb(var(--sl-L) / 0.75) 50%, transparent);
-}
-/* With motion: the room's own key travels to the package under attention
-   (a transitioned transform, so it composites). */
-.h-cmp > .key-cone, .h-cmp > .key-pool { display: none; transition: transform 650ms var(--sl-e-out); }
-.alv-enhance .h-cmp > .key-cone, .alv-enhance .h-cmp > .key-pool { display: block; }
-.alv-enhance .h-cmp-col:has(:checked)::before,
-.alv-enhance .h-cmp-col:has(:checked):not(.is-lit)::after { content: none; }
-
-.h-prices-act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 28px; }
-
-/* The two standing facts, side by side rather than stacked sentences. */
-.h-facts {
-  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 20px clamp(28px, 5vw, 80px);
-  margin-top: 32px; padding-top: 22px; border-top: 1px solid var(--sl-line);
-}
-.h-fact { font-size: 14.5px; color: var(--sl-ink2); max-width: 60ch; }
-.h-fact-k { display: block; margin-bottom: 6px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
-
-/* ============================================================
-   FOUNDERS SPECIAL: its own moment
-   Three spot markers, one per founding spot, lit while open. They are
-   the brightest objects in the band; the key falls on them.
-   ============================================================ */
-.h-founders {
-  position: relative; isolation: isolate;
-  display: grid; grid-template-columns: minmax(0, 1.15fr) auto minmax(0, 1fr); align-items: center;
-  gap: 32px clamp(32px, 5vw, 80px);
-  padding-block: clamp(64px, 9vh, 96px);
-  --kx: 52; --kw: 24; --ki: 0.9; --kpy: 72;
-}
-.h-founders-copy { display: grid; gap: 12px; }
-.h-founders-h {
-  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
-  font-size: clamp(30px, 3vw, 44px); line-height: 1; letter-spacing: -0.032em; color: var(--sl-ink1);
-}
-.h-founders-lead { font-size: 16.5px; color: var(--sl-ink2); max-width: 40ch; }
-.h-spots-wrap { display: grid; justify-items: center; gap: 14px; }
-.h-spots { display: flex; align-items: flex-end; gap: 14px; padding: 0 18px 10px; border-bottom: 1px solid var(--sl-line2); }
-.h-spot {
-  width: 38px; height: 58px; border-radius: 6px;
-  background: #0d0d0d; box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.12);
-  transition: opacity 500ms var(--sl-e-out) calc(var(--i, 0) * 170ms);
-}
-/* An open spot is a lit screen; a claimed one stays dark glass. */
-.h-spot.is-open {
-  background: linear-gradient(180deg, rgb(var(--sl-L) / 0.86), rgb(var(--sl-L) / 0.3));
-  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.5), 0 24px 40px -22px rgb(var(--sl-L) / 0.55);
-}
-.h-spots.is-armed:not(.is-on) .h-spot.is-open { opacity: 0.14; }
-.h-spots-count { font-size: 13.5px; font-weight: 500; color: var(--sl-ink1); }
-.h-founders-terms { display: grid; gap: 18px; justify-items: start; }
-.h-founders-terms p { font-size: 14.5px; color: var(--sl-ink2); max-width: 44ch; }
-
-/* ============================================================
-   WHAT YOU CAN HOLD ME TO: terms, signed
-   One sheet of commitments from the person building the site, signed at
-   the foot with the signature that credits the work in the reel.
-   ============================================================ */
-.h-terms { padding-block: clamp(32px, 5vh, 56px) clamp(64px, 9vh, 96px); }
-.h-terms-pre { display: grid; gap: 14px; margin-bottom: clamp(24px, 3.5vh, 36px); }
-.h-terms-pre .h-lede { max-width: 56ch; }
-.h-sheet {
-  position: relative; display: grid; gap: clamp(28px, 4vh, 40px);
-  padding: clamp(28px, 3.6vw, 52px); border-radius: 12px;
-  background: radial-gradient(ellipse 70% 90% at 22% -20%, rgb(var(--sl-L) / 0.05), transparent 70%), #0e0e0e;
-  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 50px 90px -50px rgb(0 0 0 / 0.9);
-}
-.h-commits {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
-  gap: 22px clamp(32px, 5vw, 88px); margin: 0; padding: 0; list-style: none;
-}
-.h-commit {
-  grid-column: 2; display: flex; align-items: baseline; gap: 14px;
+.h-card:hover { background: #111; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -44px rgb(0 0 0 / 0.95); }
+.h-card:hover::before, .h-card:focus-within::before,
+.h-card:hover::after, .h-card:focus-within::after { opacity: 1; }
+.h-card-ic { width: 24px; height: 24px; color: oklch(0.86 0.05 var(--h1, 0)); }
+.h-card-h {
+  margin-top: auto; padding-top: 28px;
   font-family: var(--sl-f-brand); font-weight: 600; font-optical-sizing: auto;
-  font-size: clamp(20px, 1.9vw, 27px); line-height: 1.2; letter-spacing: -0.02em; color: var(--sl-ink1);
+  font-size: clamp(19px, 1.55vw, 22px); line-height: 1.15; letter-spacing: -0.018em; color: var(--sl-ink1);
+  text-wrap: balance;
 }
-.h-commit .h-ic { width: 22px; height: 22px; color: var(--sl-ink2); transform: translateY(3px); }
-/* Ownership leads: the largest commitment, standing alone. */
-.h-commit:first-child {
-  grid-column: 1; grid-row: 1 / span 3; align-self: start;
-  flex-direction: column; align-items: flex-start; gap: 20px;
-  font-size: clamp(38px, 3.9vw, 58px); line-height: 0.98; letter-spacing: -0.038em;
+/* The heading's link covers the whole card. */
+.h-card-link { color: inherit; text-decoration: none; }
+.h-card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
+.h-card-link:focus-visible { outline: none; }
+.h-card:has(.h-card-link:focus-visible) { outline: 2px solid var(--sl-ink1); outline-offset: 3px; }
+.h-card-body { font-size: 15px; color: var(--sl-ink2); max-width: 38ch; }
+.h-card-go {
+  position: absolute; top: clamp(22px, 2.2vw, 30px); right: clamp(22px, 2.2vw, 30px);
+  color: var(--sl-ink3); transition: color 300ms, transform 400ms var(--sl-e-out);
 }
-.h-commit:first-child span { max-width: 8ch; }
-.h-commit:first-child .h-ic { width: 30px; height: 30px; transform: none; }
-.h-sheet-foot {
-  display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 20px 48px;
-  padding-top: 24px; border-top: 1px solid var(--sl-line);
+.h-card:hover .h-card-go,
+.h-card:focus-within .h-card-go { color: var(--sl-ink1); transform: translateX(3px); }
+
+/* The website: the largest surface, standing in the key light. */
+.h-card--lead {
+  grid-row: 1 / span 2; min-height: 440px; padding: clamp(28px, 3vw, 44px);
+  --kx: 34; --kw: 90; --ki: 0.7;
 }
-.h-one { font-family: var(--sl-f-brand); font-weight: 600; font-size: clamp(18px, 1.6vw, 22px); line-height: 1.25; letter-spacing: -0.018em; color: var(--sl-ink1); max-width: 30ch; }
-.h-sheet-sig { display: grid; justify-items: end; gap: 10px; font-size: 14.5px; }
-.alv-sign--sheet { font-size: 20px; }
-/* With motion the signature signs as the sheet arrives (moments.ts). */
-.alv-enhance .h-sheet .alv-sign:not(.is-signed) .alv-sign-line { clip-path: inset(0 100% 0 0); transform: translateX(-4px); }
+.h-card--lead .h-card-ic { width: 30px; height: 30px; }
+.h-card--lead .h-card-h { font-weight: 620; font-size: clamp(30px, 2.9vw, 42px); line-height: 1.02; letter-spacing: -0.034em; max-width: 13ch; }
+.h-card--lead .h-card-body { font-size: 16px; }
+.h-card-feats {
+  width: 100%; margin-top: 14px; padding-top: 16px; gap: 6px 22px;
+  border-top: 1px solid var(--sl-line); font-size: 14px; color: var(--sl-ink2);
+}
+.h-card-feats li { padding-top: 0; }
+.h-card-feats li::before { content: none; }
+.h-card--lead .h-card-go { top: clamp(28px, 3vw, 44px); right: clamp(28px, 3vw, 44px); }
+
+.h-offer-all { margin-top: 22px; font-size: 15px; }
+
 
 /* ============================================================
-   CLOSE: the hero, answered
-   The words in the key light, as the hero's are, and one screen waiting
-   beside them: the next one, unbuilt, standing on the floor line that is
-   the footer's top edge.
+   PACKAGES: recognisable, re-lit
    ============================================================ */
-.h-close { min-height: 0; height: auto; display: block; --kx: 30; --kw: 56; --ki: 1; --kpy: 97; }
+.h-prices { padding-block: clamp(56px, 8vh, 88px) clamp(28px, 4vh, 44px); }
+.h-prices-head { display: grid; gap: 16px; margin-bottom: clamp(20px, 3vh, 32px); }
+.h-prices-head .h-h2 { max-width: 16ch; }
+.h-prices-note { margin-top: 24px; font-size: 14.5px; color: var(--sl-ink2); max-width: 72ch; }
+
+
+/* ============================================================
+   THE FOUR BUILDS: the same picker, a size down
+   ============================================================ */
+.h-builds { padding-block: clamp(28px, 4vh, 44px) clamp(56px, 8vh, 88px); }
+.h-builds-head { display: grid; gap: 8px; margin-bottom: clamp(8px, 1.6vh, 16px); }
+.h-h3 {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(26px, 2.6vw, 38px); line-height: 1.04; letter-spacing: -0.03em; color: var(--sl-ink1);
+  text-wrap: balance;
+}
+.h-builds-lede { font-size: 15.5px; color: var(--sl-ink2); }
+.h-pick--builds { --n: 4; --ki: 0.9; }
+.h-pick--builds .h-opt { gap: 4px; padding: 18px 0; }
+.h-pick--builds .h-opt-input { top: 22px; }
+.h-opt-top { display: flex; align-items: center; gap: 10px; }
+.h-pick--builds .h-opt-name { font-size: 19px; letter-spacing: -0.018em; }
+.h-pick--builds .h-opt-price { font-size: clamp(26px, 2.4vw, 34px); letter-spacing: -0.03em; margin: 6px 0 2px; }
+.h-pick--builds .h-opt-for { font-size: 14px; min-height: 0; max-width: 32ch; }
+.h-pick--builds .h-opt-state { margin-top: 8px; font-size: 13.5px; }
+.h-pick--builds .h-opt:has(:checked)::before { top: -90px; }
+
+/* Each build's own hue (--hue, from bundles.json). The key takes the hue
+   of the build under attention (--kh) and the bar's glow the hue of the
+   build chosen (--bh); picker.ts sets both, and as registered numbers they
+   blend from one hue to the next as the lights glide. */
+@property --kh { syntax: "<number>"; inherits: true; initial-value: 245; }
+@property --bh { syntax: "<number>"; inherits: true; initial-value: 245; }
+.h-pick--builds {
+  --bar-glow: 0 0 6px oklch(0.92 0.08 var(--bh) / 0.85), 0 0 18px 1px oklch(0.8 0.15 var(--bh) / 0.42), 0 0 44px 4px oklch(0.74 0.15 var(--bh) / 0.14);
+}
+.h-pick--builds.is-placed { transition: --kh var(--glide), --bh var(--glide); }
+.no-motion .h-pick--builds { transition: none; }
+.h-pick--builds > .key-cone {
+  background: radial-gradient(ellipse 52% 96% at 50% -14%,
+    oklch(0.93 0.05 var(--kh) / 0.16) 0%, oklch(0.88 0.07 var(--kh) / 0.08) 34%, oklch(0.82 0.08 var(--kh) / 0.024) 60%, transparent 92%);
+}
+.h-pick--builds > .key-pool {
+  background: radial-gradient(ellipse 44% 7.5% at 50% 50%,
+    oklch(0.9 0.08 var(--kh) / 0.15) 0%, oklch(0.85 0.09 var(--kh) / 0.07) 45%, oklch(0.8 0.09 var(--kh) / 0.015) 75%, transparent 100%);
+}
+.h-pick--builds .h-pick-bar { background: oklch(0.97 0.03 var(--bh)); }
+.h-pick--builds .h-opt-top .h-ic { color: oklch(0.84 0.11 var(--hue, 0)); opacity: 0.7; transition: opacity 300ms; }
+.h-pick--builds .h-opt:is(:has(:checked), :hover) .h-opt-top .h-ic { opacity: 1; }
+/* At rest (no JS) the checked build's own bar carries its own hue. */
+.h-pick--builds .h-opt:has(:checked)::after {
+  background: oklch(0.97 0.03 var(--hue, 0));
+  box-shadow: 0 0 6px oklch(0.92 0.08 var(--hue, 0) / 0.85), 0 0 18px 1px oklch(0.8 0.15 var(--hue, 0) / 0.42), 0 0 44px 4px oklch(0.74 0.15 var(--hue, 0) / 0.14);
+}
+.h-builds .h-pick-act { margin-top: 22px; }
+
+/* ============================================================
+   CLOSE: the hero, answered, and the way in
+   The words in the key light, as the hero's are, with what happens next
+   beneath them; beside them, the intake form itself. The words stay in
+   view while the form is answered.
+   ============================================================ */
+/* clip, not hidden: the room still ends its light at its edges, but is
+   no scroll container, so the sticky words beside the form still stick. */
+.h-close { min-height: 0; height: auto; display: block; overflow: clip; --kx: 22; --kw: 50; --ki: 1; --kpy: 97; }
 .h-close-in {
   position: relative; z-index: 20;
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 0.92fr); align-items: end;
-  gap: 40px clamp(40px, 6vw, 112px);
-  padding-top: clamp(88px, 12vh, 136px);
+  display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); align-items: start;
+  gap: 40px clamp(40px, 6vw, 104px);
+  padding-block: clamp(88px, 12vh, 136px) clamp(72px, 10vh, 120px);
 }
-.h-close-copy { display: grid; justify-items: start; gap: 20px; padding-bottom: clamp(56px, 8vh, 88px); }
+.h-close-copy { position: sticky; top: calc(var(--alv-nav-h) + 32px); display: grid; justify-items: start; gap: 18px; }
 .h-close-h {
   font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
-  font-size: clamp(42px, 5.4vw, 82px); line-height: 0.98; letter-spacing: -0.04em; max-width: 12ch; padding-bottom: 0.06em;
+  font-size: clamp(40px, 4.4vw, 66px); line-height: 0.98; letter-spacing: -0.04em; max-width: 12ch; padding-bottom: 0.06em;
 }
-.h-close-copy p { font-size: 16.5px; color: var(--sl-ink2); max-width: 40ch; }
-.h-close-row { display: flex; align-items: center; flex-wrap: wrap; gap: 16px 28px; margin-top: 4px; }
-.h-next { position: relative; align-self: end; --c: 1; }
-.h-next-glass { aspect-ratio: 1440 / 900; }
-/* Pointing at the invitation powers the waiting screen faintly on. */
-.h-next-glow {
-  background: radial-gradient(ellipse 75% 70% at 50% 45%, rgb(var(--sl-L) / 0.14), rgb(var(--sl-L) / 0.04) 60%, transparent 100%);
-  opacity: 0; transition: opacity 700ms var(--sl-e-out);
+.h-close-copy > p { font-size: 16.5px; color: var(--sl-ink2); max-width: 42ch; }
+.h-close-form { min-width: 0; scroll-margin-top: calc(var(--alv-nav-h) + 24px); }
+
+/* ============================================================
+   START A PROJECT: the intake form, re-lit
+   The live site's wizard (components/quote-form.njk), unchanged in
+   markup, restyled in the room's language: dark glass controls, the key
+   catching the form's top edge, white for what is chosen, and the same
+   glowing bar as the package picker for progress. Scoped to .h-quote, so
+   the legacy classes it carries (.btn, .opt, .input ...) mean nothing
+   outside it. The error colour is the one colour here that is not light:
+   it has to be read as a problem at a glance.
+   ============================================================ */
+.h-quote { --q-err: oklch(0.78 0.13 25); }
+.h-quote [hidden] { display: none !important; }
+.h-quote .vh {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
 }
-.h-close:has([data-close-cta]:hover) .h-next-glow,
-.h-close:has([data-close-cta]:focus-visible) .h-next-glow { opacity: 1; }
-/* The floor line catches the key where the screen stands on it. */
-.h-next::after {
-  content: ""; position: absolute; left: -14%; right: -14%; bottom: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgb(var(--sl-L) / 0.35) 50%, transparent);
+.h-quote .ic {
+  width: 1em; height: 1em; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
 }
+
+.h-quote .next { display: grid; width: 100%; margin-top: 10px; }
+.h-quote .next-item { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px; padding: 18px 0; border-top: 1px solid var(--sl-line); }
+.h-quote .next-item .ic { font-size: 19px; color: var(--sl-ink2); margin-top: 2px; }
+.h-quote .next-item h3 { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16.5px; letter-spacing: -0.012em; color: var(--sl-ink1); margin-bottom: 3px; }
+.h-quote .next-item p { font-size: 14.5px; color: var(--sl-ink2); }
+
+/* The form: one surface, lit along its top edge. */
+.h-quote .form {
+  position: relative; min-width: 0;
+  padding: clamp(24px, 3.2vw, 42px); border-radius: 12px;
+  background: radial-gradient(ellipse 70% 50% at 30% -10%, rgb(var(--sl-L) / 0.045), transparent 70%), #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 50px 90px -50px rgb(0 0 0 / 0.95);
+}
+.h-quote .form::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.5) 50%, transparent 96%);
+}
+
+/* ---- progress ---- */
+.h-quote .wiz-head { margin-bottom: 28px; }
+.h-quote .wiz-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.h-quote .wiz-count { font-size: 13px; color: var(--sl-ink3); font-variant-numeric: tabular-nums; }
+.h-quote .wiz-now { font-family: var(--sl-f-brand); font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.h-quote .wiz-bar { position: relative; height: 2px; border-radius: 2px; background: var(--sl-line2); }
+.h-quote .wiz-fill {
+  display: block; width: 100%; height: 100%; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+  transform: scaleX(var(--p, 0.25)); transform-origin: left;
+  transition: transform 550ms var(--sl-e-out);
+}
+
+/* ---- a step ---- */
+.h-quote .wiz-panel { min-width: 0; }
+.h-quote .wiz-title {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(22px, 2vw, 27px); line-height: 1.1; letter-spacing: -0.026em; color: var(--sl-ink1); margin-bottom: 6px;
+}
+.h-quote .wiz-title:focus { outline: none; }
+.h-quote .wiz-title:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 4px; border-radius: 4px; }
+.h-quote .wiz-sub { font-size: 14.5px; color: var(--sl-ink2); margin-bottom: 24px; }
+
+.h-quote .wiz-tag {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px;
+  min-height: 32px; padding: 0 14px; border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--sl-line2); font-size: 13.5px; color: var(--sl-ink1);
+}
+.h-quote .wiz-tag .ic { font-size: 15px; color: var(--sl-ink2); }
+.h-quote .opt-tag { margin-left: 6px; font-size: 12.5px; font-weight: 400; color: var(--sl-ink3); }
+
+.h-quote .wiz-alert,
+.h-quote .wiz-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px; border-radius: 8px; font-size: 13.5px; line-height: 1.55;
+}
+.h-quote .wiz-alert { margin-bottom: 20px; background: oklch(0.78 0.13 25 / 0.08); box-shadow: inset 0 0 0 1px oklch(0.78 0.13 25 / 0.35); color: oklch(0.9 0.05 25); }
+.h-quote .wiz-alert .ic { font-size: 16px; color: var(--q-err); margin-top: 2px; }
+.h-quote .wiz-alert a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+.h-quote .wiz-note { margin-top: 12px; background: rgb(var(--sl-L) / 0.035); box-shadow: inset 0 0 0 1px var(--sl-line2); color: var(--sl-ink2); }
+.h-quote .wiz-note .ic { font-size: 17px; color: var(--sl-ink1); margin-top: 2px; }
+
+/* ---- fields ---- */
+.h-quote .field { display: grid; gap: 8px; margin-bottom: 18px; }
+.h-quote .field label,
+.h-quote .fset-lg { padding: 0; font-size: 14px; font-weight: 500; color: var(--sl-ink1); }
+.h-quote .hint,
+.h-quote .fset > .hint { display: block; font-size: 13px; color: var(--sl-ink3); }
+.h-quote .fset > .hint { margin-top: 4px; }
+.h-quote .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+
+.h-quote .input {
+  width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: 8px;
+  background: #080808; box-shadow: inset 0 0 0 1px var(--sl-line2);
+  font: 400 15px/1.4 var(--sl-f-text); color: var(--sl-ink1);
+  transition: box-shadow 200ms, background-color 200ms;
+}
+.h-quote .input::placeholder { color: var(--sl-ink3); opacity: 1; }
+.h-quote .input:hover { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.32); }
+/* Focus: the site's lit bar around the field, a near-white edge with the
+   light-blue glow. Visible on its own, without the browser outline. */
+.h-quote .input:focus {
+  outline: none; background: #0a0a0a;
+  box-shadow: 0 0 0 1px var(--sl-bar), 0 0 6px oklch(0.92 0.08 245 / 0.75), 0 0 20px 1px oklch(0.8 0.15 245 / 0.32);
+}
+.h-quote textarea.input { resize: vertical; min-height: 116px; }
+.h-quote textarea.input-sm { min-height: 88px; }
+
+.h-quote .sel { position: relative; }
+.h-quote select.input { appearance: none; -webkit-appearance: none; padding-right: 48px; cursor: pointer; }
+.h-quote select.input:required:invalid { color: var(--sl-ink3); }
+.h-quote select.input option { background: #141414; color: var(--sl-ink1); }
+.h-quote .sel-chev { position: absolute; top: 50%; right: 16px; transform: translateY(-50%); font-size: 18px; color: var(--sl-ink2); pointer-events: none; }
+
+.h-quote .err { display: none; align-items: flex-start; gap: 6px; font-size: 13px; line-height: 1.45; color: var(--q-err); }
+.h-quote .err .ic { font-size: 14px; margin-top: 2px; }
+.h-quote [data-field].invalid > .err { display: flex; }
+.h-quote .field.invalid .input { box-shadow: inset 0 0 0 1px var(--q-err); }
+.h-quote .fset.invalid .fset-lg { color: var(--q-err); }
+
+/* ---- choices: square + tick for many, circle + dot for one ---- */
+.h-quote .fset { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
+.h-quote .fset .err { margin-top: 10px; }
+.h-quote :is(.seg, .opt-pair, .opt-grid, .opt-stack) { display: grid; gap: 8px; margin-top: 12px; }
+.h-quote .seg { grid-template-columns: 1fr 1fr; max-width: 280px; }
+.h-quote .opt-pair { grid-template-columns: 1fr 1fr; }
+.h-quote .opt-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.h-quote .opt { position: relative; display: block; min-width: 0; }
+.h-quote .opt input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+.h-quote .opt-face {
+  display: flex; align-items: center; gap: 12px; height: 100%; min-height: 46px; padding: 10px 14px;
+  border-radius: 8px; background: #080808; box-shadow: inset 0 0 0 1px var(--sl-line2);
+  font-size: 14.5px; line-height: 1.35; color: var(--sl-ink2); cursor: pointer;
+  transition: box-shadow 200ms, background-color 200ms, color 200ms;
+}
+.h-quote .opt:hover .opt-face { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.32); color: var(--sl-ink1); }
+.h-quote .opt input:focus-visible ~ .opt-face { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.h-quote .opt input:checked ~ .opt-face { background: rgb(var(--sl-L) / 0.06); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.75); color: var(--sl-ink1); }
+.h-quote .opt-mark {
+  flex: none; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.3); transition: background-color 200ms, box-shadow 200ms;
+}
+.h-quote .opt-mark .ic { font-size: 13px; color: var(--sl-room); stroke-width: 2.4; opacity: 0; }
+.h-quote .opt input:checked ~ .opt-face .opt-mark { background: var(--sl-ink1); box-shadow: 0 0 10px rgb(var(--sl-L) / 0.35); }
+.h-quote .opt input:checked ~ .opt-face .opt-mark .ic { opacity: 1; }
+.h-quote .opt-one .opt-mark { border-radius: 999px; }
+.h-quote .opt-one .opt-mark::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--sl-room); transform: scale(0); transition: transform 180ms var(--sl-e-out); }
+.h-quote .opt-one input:checked ~ .opt-face .opt-mark::after { transform: none; }
+.h-quote .opt-txt { min-width: 0; }
+
+/* ---- review ---- */
+.h-quote .rev { display: grid; gap: 12px; margin-bottom: 24px; }
+.h-quote .rev-group { padding: 16px 18px; border-radius: 8px; background: #080808; box-shadow: inset 0 0 0 1px var(--sl-line); }
+.h-quote .rev-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.h-quote .rev-head h4 { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.h-quote .rev-edit {
+  padding: 6px 10px; margin: -6px -10px -6px 0; border: 0; border-radius: 999px; background: none; cursor: pointer;
+  font: 500 13px/1 var(--sl-f-text); color: var(--sl-ink2); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.25em;
+}
+.h-quote .rev-edit:hover { color: var(--sl-ink1); text-decoration-color: var(--sl-ink1); }
+.h-quote .rev-edit:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.h-quote .rev-list { display: grid; gap: 10px; margin: 0; }
+.h-quote .rev-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; align-items: baseline; }
+.h-quote .rev-row dt { font-size: 13px; color: var(--sl-ink3); }
+.h-quote .rev-row dd { margin: 0; font-size: 14.5px; color: var(--sl-ink1); overflow-wrap: anywhere; }
+.h-quote .rev-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.h-quote .rev-tags li { padding: 3px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--sl-line2); font-size: 13px; color: var(--sl-ink2); }
+
+/* ---- step controls ---- */
+.h-quote .wiz-nav { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--sl-line); }
+.h-quote .wiz-back { margin-right: auto; }
+.h-quote .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  font: 600 15px/1 var(--sl-f-text);
+  transition: transform 300ms var(--sl-e-out), box-shadow 300ms var(--sl-e-out), background-color 200ms, color 200ms;
+}
+.h-quote .btn .ic { font-size: 16px; }
+.h-quote .btn-primary { background: var(--sl-ink1); color: var(--sl-room); }
+.h-quote .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgb(var(--sl-L) / 0.42); }
+.h-quote .btn-primary:active { transform: translateY(0) scale(0.98); background: #dad9d5; }
+.h-quote .btn-primary:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
+.h-quote .btn-ghost { background: transparent; color: var(--sl-ink1); box-shadow: inset 0 0 0 1px var(--sl-line2); }
+.h-quote .btn-ghost:hover { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.5); }
+.h-quote .btn:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 3px; }
+.h-quote .wiz-back-ic { transform: scaleX(-1); }
+
+.h-quote .form-note { margin-top: 16px; text-align: center; font-size: 13.5px; color: var(--sl-ink3); }
+.h-quote .form-note a,
+.h-quote .sent a { color: var(--sl-ink1); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.4); text-underline-offset: 0.25em; }
+
+/* ---- sent ---- */
+.h-quote .sent { display: none; padding: 28px 6px; text-align: center; }
+.h-quote .form.done .form-body,
+.h-quote .form.done .wiz-head { display: none; }
+.h-quote .form.done .sent { display: block; }
+.h-quote .sent > .ic { display: block; margin: 0 auto 18px; font-size: 40px; color: var(--sl-ink1); }
+.h-quote .sent h3 {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(22px, 2vw, 28px); line-height: 1.12; letter-spacing: -0.026em;
+  color: var(--sl-ink1); text-wrap: balance; margin-bottom: 12px;
+}
+.h-quote .sent h3:focus { outline: none; }
+.h-quote .sent p { max-width: 44ch; margin-inline: auto; font-size: 15px; color: var(--sl-ink2); }
+.h-quote .sent .sent-note { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--sl-line); font-size: 13.5px; color: var(--sl-ink3); }
+
+/* Panels enter from the direction of travel (--wiz-y, set by the wizard). */
+.h-quote .wiz-panel.is-in,
+.h-quote .cond.is-in { animation: h-wiz-in 380ms var(--sl-e-out) both; }
+.h-quote .cond.is-in { --wiz-y: -6px; }
+@keyframes h-wiz-in {
+  from { opacity: 0; transform: translateY(var(--wiz-y, 10px)); }
+  to { opacity: 1; transform: none; }
+}
+.no-motion .h-quote .wiz-panel,
+.no-motion .h-quote .cond { animation: none !important; }
+.no-motion .h-quote .wiz-fill { transition: none; }
 
 /* ============================================================
    INTERMEDIATE WIDTHS
@@ -547,20 +601,13 @@
 @media (max-width: 1100px) {
   .h-steps .long { display: none; }
   .h-steps .short { display: inline; }
-  .h-cmp-row { grid-template-columns: minmax(120px, 0.6fr) repeat(3, minmax(0, 1fr)); }
-  .h-founders { grid-template-columns: minmax(0, 1fr) auto; }
-  .h-founders-terms { grid-column: 1 / -1; }
+  /* The website card leads across the top; the rest pair beneath it. */
+  .h-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .h-card--lead { grid-row: auto; grid-column: 1 / -1; min-height: 340px; }
 }
 @media (max-width: 900px) {
-  .h-fit { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .h-fit-copy { padding-bottom: 0; }
-  .h-commits { grid-template-columns: minmax(0, 1fr); }
-  .h-commit, .h-commit:first-child { grid-column: auto; grid-row: auto; }
-  .h-commit:first-child { margin-bottom: 8px; }
-  .h-facts { grid-template-columns: minmax(0, 1fr); }
-  .h-close-in { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .h-close-copy { padding-bottom: 40px; }
-  .h-next { width: min(100%, 520px); }
+  .h-close-in { grid-template-columns: minmax(0, 1fr); gap: 32px; }
+  .h-close-copy { position: static; }
 }
 
 /* ============================================================
@@ -583,51 +630,32 @@
   .h-pair .h-panel-h { font-size: clamp(26px, 7vw, 34px); }
   .h-pair .h-panel-work { grid-template-columns: minmax(0, 1fr); }
 
-  .h-build-stage { --kw: 60; }
-  .h-trades { grid-template-columns: 1fr 1fr; border-bottom: 0; }
-  .h-trades .alv-lit-sel { padding: 14px 10px 14px 0; border-bottom: 1px solid var(--sl-line); }
-  .h-fit-line { font-size: clamp(30px, 8.4vw, 40px); }
-  .h-bp { min-height: 0; }
-  .h-slots { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .h-slots--power { grid-template-columns: minmax(0, 1fr); }
+  .h-offer { padding-top: clamp(56px, 9vh, 80px); }
+  .h-offer-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .h-card { min-height: 0; }
+  .h-card-h { padding-top: 18px; }
+  .h-card--lead { min-height: 300px; --kw: 150; }
 
-  /* The rail turns vertical: stations stacked, the light filling down. */
-  .h-process { --kx: 50; --kw: 120; }
-  .h-line { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: 32px; padding-left: 30px; }
-  .h-stn { grid-row: auto; display: block; position: relative; }
-  .h-stn-clause { padding-bottom: 0; font-size: clamp(28px, 8vw, 36px); }
-  .h-stn-node { position: absolute; left: -30px; top: 13px; bottom: -32px; width: 9px; height: auto; }
-  .h-stn-node::after,
-  .h-stn-node > i { left: 4px; right: auto; top: 18px; bottom: 0; width: 1px; height: auto; }
-  .h-stn-node > i { transform-origin: 50% 0; }
-  .h-line.is-armed .h-stn-node > i { transform: scaleY(0); }
-  .h-line.is-armed .h-stn.is-past .h-stn-node > i { transform: scaleY(1); }
-  .h-stn-body { padding-top: 14px; }
 
-  /* Comparison: each fact reads as a label, then the three packages beneath it. */
-  .h-cmp-row { grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 10px; }
-  .h-cmp-head .h-cmp-corner { display: none; }
-  .h-cmp-body .h-cmp-label { grid-column: 1 / -1; padding-bottom: 0; }
-  .h-cmp-body .h-cmp-row > .h-cmp-cell { padding-top: 6px; }
-  .h-cmp-cell { font-size: 14.5px; }
-  .h-tier { padding: 16px 0 18px; gap: 4px; }
-  .h-tier-input { top: 16px; }
-  .h-tier-name { font-size: 19px; }
-  .h-tier-price { font-size: clamp(26px, 7.6vw, 34px); }
-  .h-tier-for { display: none; }
-  .h-tier-mark { font-size: 12px; }
-  .h-tier-state { font-size: 13.5px; }
-  .h-state-name { display: none; }
+  /* Builds: two by two, each on its own floor line. */
+  .h-pick--builds { --n: 2; }
+  .h-pick--builds .h-pick-row { border-bottom: 0; row-gap: 4px; }
+  .h-pick--builds .h-opt { border-bottom: 1px solid var(--sl-line2); border-radius: 0; }
+  .h-pick--builds .h-opt:has(:checked)::after { bottom: -1.5px; }
+  .h-pick--builds .h-opt-for { display: block; font-size: 13px; }
+  .h-pick--builds .h-opt-name { font-size: 17px; }
 
-  .h-founders { grid-template-columns: minmax(0, 1fr); --kx: 22; --kw: 60; }
-  .h-spots-wrap { justify-items: start; }
-
-  .h-sheet-foot { flex-direction: column; align-items: flex-start; }
-  .h-sheet-sig { justify-items: start; }
+  /* The form: one column of answers, full-width controls. */
+  .h-quote .field-row,
+  .h-quote .opt-pair,
+  .h-quote .rev-row { grid-template-columns: minmax(0, 1fr); }
+  .h-quote .rev-row { gap: 2px; }
+  .h-quote .opt-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .h-quote .wiz-nav { flex-direction: column-reverse; align-items: stretch; }
+  .h-quote .wiz-back { margin-right: 0; }
 
   .h-close { --kx: 50; --kw: 120; }
   .h-close-in { padding-top: 72px; }
-  .h-next { width: 86%; }
 }
 
 /* ============================================================
@@ -699,7 +727,12 @@
 .alv-reel .h-col { display: grid; align-items: center; pointer-events: none; }
 .alv-reel .h-copy { min-height: 0; padding: 0; pointer-events: auto; }
 .alv-reel .h-copy.is-away { pointer-events: none; }
-.alv-reel .h-copy:focus-within { --copy: 1 !important; pointer-events: auto; }
+/* Focus keeps the words lit only while the room is on them. Once the room
+   has moved to the work (.is-away), focus left behind in the words (a link
+   clicked, then scrolled away from) must not force them back over a chapter;
+   reel.ts hands focus on when a hero link takes the visitor to the work,
+   and brings the room back to the words if focus later returns to them. */
+.alv-reel .h-copy:not(.is-away):focus-within { --copy: 1 !important; pointer-events: auto; }
 
 /* Each chapter covers the room; only its story and its screens show. */
 .alv-reel .h-panel { position: absolute; inset: 0; z-index: auto; display: block; padding: 0; pointer-events: none; }

@@ -1,0 +1,103 @@
+/* ============================================================
+   CONTACT (/contact/)
+   The form, and the road after it. The road is the three "what happens
+   next" items as a rail: its lit bar (the site's bar) fills as the form is
+   answered, and each station comes on as the bar reaches it (contact.ts
+   measures and writes --rt --rh --cp). A key light glides to the field
+   being answered, in the form's own surface. Below, what is useful to
+   have sits in a grid a spotlight glides across (services.css owns the
+   spotlight itself). Shape rule as /pricing/: surfaces 8-12px, controls
+   full pill. Imported by interior.css.
+   ============================================================ */
+@import "./quote-form.css";
+
+.ct {
+  display: grid; grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr); gap: 32px clamp(40px, 6vw, 104px); align-items: start;
+  padding-block: clamp(24px, 4vh, 40px) clamp(56px, 8vh, 96px);
+}
+.ct-side { position: sticky; top: calc(var(--alv-nav-h) + 32px); display: grid; gap: 14px; justify-items: start; }
+.ct-lede { font-size: 16px; line-height: 1.6; color: var(--sl-ink2); max-width: 44ch; }
+
+/* A back button that waits for a package or service (contact.ts) stays hidden until then. */
+.int-back[hidden] { display: none; }
+
+/* ---- the road after the form ---- */
+.ct-road { width: 100%; margin-top: clamp(14px, 3vh, 30px); }
+.ct-road-h { margin-bottom: 8px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 15px; letter-spacing: -0.008em; color: var(--sl-ink2); }
+.ct-road-list { position: relative; }
+.ct-road .next { display: grid; }
+.ct-road .ic { display: none; }
+.ct-road .next-item { position: relative; padding: 18px 0 18px 34px; }
+.ct-road .next-item h3 { font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.014em; color: var(--sl-ink1); margin-bottom: 3px; transition: opacity 600ms var(--sl-e-out); }
+.ct-road .next-item p { font-size: 14.5px; line-height: 1.5; color: var(--sl-ink2); max-width: 34ch; transition: opacity 600ms var(--sl-e-out); }
+.ct-road .next-item::before {
+  content: ""; position: absolute; left: 0; top: 25px; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); transition: opacity 600ms var(--sl-e-out), box-shadow 600ms var(--sl-e-out);
+}
+/* The rail: a hairline from the first station to the last, and the bar
+   filling it (both placed by contact.ts, so nothing is drawn without it). */
+.ct-road-list::before, .ct-road-fill {
+  content: ""; position: absolute; left: 4px; top: var(--rt, 0px); height: var(--rh, 0px); pointer-events: none; display: none;
+}
+.ct-road-list::before { width: 1px; background: var(--sl-line2); }
+.ct-road-fill {
+  left: 3.5px; width: 2px; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+  transform: scaleY(var(--cp, 0)); transform-origin: 50% 0; transition: transform 450ms var(--sl-e-out);
+}
+.ct-road.is-armed .ct-road-list::before, .ct-road.is-armed .ct-road-fill { display: block; }
+/* Armed (contact.ts, motion on), a station waits dark until the bar reaches it. */
+.ct-road.is-armed .next-item:not(.is-lit) h3 { opacity: 0.3; }
+.ct-road.is-armed .next-item:not(.is-lit) p { opacity: 0.4; }
+.ct-road.is-armed .next-item:not(.is-lit)::before { opacity: 0.25; box-shadow: none; }
+/* Sent: every station is lit, and the last one blooms once. */
+.ct-road.is-sent .next-item:last-child::before { animation: ct-bloom 1400ms var(--sl-e-out) both; }
+@keyframes ct-bloom {
+  0% { box-shadow: var(--sl-bar-glow-sm); }
+  30% { box-shadow: 0 0 6px oklch(0.92 0.08 245 / 0.9), 0 0 24px 4px oklch(0.8 0.15 245 / 0.6), 0 0 60px 10px oklch(0.74 0.15 245 / 0.25); }
+  100% { box-shadow: var(--sl-bar-glow-sm); }
+}
+.no-motion .ct-road-fill { transition: none; }
+.no-motion .ct-road.is-sent .next-item:last-child::before { animation: none; }
+
+/* ---- the form: the key light follows the field being answered ---- */
+.ct-quote { position: relative; min-width: 0; --sv-glide: 600ms cubic-bezier(0.45, 0, 0.2, 1); }
+.ct-quote .form { isolation: isolate; }
+/* Where the form has been read to: 1px marks along it (contact.ts). */
+.ct-mark { position: absolute; left: 0; width: 1px; height: 1px; pointer-events: none; }
+.ct-quote .form > .ct-spot { z-index: -1; }
+.ct-quote .form > .ct-spot::before {
+  content: ""; position: absolute; inset: -8px -10px; border-radius: 10px;
+  background: radial-gradient(ellipse 100% 120% at 0% 50%, oklch(0.93 0.06 245 / 0.11), oklch(0.85 0.08 245 / 0.035) 60%, transparent 92%);
+  box-shadow: inset 0 0 0 1px oklch(0.85 0.08 245 / 0.14), inset 0 1px 0 oklch(0.96 0.05 245 / 0.3);
+}
+.ct-quote .form > .ct-spot::after {
+  content: ""; position: absolute; left: -10px; top: -2px; bottom: -2px; width: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+}
+
+/* ---- what is useful to have ---- */
+.ct-bring { display: grid; gap: 12px; justify-items: start; padding-block: clamp(48px, 7vh, 80px) clamp(40px, 6vh, 64px); border-top: 1px solid var(--sl-line); --sv-glide: 700ms cubic-bezier(0.45, 0, 0.2, 1); }
+.ct-bring-wrap { width: 100%; margin-top: clamp(10px, 2vh, 20px); }
+.ct-bring-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 12px; margin: 0; padding: 0; list-style: none; }
+.ct-bring-i {
+  position: relative; display: flex; align-items: center; gap: 16px; min-height: 84px; padding: 20px 20px;
+  font-family: var(--sl-f-brand); font-weight: 540; font-size: 16.5px; line-height: 1.3; letter-spacing: -0.012em; color: var(--sl-ink1);
+}
+.ct-bring-i::before { content: ""; position: absolute; left: 20px; right: 20px; top: 0; height: 1px; background: var(--sl-line); }
+.ct-bring-i .int-ic { width: 22px; height: 22px; color: var(--sl-ink2); }
+
+@media (max-width: 900px) {
+  /* One column, in the order the visitor needs it: the words, the form,
+     then the road after it. */
+  .ct { grid-template-columns: minmax(0, 1fr); }
+  .ct-side { display: contents; }
+  .ct-side > .ct-lede { order: 1; }
+  .ct-quote { order: 2; }
+  .ct-road { order: 3; margin-top: 8px; }
+  .ct-bring-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .ct-bring-list { grid-template-columns: minmax(0, 1fr); }
+  .ct-bring-i { min-height: 70px; }
+  .ct-quote .form > .ct-spot { display: none !important; }
+}

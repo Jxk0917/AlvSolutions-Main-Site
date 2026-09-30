@@ -1,0 +1,98 @@
+/* ============================================================
+   ALVSolutions - how a project runs, shared by the homepage and the
+   service pages. Moved here verbatim from home.css (the homepage keeps
+   its look exactly); home.css and interior.css each import it.
+   src/home/process.ts lights each clause as the visitor scrolls past it.
+   ============================================================ */
+.h-process > .key-cone, .h-process > .key-pool {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+}
+/* The section brings its own icon base, so a page without home.css (whose
+   .h-ic it otherwise inherits) draws the same stroke icons. */
+.h-process .h-ic {
+  width: 20px; height: 20px; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ============================================================
+   HOW A PROJECT RUNS: one project, one line
+   The sentence reads across; each clause has its station on one rail,
+   with its detail and its payment note. At rest everything is lit and
+   the room is on. Armed (process.ts, motion on), what has not been
+   reached is dimmed and lights as the visitor scrolls past it.
+   ============================================================ */
+.h-process {
+  position: relative; isolation: isolate;
+  padding-block: clamp(44px, 6vh, 72px);
+  border-top: 1px solid var(--sl-line);
+  --kx: 82; --kw: 44; --ki: 0.6; --kpy: 97;
+}
+.h-process > .key-cone, .h-process > .key-pool { transition: opacity 900ms var(--sl-e-out); }
+.h-process.is-armed:not(.is-live) { --ki: 0; }
+.h-proc-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.012em; color: var(--sl-ink2); margin-bottom: clamp(14px, 2vh, 20px); }
+
+.h-line {
+  --gap: clamp(24px, 3vw, 48px);
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-rows: auto auto auto; column-gap: var(--gap);
+  margin: 0; padding: 0; list-style: none;
+}
+.h-stn { grid-row: span 3; display: grid; grid-template-rows: subgrid; }
+.h-stn-clause {
+  align-self: end; padding-bottom: 16px;
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(22px, 2vw, 30px); line-height: 1.06; letter-spacing: -0.03em; color: var(--sl-ink1);
+  transition: opacity 600ms var(--sl-e-out);
+}
+.h-stn-node { position: relative; height: 9px; }
+.h-stn-node::before {
+  content: ""; position: absolute; left: 0; top: 0; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); transition: opacity 600ms var(--sl-e-out);
+}
+/* The rail: a hairline to the next station, and the light filling it: a
+   2px lit bar with the site's full light-blue glow, like the other bars. */
+.h-stn-node::after,
+.h-stn-node > i { content: ""; position: absolute; left: 18px; right: calc(8px - var(--gap)); top: 4px; height: 1px; }
+.h-stn-node::after { background: var(--sl-line2); }
+.h-stn-node > i { top: 3.5px; height: 2px; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); transform-origin: 0 50%; transition: transform 700ms var(--sl-e-out); }
+/* The last station has no next one, but its rail still runs on as a bar
+   beside "We go live.", lit as the project goes live. Horizontal only: in
+   the stacked layout the rail ends at the last dot. */
+.h-stn:last-child .h-stn-node::after,
+.h-stn:last-child .h-stn-node > i { right: 0; }
+.h-stn-body {
+  display: grid; gap: 8px; align-content: start; justify-items: start; max-width: 34ch;
+  padding-top: 14px; transition: opacity 600ms var(--sl-e-out);
+}
+.h-stn-body .h-ic { width: 18px; height: 18px; color: var(--sl-ink2); }
+.h-stn-body p { font-size: 14.5px; color: var(--sl-ink2); }
+.h-stn-body .h-stn-note { margin-top: 2px; padding-block: 4px; font-size: 12.5px; line-height: 1.35; color: var(--sl-ink1); text-wrap: balance; }
+
+.h-line.is-armed .h-stn:not(.is-lit) .h-stn-clause { opacity: 0.26; }
+.h-line.is-armed .h-stn:not(.is-lit) .h-stn-body { opacity: 0.4; }
+.h-line.is-armed .h-stn:not(.is-lit) .h-stn-node::before { opacity: 0.3; }
+.h-line.is-armed .h-stn-node > i { transform: scaleX(0); }
+.h-line.is-armed .h-stn.is-past .h-stn-node > i,
+.h-line.is-armed .h-stn:last-child.is-lit .h-stn-node > i { transform: scaleX(1); }
+
+/* Where each clause is reached: spread down the section, read by an
+   IntersectionObserver as they pass a line in the viewport. */
+.h-proc-mark { position: absolute; left: 0; top: calc(12% + var(--m, 0) * 33%); width: 1px; height: 1px; pointer-events: none; }
+
+@media (max-width: 760px) {
+  /* The rail turns vertical: stations stacked, the light filling down. */
+  .h-process { --kx: 50; --kw: 120; }
+  .h-line { grid-template-columns: minmax(0, 1fr); grid-template-rows: none; row-gap: 24px; padding-left: 28px; }
+  .h-stn { grid-row: auto; display: block; position: relative; }
+  .h-stn-clause { padding-bottom: 0; font-size: clamp(22px, 6.4vw, 28px); }
+  .h-stn-node { position: absolute; left: -28px; top: 9px; bottom: -24px; width: 9px; height: auto; }
+  .h-stn:last-child .h-stn-node::after,
+  .h-stn:last-child .h-stn-node > i { display: none; }
+  .h-stn-node::after,
+  .h-stn-node > i { left: 4px; right: auto; top: 18px; bottom: 0; width: 1px; height: auto; }
+  .h-stn-node > i { left: 3.5px; width: 2px; transform-origin: 50% 0; }
+  .h-line.is-armed .h-stn-node > i { transform: scaleY(0); }
+  .h-line.is-armed .h-stn.is-past .h-stn-node > i { transform: scaleY(1); }
+  .h-stn-body { padding-top: 10px; }
+
+}

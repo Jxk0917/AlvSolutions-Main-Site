@@ -12,20 +12,31 @@ import { Reel } from "../home/reel";
 import { Opening } from "../home/opening";
 import { geoFor, layoutFor, watchResize } from "../home/reel-geometry";
 import { finishIntro } from "../identity/motions";
-import { Trades } from "../home/trades";
 import { Process } from "../home/process";
-import { Prices } from "../home/prices";
+import { Picker } from "../home/picker";
 import { initClose } from "../home/close";
-import { initFounders, initSheet } from "../home/moments";
+import { initQuoteForm } from "../forms/quote-wizard";
+
+// The intake form works independently of the reel: wire it at once, not
+// after the fonts and the opening have settled.
+const quoteForm = document.getElementById("quote-form");
+if (quoteForm instanceof HTMLFormElement) initQuoteForm(quoteForm);
 
 declare global {
   interface Window {
     __alvHomeReady?: boolean;
+    /** Set by home/prepaint.njk when the visitor scrolled before we were ready. */
+    __alvIntent?: boolean;
   }
 }
 
 const html = document.documentElement;
 const wait = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
+/** Resolves as soon as the visitor asks to move on (prepaint.njk latches it). */
+const intent: Promise<void> = new Promise((r) => {
+  if (window.__alvIntent) r();
+  else addEventListener("alv-intent", () => r(), { once: true });
+});
 
 async function boot(): Promise<void> {
   const work = document.querySelector<HTMLElement>(".h-work");
@@ -35,7 +46,9 @@ async function boot(): Promise<void> {
   const navMark = nav?.querySelector<HTMLElement>(".alv-nav-mark");
   if (!work || !fly || !stage || !nav || !navMark) return;
 
-  // Measure with the real faces: the introduction and the flight depend on them.
+  // Measure with the real faces: the introduction and the flight depend on
+  // them. But never make a visitor who has already moved on wait for them:
+  // the opening will not play for them, so it needs no measuring.
   try {
     await Promise.race([
       Promise.all([
@@ -44,6 +57,7 @@ async function boot(): Promise<void> {
         document.fonts.load('italic 560 20px "Instrument Sans Variable"', "ALVSolutions"),
       ]),
       wait(2500),
+      intent,
     ]);
   } catch {
     /* measure with what is there */
@@ -61,25 +75,23 @@ async function boot(): Promise<void> {
   // everything follows native scrolling or answers a click. Each degrades
   // on its own if its section is missing, so none of it gates the reel.
   const $ = (sel: string): HTMLElement | null => document.querySelector<HTMLElement>(sel);
-  const build = $("#build");
-  if (build) new Trades(build);
   const procRoot = $("#process");
   const proc = procRoot ? new Process(procRoot) : null;
-  const pricesRoot = $("#prices");
-  const prices = pricesRoot ? new Prices(pricesRoot) : null;
-  const founders = $("#founders");
-  if (founders) initFounders(founders);
-  const terms = $("#terms");
-  if (terms) initSheet(terms);
+  const pickers = Array.from(document.querySelectorAll<HTMLElement>("[data-pick]"), (el) => new Picker(el));
   const close = $(".h-close");
   if (close) initClose(close);
 
-  // Every screen's own light; the opening waits a moment for it, not forever.
-  await Promise.race([reel.lightScreens(), wait(900)]);
+  // Every screen's own light; the opening waits a moment for it, not
+  // forever, and not at all for a visitor who has already moved on.
+  await Promise.race([reel.lightScreens(), wait(900), intent]);
 
-  const atTop = scrollY < innerHeight * 0.4 && !location.hash;
-  if (html.classList.contains("alv-opening")) {
-    if (motionOn() && atTop) opening.play();
+  // Someone who scrolled (or pressed a scrolling key) before we were ready
+  // has told us what they want: the finished room, now. prepaint.njk has
+  // already dropped the dark start state so they were not left on black.
+  const yielded = window.__alvIntent === true;
+  const atTop = scrollY < innerHeight * 0.4 && !location.hash && !yielded;
+  if (html.classList.contains("alv-opening") || yielded) {
+    if (motionOn() && atTop && html.classList.contains("alv-opening")) opening.play();
     else {
       finishIntro(stage);
       Opening.settle(nav, navMark, fly);
@@ -88,12 +100,15 @@ async function boot(): Promise<void> {
     // A returning visitor: the room is already arranged; only the light comes up.
     reel.raiseLight();
   }
-  reel.followHash();
+  // Coming back through history to a place the browser has already restored
+  // (Back/Forward), the visitor's own position wins over the anchor.
+  const nav0 = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+  if (!(nav0?.type === "back_forward" && scrollY > 4)) reel.followHash();
 
   watchResize((w, h) => {
     opening.skip();
     reel.setLayout(layoutFor(w, h, motionOn()), geoFor(w, h));
-    prices?.refresh();
+    pickers.forEach((p) => p.refresh());
   });
 
   onMotionChange((on) => {

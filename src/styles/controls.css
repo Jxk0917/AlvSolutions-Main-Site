@@ -81,7 +81,8 @@
   width: 0;
   height: 2px;
   border-radius: 2px;
-  background: var(--sl-ink1);
+  background: var(--sl-bar);
+  box-shadow: var(--sl-bar-glow-sm);
   transform: translateX(-50%);
   transition: width 450ms var(--sl-e-out);
 }
@@ -127,4 +128,12 @@
 .alv-pill:focus-visible {
   outline: 2px solid var(--sl-ink1);
   outline-offset: 2px;
+}
+
+/* The contact form's fields: focus is the site's lit bar around the field
+   (a near-white edge, light-blue glow), the same as on the homepage form,
+   in place of the legacy gold ring. */
+#contact .form .input:is(:focus, :focus-visible) {
+  outline: none; border-color: var(--sl-bar);
+  box-shadow: 0 0 0 1px var(--sl-bar), 0 0 6px oklch(0.92 0.08 245 / 0.75), 0 0 20px 1px oklch(0.8 0.15 245 / 0.32);
 }

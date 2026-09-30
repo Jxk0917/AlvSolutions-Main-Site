@@ -342,6 +342,23 @@ export class Reel {
     if (n !== null) this.scrollToStep(n, false);
   }
 
+  /** True while focus is being moved on purpose, so the focus rule below leaves it be. */
+  private handingOff = false;
+
+  /**
+   * Moves focus to the heading of the place a link has just taken the
+   * visitor to (without scrolling: the link's own scroll is under way), so
+   * what has focus is what is shown, and screen readers announce it.
+   */
+  private handOffFocus(n: number): void {
+    const target = n === 0 ? this.copy.querySelector<HTMLElement>(".h-h1") : this.panels[n - 1]?.querySelector<HTMLElement>(".h-panel-h");
+    if (!target) return;
+    if (!target.hasAttribute("tabindex")) target.tabIndex = -1;
+    this.handingOff = true;
+    target.focus({ preventScroll: true });
+    this.handingOff = false;
+  }
+
   private bindNavigation(): void {
     // Inside a held room every chapter shares one sticky box, so a native
     // jump would land on the room's top. Links to the reel go to its step.
@@ -354,13 +371,17 @@ export class Reel {
       e.preventDefault();
       this.scrollToStep(n);
       history.pushState(null, "", a.hash);
+      // A link in the hero's words hands the room to the work. Focus must
+      // go with it: left on the link, it keeps the (now hidden) words lit
+      // over the chapter (home.css :focus-within), which is the overlap.
+      if (a.closest(".h-copy")) this.handOffFocus(n);
     });
     addEventListener("hashchange", () => this.followHash());
 
     // Keyboard and assistive technology: focus inside a chapter brings the
     // room to that chapter, so what has focus is always what is shown.
     this.work.addEventListener("focusin", (e) => {
-      if (this.layout !== "held") return;
+      if (this.layout !== "held" || this.handingOff) return;
       const t = e.target as HTMLElement;
       const panel = t.closest<HTMLElement>("[data-panel]");
       const n = panel ? Number(panel.dataset.panel) : t.closest(".h-copy") ? 0 : null;

@@ -12,8 +12,8 @@
         { "slug": "services-page",     "name": "Services page",        "icon": "list",     "blurb": "Everything you do, what it costs and who it is for.", "service": "menu-service-page" },
         { "slug": "menu-page",         "name": "Menu page",            "icon": "menu",     "blurb": "Up to 20 items as real text, not a photographed PDF.", "service": "menu-service-page" },
         { "slug": "photo-gallery",     "name": "Photo gallery",        "icon": "photo",    "blurb": "Your own work, sized and compressed so it loads on mobile data." },
-        { "slug": "before-after",      "name": "Before / after gallery","icon": "adjust",  "blurb": "Paired shots of the same job, which is what sells detailing and repair work." },
-        { "slug": "testimonials",      "name": "Testimonials page",    "icon": "star",     "blurb": "Your real reviews, pulled together in one place people can read." },
+        { "slug": "before-after",      "name": "Before / after gallery","icon": "adjust",  "blurb": "Paired shots of the same job, which is what sells detailing and repair work.", "brief": "Paired shots of the same job." },
+        { "slug": "testimonials",      "name": "Testimonials page",    "icon": "star",     "blurb": "Your real reviews, pulled together in one place people can read.", "brief": "Your real reviews, in one place." },
         { "slug": "about-team",        "name": "About / team page",    "icon": "users",    "blurb": "Who runs the business and why a stranger should trust it." },
         { "slug": "faq-page",          "name": "FAQ page",             "icon": "help",     "blurb": "The questions you answer on the phone ten times a week." },
         { "slug": "service-area",      "name": "Service area page",    "icon": "map",      "blurb": "The towns and neighbourhoods you cover, written so Google can read them." }
@@ -26,11 +26,11 @@
       "unit": "each",
       "blurb": "Something the site does, rather than something it shows. These are builds, not pages.",
       "items": [
-        { "slug": "online-booking",    "name": "Online booking",        "icon": "calendar", "blurb": "One booking provider you already use, integrated into the site's booking journey: the main destination and the buttons that lead to it.", "service": "booking-integration" },
-        { "slug": "quote-request",     "name": "Structured Quote / Request","icon": "clipboard","blurb": "A request form built around how you take quotes, estimates, catering bookings or service inquiries, structured to collect what you need to respond. Catering is this feature's restaurant-specific form.", "service": "catering-quote-page" },
+        { "slug": "online-booking",    "name": "Online booking",        "icon": "calendar", "blurb": "One booking provider you already use, integrated into the site's booking journey: the main destination and the buttons that lead to it.", "service": "booking-integration", "brief": "Your booking provider, built into the site." },
+        { "slug": "quote-request",     "name": "Structured Quote / Request","icon": "clipboard","blurb": "A request form built around how you take quotes, estimates, catering bookings or service inquiries, structured to collect what you need to respond. Catering is this feature's restaurant-specific form.", "service": "catering-quote-page", "brief": "A request form that collects what you need to quote." },
         { "slug": "large-menu",        "name": "Large menu with categories","icon": "menu", "blurb": "20+ items, sectioned and filterable instead of one endless list.", "service": "menu-service-page" },
         { "slug": "self-editable",     "name": "Self-editable content", "icon": "pencil",   "blurb": "Change your own menu, services or gallery without calling me." },
-        { "slug": "before-after-slider","name": "Before / after slider","icon": "adjust",   "blurb": "Drag across one photo to reveal the other. It stops people scrolling." },
+        { "slug": "before-after-slider","name": "Before / after slider","icon": "adjust",   "blurb": "Drag across one photo to reveal the other. It stops people scrolling.", "brief": "Drag across one photo to reveal the other." },
         { "slug": "multi-location",    "name": "Multi-location support","icon": "building", "blurb": "Separate hours, addresses and maps for every place you operate." }
       ]
     },
@@ -41,7 +41,7 @@
       "unit": "each",
       "blurb": "A small, self-contained addition to a build - not a power feature, and not a page of its own.",
       "items": [
-        { "slug": "delivery-links", "name": "Delivery links section", "icon": "truck", "blurb": "A clean, responsive section of external links to your delivery platforms - DoorDash, Uber Eats and the rest, wired to the buttons people look for." }
+        { "slug": "delivery-links", "name": "Delivery links section", "icon": "truck", "blurb": "A clean, responsive section of external links to your delivery platforms - DoorDash, Uber Eats and the rest, wired to the buttons people look for.", "brief": "DoorDash, Uber Eats and the rest, linked from your site." }
       ]
     }
   ]

@@ -1,55 +1,78 @@
 ---
-layout: layouts/base.njk
+layout: layouts/interior.njk
+permalink: /contact/
 title: Contact
 description: Tell me what your business does and what you need. Free quote, no pressure. ALVSolutions, San Antonio, Texas.
+pageJs: contact
+head:
+  crumbs: [{ label: "Contact" }]
+  back: { label: "Back to Packages", url: "/packages/", showIf: "package" }
+  heading: "Tell me what<br>you need."
+  lede: "Tell me what you're working on. I'll review the project and send you a clear quote and next steps. I reply within one business day."
+cta:
+  inline: true
 ---
+{#
+  CONTACT: the way in. Three short steps, then a summary to check before
+  anything sends (components/quote-form.njk, shared with the homepage).
+    1. the form, with the road after it beside it. That road is the three
+       "what happens next" items (components/contact-next.njk, restyled as
+       a rail): its lit bar fills as the form is answered, one station per
+       step, and the last lights when the request is sent. The form's own
+       progress bar is the site's bar as well;
+    2. a key light glides to the field being answered (interior/spot.ts),
+       so the eye always knows where it is in a long form;
+    3. what is useful to have, in a grid a spotlight glides across;
+    4. how a project runs: the shared scroll-lit process.
+  Behaviour is src/forms/quote-wizard.ts, untouched; contact.ts only reads
+  the form's state and writes classes and custom properties.
+#}
 
 {#- slug, name and route of every service, so a visitor who arrived from one
-    gets a Back link to it without main.js hardcoding any URL. -#}
+    gets a Back link to it without any script hardcoding a URL. -#}
 {%- set svcRoutes = [] -%}
 {%- for s in services -%}
   {%- set svcRoutes = (svcRoutes.push({ slug: s.slug, name: s.name, url: ("/services/" + s.slug + "/") | url }), svcRoutes) -%}
 {%- endfor -%}
+<script type="application/json" id="svc-routes">{{ svcRoutes | dump | safe }}</script>
 
-{%- set ph = {
-  heading: "Tell me what<br />you need.",
-  lead: "Tell me what you're working on. I'll review the project and send you a clear quote and next steps. I reply within a day, usually the same afternoon.",
-  back: { label: "Packages", url: "/packages/", showIf: "package", services: svcRoutes },
-  crumbs: [{ label: "Contact" }]
-} -%}
-{% include "components/pagehead.njk" %}
-
-<main id="main">
-
-  {#- the pagehead already carries the heading and lead, so the shared contact
-      block leads with the practical question instead of repeating them -#}
-  {%- set contactHeading = "Start a project" %}
-  {%- set contactLead = "Three short steps, then a summary you can check before anything sends. The more you tell me, the more accurate the quote." %}
-  {% include "components/contact-section.njk" %}
-
-  <!-- ══════════════ WHAT TO SEND ══════════════ -->
-  <section class="sec band sec-line">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2 style="font-size: clamp(22px, 2.4vw, 28px);">Useful to have, not required</h2>
-        <p class="lead">
-          None of this stops us starting. If you have none of it, content preparation
-          covers me gathering it with you. It is a
-          <a href="/pricing/#project-extras" style="color: var(--blue);">listed fee</a>, not a surprise.
-        </p>
+<section class="int-wrap ct" id="contact" aria-label="Start a project">
+  <div class="ct-side">
+    <p class="ct-lede">Three short steps, then a summary you can check before anything sends. The more you tell me, the more accurate the quote.</p>
+    <div class="ct-road" data-road>
+      <h3 class="ct-road-h">What happens after you send</h3>
+      <div class="ct-road-list">
+        {% include "components/contact-next.njk" %}
+        <span class="ct-road-fill" aria-hidden="true"></span>
       </div>
-
-      <ul class="inc-list reveal" style="max-width: 780px;">
-        <li>Your logo, if you have one</li>
-        <li>Photos of your own work</li>
-        <li>Your services or menu, in any format</li>
-        <li>Hours and the address you want listed</li>
-        <li>A site you like the look of</li>
-        <li>Whether you take bookings today, and how</li>
-      </ul>
     </div>
-  </section>
+  </div>
 
-  {% include "components/process-steps.njk" %}
+  <div class="ct-quote">
+    {% include "components/quote-form.njk" %}
+  </div>
+</section>
 
-</main>
+<section class="int-wrap ct-bring" aria-labelledby="bring-h">
+  <h2 id="bring-h" class="int-h2">Useful to have, not required</h2>
+  <p class="ct-lede">None of this stops us starting. If you have none of it, content preparation covers me gathering it with you. It is a <a class="alv-tlink" href="/pricing/#project-extras">listed fee</a>, not a surprise.</p>
+  {%- set bring = [
+    { icon: "sparkle",  text: "Your logo, if you have one" },
+    { icon: "photo",    text: "Photos of your own work" },
+    { icon: "list",     text: "Your services or menu, in any format" },
+    { icon: "pin",      text: "Hours and the address you want listed" },
+    { icon: "browser",  text: "A site you like the look of" },
+    { icon: "calendar", text: "Whether you take bookings today, and how" }
+  ] %}
+  <div class="sv-grid-wrap ct-bring-wrap" data-spot=".ct-bring-i">
+    <ul class="ct-bring-list">
+      {%- for b in bring %}
+      <li class="ct-bring-i"><svg class="int-ic" aria-hidden="true"><use href="#i-{{ b.icon }}"/></svg><span>{{ b.text }}</span></li>
+      {%- endfor %}
+    </ul>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+</section>
+
+{%- set procWrap = "int-wrap" %}
+{% include "home/process.njk" %}

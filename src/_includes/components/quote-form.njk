@@ -1,0 +1,328 @@
+{#
+  The project intake wizard: three answer steps and a review, submitting to
+  Formspree. Shared, unchanged, by /contact/ (contact-section.njk) and the
+  homepage (home/close.njk), so the questions can never drift between them.
+
+  Every panel ships in the markup; `hidden` on all but the first is the
+  only thing that makes it a wizard, so with JS off the first step still
+  renders and reads. Behaviour: src/forms/quote-wizard.ts. `data-endpoint`
+  is the only place the Formspree URL lives; the destination inbox itself
+  is configured on the Formspree form, not here.
+#}
+{%- set _rg = standalone | byGroup("project-extras") %}{%- set _rush = _rg.items | find("name", "Rush delivery") %}
+<form class="form reveal" id="quote-form" novalidate style="--d:1" data-endpoint="https://formspree.io/f/mkjgnlve">
+
+  {#- Position, then the bar. The step names live on the panels themselves
+      (data-step-label) so the copy sits with the step it belongs to and the
+      bar has nothing to keep in sync by hand. -#}
+  <div class="wiz-head">
+    <div class="wiz-meta">
+      <span class="wiz-count">Step <span data-step-n>1</span> of 4</span>
+      <span class="wiz-now" data-step-name>Contact</span>
+    </div>
+    <div class="wiz-bar" role="progressbar" aria-label="How far through the form you are"
+         aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" aria-valuetext="Step 1 of 4, Contact">
+      <span class="wiz-fill" data-fill></span>
+    </div>
+    <p class="vh" role="status" aria-live="polite" data-live></p>
+  </div>
+
+  <div class="form-body">
+
+    {#- The package cards link to /contact/?package=standard. The tier rides
+        along in this field so the first reply can be a quote rather than a
+        question they already answered by clicking. -#}
+    <input type="hidden" name="package" value="" />
+    <p class="pill wiz-tag" hidden>
+      <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
+      <span data-package-label></span>
+    </p>
+
+    <!-- ══════════════ 1. CONTACT ══════════════ -->
+    <section class="wiz-panel" data-panel data-step-label="Contact" role="group" aria-labelledby="wiz-h1">
+      <h3 class="wiz-title" id="wiz-h1" tabindex="-1">Your contact details</h3>
+      <p class="wiz-sub">So I know who I am quoting and where to reach you.</p>
+
+      <p class="wiz-alert" data-alert role="alert" hidden>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
+        <span data-alert-text></span>
+      </p>
+
+      <div class="field-row">
+        <div class="field" data-field data-req>
+          <label for="f-name">Full name</label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name"
+                 aria-describedby="e-name" placeholder="Jordan Alvarez" />
+          <span class="err" id="e-name"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter your full name</span>
+        </div>
+        <div class="field" data-field data-req>
+          <label for="f-business">Business name</label>
+          <input class="input" id="f-business" name="business" type="text" autocomplete="organization"
+                 aria-describedby="e-business" placeholder="Alvarez Roofing" />
+          <span class="err" id="e-business"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter your business name</span>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field" data-field data-req>
+          <label for="f-email">Email</label>
+          <input class="input" id="f-email" name="email" type="email" autocomplete="email"
+                 data-check="email" aria-describedby="e-email" placeholder="you@yourbusiness.com" />
+          <span class="err" id="e-email"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter an email address, like you@yourbusiness.com</span>
+        </div>
+        <div class="field" data-field data-req>
+          <label for="f-phone">Phone</label>
+          <input class="input" id="f-phone" name="phone" type="tel" autocomplete="tel"
+                 data-check="phone" aria-describedby="e-phone" placeholder="(210) 555 0134" />
+          <span class="err" id="e-phone"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter a phone number with its area code</span>
+        </div>
+      </div>
+
+      <div class="field" data-field data-req>
+        <label for="f-city">City or service area</label>
+        <span class="hint" id="h-city">Where your customers are, not necessarily where you are.</span>
+        <input class="input" id="f-city" name="city" type="text" autocomplete="address-level2"
+               aria-describedby="h-city e-city" placeholder="San Antonio and surrounding areas" />
+        <span class="err" id="e-city"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me the city or area you serve</span>
+      </div>
+
+      <fieldset class="fset" data-field data-req data-group>
+        <legend class="fset-lg">Do you have a website now?</legend>
+        <div class="seg">
+          <label class="opt opt-one">
+            <input type="radio" name="hasSite" value="Yes" data-cond="c-url" />
+            <span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Yes</span></span>
+          </label>
+          <label class="opt opt-one">
+            <input type="radio" name="hasSite" value="No" />
+            <span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">No</span></span>
+          </label>
+        </div>
+        <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Choose yes or no</span>
+      </fieldset>
+
+      <div class="field cond" id="c-url" data-field data-req hidden>
+        <label for="f-url">What is the address?</label>
+        <input class="input" id="f-url" name="siteUrl" type="text" autocomplete="url" inputmode="url"
+               data-check="url" aria-describedby="e-url" placeholder="alvarezroofing.com" />
+        <span class="err" id="e-url"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter the web address, like alvarezroofing.com</span>
+      </div>
+    </section>
+
+    <!-- ══════════════ 2. BUSINESS ══════════════ -->
+    <section class="wiz-panel" data-panel data-step-label="Business" role="group" aria-labelledby="wiz-h2" hidden>
+      <h3 class="wiz-title" id="wiz-h2" tabindex="-1">About the business</h3>
+      <p class="wiz-sub">This sets which examples I start from.</p>
+
+      <p class="wiz-alert" data-alert role="alert" hidden>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
+        <span data-alert-text></span>
+      </p>
+
+      <div class="field" data-field data-req>
+        <label for="f-type">Business type</label>
+        <div class="sel">
+          <select class="input" id="f-type" name="businessType" required
+                  data-cond="c-type" data-cond-value="Other" aria-describedby="e-type">
+            <option value="" selected disabled>Choose one</option>
+            <option>Auto detailing</option>
+            <option>Home services</option>
+            <option>Restaurant / food</option>
+            <option>Salon / barber / beauty</option>
+            <option>Professional services</option>
+            <option>Retail</option>
+            <option>Other</option>
+          </select>
+          <svg class="ic sel-chev" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+        </div>
+        <span class="err" id="e-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick the closest match</span>
+      </div>
+
+      <div class="field cond" id="c-type" data-field data-req hidden>
+        <label for="f-type-other">What does the business do?</label>
+        <span class="hint" id="h-type-other">A sentence is plenty.</span>
+        <textarea class="input input-sm" id="f-type-other" name="businessOther" rows="3" maxlength="400"
+                  aria-describedby="h-type-other e-type-other"
+                  placeholder="We install and service commercial ice machines for restaurants."></textarea>
+        <span class="err" id="e-type-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what the business does</span>
+      </div>
+    </section>
+
+    <!-- ══════════════ 3. GOALS ══════════════ -->
+    <section class="wiz-panel" data-panel data-step-label="Project" role="group" aria-labelledby="wiz-h3" hidden>
+      <h3 class="wiz-title" id="wiz-h3" tabindex="-1">Your project</h3>
+      <p class="wiz-sub">These answers decide the scope, the deliverables and the price.</p>
+
+      <p class="wiz-alert" data-alert role="alert" hidden>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
+        <span data-alert-text></span>
+      </p>
+
+      <fieldset class="fset" data-field data-req data-group>
+        <legend class="fset-lg">What do you need?</legend>
+        <span class="hint">Pick as many as apply.</span>
+        <div class="opt-pair">
+          <label class="opt"><input type="checkbox" name="needs" value="New website" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">New website</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Logo / branding" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Logo / branding</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Existing logo / brand asset preparation" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Existing logo / brand asset preparation</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Social / web graphics" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Social / web graphics</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Booking integration" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Booking integration</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Quote / estimate functionality" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Quote / estimate functionality</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Menu / services" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Menu / services</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Other" data-cond="c-need" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Other</span></span></label>
+        </div>
+        <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick at least one thing you need</span>
+      </fieldset>
+
+      <div class="field cond" id="c-need" data-field data-req hidden>
+        <label for="f-need-other">What else do you need?</label>
+        <input class="input" id="f-need-other" name="needOther" type="text" maxlength="200"
+               aria-describedby="e-need-other" placeholder="Menu boards for the restaurant" />
+        <span class="err" id="e-need-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what else you need</span>
+      </div>
+
+      {#- The website-behaviour question only makes sense when part of the
+          project is a website, so it stays hidden for a branding-only
+          request. main.js toggles it from the options above. -#}
+      <div class="cond" id="c-goals" hidden>
+        <fieldset class="fset" data-field data-req data-group>
+          <legend class="fset-lg">What do you want your website to help customers do?</legend>
+          <span class="hint">Pick as many as apply.</span>
+          <div class="opt-pair">
+            <label class="opt"><input type="checkbox" name="goals" value="Call the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Call the business</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Request a quote" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Request a quote</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Book an appointment" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Book an appointment</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="View services" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View services</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="View a menu" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View a menu</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Access delivery / ordering" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Access delivery / ordering</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="View work / portfolio" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">View work / portfolio</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Find the business location" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Find the business location</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Learn about the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Learn about the business</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Contact the business" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Contact the business</span></span></label>
+            <label class="opt"><input type="checkbox" name="goals" value="Other" data-cond="c-goal" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Other</span></span></label>
+          </div>
+          <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick at least one thing the site should do</span>
+        </fieldset>
+
+        <div class="field cond" id="c-goal" data-field data-req hidden>
+          <label for="f-goal-other">What else should it do?</label>
+          <input class="input" id="f-goal-other" name="goalOther" type="text" maxlength="200"
+                 aria-describedby="e-goal-other" placeholder="Let customers upload photos before a quote" />
+          <span class="err" id="e-goal-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what else the site should do</span>
+        </div>
+      </div>
+
+      <fieldset class="fset" data-field data-req data-group>
+        <legend class="fset-lg">Budget</legend>
+        {#- A new website starts at the cheapest package, so the choices for a new
+            website begin there; the smaller ranges are for services on their own
+            (a logo, a banner set, a page or booking added to a site you already
+            have). quote-wizard.ts swaps the two sets from what is ticked above. -#}
+        {%- set siteFrom = packages.tiers[0].price | price %}
+        <span class="hint" data-budget-hint="standalone">A range is enough. It steers the scope, it is not a commitment.</span>
+        <span class="hint" data-budget-hint="site" hidden>A range is enough. A new website starts at {{ siteFrom }}, so the ranges begin there. It steers the scope, it is not a commitment.</span>
+        <div class="opt-grid">
+          <label class="opt opt-one" data-budget="standalone"><input type="radio" name="budget" value="Under $250" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Under $250</span></span></label>
+          <label class="opt opt-one" data-budget="standalone"><input type="radio" name="budget" value="$250–$500" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$250–$500</span></span></label>
+          <label class="opt opt-one" data-budget="standalone"><input type="radio" name="budget" value="$500–$1,000" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$500–$1,000</span></span></label>
+          <label class="opt opt-one" data-budget="site" hidden><input type="radio" name="budget" value="{{ siteFrom }}–$1,000" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">{{ siteFrom }}–$1,000</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="budget" value="$1,000–$1,500" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$1,000–$1,500</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="budget" value="$1,500+" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">$1,500+</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="budget" value="Not sure yet" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Not sure yet</span></span></label>
+        </div>
+        <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick a budget range</span>
+      </fieldset>
+
+      <fieldset class="fset" data-field data-req data-group>
+        <legend class="fset-lg">Timeline</legend>
+        <div class="opt-stack">
+          <label class="opt opt-one"><input type="radio" name="timeline" value="As soon as possible" data-cond="c-rush" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">As soon as possible</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="timeline" value="Within 2 weeks" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Within 2 weeks</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="timeline" value="Within a month" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Within a month</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="timeline" value="1 - 3 months" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">1 - 3 months</span></span></label>
+          <label class="opt opt-one"><input type="radio" name="timeline" value="No hard deadline" /><span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">No hard deadline</span></span></label>
+        </div>
+        <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick a timeline</span>
+        <p class="wiz-note cond" id="c-rush" role="status" hidden>
+          <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-clock"/></svg>
+          <span>Rush delivery is {{ _rush.price | money | safe }}, depending on what is already booked. I confirm the exact figure with you before any work starts.</span>
+        </p>
+      </fieldset>
+    </section>
+
+    <!-- ══════════════ 4. REVIEW ══════════════ -->
+    <section class="wiz-panel" data-panel data-step-label="Review" role="group" aria-labelledby="wiz-h4" hidden>
+      <h3 class="wiz-title" id="wiz-h4" tabindex="-1">Review your request</h3>
+      <p class="wiz-sub">This is exactly what reaches me. Change anything that is not right.</p>
+
+      <div class="rev">
+        <div class="rev-group">
+          <div class="rev-head">
+            <h4>Contact</h4>
+            <button class="rev-edit" type="button" data-edit="0">Edit<span class="vh"> your contact details</span></button>
+          </div>
+          <dl class="rev-list" data-rev="contact"></dl>
+        </div>
+        <div class="rev-group">
+          <div class="rev-head">
+            <h4>Business</h4>
+            <button class="rev-edit" type="button" data-edit="1">Edit<span class="vh"> your business details</span></button>
+          </div>
+          <dl class="rev-list" data-rev="business"></dl>
+        </div>
+        <div class="rev-group">
+          <div class="rev-head">
+            <h4>Project, budget and timing</h4>
+            <button class="rev-edit" type="button" data-edit="2">Edit<span class="vh"> your project, budget and timing</span></button>
+          </div>
+          <dl class="rev-list" data-rev="goals"></dl>
+        </div>
+      </div>
+
+      <div class="field" data-field>
+        <label for="f-notes">Anything else I should know? <span class="opt-tag">Optional</span></label>
+        <textarea class="input" id="f-notes" name="notes" rows="3" maxlength="1200"
+                  placeholder="A site you like the look of, a date that is fixed, anything that has gone wrong before."></textarea>
+      </div>
+
+      <p class="wiz-alert" data-submit-error role="alert" hidden>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>
+        <span>
+          <span data-submit-error-text>Something went wrong sending your request.</span>
+          Nothing here was lost &mdash; try again, or email me directly at
+          <a href="mailto:{{ site.email }}">{{ site.email }}</a>.
+        </span>
+      </p>
+    </section>
+
+    <div class="wiz-nav">
+      <button class="btn btn-ghost wiz-back" type="button" data-back hidden>
+        <svg class="ic wiz-back-ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+        Back
+      </button>
+      <button class="btn btn-primary" type="button" data-next>
+        Continue
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </button>
+      <button class="btn btn-primary" type="submit" data-send hidden>
+        <span data-send-label>Send project details</span>
+        <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-arrow"/></svg>
+      </button>
+    </div>
+
+    <p class="form-note">
+      Or email me directly at
+      <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+    </p>
+  </div>
+
+  <div class="sent" role="status" aria-live="polite">
+    <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-circle-check"/></svg>
+    <h3 tabindex="-1" data-sent-head>Thanks<span data-firstname></span>. I have your project request.</h3>
+    <p class="sent-lead">I will review everything and follow up within one business day with any questions and my recommended setup.</p>
+    <p class="sent-note">
+      Your project details have been sent. If you do not hear back within one business day,
+      email <a href="mailto:{{ site.email }}">{{ site.email }}</a> directly.
+    </p>
+  </div>
+</form>

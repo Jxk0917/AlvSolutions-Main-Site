@@ -7,11 +7,14 @@
   Statically (no JS, or reduced motion) every clause is lit and the room is
   on. With motion (src/home/process.ts) each clause lights as the visitor
   scrolls past its [data-mark]; nothing is pinned and nothing waits.
+
+  Shared with the service pages, which pass `procWrap` (their own measure,
+  int-wrap) and `processHeading` (the question the page has raised).
 #}
-<section class="h-process h-wrap" id="process" aria-labelledby="process-h">
+<section class="h-process {{ procWrap | default('h-wrap') }}" id="process" aria-labelledby="process-h">
   <span class="key-cone" aria-hidden="true"></span>
   <span class="key-pool" aria-hidden="true"></span>
-  <h2 id="process-h" class="h-proc-h">How a project runs.</h2>
+  <h2 id="process-h" class="h-proc-h">{{ processHeading | default("How a project runs.") }}</h2>
   <ol class="h-line">
     {%- for s in process.steps %}
     <li class="h-stn" data-stn>

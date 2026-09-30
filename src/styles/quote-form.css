@@ -1,0 +1,211 @@
+/* ============================================================
+   THE INTAKE FORM, in Screen Light (/contact/)
+   The wizard's skin, ported from home.css's "START A PROJECT" block: dark
+   glass controls, white for what is chosen, the site's lit bar for
+   progress and for the focused field. Scoped to .ct-quote so the legacy
+   class names it carries (.btn, .opt, .input ...) mean nothing outside it.
+   The homepage keeps its own copy under .h-quote (home.css is locked);
+   change the two together. The error colour is the one colour here that
+   is not light: it has to be read as a problem at a glance.
+   Imported by contact.css.
+   ============================================================ */
+.ct-quote { --q-err: oklch(0.78 0.13 25); }
+.ct-quote [hidden] { display: none !important; }
+.ct-quote .vh {
+  position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.ct-quote .ic {
+  width: 1em; height: 1em; flex: none;
+  fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+
+
+/* The form: one surface, lit along its top edge. */
+.ct-quote .form {
+  position: relative; min-width: 0;
+  padding: clamp(24px, 3.2vw, 42px); border-radius: 12px;
+  background: radial-gradient(ellipse 70% 50% at 30% -10%, rgb(var(--sl-L) / 0.045), transparent 70%), #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 50px 90px -50px rgb(0 0 0 / 0.95);
+}
+.ct-quote .form::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.5) 50%, transparent 96%);
+}
+
+/* ---- progress ---- */
+.ct-quote .wiz-head { margin-bottom: 28px; }
+.ct-quote .wiz-meta { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.ct-quote .wiz-count { font-size: 13px; color: var(--sl-ink3); font-variant-numeric: tabular-nums; }
+.ct-quote .wiz-now { font-family: var(--sl-f-brand); font-weight: 600; font-size: 14.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.ct-quote .wiz-bar { position: relative; height: 2px; border-radius: 2px; background: var(--sl-line2); }
+.ct-quote .wiz-fill {
+  display: block; width: 100%; height: 100%; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+  transform: scaleX(var(--p, 0.25)); transform-origin: left;
+  transition: transform 550ms var(--sl-e-out);
+}
+
+/* ---- a step ---- */
+.ct-quote .wiz-panel { min-width: 0; }
+.ct-quote .wiz-title {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(22px, 2vw, 27px); line-height: 1.1; letter-spacing: -0.026em; color: var(--sl-ink1); margin-bottom: 6px;
+}
+.ct-quote .wiz-title:focus { outline: none; }
+.ct-quote .wiz-title:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 4px; border-radius: 4px; }
+.ct-quote .wiz-sub { font-size: 14.5px; color: var(--sl-ink2); margin-bottom: 24px; }
+
+.ct-quote .wiz-tag {
+  display: inline-flex; align-items: center; gap: 8px; margin-bottom: 22px;
+  min-height: 32px; padding: 0 14px; border-radius: 999px;
+  box-shadow: inset 0 0 0 1px var(--sl-line2); font-size: 13.5px; color: var(--sl-ink1);
+}
+.ct-quote .wiz-tag .ic { font-size: 15px; color: var(--sl-ink2); }
+.ct-quote .opt-tag { margin-left: 6px; font-size: 12.5px; font-weight: 400; color: var(--sl-ink3); }
+
+.ct-quote .wiz-alert,
+.ct-quote .wiz-note {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 14px; border-radius: 8px; font-size: 13.5px; line-height: 1.55;
+}
+.ct-quote .wiz-alert { margin-bottom: 20px; background: oklch(0.78 0.13 25 / 0.08); box-shadow: inset 0 0 0 1px oklch(0.78 0.13 25 / 0.35); color: oklch(0.9 0.05 25); }
+.ct-quote .wiz-alert .ic { font-size: 16px; color: var(--q-err); margin-top: 2px; }
+.ct-quote .wiz-alert a { color: inherit; text-decoration: underline; text-underline-offset: 0.2em; }
+.ct-quote .wiz-note { margin-top: 12px; background: rgb(var(--sl-L) / 0.035); box-shadow: inset 0 0 0 1px var(--sl-line2); color: var(--sl-ink2); }
+.ct-quote .wiz-note .ic { font-size: 17px; color: var(--sl-ink1); margin-top: 2px; }
+
+/* ---- fields ---- */
+.ct-quote .field { display: grid; gap: 8px; margin-bottom: 18px; }
+.ct-quote .field label,
+.ct-quote .fset-lg { padding: 0; font-size: 14px; font-weight: 500; color: var(--sl-ink1); }
+.ct-quote .hint,
+.ct-quote .fset > .hint { display: block; font-size: 13px; color: var(--sl-ink3); }
+.ct-quote .fset > .hint { margin-top: 4px; }
+.ct-quote .field-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 14px; }
+
+.ct-quote .input {
+  width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: 8px;
+  background: #080808; box-shadow: inset 0 0 0 1px var(--sl-line2);
+  font: 400 15px/1.4 var(--sl-f-text); color: var(--sl-ink1);
+  transition: box-shadow 200ms, background-color 200ms;
+}
+.ct-quote .input::placeholder { color: var(--sl-ink3); opacity: 1; }
+.ct-quote .input:hover { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.32); }
+/* Focus: the site's lit bar around the field, a near-white edge with the
+   light-blue glow. Visible on its own, without the browser outline. */
+.ct-quote .input:focus {
+  outline: none; background: #0a0a0a;
+  box-shadow: 0 0 0 1px var(--sl-bar), 0 0 6px oklch(0.92 0.08 245 / 0.75), 0 0 20px 1px oklch(0.8 0.15 245 / 0.32);
+}
+.ct-quote textarea.input { resize: vertical; min-height: 116px; }
+.ct-quote textarea.input-sm { min-height: 88px; }
+
+.ct-quote .sel { position: relative; }
+.ct-quote select.input { appearance: none; -webkit-appearance: none; padding-right: 48px; cursor: pointer; }
+.ct-quote select.input:required:invalid { color: var(--sl-ink3); }
+.ct-quote select.input option { background: #141414; color: var(--sl-ink1); }
+.ct-quote .sel-chev { position: absolute; top: 50%; right: 16px; transform: translateY(-50%); font-size: 18px; color: var(--sl-ink2); pointer-events: none; }
+
+.ct-quote .err { display: none; align-items: flex-start; gap: 6px; font-size: 13px; line-height: 1.45; color: var(--q-err); }
+.ct-quote .err .ic { font-size: 14px; margin-top: 2px; }
+.ct-quote [data-field].invalid > .err { display: flex; }
+.ct-quote .field.invalid .input { box-shadow: inset 0 0 0 1px var(--q-err); }
+.ct-quote .fset.invalid .fset-lg { color: var(--q-err); }
+
+/* ---- choices: square + tick for many, circle + dot for one ---- */
+.ct-quote .fset { border: 0; padding: 0; margin: 0 0 20px; min-width: 0; }
+.ct-quote .fset .err { margin-top: 10px; }
+.ct-quote :is(.seg, .opt-pair, .opt-grid, .opt-stack) { display: grid; gap: 8px; margin-top: 12px; }
+.ct-quote .seg { grid-template-columns: 1fr 1fr; max-width: 280px; }
+.ct-quote .opt-pair { grid-template-columns: 1fr 1fr; }
+.ct-quote .opt-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ct-quote .opt { position: relative; display: block; min-width: 0; }
+.ct-quote .opt input { position: absolute; width: 1px; height: 1px; margin: 0; opacity: 0; pointer-events: none; }
+.ct-quote .opt-face {
+  display: flex; align-items: center; gap: 12px; height: 100%; min-height: 46px; padding: 10px 14px;
+  border-radius: 8px; background: #080808; box-shadow: inset 0 0 0 1px var(--sl-line2);
+  font-size: 14.5px; line-height: 1.35; color: var(--sl-ink2); cursor: pointer;
+  transition: box-shadow 200ms, background-color 200ms, color 200ms;
+}
+.ct-quote .opt:hover .opt-face { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.32); color: var(--sl-ink1); }
+.ct-quote .opt input:focus-visible ~ .opt-face { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.ct-quote .opt input:checked ~ .opt-face { background: rgb(var(--sl-L) / 0.06); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.75); color: var(--sl-ink1); }
+.ct-quote .opt-mark {
+  flex: none; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 5px;
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.3); transition: background-color 200ms, box-shadow 200ms;
+}
+.ct-quote .opt-mark .ic { font-size: 13px; color: var(--sl-room); stroke-width: 2.4; opacity: 0; }
+.ct-quote .opt input:checked ~ .opt-face .opt-mark { background: var(--sl-ink1); box-shadow: 0 0 10px rgb(var(--sl-L) / 0.35); }
+.ct-quote .opt input:checked ~ .opt-face .opt-mark .ic { opacity: 1; }
+.ct-quote .opt-one .opt-mark { border-radius: 999px; }
+.ct-quote .opt-one .opt-mark::after { content: ""; width: 7px; height: 7px; border-radius: 999px; background: var(--sl-room); transform: scale(0); transition: transform 180ms var(--sl-e-out); }
+.ct-quote .opt-one input:checked ~ .opt-face .opt-mark::after { transform: none; }
+.ct-quote .opt-txt { min-width: 0; }
+
+/* ---- review ---- */
+.ct-quote .rev { display: grid; gap: 12px; margin-bottom: 24px; }
+.ct-quote .rev-group { padding: 16px 18px; border-radius: 8px; background: #080808; box-shadow: inset 0 0 0 1px var(--sl-line); }
+.ct-quote .rev-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
+.ct-quote .rev-head h4 { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.ct-quote .rev-edit {
+  padding: 6px 10px; margin: -6px -10px -6px 0; border: 0; border-radius: 999px; background: none; cursor: pointer;
+  font: 500 13px/1 var(--sl-f-text); color: var(--sl-ink2); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.25em;
+}
+.ct-quote .rev-edit:hover { color: var(--sl-ink1); text-decoration-color: var(--sl-ink1); }
+.ct-quote .rev-edit:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.ct-quote .rev-list { display: grid; gap: 10px; margin: 0; }
+.ct-quote .rev-row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 14px; align-items: baseline; }
+.ct-quote .rev-row dt { font-size: 13px; color: var(--sl-ink3); }
+.ct-quote .rev-row dd { margin: 0; font-size: 14.5px; color: var(--sl-ink1); overflow-wrap: anywhere; }
+.ct-quote .rev-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.ct-quote .rev-tags li { padding: 3px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--sl-line2); font-size: 13px; color: var(--sl-ink2); }
+
+/* ---- step controls ---- */
+.ct-quote .wiz-nav { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--sl-line); }
+.ct-quote .wiz-back { margin-right: auto; }
+.ct-quote .btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 48px; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer; white-space: nowrap;
+  font: 600 15px/1 var(--sl-f-text);
+  transition: transform 300ms var(--sl-e-out), box-shadow 300ms var(--sl-e-out), background-color 200ms, color 200ms;
+}
+.ct-quote .btn .ic { font-size: 16px; }
+.ct-quote .btn-primary { background: var(--sl-ink1); color: var(--sl-room); }
+.ct-quote .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 16px 34px -14px rgb(var(--sl-L) / 0.42); }
+.ct-quote .btn-primary:active { transform: translateY(0) scale(0.98); background: #dad9d5; }
+.ct-quote .btn-primary:disabled { opacity: 0.6; cursor: progress; transform: none; box-shadow: none; }
+.ct-quote .btn-ghost { background: transparent; color: var(--sl-ink1); box-shadow: inset 0 0 0 1px var(--sl-line2); }
+.ct-quote .btn-ghost:hover { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.5); }
+.ct-quote .btn:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 3px; }
+.ct-quote .wiz-back-ic { transform: scaleX(-1); }
+
+.ct-quote .form-note { margin-top: 16px; text-align: center; font-size: 13.5px; color: var(--sl-ink3); }
+.ct-quote .form-note a,
+.ct-quote .sent a { color: var(--sl-ink1); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.4); text-underline-offset: 0.25em; }
+
+/* ---- sent ---- */
+.ct-quote .sent { display: none; padding: 28px 6px; text-align: center; }
+.ct-quote .form.done .form-body,
+.ct-quote .form.done .wiz-head { display: none; }
+.ct-quote .form.done .sent { display: block; }
+.ct-quote .sent > .ic { display: block; margin: 0 auto 18px; font-size: 40px; color: var(--sl-ink1); }
+.ct-quote .sent h3 {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(22px, 2vw, 28px); line-height: 1.12; letter-spacing: -0.026em;
+  color: var(--sl-ink1); text-wrap: balance; margin-bottom: 12px;
+}
+.ct-quote .sent h3:focus { outline: none; }
+.ct-quote .sent p { max-width: 44ch; margin-inline: auto; font-size: 15px; color: var(--sl-ink2); }
+.ct-quote .sent .sent-note { margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--sl-line); font-size: 13.5px; color: var(--sl-ink3); }
+
+/* Panels enter from the direction of travel (--wiz-y, set by the wizard). */
+.ct-quote .wiz-panel.is-in,
+.ct-quote .cond.is-in { animation: ct-wiz-in 380ms var(--sl-e-out) backwards; }
+.ct-quote .cond.is-in { --wiz-y: -6px; }
+@keyframes ct-wiz-in {
+  from { opacity: 0; transform: translateY(var(--wiz-y, 10px)); }
+  to { opacity: 1; transform: none; }
+}
+.no-motion .ct-quote .wiz-panel,
+.no-motion .ct-quote .cond { animation: none !important; }
+.no-motion .ct-quote .wiz-fill { transition: none; }

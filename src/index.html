@@ -1,7 +1,6 @@
 ---
 layout: layouts/base.njk
 title: false
-legacy: false
 pageCss: home
 pageJs: home
 prepaint: home/prepaint.njk
@@ -11,14 +10,18 @@ themeColor: "#0B0B0B"
   The Screen Light homepage (Phase 3, locked at bf08bb6), in its static-first
   production form: every section is complete, readable HTML from production
   data, before any motion. Each section lives in _includes/home/.
+
+  The homepage sells and routes; it does not hold every detail. Each section
+  below names what is on offer and links to the page that owns the rest.
 -#}
 <main id="main">
 {% include "home/hero-work.njk" %}
-{% include "home/build.njk" %}
-{% include "home/process.njk" %}
+{% include "home/offer.njk" %}
 {% include "home/prices.njk" %}
 {%- set fsVariant = "home" %}
+{%- set fsHref = "#quote" %}
 {% include "components/founders-special.njk" %}
-{% include "home/terms.njk" %}
+{% include "home/builds.njk" %}
+{% include "home/process.njk" %}
 {% include "home/close.njk" %}
 </main>

@@ -7,13 +7,13 @@
     "promise": "A branded site that represents your business around the clock.",
     "blurb": "The core build. Three packages, each a one-time price agreed before I start.",
     "intro": [
-      "Most people looking for a business like yours will decide whether to call you before they ever speak to you. They will do it on a phone, in under a minute, from a search result. A business website exists to win that minute.",
-      "That means the essentials come first: what you do, where you are, what it costs, and how to get hold of you. Everything else is arranged around those four.",
-      "Every build is custom-coded rather than assembled from a template, which is why it loads fast on mobile data and why changing something later does not mean fighting a page builder."
+      "A business website exists to win the minute when someone finds you on their phone and decides whether to call.",
+      "The essentials come first: what you do, where you are, what it costs and how to reach you.",
+      "Every site is custom-coded, not built from a template, so it loads fast on mobile and stays easy to change."
     ],
     "includes": [
-      "Home, services, about and contact pages",
-      "Contact and quote forms that reach your inbox",
+      "The pages your package allows, 3, 5 or 7 in total",
+      "A contact form that reaches your inbox",
       "Google Maps, hours and click to call",
       "On-page SEO built in, not sold back to you",
       "Hosting, SSL and backups on your care plan",
@@ -29,7 +29,7 @@
       },
       {
         "q": "Who owns the site when it is done?",
-        "a": "You do, and you own the domain outright because you bought it in your own name. The care plan covers hosting and updates, not custody of your own business."
+        "a": "Once the project is paid in full, the final in-scope site is yours. You own the domain outright because you bought it in your own name. The care plan covers hosting and updates, not custody of your own business."
       },
       {
         "q": "Why is a care plan required?",
@@ -51,9 +51,9 @@
     "promise": "Everything you offer, on one page a customer can actually read.",
     "blurb": "Food, nails, detailing, lawn care. Any business with a list.",
     "intro": [
-      "A printed menu photographed and uploaded as a PDF is the most common mistake a small business makes online. It is unreadable at arm's length on a phone, invisible to Google, and out of date the day a price changes.",
-      "A real menu or services page is text. It scales to the screen, it can be searched, and changing a price takes a minute instead of a reprint. It works exactly the same whether you are listing tacos, nail treatments, detailing packages or lawn services.",
-      "Past about 20 items the job changes shape: it needs categories, filtering and a layout that survives scrolling. That is where the complex price applies, and it is the only thing that moves it."
+      "A photographed PDF menu is unreadable on a phone, invisible to Google and wrong the day a price changes.",
+      "A real menu or services page is text. It fits any screen, can be searched, and a price change takes a minute.",
+      "Past about 20 items it needs categories and filtering. That is the complex price, and the only thing that moves it."
     ],
     "includes": [
       "Every item as real text, not an image of text",
@@ -70,13 +70,27 @@
           "label": "Simple",
           "price": 150,
           "note": "A list you already have written, under 20 items.",
-          "addon": { "class": "Page add-on", "price": 125, "packages": ["standard", "complete"] }
+          "addon": {
+            "class": "Page add-on",
+            "price": 125,
+            "packages": [
+              "standard",
+              "complete"
+            ]
+          }
         },
         {
           "label": "Complex",
           "price": 275,
           "note": "20+ items, categories, prices and photography.",
-          "addon": { "class": "Power feature", "price": 225, "packages": ["standard", "complete"] }
+          "addon": {
+            "class": "Power feature",
+            "price": 225,
+            "packages": [
+              "standard",
+              "complete"
+            ]
+          }
         }
       ],
       "factors": [
@@ -143,9 +157,9 @@
     "promise": "Turn a big job enquiry into a lead you can actually follow up.",
     "blurb": "Lead capture for the jobs that need a conversation first.",
     "intro": [
-      "The jobs worth the most are the ones that need a conversation first: a wedding, a fleet, a full-property contract. Those enquiries arrive as a phone call you miss, or a message with none of the detail you need to quote.",
-      "A catering or quote page asks the right questions up front. You open your inbox to a date, a headcount and a budget instead of the word \"hi\".",
-      "The complex version is the one where the page also sells: your packages laid out, what each includes, and pricing tiers underneath them."
+      "The biggest jobs need a conversation first, and those enquiries often arrive as a missed call or a message with no detail.",
+      "A quote page asks the right questions up front, so you open your inbox to a date, a headcount and a budget.",
+      "The complex version also sells: your packages, what each includes, and pricing tiers."
     ],
     "includes": [
       "A form that asks what you need in order to quote",
@@ -225,9 +239,9 @@
     "promise": "Let clients book straight from your site, at any hour, without phone tag.",
     "blurb": "Calendly, Square, Booksy or Vagaro, wired into the site properly.",
     "intro": [
-      "Every booking made by phone costs you a call, and every call you miss costs you the booking. Someone deciding at nine at night will book the business that lets them and leave a voicemail for the one that does not.",
-      "I connect the booking system to your site so the availability people see is the availability you actually have, and so the booking buttons sit where someone has just decided to act rather than three scrolls below it.",
-      "If you take deposits or payment at the time of booking, that is a further $150 on top of either option. It is the part that stops no-shows, and it is worth costing separately rather than burying."
+      "Every booking made by phone costs a call, and every missed call costs a booking.",
+      "I connect your booking system to your site so people see your real availability, with the booking buttons where they decide.",
+      "Deposits or payment at booking are a further $150 on either option. It is the part that stops no-shows."
     ],
     "includes": [
       "Your platform embedded so it looks like part of the site",
@@ -328,9 +342,9 @@
     "blurb": "Already have a logo? I prepare it for the web. No redesign.",
     "noProcess": true,
     "intro": [
-      "Plenty of businesses already have a logo, but only as a screenshot, a small image or a Facebook profile picture. It looks fine there and soft or jagged on a website.",
-      "This is the tidy-up. I take the logo you have and prepare it to load quickly, sit properly on the page and show up as the little icon in a browser tab. The logo itself is not redesigned or restyled.",
-      "How far it can go depends on the artwork you send. A clean vector file gives the best result, a small image can only be prepared so far, and I will tell you which one you have before I start."
+      "You have a logo, but only as a screenshot or a profile picture. On a website it looks soft or jagged.",
+      "I prepare it to load fast, sit properly on the page and show as the browser-tab icon. The logo itself is not redesigned.",
+      "A clean vector file gives the best result. I will tell you what you have before I start."
     ],
     "includes": [
       "Web-ready logo files, prepared for your site",
@@ -374,10 +388,9 @@
     "blurb": "Need a straightforward new logo? Two concepts, delivered web-ready.",
     "noProcess": true,
     "intro": [
-      "For the business with a name and no mark. This is a clean, considered logo built from type and simple shapes: a wordmark, a monogram, a typography-based mark or a simple geometric or custom symbol.",
-      "You get two genuinely different concepts to choose between, not one idea in two colors. Pick a direction, send one round of revisions and I finish it and deliver the files.",
-      "It is designed to sit next to a website, so it has to read at small sizes, on light and dark backgrounds and as a favicon.",
-      "If what you have in mind is more elaborate, such as a detailed emblem or a fuller set of variants, that is Custom Identity."
+      "A clean logo for the business with a name and no mark, built from type and simple shapes.",
+      "You get two different concepts. Pick one, send one round of revisions, and I finish it and deliver the files.",
+      "It is designed to read at small sizes, on light and dark backgrounds and as a favicon. Need a detailed emblem or a fuller set of variants? That is Custom Identity."
     ],
     "includes": [
       "Two distinct logo concepts",
@@ -394,8 +407,14 @@
       "unit": "one-time, standalone",
       "note": "Two concepts and one revision round are included. A round is one consolidated list of changes.",
       "extras": [
-        { "label": "Additional concept", "price": 35 },
-        { "label": "Additional revision round", "price": 50 }
+        {
+          "label": "Additional concept",
+          "price": 35
+        },
+        {
+          "label": "Additional revision round",
+          "price": 50
+        }
       ]
     },
     "turnaroundNote": "Timing is agreed when we start. It depends on how quickly you choose a concept and send your revision notes.",
@@ -432,9 +451,9 @@
     "blurb": "Need something more custom? Developed marks and expanded variants, quoted to fit.",
     "noProcess": true,
     "intro": [
-      "For the business whose identity has to do more work: a constructed mark rather than a simple wordmark, an emblem or badge, a logo that adapts cleanly across sizes and layouts.",
-      "It is scoped to the job. We talk through what you need, I quote it and you approve the figure before I start.",
-      "The work is done in-house and built for digital use: your website, social profiles, listings and the files that go with them."
+      "For a business whose identity has to do more: a constructed mark, an emblem or badge, a logo that works across sizes and layouts.",
+      "It is scoped to the job. We talk it through, I quote it, and you approve the price before I start.",
+      "Built in-house for digital use: your website, social profiles and listings, with the files that go with them."
     ],
     "includes": [
       "A custom-constructed mark, more developed than the Starter Kit",
@@ -493,8 +512,8 @@
     "blurb": "Google Business Profile and Facebook covers, plus one square graphic.",
     "noProcess": true,
     "intro": [
-      "When someone looks you up, the first thing they see is often a cover image rather than your site. A blank or mismatched one makes a business look unfinished.",
-      "This set gives your Google Business Profile and Facebook page a matching cover, plus one square graphic you can reuse for posts. It is built around your existing logo and colors, so every profile reads as the same business."
+      "When someone looks you up, they often see a cover image before your site. A blank or mismatched one looks unfinished.",
+      "You get a matching cover for your Google Business Profile and Facebook page, plus one square graphic for posts, built from your logo and colors."
     ],
     "includes": [
       "Google Business Profile cover",
@@ -533,9 +552,9 @@
     "promise": "The site stays hosted, secure, backed up and current, without you touching it.",
     "blurb": "Required with every build. $45 or $95 a month.",
     "intro": [
-      "Hours change. Prices change. You get better photos. A site still showing last year's information does more damage than no site at all, because it teaches people your business cannot be trusted on detail.",
-      "A care plan is what keeps that from happening, and it is required with every build. That is not an upsell: a site nobody hosts, patches or backs up is not a working site, and I am not willing to hand over something that will quietly break six months later.",
-      "Host keeps the site online and current. Grow adds real monthly work on top: four updates, faster turnaround, and your Google Business Profile managed rather than just created."
+      "A site with last year's hours and prices does more harm than no site.",
+      "A care plan keeps it current and is required with every build. A site nobody hosts, patches or backs up is not a working site.",
+      "Host keeps the site online and current. Grow adds monthly work: four updates, faster turnaround and a managed Google Business Profile."
     ],
     "includes": [
       "Hosting, SSL and daily backups",
@@ -555,7 +574,7 @@
       },
       {
         "q": "How do I request a change?",
-        "a": "You message me. You work directly with ALVSolutions — no ticket queue or outsourced support."
+        "a": "You message me. You work directly with ALVSolutions, with no ticket queue or outsourced support."
       },
       {
         "q": "What if I need more than my plan covers?",
@@ -563,7 +582,7 @@
       },
       {
         "q": "Can I cancel?",
-        "a": "After the 3-month minimum, with 30 days' notice. Cancellation takes effect at the end of your current billing period, and that period is not refunded. After that I stop hosting, maintaining and monitoring the site. The site is yours either way: nothing is deleted, and I will help you move it to hosting you control, though any third-party cost to do that is yours."
+        "a": "After the 3-month minimum, with 30 days' notice. Cancellation takes effect at the end of your current billing period, and that period is not refunded. After that I stop hosting, maintaining and monitoring the site. You get a 30-day handoff window after cancellation takes effect, followed by a 30-day archive window. After the archive window ends I am no longer required to keep archived site files or backups, and recovery is not guaranteed. One basic handoff to a compatible hosting environment is included. Ownership of the finished site transfers to you once the project is paid in full. A complex migration may need a quote you approve first, and any third-party cost is yours."
       }
     ],
     "related": [
@@ -581,9 +600,9 @@
     "promise": "The listing that shows up in the map pack, set up in your own account.",
     "blurb": "$200 standalone. Setup assistance in Standard and Complete, managed on Grow.",
     "intro": [
-      "For a local business, the Google Business Profile is often doing more work than the website is. It is the box with your hours, your photos, your reviews and a call button, and it appears above the search results rather than in them.",
-      "I set it up inside your own Google account, so it belongs to you and nobody has to ask my permission to change it later. Categories, service areas, hours, description, photos and the first review request all get handled.",
-      "Google controls verification timelines and anyone who promises you a date on that is guessing. What I can control is that everything is correct and complete the moment it goes live."
+      "Your Google Business Profile shows your hours, photos, reviews and a call button above the search results.",
+      "I set it up inside your own Google account, so it belongs to you. Categories, service areas, hours, description, photos and the first review request are all handled.",
+      "Google controls verification timelines, so I cannot promise a date. I make sure everything is correct the moment it goes live."
     ],
     "includes": [
       "Created or claimed in your own Google account",
@@ -629,9 +648,9 @@
     "promise": "Cards that match the site exactly, so your brand looks the same on screen and in hand.",
     "blurb": "$85 basic, $165 premium. Same brand as the site.",
     "intro": [
-      "A card designed separately from the website always looks like it. Different blue, different typeface, a logo at a slightly different weight. Small differences that add up to a business that looks improvised.",
-      "Designing the card against the same brand as the site means the person who found you online and the person handed your card meet the same business.",
-      "Basic is design only: you get files prepared for professional printing to take to the printer you choose, who confirms final specifications and proofs. Premium is front and back on thick stock with a QR code, printed and delivered to you."
+      "A card designed apart from your website looks like it: a different blue, a different typeface, a logo at another weight.",
+      "I design it against the same brand as the site, so people who find you online and people handed your card meet the same business.",
+      "Basic is design only: print-ready files for the printer you choose, who confirms specifications and proofs. Premium is front and back on thick stock with a QR code, printed and delivered to you."
     ],
     "includes": [
       "Designed against your site's exact brand",
@@ -648,7 +667,11 @@
           "label": "Basic",
           "price": 85,
           "note": "Front design, files prepared for professional printing.",
-          "addon": { "includedIn": ["complete"] },
+          "addon": {
+            "includedIn": [
+              "complete"
+            ]
+          },
           "shot": {
             "caption": "One face. Logo, name and the three ways to reach you.",
             "faces": [
@@ -752,9 +775,9 @@
     "blurb": "Coming soon. Not open for orders yet.",
     "soon": true,
     "intro": [
-      "A branded shirt is the cheapest advertising a service business owns. A crew in matching shirts on a driveway is seen by every neighbour on the street, and it is the difference between looking like a company and looking like a guy with a van.",
-      "Same rule as the cards: designed against the brand the site already uses, so it reads as one business rather than three.",
-      "This one is not open for orders yet. The pricing is not settled and I would rather say that than invent a number. Ask me about it and I will tell you where it stands."
+      "A branded shirt is the cheapest advertising a service business owns. Matching shirts make a crew look like a company.",
+      "It is designed against the same brand as your site and cards, so it reads as one business.",
+      "Not open for orders yet. Pricing is not settled, so there is no number. Ask me where it stands."
     ],
     "includes": [
       "Logo, business name and brand colors",

@@ -1,0 +1,51 @@
+{#
+  THE FOUR BUILDS: the packages, pre-planned for a kind of business. The
+  same picker as the packages above (prices.njk), at a smaller scale: the
+  key light glides to the build under attention and the glowing selection
+  bar to the build chosen (src/home/picker.ts). One short line each, from
+  bundles.json `brief`; what each includes lives on the builds page.
+
+  Each build carries its trade's own hue (bundles.json `hue`): its icon,
+  and a tint in the key light and the selection bar's glow while it is
+  under attention or chosen. The bar's core and all type stay white.
+
+  A native radio group submitting by GET to /contact/?package=<build>, the
+  first build checked. #build-<slug> still lands on (and, with JS, selects)
+  that build, so older deep links keep working.
+#}
+<section class="h-builds h-wrap" id="build" aria-labelledby="builds-h">
+  <div class="h-builds-head">
+    <h2 id="builds-h" class="h-h3">Or start from a build made for your trade.</h2>
+    <p class="h-builds-lede">Four kinds of business, planned in advance. Pick the closest one.</p>
+  </div>
+
+  <form class="h-pick-form" action="/contact/" method="get">
+    <fieldset class="h-pick-set">
+      <legend class="alv-sr-only">Choose a build for your type of business</legend>
+      <div class="h-pick h-pick--builds" data-pick>
+        <span class="key-cone" aria-hidden="true"></span>
+        <span class="key-pool" aria-hidden="true"></span>
+        <div class="h-pick-row" data-pick-row>
+          {%- for b in bundles %}
+          <label class="h-opt" id="build-{{ b.slug }}" data-opt="{{ b.slug }}" data-hue="{{ b.hue }}" style="--hue: {{ b.hue }}">
+            <input class="h-opt-input" type="radio" name="package" value="{{ b.slug }}"{% if loop.first %} checked{% endif %} />
+            <span class="h-opt-top">
+              <svg class="h-ic" aria-hidden="true"><use href="#i-{{ b.icon }}"/></svg>
+              <span class="h-opt-name">{{ b.shortName }}</span>
+            </span>
+            <span class="h-opt-price">{{ b.price | price | safe }}</span>
+            <span class="h-opt-for">{{ b.brief }}</span>
+            <span class="h-opt-state" aria-hidden="true"><span class="h-state-on">Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ b.shortName }}</span></span></span>
+          </label>
+          {%- endfor %}
+        </div>
+        <span class="h-pick-bar" aria-hidden="true"></span>
+      </div>
+    </fieldset>
+
+    <div class="h-pick-act">
+      <button class="alv-btn alv-btn--sm" type="submit">Start with this build</button>
+      <a class="alv-tlink" href="/builds/">What each build includes</a>
+    </div>
+  </form>
+</section>

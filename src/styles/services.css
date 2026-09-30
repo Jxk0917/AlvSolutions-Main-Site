@@ -1,0 +1,227 @@
+/* ============================================================
+   SERVICES (/services/)
+   Every service in four categories, beside a category rail. The rail's
+   lit bar (the site's bar) glides to the category being read; the key
+   light glides to the category under the pointer (services.ts). Each card
+   carries its own hue (--hue, from the page) as light on its surface -
+   a tinted top edge, a faint wash, its icon - and never on its type. A
+   spotlight in that hue glides to the card under attention. Shape rule
+   as /packages/: surfaces 10px, controls full pill. Imported by
+   interior.css.
+   ============================================================ */
+.sv-body {
+  display: grid; grid-template-columns: minmax(170px, 210px) minmax(0, 1fr); gap: clamp(28px, 4.4vw, 72px); align-items: start;
+  padding-block: clamp(24px, 4vh, 40px) clamp(48px, 7vh, 80px);
+  --sv-glide: 850ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+/* ---- the category rail ---- */
+.sv-rail {
+  position: sticky; top: calc(var(--alv-nav-h) + 32px); isolation: isolate;
+  box-shadow: inset 1px 0 0 var(--sl-line2); --i: 0; --n: 4;
+}
+.sv-rail-list { display: grid; grid-auto-rows: 1fr; margin: 0; padding: 0; list-style: none; }
+.sv-rail-list > li + li { box-shadow: inset 0 1px 0 var(--sl-line); }
+.sv-rail-a {
+  display: grid; gap: 3px; align-content: center; height: 100%; padding: 16px 0 16px 22px;
+  text-decoration: none; color: inherit; border-radius: 8px;
+}
+.sv-rail-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16.5px; letter-spacing: -0.014em; line-height: 1.15; color: var(--sl-ink2); transition: color 300ms; }
+.sv-rail-short { display: none; }
+.sv-rail-n { font-size: 13px; color: var(--sl-ink3); }
+.sv-rail-a:hover .sv-rail-name, .sv-rail-a[aria-current] .sv-rail-name { color: var(--sl-ink1); }
+.sv-rail-a:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.sv-rail-bar {
+  display: none; position: absolute; left: -0.5px; top: 0; width: 2px; height: calc(100% / var(--n)); pointer-events: none;
+  transform: translateY(calc(var(--i) * 100%)); transition: transform var(--sv-glide);
+}
+.sv-rail-bar::before { content: ""; position: absolute; inset: 16px 0; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); }
+.sv-rail.is-js .sv-rail-bar { display: block; }
+
+/* ---- spotlights (services.ts writes --sx --sy --sw --sh, --shue) ---- */
+.sv-spot {
+  position: absolute; left: 0; top: 0; width: var(--sw, 0px); height: var(--sh, 0px); display: none;
+  transform: translate(var(--sx, 0px), var(--sy, 0px)); opacity: 0; pointer-events: none;
+}
+.is-js > .sv-spot { display: block; }
+.is-lit > .sv-spot { opacity: 1; }
+.is-placed > .sv-spot { transition: transform var(--sv-glide), width var(--sv-glide), height var(--sv-glide), opacity 400ms; }
+.is-placed.is-snap > .sv-spot { transition: opacity 400ms; }
+.no-motion .sv-spot, .no-motion .sv-rail-bar { transition: none !important; }
+/* The rail: a wash from the bar's edge, a hairline of light along the top. */
+.sv-rail > .sv-spot {
+  z-index: -1; border-radius: 0 8px 8px 0;
+  background: radial-gradient(ellipse 110% 130% at 0% 50%, rgb(var(--sl-L) / 0.13), rgb(var(--sl-L) / 0.045) 55%, transparent 92%);
+  box-shadow: inset 0 1px 0 rgb(var(--sl-L) / 0.14), inset 0 -1px 0 rgb(var(--sl-L) / 0.05);
+}
+/* A grid: the key falls from the top edge of the card, in its own hue. */
+.sv-grid-wrap { position: relative; --shue: 245; }
+.sv-grid-wrap > .sv-spot {
+  z-index: 2; border-radius: 10px;
+  background: radial-gradient(ellipse 100% 62% at 50% 0%, oklch(0.93 0.06 var(--shue) / 0.15), oklch(0.85 0.08 var(--shue) / 0.05) 52%, transparent 88%);
+  box-shadow: inset 0 0 0 1px oklch(0.85 0.08 var(--shue) / 0.28), inset 0 1px 0 oklch(0.96 0.05 var(--shue) / 0.65);
+}
+
+/* ---- a category ---- */
+.sv-cat { scroll-margin-top: calc(var(--alv-nav-h) + 24px); }
+.sv-cat + .sv-cat { margin-top: clamp(48px, 7vh, 80px); padding-top: clamp(40px, 6vh, 64px); border-top: 1px solid var(--sl-line); }
+.sv-cat-head { display: grid; gap: 10px; margin-bottom: clamp(20px, 3vh, 30px); }
+.sv-cat-head .int-lede { max-width: 58ch; }
+
+.sv-grid {
+  display: grid; grid-template-columns: repeat(var(--cols, 3), minmax(0, 1fr)); gap: 12px;
+  margin: 0; padding: 0; list-style: none;
+}
+
+/* ---- a service card ---- */
+.sv-card {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
+  min-height: 236px; padding: clamp(20px, 2vw, 26px);
+  border-radius: 10px; background: #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+  transition: background-color 400ms var(--sl-e-out), box-shadow 400ms var(--sl-e-out);
+}
+.sv-card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, oklch(0.84 0.09 var(--hue, 0)) 50%, transparent 96%);
+  opacity: 0.4; transition: opacity 400ms var(--sl-e-out);
+}
+.sv-card::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 90% 55% at 0% 0%, oklch(0.7 0.12 var(--hue, 0) / 0.065), transparent 72%);
+  opacity: 0.85; transition: opacity 400ms var(--sl-e-out);
+}
+.sv-card:hover, .sv-card:focus-within { background: #111; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -44px rgb(0 0 0 / 0.95); }
+.sv-card:is(:hover, :focus-within)::before, .sv-card:is(:hover, :focus-within)::after { opacity: 1; }
+.sv-card-ic { width: 22px; height: 22px; color: oklch(0.86 0.07 var(--hue, 0)); }
+.sv-card-h {
+  padding-top: 18px;
+  font-family: var(--sl-f-brand); font-weight: 600; font-optical-sizing: auto;
+  font-size: clamp(18px, 1.4vw, 20.5px); line-height: 1.15; letter-spacing: -0.018em; color: var(--sl-ink1); text-wrap: pretty;
+}
+/* The heading's link covers the whole card. */
+.sv-card-link { color: inherit; text-decoration: none; }
+.sv-card-link::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; }
+.sv-card-link:focus-visible { outline: none; }
+.sv-card:has(.sv-card-link:focus-visible) { outline: 2px solid var(--sl-ink1); outline-offset: 3px; }
+.sv-card-body { font-size: 14.5px; color: var(--sl-ink2); max-width: 40ch; }
+.sv-card-foot {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 12px;
+  width: 100%; margin-top: auto; padding-top: 14px; border-top: 1px solid var(--sl-line);
+}
+.sv-card-price {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: 21px; letter-spacing: -0.024em; line-height: 1.1;
+  color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.sv-pre, .sv-per { font-family: var(--sl-f-text); font-weight: 400; font-size: 13px; letter-spacing: 0; color: var(--sl-ink3); }
+.sv-soon { font-family: var(--sl-f-text); font-weight: 500; font-size: 14px; letter-spacing: 0; color: var(--sl-ink2); }
+.sv-card-pk { font-size: 12.5px; color: var(--sl-ink3); }
+.sv-card-go {
+  position: absolute; top: clamp(20px, 2vw, 26px); right: clamp(20px, 2vw, 26px); width: 18px; height: 18px;
+  color: var(--sl-ink3); transition: color 300ms, transform 400ms var(--sl-e-out);
+}
+.sv-card:is(:hover, :focus-within) .sv-card-go { color: var(--sl-ink1); transform: translateX(3px); }
+/* Not open for orders: the same card, with its light turned down. */
+.sv-card.is-soon::after { opacity: 0.4; }
+.sv-card.is-soon .sv-card-ic { color: var(--sl-ink3); }
+
+/* ---- the website: the widest surface, in the key light ---- */
+.sv-lead {
+  grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
+  gap: 28px clamp(28px, 4vw, 64px); align-items: end; min-height: 0; padding: clamp(24px, 3vw, 40px);
+  --kx: 26; --kw: 80; --ki: 0.7; --kpy: 96;
+}
+.sv-lead > .key-cone { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.sv-lead-copy { display: grid; gap: 12px; justify-items: start; }
+.sv-lead .sv-card-ic { width: 28px; height: 28px; }
+.sv-lead-h {
+  padding-top: 20px; font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(28px, 2.7vw, 40px); line-height: 1.02; letter-spacing: -0.034em; color: var(--sl-ink1);
+}
+.sv-lead .sv-card-body { font-size: 15.5px; max-width: 42ch; }
+.sv-lead-more { position: relative; z-index: 3; margin-top: 4px; font-size: 14.5px; }
+.sv-lead-tiers { position: relative; z-index: 3; }
+.sv-lead-k { font-size: 13px; color: var(--sl-ink3); margin-bottom: 4px; }
+/* The three packages on one floor line. The site's lit bar lies under the
+   recommended one and glides to whichever the pointer or focus is on. */
+.sv-tiers {
+  position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--sl-line2); --i: 1;
+}
+.sv-tiers::after {
+  content: ""; position: absolute; left: 0; bottom: -1.5px; width: calc(100% / 3); height: 2px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 10%, var(--sl-bar) 10%, var(--sl-bar) 90%, transparent 90%);
+  filter: drop-shadow(0 0 4px oklch(0.92 0.08 245 / 0.8)) drop-shadow(0 0 10px oklch(0.8 0.15 245 / 0.45));
+  transform: translateX(calc(var(--i) * 100%)); transition: transform var(--sv-glide);
+}
+.sv-tiers:has(li:nth-child(1) :is(:hover, :focus-visible)) { --i: 0; }
+.sv-tiers:has(li:nth-child(2) :is(:hover, :focus-visible)) { --i: 1; }
+.sv-tiers:has(li:nth-child(3) :is(:hover, :focus-visible)) { --i: 2; }
+.no-motion .sv-tiers::after { transition: none; }
+.sv-tier { display: grid; gap: 2px; padding: 14px 10% 16px; text-decoration: none; color: inherit; border-radius: 8px; }
+.sv-tier-name { font-size: 14px; color: var(--sl-ink2); transition: color 300ms; }
+.sv-tier-price {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(24px, 2.2vw, 32px); letter-spacing: -0.032em; line-height: 1.05;
+  color: var(--sl-ink2); font-variant-numeric: tabular-nums; transition: color 300ms;
+}
+.sv-tier-pages { font-size: 12.5px; color: var(--sl-ink3); }
+.sv-tier.is-rec :is(.sv-tier-name, .sv-tier-price),
+.sv-tier:is(:hover, :focus-visible) :is(.sv-tier-name, .sv-tier-price) { color: var(--sl-ink1); }
+/* While another package holds the bar, the recommended one steps back. */
+.sv-tiers:has(.sv-tier:not(.is-rec):is(:hover, :focus-visible)) .sv-tier.is-rec :is(.sv-tier-name, .sv-tier-price) { color: var(--sl-ink2); }
+.sv-tier:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+
+/* ---- two ways to buy: two halves, no cards ---- */
+.sv-buy { padding-block: clamp(48px, 7vh, 80px); border-top: 1px solid var(--sl-line); }
+.sv-buy .int-h2 { margin-bottom: clamp(20px, 3.4vh, 32px); }
+.sv-ways { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--sl-line2); }
+.sv-way { display: grid; gap: 10px; align-content: start; justify-items: start; padding: 26px clamp(24px, 4vw, 56px) 8px 0; }
+.sv-way + .sv-way { padding-left: clamp(24px, 4vw, 56px); box-shadow: inset 1px 0 0 var(--sl-line); }
+.sv-way > .int-ic { color: var(--sl-ink2); }
+.sv-way-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 20px; letter-spacing: -0.016em; color: var(--sl-ink1); }
+.sv-way p { font-size: 15px; color: var(--sl-ink2); max-width: 46ch; }
+.sv-way .alv-tlink { margin-top: 4px; font-size: 14.5px; }
+
+@media (max-width: 1180px) {
+  .sv-grid--4 { --cols: 2 !important; }
+  .sv-lead { grid-template-columns: minmax(0, 1fr); align-items: start; }
+}
+@media (max-width: 900px) {
+  .sv-body { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-top: 8px; }
+  /* The rail turns across the top and stays under the nav; its bar lies
+     along its foot. Short names, so all four fit a phone. */
+  .sv-rail {
+    top: var(--alv-nav-h); z-index: 20; margin-inline: calc(-1 * var(--sl-gutter));
+    background: rgb(11 11 11 / 0.9); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: inset 0 -1px 0 var(--sl-line2);
+  }
+  .sv-rail-list { grid-auto-rows: auto; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); padding-inline: var(--sl-gutter); }
+  .sv-rail-list > li + li { box-shadow: none; }
+  .sv-rail-a { padding: 15px 4px; justify-items: center; text-align: center; }
+  .sv-rail-long, .sv-rail-n { display: none; }
+  .sv-rail-short { display: inline; }
+  .sv-rail-name { font-size: 14.5px; }
+  .sv-rail-bar {
+    left: var(--sl-gutter); top: auto; bottom: 0; width: calc((100% - 2 * var(--sl-gutter)) / var(--n)); height: 2px;
+    transform: translateX(calc(var(--i) * 100%));
+  }
+  .sv-rail-bar::before { inset: 0 14px; }
+  .sv-rail.is-stuck::before {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--alv-nav-h); z-index: -1; pointer-events: none;
+    background: var(--sl-room);
+  }
+  .sv-rail > .sv-spot { display: none !important; }
+  .sv-cat { scroll-margin-top: calc(var(--alv-nav-h) + 72px); }
+}
+@media (max-width: 760px) {
+  .sv-grid, .sv-grid--4 { --cols: 1 !important; gap: 10px; }
+  .sv-card { min-height: 0; }
+  .sv-card-h { padding-top: 12px; }
+  .sv-tier { padding-inline: 4px; }
+  .sv-ways { grid-template-columns: minmax(0, 1fr); }
+  .sv-way { padding-right: 0; padding-bottom: 22px; }
+  .sv-way + .sv-way { padding-left: 0; box-shadow: inset 0 1px 0 var(--sl-line); }
+  /* No card spotlight on a phone: a tap has no hover to follow. */
+  .sv-grid-wrap > .sv-spot { display: none !important; }
+}

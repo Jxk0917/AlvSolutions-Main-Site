@@ -14,6 +14,7 @@
   <div class="dev-floor" aria-hidden="true"><img class="dev-refl" src="{{ s.src }}" alt="" loading="lazy" decoding="async"{% if crop %} style="aspect-ratio: {{ crop }}"{% endif %} /></div>
   <span class="dev-contact" aria-hidden="true"></span>
   <div class="dev-glass"{% if crop %} style="aspect-ratio: {{ crop }}"{% endif %}>
+    {%- if phone %}<div class="dev-island" aria-hidden="true"></div><div class="dev-home" aria-hidden="true"></div>{% else %}<div class="dev-chrome" aria-hidden="true"><i></i><i></i><i></i><b></b></div><div class="dev-load" aria-hidden="true"></div>{% endif %}
     <img src="{{ s.src }}"{% if s.small %} srcset="{{ s.small }} 720w, {{ s.src }} {{ s.width }}w" sizes="{{ sizes or '(min-width: 761px) 58vw, 100vw' }}"{% endif %} width="{{ s.width }}" height="{{ s.height }}" alt="{{ s.alt }}" loading="lazy" decoding="async" />
     <span class="dev-off"></span><span class="dev-sheen"></span><span class="dev-catch"></span>
   </div>

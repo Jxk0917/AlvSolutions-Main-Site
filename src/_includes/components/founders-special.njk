@@ -2,13 +2,19 @@
   Founders Special. Shapes of one offer, set with `fsVariant` before including:
     "announce"  the compact panel (legacy; no longer placed in any hero)
     "callout"   the full statement beside the packages (legacy pages)
-    "home"      the Screen Light homepage's own section after pricing: three
-                spot markers, one per founding spot, lit while open (read
-                from site.foundersSpecial.spots) - never the hero
+    "home"      the Screen Light homepage's one-line notice between the
+                three packages and the four builds: minimal but lit, with
+                the open-spot count (site.foundersSpecial.spots) - never
+                the hero
+    "packages"  the same one-line notice on /packages/, between the three
+                packages and the four builds, on the interior measure
+    "pricing"   the Screen Light /pricing/ page's plain reference version:
+                the same spot markers and terms, without the homepage's key
+                light (it is one section among many on a reference page)
 
   The open-spot count is read from site.foundersSpecial.spots, so the chip in
   every placement is one hand edit in site.json. A spot is only taken once the
-  Client Services Agreement is signed AND the 50% deposit has arrived; nobody
+  ALVSolutions Client Services Agreement is signed AND the 50% deposit has arrived; nobody
   updates the number on an inquiry. Setting it to 0 renders nothing at all.
 
   Both CTAs point at the plain contact route on purpose. No price, percentage
@@ -28,27 +34,32 @@
   <a class="btn btn-ghost" href="/contact/">Start a project</a>
 </aside>
 
-{%- elif fsVariant == "home" %}
-<section class="h-founders h-wrap" id="founders" aria-labelledby="founders-h">
-  <span class="key-cone" aria-hidden="true"></span>
-  <span class="key-pool" aria-hidden="true"></span>
-  <div class="h-founders-copy">
-    <h2 id="founders-h" class="h-founders-h">Founders Special</h2>
-    <p class="h-founders-lead">To celebrate the launch of ALVSolutions, the first 3 new clients can receive special founding-client pricing.</p>
+{%- elif fsVariant == "home" or fsVariant == "packages" %}
+<section class="h-founders {{ 'h-wrap' if fsVariant == 'home' else 'int-wrap' }}" id="founders" aria-labelledby="founders-h">
+  <div class="h-fs-note">
+    <h2 id="founders-h" class="h-fs-name">Founders Special</h2>
+    <p class="h-fs-text">The first 3 new clients can receive special founding-client pricing. <span class="h-fs-count">{{ fsChip | capitalize }}.</span></p>
+    <a class="alv-tlink h-fs-link" href="{{ fsHref or '/contact/' }}">Start a project</a>
   </div>
-  <div class="h-spots-wrap">
-    <div class="h-spots" aria-hidden="true" data-spots>
-      {%- for i in range(3) %}
-      <span class="h-spot{% if i < fsSpots %} is-open{% endif %}" style="--i: {{ i }}"></span>
-      {%- endfor %}
-    </div>
-    <p class="h-spots-count">{{ fsChip }}</p>
-  </div>
-  <div class="h-founders-terms">
-    <p>A spot is secured once the Client Services Agreement is signed and the required 50% project deposit is received.</p>
+  <p class="h-fs-terms">A spot is secured once the ALVSolutions Client Services Agreement is signed and the required 50% project deposit is received.</p>
+</section>
+
+{%- elif fsVariant == "pricing" %}
+<div class="int-founders">
+  <div class="int-founders-copy">
+    <p class="int-head-lede">To celebrate the launch of ALVSolutions, the first 3 new clients get special founding-client pricing - the same service and scope, at a lower project price. No public percentage or dollar figure; it is quoted per project.</p>
+    <p class="int-founders-terms">A spot is secured once the ALVSolutions Client Services Agreement is signed and the required 50% deposit is received.</p>
     <a class="alv-btn" href="/contact/">Start a project</a>
   </div>
-</section>
+  <div class="int-spots-wrap">
+    <div class="int-spots" aria-hidden="true">
+      {%- for i in range(3) %}
+      <span class="int-spot{% if i < fsSpots %} is-open{% endif %}"></span>
+      {%- endfor %}
+    </div>
+    <p class="int-spots-count">{{ fsChip }}</p>
+  </div>
+</div>
 
 {%- else %}
 <section class="founders founders-callout reveal" aria-labelledby="founders-heading">
@@ -66,7 +77,7 @@
     <p class="founders-limit">Limited to 3 new-client spots.</p>
     <p class="rail-foot">
       <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
-      <span>A spot is secured once the Client Services Agreement is signed and the required 50% project deposit is received.</span>
+      <span>A spot is secured once the ALVSolutions Client Services Agreement is signed and the required 50% project deposit is received.</span>
     </p>
     <a class="btn btn-primary" href="/contact/">Start your project</a>
   </div>

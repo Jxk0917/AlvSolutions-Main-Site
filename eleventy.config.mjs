@@ -27,11 +27,20 @@ export default function (eleventyConfig) {
       esbuild.build({
         // site: shared on every page. home: the homepage's opening and
         // reel (GSAP), loaded only through the page's `pageJs` front matter.
-        entryPoints: { site: "src/scripts/site.ts", home: "src/scripts/home.ts" },
+        // packages: the package picker on /packages/. services: the category rail and
+        // spotlights on /services/. service: every /services/<slug>/
+        // page (level chart, card, spotlights, scroll-lit process). pricing:
+        // the price list's category rail, row spotlights and lit prices.
+        // work: /work/ (What I build), each screen's light and its power-on.
+        // about: /about/ (the rail of points and the scroll-lit process).
+        // contact: /contact/ (the intake wizard, the road after it, the
+        // spotlights). doc: the policies, legal and package sub-pages
+        // (contents rail, spotlit grids). connect: the QR business-card page.
+        entryPoints: { site: "src/scripts/site.ts", home: "src/scripts/home.ts", packages: "src/scripts/packages.ts", services: "src/scripts/services.ts", service: "src/scripts/service.ts", pricing: "src/scripts/pricing.ts", work: "src/scripts/work.ts", about: "src/scripts/about.ts", contact: "src/scripts/contact.ts", doc: "src/scripts/doc.ts", connect: "src/scripts/connect.ts" },
         outdir: "src/assets/dist",
         bundle: true,
         // iife, not esm: the site loads these as plain <script defer>,
-        // the same convention as the existing assets/main.js.
+        // the same convention throughout.
         format: "iife",
         target: "es2020",
         minify: true,
@@ -52,7 +61,7 @@ export default function (eleventyConfig) {
     ]);
   });
 
-  // styles.css / main.js / shader.js and the images, copied untouched.
+  // The images, fonts and other static assets, copied untouched.
   // Eleventy only processes *.html/*.njk; everything else in the input tree
   // needs to be named here or it never reaches the output.
   eleventyConfig.addPassthroughCopy("src/assets");
@@ -118,7 +127,7 @@ eleventyConfig.addPassthroughCopy({ "Demo Detailer": "demo-detailer" });
   // the offer itself.
   eleventyConfig.addFilter("sitemapPriority", (url) => {
     if (url === "/") return "1.0";
-    if (["/services/", "/packages/", "/pricing/", "/work/", "/about/", "/contact/"].includes(url)) return "0.8";
+    if (["/services/", "/packages/", "/builds/", "/pricing/", "/work/", "/about/", "/contact/"].includes(url)) return "0.8";
     if (url === "/policies/") return "0.5";
     if (url.startsWith("/legal/")) return "0.3";
     return "0.6";

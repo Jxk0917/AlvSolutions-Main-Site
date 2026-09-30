@@ -1,0 +1,53 @@
+{#
+  One service as a card, shared by /services/ and the "Often bought with
+  this" grid on every service page. Import it `with context` so the card
+  can read services, packages and careplans:
+
+    {% from "components/sv-card.njk" import card, hueFor with context %}
+
+  hueFor(s) is the service's own light: its category's base hue, stepped
+  down 15 degrees per place in that category, so the whole list reads as
+  one spectrum (Websites violet-blue, Care teal, Branding yellow-green,
+  Print warm). The same number everywhere a service appears.
+
+  The whole card is its link; the foot reads the service's own pricing
+  block, so a card can never quote a figure its page does not. Where a
+  package includes the service, the foot says which.
+#}
+{%- macro hueFor(s) -%}
+{%- set base = { web: 285, care: 175, brand: 100, print: 40 } -%}
+{%- set idx = 0 -%}
+{%- for x in services | byFamily(s.family) -%}{% if x.slug == s.slug %}{% set idx = loop.index0 %}{% endif %}{%- endfor -%}
+{{ base[s.family] - idx * 15 }}
+{%- endmacro -%}
+
+{%- macro card(s, extraClass = "") %}
+{%- set cardText = {
+  "care-plans": "Hosting, security, backups and edits, handled every month. Required with every build.",
+  "google-business-profile": "The listing in the map pack, set up in your own Google account so it stays yours.",
+  "business-cards": "Designed against the same brand as your site, so both read as one business.",
+  "shirt-design": "Crew shirts matched to your brand. Not open for orders yet."
+} %}
+{%- set p = s.pricing %}
+<li class="sv-card{% if s.soon %} is-soon{% endif %}{% if extraClass %} {{ extraClass }}{% endif %}" style="--hue: {{ hueFor(s) | trim }}">
+  <svg class="int-ic sv-card-ic" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>
+  <h3 class="sv-card-h"><a class="sv-card-link" href="/services/{{ s.slug }}/">{{ s.name }}</a></h3>
+  <p class="sv-card-body">{{ cardText[s.slug] or s.blurb }}</p>
+  <p class="sv-card-foot">
+    <span class="sv-card-price">
+      {%- if p.kind == "levels" %}<span class="sv-pre">From</span> {{ p.levels[0].price | price | safe }}
+      {%- elif p.kind == "package" %}<span class="sv-pre">From</span> {{ packages.tiers[0].price | price | safe }}
+      {%- elif p.kind == "care" %}<span class="sv-pre">From</span> {{ careplans.plans[0].price | price | safe }}<span class="sv-per">/mo</span>
+      {%- elif p.kind == "flat" %}{% if p.from %}<span class="sv-pre">From</span> {% endif %}{{ p.price | price | safe }}
+      {%- elif p.kind == "soon" %}<span class="sv-soon">Coming soon</span>
+      {%- endif %}
+    </span>
+    {%- if s.packageKey %}
+    {%- set inc = [] %}
+    {%- for t in packages.tiers %}{% if t.has[s.packageKey] %}{% set _ = inc.push(t.name) %}{% endif %}{% endfor %}
+    {%- if inc.length %}<span class="sv-card-pk">In {{ inc | join(" and ") }}</span>{% endif %}
+    {%- endif %}
+  </p>
+  <svg class="int-ic sv-card-go" aria-hidden="true"><use href="#i-arrow"/></svg>
+</li>
+{%- endmacro %}

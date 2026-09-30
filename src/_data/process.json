@@ -6,7 +6,7 @@
   "steps": [
     {
       "clause": "Tell me what you need.",
-      "detail": "We talk through the business, your customers and what the site has to do. I ask the questions that decide the rest of the build.",
+      "detail": "You tell me about the business, your customers and what the site has to do. I ask the questions that decide the rest of the build.",
       "note": "Free quote, no pressure",
       "icon": "message"
     },

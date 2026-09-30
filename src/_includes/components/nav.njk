@@ -1,8 +1,10 @@
 {#
-  Site-wide navigation (Phase 4B foundation): the approved destination
-  philosophy - Work, What I build, Services, Pricing, Start a project - as
-  real routes (site.primaryNav), the same on every page including Home.
-  "Start a project" always goes to the /contact/ wizard.
+  Site-wide navigation: the logo (home), then the approved destinations as
+  real routes (site.primaryNav: Work, What I build, Services, Pricing), then
+  Start a project. The same on every page including
+  Home. A page inside a section (a build, a service) keeps its section lit
+  (aria-current="true"; the page itself is aria-current="page"). "Start a
+  project" always goes to the /contact/ wizard.
 
   The mobile menu is a native <details>, so it opens and closes with no JS
   at all; site.ts only adds Escape-to-close with focus returned to "Menu".
@@ -18,7 +20,7 @@
 
     <nav class="alv-nav-links" aria-label="Primary">
       {%- for item in site.primaryNav %}
-      <a class="alv-lit-sel" href="{{ item.url }}">{{ item.label }}</a>
+      <a class="alv-lit-sel" href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% elif page.url.startsWith(item.url) %} aria-current="true"{% endif %}>{{ item.label }}</a>
       {%- endfor %}
     </nav>
 
@@ -29,7 +31,7 @@
       <div class="alv-menu-panel">
         <nav aria-label="Mobile">
           {%- for item in site.primaryNav %}
-          <a href="{{ item.url }}">{{ item.label }}</a>
+          <a href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% elif page.url.startsWith(item.url) %} aria-current="true"{% endif %}>{{ item.label }}</a>
           {%- endfor %}
         </nav>
         <a class="alv-btn" href="/contact/">Start a project</a>

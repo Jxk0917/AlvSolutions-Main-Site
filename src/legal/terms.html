@@ -1,187 +1,240 @@
 ---
-layout: layouts/base.njk
+layout: layouts/interior.njk
 permalink: /legal/terms/
 title: Terms of Service
 description: Domain and site ownership, payment, scope, care plan cancellation, third-party services, and the 30-day launch warranty, in full.
+pageJs: doc
+head:
+  crumbs: [{ label: "Policies", url: "/policies/" }, { label: "Terms of Service" }]
+  heading: "Terms of service."
+  lede: "The fuller version of the policies page: ownership, payment, scope, cancellation and warranty, written in plain English."
+cta:
+  heading: "Anything here you want changed?"
+  lede: "Ask before you sign, not after. If something here does not work for your business, say so and I will tell you straight whether it can move."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "Privacy policy", url: "/legal/privacy/" }
 ---
+{#
+  A formal document, in the same system as /policies/ (doc.css, doc.ts): a
+  contents rail beside the text. The rail's lit bar glides to the section
+  being read, and a lit bar stands beside that section's heading. The text
+  is the document's own; only its frame changed. Section anchors stay.
+#}
+<div class="int-wrap dc-body">
 
-{%- set ph = {
-  heading: "Terms of service.",
-  lead: "The fuller version of the policies page: ownership, payment, scope, cancellation and warranty, written in plain English.",
-  crumbs: [{ label: "Legal" }, { label: "Terms" }]
-} -%}
-{% include "components/pagehead.njk" %}
+  <nav class="dc-toc" aria-label="On this page" data-toc>
+    <p class="dc-toc-h">On this page</p>
+    <div class="dc-toc-in">
+      <ol class="dc-toc-list">
+        <li><a class="dc-toc-a" href="#domain-ownership">1. Domain ownership</a></li>
+        <li><a class="dc-toc-a" href="#website-ownership">2. Website ownership</a></li>
+        <li><a class="dc-toc-a" href="#google-business-profile">3. Google Business Profile</a></li>
+        <li><a class="dc-toc-a" href="#payment">4. Payment structure</a></li>
+        <li><a class="dc-toc-a" href="#scope">5. Scope and extra work</a></li>
+        <li><a class="dc-toc-a" href="#care-plan-cancellation">6. Care plan cancellation</a></li>
+        <li><a class="dc-toc-a" href="#third-party-services">7. Third-party services</a></li>
+        <li><a class="dc-toc-a" href="#late-payment">8. Late payment and hosting suspension</a></li>
+        <li><a class="dc-toc-a" href="#launch-warranty">9. 30-day launch warranty</a></li>
+        <li><a class="dc-toc-a" href="#content-and-assets">10. Client content and assets</a></li>
+        <li><a class="dc-toc-a" href="#client-inactivity">11. Client inactivity</a></li>
+        <li><a class="dc-toc-a" href="#questions">Questions</a></li>
+      </ol>
+      <span class="dc-toc-bar" aria-hidden="true"></span>
+      <span class="sv-spot" aria-hidden="true"></span>
+    </div>
+  </nav>
 
-<main id="main">
-  <section class="sec">
-    <div class="wrap wrap-mid">
-
-      <p class="legal-updated">Last updated September 17, 2026</p>
-      <p class="legal-intro">
-        These terms describe how {{ site.name }} works with clients. They apply to
-        website projects and care plans agreed with {{ site.name }}. For any project,
-        the specifics are also confirmed directly with you before work starts; these
-        terms are the general rules behind that agreement, not a substitute for it.
-      </p>
-
-      <div class="legal-section" id="domain-ownership">
-        <h2>1. Domain ownership</h2>
-        <p>
-          You purchase and own your own domain, in your own name. {{ site.name }} may
-          configure DNS and connect your domain to your completed site, but ownership of
-          the domain always remains with you.
-        </p>
-      </div>
-
-      <div class="legal-section" id="website-ownership">
-        <h2>2. Website ownership</h2>
-        <p>
-          Once your project has been paid in full, the completed website belongs to you,
-          subject to any third-party licenses or services used to build or run it (for
-          example, fonts, plugins, or platforms with their own terms).
-        </p>
-      </div>
-
-      <div class="legal-section" id="google-business-profile">
-        <h2>3. Google Business Profile</h2>
-        <p>
-          Your Google Business Profile stays under your own Google account.
-          {{ site.name }} may assist with setup, optimization and submission, but Google
-          controls its own verification requirements and timelines, and no timeline can
-          be promised on {{ site.name }}'s behalf.
-        </p>
-      </div>
-
-      <div class="legal-section" id="payment">
-        <h2>4. Payment structure</h2>
-        <p>Projects require a 50% deposit to reserve and start the project.</p>
-        <p>
-          The remaining 50% balance is due once the website is approved and before it is
-          published to your live domain. "Launch" means the point where the completed
-          site has received your final approval, the remaining balance has been paid, and
-          {{ site.name }} publishes the site to your live domain or an approved production
-          host.
-        </p>
-      </div>
-
-      <div class="legal-section" id="scope">
-        <h2>5. Scope and extra work</h2>
-        <p>
-          If requested work falls outside the package or scope you agreed to,
-          {{ site.name }} provides a quote before doing it. You approve that cost before
-          any additional work begins. There are no surprise charges.
-        </p>
-      </div>
-
-      <div class="legal-section" id="care-plan-cancellation">
-        <h2>6. Care plan cancellation</h2>
-        <p>
-          Care plans run for a 3-month minimum, after which you can cancel any time with
-          30 days' notice. Cancellation takes effect at the end of your current paid
-          billing period, and payments already processed for that period are non-refundable.
-        </p>
-        <p>
-          At the end of the billing period, {{ site.name }} stops providing hosting,
-          maintenance, monitoring and the included update service. The website remains
-          your property. {{ site.name }} may provide reasonable assistance transferring the
-          site to hosting you control or another provider, and any third-party hosting,
-          migration, platform or service cost after cancellation is your responsibility.
-        </p>
-      </div>
-
-      <div class="legal-section" id="third-party-services">
-        <h2>7. Third-party services</h2>
-        <p>
-          Unless a service is specifically included in your project agreement, third-party
-          services and subscriptions are paid by you directly. Examples include domains,
-          booking platforms, email services, premium plugins, premium fonts or media,
-          ecommerce services, delivery platforms, payment processing fees, and other
-          external software or services.
-        </p>
-        <p>
-          {{ site.name }} will not purchase or activate a paid third-party service on your
-          behalf without your approval first. Third-party providers may change their own
-          pricing, features, availability or terms at any time, independently of
-          {{ site.name }}.
-        </p>
-      </div>
-
-      <div class="legal-section" id="late-payment">
-        <h2>8. Late payment and hosting suspension</h2>
-        <p>
-          An overdue balance may affect hosting or other service availability. If hosting
-          is suspended for nonpayment, the site is suspended, not deleted. Restoring it
-          requires the full outstanding balance to be paid, plus a flat $75 reactivation
-          fee before hosting is restored.
-        </p>
-      </div>
-
-      <div class="legal-section" id="launch-warranty">
-        <h2>9. 30-day launch warranty</h2>
-        <p>
-          Every completed website includes a 30-day launch warranty starting on the date
-          the site is published to your live domain. The warranty covers bugs, broken
-          functionality, layout issues, and implementation errors caused by
-          {{ site.name }}, limited to items within the originally approved project scope.
-          Warranty fixes within that scope are completed at no additional charge.
-        </p>
-        <p>The warranty does not cover:</p>
-        <ul>
-          <li>New features or new content</li>
-          <li>Redesign requests or additional revisions</li>
-          <li>Changes you or someone else makes to the site</li>
-          <li>Third-party platform changes</li>
-          <li>Domain or DNS changes made outside {{ site.name }}</li>
-          <li>Unsupported integrations</li>
-          <li>Issues caused by external services outside {{ site.name }}'s control</li>
-        </ul>
-      </div>
-
-      <div class="legal-section" id="content-and-assets">
-        <h2>10. Client content and assets</h2>
-        <p>
-          If you don't yet have a logo, photos, or other content, {{ site.name }} may
-          recommend DIY options, use professional stock placeholders in the meantime, or
-          offer sourcing and design help as a separate, listed service. Logo design or paid
-          media is not included in a project unless it is specifically listed in your
-          package or agreement.
-        </p>
-        <p>
-          Logo and brand files are prepared for digital use. They may be used as a starting
-          point for print, signage, vinyl, decals or embroidery, but their suitability for
-          physical production must be confirmed through the relevant vendor and their
-          proofing process. {{ site.name }} does not supply validated Pantone, CMYK, vinyl,
-          thread or embroidery specifications unless they are provided and validated in
-          writing.
-        </p>
-        <p>
-          {{ site.name }} does not perform trademark searches or trademark clearance. You
-          are responsible for confirming that your business name, logo and marks do not
-          infringe existing rights.
-        </p>
-        <p>
-          Work outside {{ site.name }}'s in-house identity scope, such as detailed mascots
-          or character illustration, hand-drawn illustration or specialized lettering, may
-          require an outside specialist. {{ site.name }} may coordinate one for a listed
-          fee. Fees charged by the specialist or their platform are your responsibility
-          and are paid directly, unless explicitly included in writing.
-        </p>
-      </div>
-
-      <div class="legal-section" id="questions">
-        <h2>Questions</h2>
-        <p>
-          These terms are meant to be readable, not exhaustive. If anything here is unclear
-          before you sign on, ask at <a href="mailto:{{ site.email }}">{{ site.email }}</a>
-          and I'll explain it plainly.
-        </p>
-      </div>
+  <article class="dc-doc">
+    <div class="dc-lead">
+  <p class="dc-updated">Last updated September 30, 2026</p>
+  <p class="dc-intro">
+    These terms describe how {{ site.name }} works with clients. They apply to
+    website projects and care plans agreed with {{ site.name }}. For any project,
+    the specifics are set out in the ALVSolutions Client Services Agreement before
+    work starts; these terms are the general rules behind that agreement, not a
+    substitute for it.
+  </p>
 
     </div>
-  </section>
+  <div class="dc-sec" id="domain-ownership">
+    <h2>1. Domain ownership</h2>
+    <p>
+      You purchase and own your own domain, in your own name. {{ site.name }} may
+      configure DNS and connect your domain to your completed site, but ownership of
+      the domain always remains with you.
+    </p>
+  </div>
 
-  {%- set ctaHeading = "Anything here you want changed?" %}
-  {%- set ctaLead = "Ask before you sign, not after. If something on this page does not work for your business, say so and I will tell you straight whether it can move." %}
-  {% include "components/cta-band.njk" %}
+  <div class="dc-sec" id="website-ownership">
+    <h2>2. Website ownership</h2>
+    <p>
+      Ownership of the final, in-scope deliverables transfers to you once your
+      project has been paid in full. Until then they remain {{ site.name }}'s. Ownership
+      is subject to any third-party licenses or services used to build or run the
+      site (for example, fonts, plugins, or platforms with their own terms).
+    </p>
+  </div>
 
-</main>
+  <div class="dc-sec" id="google-business-profile">
+    <h2>3. Google Business Profile</h2>
+    <p>
+      Your Google Business Profile stays under your own Google account.
+      {{ site.name }} may assist with setup, optimization and submission, but Google
+      controls its own verification requirements and timelines, and no timeline can
+      be promised on {{ site.name }}'s behalf.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="payment">
+    <h2>4. Payment structure</h2>
+    <p>Projects require a 50% deposit to reserve and start the project.</p>
+    <p>
+      The remaining 50% balance is due once the website is approved and before it is
+      published to your live domain. "Launch" means the point where the completed
+      site has received your final approval, the remaining balance has been paid, and
+      {{ site.name }} publishes the site to your live domain or an approved production
+      host.
+    </p>
+    <p>
+      If you cancel before project-specific work begins, the deposit is refunded, less
+      any approved third-party costs that cannot be refunded. Once project-specific
+      work begins, the deposit is non-refundable.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="scope">
+    <h2>5. Scope and extra work</h2>
+    <p>
+      If requested work falls outside the package or scope you agreed to,
+      {{ site.name }} provides a quote before doing it. You approve that cost before
+      any additional work begins. There are no surprise charges.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="care-plan-cancellation">
+    <h2>6. Care plan cancellation</h2>
+    <p>
+      Care plans run for a 3-month minimum, after which you can cancel any time with
+      30 days' notice. Cancellation takes effect at the end of your current paid
+      billing period, and payments already processed for that period are non-refundable.
+    </p>
+    <p>
+      At the end of the billing period, {{ site.name }} stops providing hosting,
+      maintenance, monitoring and the included update service. Ownership of the
+      website is as set out in section 2. After cancellation takes effect there is a
+      30-day handoff window, followed by a 30-day archive window. After the archive
+      window ends, {{ site.name }} is no longer required to retain archived site files
+      or backups, and recovery is not guaranteed. One basic handoff of the site to a compatible hosting
+      environment is included. A complex migration may require a quote that you approve
+      before the work begins. Any third-party hosting, migration, platform or service
+      cost after cancellation is your responsibility.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="third-party-services">
+    <h2>7. Third-party services</h2>
+    <p>
+      Unless a service is specifically included in your ALVSolutions Client Services
+      Agreement, third-party
+      services and subscriptions are paid by you directly. Examples include domains,
+      booking platforms, email services, premium plugins, premium fonts or media,
+      ecommerce services, delivery platforms, payment processing fees, and other
+      external software or services.
+    </p>
+    <p>
+      {{ site.name }} will not purchase or activate a paid third-party service on your
+      behalf without your approval first. Third-party providers may change their own
+      pricing, features, availability or terms at any time, independently of
+      {{ site.name }}.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="late-payment">
+    <h2>8. Late payment and hosting suspension</h2>
+    <p>
+      An overdue balance may affect hosting or other service availability. If hosting
+      is suspended for nonpayment, the site is suspended, not deleted. Restoring it
+      requires the full outstanding balance to be paid, plus a flat $75 reactivation
+      fee before hosting is restored. This reactivation fee applies only to hosting
+      suspended for late payment.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="launch-warranty">
+    <h2>9. 30-day launch warranty</h2>
+    <p>
+      Every completed website includes a 30-day launch warranty starting on the date
+      the site is published to your live domain. The warranty covers bugs, broken
+      functionality, layout issues, and implementation errors caused by
+      {{ site.name }}, limited to items within the originally approved project scope.
+      Warranty fixes within that scope are completed at no additional charge.
+    </p>
+    <p>The warranty does not cover:</p>
+    <ul>
+      <li>New features or new content</li>
+      <li>Redesign requests or additional revisions</li>
+      <li>Changes you or someone else makes to the site</li>
+      <li>Third-party platform changes</li>
+      <li>Domain or DNS changes made outside {{ site.name }}</li>
+      <li>Unsupported integrations</li>
+      <li>Issues caused by external services outside {{ site.name }}'s control</li>
+    </ul>
+  </div>
+
+  <div class="dc-sec" id="content-and-assets">
+    <h2>10. Client content and assets</h2>
+    <p>
+      If you don't yet have a logo, photos, or other content, {{ site.name }} may
+      recommend DIY options, use professional stock placeholders in the meantime, or
+      offer sourcing and design help as a separate, listed service. Logo design or paid
+      media is not included in a project unless it is specifically listed in your
+      package or ALVSolutions Client Services Agreement.
+    </p>
+    <p>
+      Logo and brand files are prepared for digital use. They may be used as a starting
+      point for print, signage, vinyl, decals or embroidery, but their suitability for
+      physical production must be confirmed through the relevant vendor and their
+      proofing process. {{ site.name }} does not supply validated Pantone, CMYK, vinyl,
+      thread or embroidery specifications unless they are provided and validated in
+      writing.
+    </p>
+    <p>
+      {{ site.name }} does not perform trademark searches or trademark clearance. You
+      are responsible for confirming that your business name, logo and marks do not
+      infringe existing rights.
+    </p>
+    <p>
+      Work outside {{ site.name }}'s in-house identity scope, such as detailed mascots
+      or character illustration, hand-drawn illustration or specialized lettering, may
+      require an outside specialist. {{ site.name }} may coordinate one for a listed
+      fee. Fees charged by the specialist or their platform are your responsibility
+      and are paid directly, unless explicitly included in writing.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="client-inactivity">
+    <h2>11. Client inactivity</h2>
+    <p>
+      If a project is waiting on content, feedback or approval from you, {{ site.name }}
+      sends a reminder after 14 days without it.
+    </p>
+    <p>
+      After 30 days without a response, {{ site.name }} sends a pause notice and the
+      project is paused. After 60 days, and after notice to you, the project is
+      administratively closed. Reopening a closed project is at {{ site.name }}'s
+      discretion, and there is no automatic reactivation fee. The $75 reactivation fee
+      in section 8 applies only to hosting suspended for late payment.
+    </p>
+  </div>
+
+  <div class="dc-sec" id="questions">
+    <h2>Questions</h2>
+    <p>
+      These terms are meant to be readable, not exhaustive. If anything here is unclear
+      before you sign on, ask at <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+      and I'll explain it plainly.
+    </p>
+  </div>
+  </article>
+</div>

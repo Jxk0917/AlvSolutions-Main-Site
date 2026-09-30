@@ -1,6 +1,5 @@
 ---
 layout: layouts/base.njk
-legacy: false
 pageCss: interior
 ---
 {#
@@ -19,22 +18,41 @@ pageCss: interior
   `content` is the page's own body, rendered between the header band and
   the CTA band.
 #}
-<main id="main">
+<main id="main"{% if head.hue %} class="int-themed" style="--hue: {{ head.hue }}"{% endif %}>
   <section class="int-head{% if head.obj %} int-head--obj{% endif %} int-wrap">
     <span class="key-cone" aria-hidden="true"></span>
     <span class="key-pool" aria-hidden="true"></span>
     <div class="int-head-in">
-      {%- if head.crumbs %}
-      <nav class="int-crumbs" aria-label="Breadcrumb">
-        <ol style="display:contents;">
-          <li><a href="/">Home</a></li>
-          {%- for c in head.crumbs %}
-          <li>{% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}<span aria-current="page">{{ c.label }}</span>{% endif %}</li>
-          {%- endfor %}
-        </ol>
-      </nav>
-      {%- endif %}
+      {#- `back` is a way up one level, as a button; the breadcrumb beside it
+          stays the full path. `hue` (0-360) themes the page in one light: see
+          .int-themed in interior.css. `icon` is the page's own mark. -#}
+      <div class="int-head-top">
+        {%- if head.back %}
+        {#- The slot holds the button's place; once it scrolls under the nav,
+            the button docks below the nav's left edge and follows (site.ts). -#}
+        <span class="int-back-slot" data-back><a class="int-back" href="{{ head.back.url }}"
+          {%- if head.back.showIf %} hidden data-show-if="{{ head.back.showIf }}"{% endif %}
+          {%- if head.back.services %} data-services="{{ head.back.services | dump | escape }}"{% endif %}><svg class="int-ic" aria-hidden="true"><use href="#i-arrow"/></svg><span data-back-label>{{ head.back.label }}</span></a></span>
+        {%- endif %}
+        {%- if head.crumbs %}
+        <nav class="int-crumbs" aria-label="Breadcrumb">
+          <ol style="display:contents;">
+            <li><a href="/">Home</a></li>
+            {%- for c in head.crumbs %}
+            <li>{% if c.url %}<a href="{{ c.url }}">{{ c.label }}</a>{% else %}<span aria-current="page">{{ c.label }}</span>{% endif %}</li>
+            {%- endfor %}
+          </ol>
+        </nav>
+        {%- endif %}
+      </div>
+      {%- if head.icon %}
+      <div class="int-head-title">
+        <span class="int-head-badge" aria-hidden="true"><svg class="int-ic" aria-hidden="true"><use href="#i-{{ head.icon }}"/></svg></span>
+        <h1 class="int-head-h1">{{ head.heading | safe }}</h1>
+      </div>
+      {%- else %}
       <h1 class="int-head-h1">{{ head.heading | safe }}</h1>
+      {%- endif %}
       {%- if head.lede %}
       <p class="int-head-lede">{{ head.lede | safe }}</p>
       {%- endif %}
@@ -53,6 +71,9 @@ pageCss: interior
 
   {{ content | safe }}
 
+  {#- A page that places its CTA band itself (cta.inline) renders it in its
+      own content, where it reads best; the markup is the same. #}
+  {%- if not cta.inline %}
   <section class="int-cta int-wrap">
     <span class="key-cone" aria-hidden="true"></span>
     <span class="key-pool" aria-hidden="true"></span>
@@ -65,8 +86,9 @@ pageCss: interior
       {%- endfor %}
       {%- else %}
       <a class="alv-btn" href="/contact/">Start a project</a>
-      <a class="alv-tlink" href="/pricing/">See pricing</a>
+      <a class="alv-tlink" href="/packages/">See packages</a>
       {%- endif %}
     </div>
   </section>
+  {%- endif %}
 </main>

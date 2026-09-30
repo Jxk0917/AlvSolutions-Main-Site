@@ -1,28 +1,29 @@
 {#
-  CLOSE: the hero, answered. The page opened with ALVSolutions' words in the
-  key light and the work waiting in the dark beside them; it ends the same
-  way, with one screen waiting. The reel showed two client screens; this is
-  the next one, unbuilt: dark glass catching the key on its top edge,
-  standing on the floor line that is the footer's top edge. Pointing at or
-  focusing "Start a project" powers it faintly on (CSS only).
+  CLOSE: the hero, answered, and the way in. The page opened with
+  ALVSolutions' words in the key light; it ends the same way, with the
+  words in the light and, beside them, the live site's project intake form
+  (components/quote-form.njk, the same partial /contact/ renders, so every
+  question and step is identical). The three "what happens next" items sit
+  under the words (components/contact-next.njk).
+
+  .h-quote scopes the form's Screen Light styling (home.css); its
+  behaviour is src/forms/quote-wizard.ts, bundled into home.js. The package
+  and build pickers above still submit to /contact/?package=, where the
+  same form picks the choice up.
 
   The key rises as the ending arrives (src/home/close.ts); at rest, and with
   motion off, it is simply up.
 #}
 <section class="room h-close" id="start" aria-labelledby="start-h" data-room="close">
   <div class="room-light" aria-hidden="true"><span class="key-cone"></span><span class="key-pool"></span></div>
-  <div class="h-close-in h-wrap">
+  <div class="h-close-in h-quote h-wrap">
     <div class="h-close-copy">
       <h2 id="start-h" class="lit-display h-close-h" data-lit>Tell me what the business does.</h2>
-      <p>Free quote, no pressure. I review the project and send you a clear quote and next steps.</p>
-      <div class="h-close-row">
-        <a class="alv-btn" href="/contact/" data-close-cta>Start a project</a>
-        <a class="alv-tlink" href="mailto:{{ site.email }}">{{ site.email }}</a>
-      </div>
+      <p>Free quote, no pressure. Three short steps, then a summary you can check before anything sends. I review the project and send you a clear quote and next steps.</p>
+      {% include "components/contact-next.njk" %}
     </div>
-    <div class="h-next" aria-hidden="true">
-      <span class="dev-contact"></span>
-      <div class="dev-glass h-next-glass"><span class="h-next-glow"></span><span class="dev-catch"></span></div>
+    <div class="h-close-form" id="quote">
+      {% include "components/quote-form.njk" %}
     </div>
   </div>
 </section>

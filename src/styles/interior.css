@@ -14,6 +14,17 @@
    ============================================================ */
 @import "./base.css";
 @import "./light.css";
+@import "./offer.css";
+@import "./services.css";
+@import "./pricing.css";
+@import "./process.css";
+@import "./service.css";
+@import "./work.css";
+@import "./about.css";
+@import "./contact.css";
+@import "./doc.css";
+@import "./connect.css";
+@import "./builds.css";
 
 :root {
   /* Same content measure the shared nav/footer already align to
@@ -28,6 +39,11 @@
   margin: 0 auto;
   padding-inline: var(--sl-gutter);
 }
+
+/* Light and a horizontally-scrollable table (the comparison grid) both stay
+   inside the viewport; clip, not hidden, so no scroll container is created
+   and the page's own scrolling is unaffected. Mirrors home.css's #main rule. */
+#main { overflow-x: clip; }
 
 .int-ic {
   width: 20px; height: 20px; flex: none;
@@ -207,6 +223,120 @@
 .int-faq-item p { padding-bottom: 20px; font-size: 15px; color: var(--sl-ink2); max-width: 64ch; }
 
 /* ============================================================
+   JUMP NAV
+   The one place a pinned element is allowed on an interior page: a compact
+   section index for a long reference page (/pricing/).
+   ============================================================ */
+.int-jump {
+  position: sticky; top: var(--alv-nav-h); z-index: 30;
+  display: flex; flex-wrap: wrap; gap: 6px;
+  padding-block: 14px; margin-bottom: clamp(24px, 4vh, 40px);
+  background: linear-gradient(rgb(11 11 11 / 0.96), rgb(11 11 11 / 0.86) 80%, rgb(11 11 11 / 0));
+  border-bottom: 1px solid var(--sl-line);
+}
+.int-jump a { font-size: 13.5px; }
+
+/* ============================================================
+   TIER CARDS
+   The three build packages, read plainly: no radio, no travelling key -
+   this is a reference page, not the homepage's Pricing section.
+   ============================================================ */
+.int-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(16px, 2.4vw, 24px); }
+.int-tier {
+  position: relative; display: grid; gap: 14px; align-content: start;
+  padding: clamp(22px, 2.6vw, 30px); border-radius: 10px;
+  background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 40px 70px -34px rgb(0 0 0 / 0.9);
+}
+.int-tier--rec { box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.26), 0 40px 70px -34px rgb(0 0 0 / 0.9); }
+.int-tier-badge {
+  position: absolute; top: -11px; left: 22px; padding: 3px 12px; border-radius: 999px;
+  background: var(--sl-ink1); color: var(--sl-room); font: 600 12px/1 var(--sl-f-text);
+}
+.int-tier-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--sl-ink1); }
+.int-tier-for { font-size: 14.5px; color: var(--sl-ink2); min-height: 3em; }
+.int-tier-price { display: flex; align-items: baseline; gap: 8px; }
+.int-tier-price b { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(34px, 3.2vw, 44px); letter-spacing: -0.032em; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+.int-tier-price span { font-size: 13px; color: var(--sl-ink3); }
+.int-tier-care { font-size: 13.5px; color: var(--sl-ink3); }
+.int-tier ul { display: grid; gap: 8px; margin: 4px 0 0; padding: 0; list-style: none; font-size: 14.5px; color: var(--sl-ink2); }
+.int-tier li { display: flex; align-items: flex-start; gap: 10px; }
+.int-tier li .int-ic { color: var(--sl-ink2); margin-top: 2px; }
+.int-tier li b { color: var(--sl-ink1); }
+.int-tier-picks { margin-top: 4px; padding-top: 12px; border-top: 1px solid var(--sl-line2); font-size: 13.5px; color: var(--sl-ink3); }
+.int-tier-act { margin-top: 6px; }
+
+/* ============================================================
+   COMPARISON TABLE
+   The full package feature grid. Scrolls sideways on a phone; the label
+   column stays put.
+   ============================================================ */
+.int-cmp-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; contain: paint; scrollbar-width: thin; scrollbar-color: rgb(var(--sl-L) / 0.24) transparent; }
+.int-cmp-table { width: 100%; min-width: 520px; border-collapse: collapse; font-size: 14.5px; }
+.int-cmp-table th, .int-cmp-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--sl-line); }
+.int-cmp-table thead th { padding-top: 0; color: var(--sl-ink1); font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; }
+.int-cmp-table thead th small { display: block; font-family: var(--sl-f-text); font-weight: 400; font-size: 12.5px; color: var(--sl-ink3); margin-top: 2px; }
+.int-cmp-table th:first-child, .int-cmp-table td:first-child {
+  position: sticky; left: 0; background: var(--sl-room); color: var(--sl-ink3); font-size: 13.5px; white-space: nowrap;
+}
+.int-cmp-table td { color: var(--sl-ink2); }
+.int-cmp-table td b { color: var(--sl-ink1); font-weight: 600; }
+.int-cmp-table .int-cmp-rec { background: rgb(var(--sl-L) / 0.035); }
+.int-cmp-dash { display: inline-block; width: 14px; height: 1px; background: var(--sl-ink3); vertical-align: middle; }
+
+/* ============================================================
+   CARE CARDS
+   Two monthly plans, deliberately a different shape from a build tier.
+   ============================================================ */
+.int-cares { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: clamp(16px, 2.4vw, 24px); }
+.int-care {
+  display: grid; gap: 12px; align-content: start;
+  padding: clamp(22px, 2.6vw, 28px); border-radius: 10px;
+  background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08);
+}
+.int-care-top { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; }
+.int-care-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.016em; color: var(--sl-ink1); }
+.int-care-price { font-family: var(--sl-f-brand); font-weight: 620; font-size: 24px; color: var(--sl-ink1); }
+.int-care-price span { font-size: 13px; font-weight: 400; color: var(--sl-ink3); }
+.int-care-for { font-size: 14px; color: var(--sl-ink2); }
+.int-care ul { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--sl-ink2); }
+.int-care li { display: flex; align-items: flex-start; gap: 10px; }
+.int-care li .int-ic { color: var(--sl-ink2); margin-top: 1px; }
+
+/* ============================================================
+   STANDALONE PRICE LIST
+   The a-la-carte rows: grouped, plain, no cards. Scannable, not decorative.
+   ============================================================ */
+.int-plist-group { padding-block: clamp(16px, 2.4vh, 24px); border-top: 1px solid var(--sl-line); }
+.int-plist-group:first-child { border-top: 0; padding-top: 0; }
+.int-plist-h { display: flex; align-items: baseline; gap: 10px; margin-bottom: 4px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 18px; letter-spacing: -0.014em; color: var(--sl-ink1); }
+.int-plist-blurb { font-size: 14px; color: var(--sl-ink3); margin-bottom: 14px; }
+.int-plist { display: grid; gap: 0; margin: 0; padding: 0; }
+.int-plist-row { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; padding: 11px 0; border-bottom: 1px solid var(--sl-line); }
+.int-plist-row:last-child { border-bottom: 0; }
+.int-plist-name { font-size: 15px; color: var(--sl-ink1); }
+.int-plist-note { display: block; font-size: 13px; color: var(--sl-ink3); margin-top: 2px; }
+.int-plist-price { flex: none; font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; color: var(--sl-ink1); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ============================================================
+   FOUNDERS (interior)
+   Three spot markers, the same data as the homepage's own section
+   (site.foundersSpecial.spots), styled for a plain reference page rather
+   than a lit room. No discount amount is ever stated here.
+   ============================================================ */
+.int-founders { display: grid; grid-template-columns: minmax(0, 1.2fr) auto; align-items: center; gap: 28px clamp(28px, 4vw, 64px); }
+.int-founders-copy { display: grid; gap: 10px; }
+.int-spots-wrap { display: grid; justify-items: center; gap: 10px; }
+.int-spots { display: flex; align-items: flex-end; gap: 10px; padding: 0 14px 8px; border-bottom: 1px solid var(--sl-line2); }
+.int-spot { width: 28px; height: 42px; border-radius: 5px; background: #0d0d0d; box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.12); }
+.int-spot.is-open { background: linear-gradient(180deg, rgb(var(--sl-L) / 0.8), rgb(var(--sl-L) / 0.28)); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.5); }
+.int-spots-count { font-size: 13px; color: var(--sl-ink2); }
+.int-founders-terms { font-size: 14px; color: var(--sl-ink2); max-width: 40ch; }
+
+@media (max-width: 760px) {
+  .int-founders { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+}
+
+/* ============================================================
    CTA BAND
    A compact close for every interior page: no big waiting screen, unlike
    Home's Close. Words in the key light, one or two actions.
@@ -231,4 +361,504 @@
 }
 @media (max-width: 760px) {
   .int-facts { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ============================================================
+   PACKAGES (/packages/)
+   The offer in the order it is decided: the three packages on the
+   homepage's picker (offer.css), the Founders notice, the four builds,
+   the care plans, the comparison chart, the two charges outside every
+   package. Shape rule as home: surfaces 10px, the care sheet 12px.
+   ============================================================ */
+.pk-sec { padding-block: clamp(48px, 7vh, 80px); border-top: 1px solid var(--sl-line); }
+.pk-sec--first { padding-top: clamp(24px, 4vh, 40px); border-top: 0; }
+.pk-head { display: grid; gap: 10px; margin-bottom: clamp(20px, 3.4vh, 36px); }
+.pk-head .int-h2 { max-width: 22ch; }
+.pk-note { margin-top: 16px; font-size: 13.5px; color: var(--sl-ink3); max-width: 72ch; }
+/* ---- the three packages: a rail, and the chosen package's file ----
+   The rail is the radio group. Its lit bar (the site's bar) glides down to
+   the checked package; the file beside it is that package, opened into
+   four parts. What a package adds over the one before it is lit. All of
+   it follows :checked, so it needs no script. */
+.pk-pick { display: grid; grid-template-columns: minmax(200px, 0.8fr) minmax(0, 2.6fr); gap: clamp(20px, 3vw, 48px); align-items: start; }
+.pk-rail {
+  position: relative; display: grid; grid-auto-rows: 1fr; margin: 0; padding: 0; border: 0; min-width: 0;
+  box-shadow: inset 1px 0 0 var(--sl-line2); --i: 1;
+  position: sticky; top: calc(var(--alv-nav-h) + 24px); isolation: isolate;
+}
+.pk-rail-opt {
+  position: relative; display: grid; gap: 2px; align-content: center; padding: 18px 0 18px 26px; cursor: pointer;
+  scroll-margin-top: calc(var(--alv-nav-h) + 24px);
+}
+.pk-rail-opt + .pk-rail-opt { box-shadow: inset 0 1px 0 var(--sl-line); }
+.pk-rail-input { position: absolute; top: 24px; left: 26px; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.pk-rail-opt:has(:focus-visible) { outline: 2px solid var(--sl-ink1); outline-offset: -2px; border-radius: 8px; }
+.pk-rail-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.014em; color: var(--sl-ink2); transition: color 300ms; }
+.pk-rail-rec { margin-left: 6px; font-family: var(--sl-f-text); font-weight: 400; font-size: 12.5px; color: var(--sl-ink3); }
+.pk-rail-price {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(28px, 2.5vw, 34px); letter-spacing: -0.034em; line-height: 1.05;
+  color: var(--sl-ink2); font-variant-numeric: tabular-nums; transition: color 300ms;
+}
+.pk-rail-pages { font-size: 13.5px; color: var(--sl-ink3); }
+.pk-rail-opt:hover :is(.pk-rail-name, .pk-rail-price),
+.pk-rail-opt:has(:checked) :is(.pk-rail-name, .pk-rail-price) { color: var(--sl-ink1); }
+.pk-rail-opt:has(:checked) { background: radial-gradient(ellipse 90% 90% at 0% 50%, rgb(var(--sl-L) / 0.05), transparent 72%); }
+.pk-rail-bar {
+  position: absolute; left: -0.5px; top: 0; width: 2px; height: calc(100% / 3); pointer-events: none;
+  transform: translateY(calc(var(--i) * 100%)); transition: transform 850ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+.pk-rail-bar::before {
+  content: ""; position: absolute; inset: 18px 0; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+}
+.pk-rail:has(#pk-foundation:checked) { --i: 0; }
+.pk-rail:has(#pk-standard:checked) { --i: 1; }
+.pk-rail:has(#pk-complete:checked) { --i: 2; }
+
+/* The file: only the checked package's shows. Opening one is the change
+   the reader asked for, so it is the one thing that animates in. */
+.pk-file {
+  display: none; position: relative; isolation: isolate; overflow: hidden;
+  padding: clamp(18px, 2vw, 26px); border-radius: 10px;
+  background: #0d0d0d; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 50px 90px -50px rgb(0 0 0 / 0.9);
+}
+.pk-file::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 60% 55% at 12% -8%, rgb(var(--sl-L) / 0.07), transparent 70%);
+}
+.pk-pick:has(#pk-foundation:checked) .pk-file[data-for="foundation"],
+.pk-pick:has(#pk-standard:checked) .pk-file[data-for="standard"],
+.pk-pick:has(#pk-complete:checked) .pk-file[data-for="complete"] { display: block; animation: pk-open 600ms var(--sl-e-out); }
+/* Without :has(), every package shows, one after another. */
+@supports not selector(:has(*)) {
+  .pk-file { display: block; margin-bottom: 16px; }
+  .pk-rail-bar { display: none; }
+}
+@keyframes pk-open { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.no-motion .pk-pick .pk-file { animation: none; }
+.no-motion .pk-rail-bar { transition: none; }
+
+.pk-file-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 12px 32px; }
+.pk-file-name { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(22px, 2vw, 27px); letter-spacing: -0.028em; line-height: 1.05; color: var(--sl-ink1); }
+.pk-file-for { margin-top: 5px; font-size: 14px; color: var(--sl-ink2); max-width: 46ch; }
+.pk-file-price { display: grid; justify-items: end; gap: 2px; }
+.pk-file-price b {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(30px, 2.8vw, 38px); letter-spacing: -0.034em; line-height: 1;
+  color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.pk-file-price span { font-size: 12.5px; color: var(--sl-ink3); }
+.pk-file-key { display: flex; align-items: center; gap: 9px; margin-top: 12px; font-size: 13px; color: var(--sl-ink2); }
+/* "New over the package below" is the site's lit bar, as a short tick. */
+.pk-file-key i, .pk-parts li.is-new::before, .pk-part-val.is-new::before {
+  content: ""; flex: none; width: 3px; height: 13px; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+}
+
+.pk-parts {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(14px, 2vh, 18px);
+  border-top: 1px solid var(--sl-line);
+}
+.pk-part-block { display: grid; grid-template-columns: auto minmax(0, 1fr); column-gap: 10px; align-content: start; padding: 14px 18px 14px 0; }
+.pk-part-block:nth-child(even) { padding: 14px 0 14px 18px; box-shadow: inset 1px 0 0 var(--sl-line); }
+.pk-part-block:nth-child(n+3) { border-top: 1px solid var(--sl-line); }
+.pk-part-block > .int-ic { grid-row: span 2; width: 17px; height: 17px; margin-top: 1px; color: var(--sl-ink2); }
+.pk-part-block h4 { font-size: 12.5px; font-weight: 500; color: var(--sl-ink3); }
+.pk-part-val {
+  display: flex; align-items: center; gap: 9px;
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.014em; color: var(--sl-ink1);
+}
+.pk-part-block ul { grid-column: 2; display: grid; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
+.pk-parts li { display: flex; align-items: baseline; gap: 9px; font-size: 13px; line-height: 1.4; color: var(--sl-ink2); }
+.pk-parts li::before {
+  content: ""; flex: none; width: 3px; height: 3px; border-radius: 50%; background: var(--sl-ink3); transform: translateY(-3px);
+}
+.pk-parts li.is-new { color: var(--sl-ink1); }
+.pk-parts li.is-new::before { transform: translateY(1px); }
+
+.pk-file-act { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 12px; padding-top: 16px; border-top: 1px solid var(--sl-line); }
+
+
+/* The Founders notice sits between the packages and the builds, as on home. */
+#founders.int-wrap { padding-block: 0 clamp(40px, 6vh, 64px); }
+
+/* ---- the four builds: one card each, in its trade's own hue ---- */
+.pk-builds {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(12px, 1.6vw, 20px);
+  margin: 0; padding: 0; list-style: none;
+}
+.pk-build {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: flex; flex-direction: column; gap: 10px;
+  padding: clamp(20px, 2vw, 26px); border-radius: 10px; background: #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+  scroll-margin-top: calc(var(--alv-nav-h) + 24px);
+  transition: background-color 400ms var(--sl-e-out), box-shadow 400ms var(--sl-e-out);
+}
+/* The trade's light: a tinted top edge and a faint wash from the corner.
+   Colour stays in the light; the type stays white. */
+.pk-build::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, oklch(0.84 0.09 var(--hue, 0)) 50%, transparent 96%);
+  opacity: 0.45; transition: opacity 400ms var(--sl-e-out);
+}
+.pk-build::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 95% 50% at 0% 0%, oklch(0.7 0.12 var(--hue, 0) / 0.07), transparent 72%);
+  opacity: 0.85; transition: opacity 400ms var(--sl-e-out);
+}
+.pk-build:hover, .pk-build:focus-within, .pk-build:target {
+  background: #111; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+}
+.pk-build:is(:hover, :focus-within, :target)::before,
+.pk-build:is(:hover, :focus-within, :target)::after { opacity: 1; }
+/* The detail wrappers take no part in the card's layout except on a phone. */
+.pk-build-more, .pk-build-more-in { display: contents; }
+.pk-build-top { order: 0; }
+.pk-build-trades { order: 1; }
+.pk-build-price { order: 2; }
+.pk-build-for { order: 3; }
+.pk-build-parts { order: 4; }
+.pk-build-go { order: 5; }
+.pk-build-toggle { display: none; }
+.pk-build-top { display: flex; align-items: center; gap: 10px; }
+.pk-build-ic { width: 22px; height: 22px; color: oklch(0.84 0.11 var(--hue, 0)); }
+.pk-build-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.018em; color: var(--sl-ink1); }
+.pk-build-trades { font-size: 13px; color: var(--sl-ink3); min-height: 2.7em; }
+.pk-build-price { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
+.pk-build-price b {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(30px, 2.6vw, 38px);
+  letter-spacing: -0.032em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.pk-build-price span { font-size: 13px; color: var(--sl-ink3); }
+.pk-build-for { font-size: 14.5px; color: var(--sl-ink2); min-height: 3em; }
+.pk-build-parts { margin-top: 6px; padding-top: 14px; border-top: 1px dashed rgb(var(--sl-L) / 0.14); }
+.pk-build-base { font-size: 13px; color: var(--sl-ink3); margin-bottom: 10px; }
+.pk-build-list { display: grid; gap: 7px; margin: 0; padding: 0; list-style: none; }
+.pk-part { display: flex; align-items: baseline; gap: 10px; font-size: 14px; color: var(--sl-ink1); }
+.pk-part > span:first-child { flex: 1; }
+/* A page is an outlined slot; a power feature is lit (the site's bar). */
+.pk-part::before {
+  content: ""; flex: none; align-self: center; width: 7px; height: 7px; border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.4);
+}
+.pk-part--power::before { width: 3px; height: 13px; margin-inline: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+.pk-part-kind { flex: none; font-size: 12px; color: var(--sl-ink3); }
+.pk-build-go { margin-top: auto; padding-top: 18px; align-self: flex-start; font-size: 14.5px; }
+
+/* ---- spotlights: the key light glides to the package under attention ----
+   One .pk-spot per group (the rail, the four builds). packages.ts writes
+   its box (--sx --sy --sw --sh) and, for a build, its trade's hue; only
+   transform and opacity move. At rest, and without script, the rail's
+   :checked wash and each card's own hover state stand in. */
+.pk-spot {
+  position: absolute; left: 0; top: 0; width: var(--sw, 0px); height: var(--sh, 0px);
+  transform: translate(var(--sx, 0px), var(--sy, 0px)); opacity: 0; pointer-events: none; display: none;
+}
+.is-js > .pk-spot { display: block; }
+.is-lit > .pk-spot { opacity: 1; }
+.is-placed > .pk-spot { transition: transform 850ms cubic-bezier(0.45, 0, 0.2, 1), width 850ms cubic-bezier(0.45, 0, 0.2, 1), height 850ms cubic-bezier(0.45, 0, 0.2, 1), opacity 400ms; }
+/* A light coming on lands where it is pointed; it does not travel in. */
+.is-placed.is-snap > .pk-spot { transition: opacity 400ms; }
+.no-motion .pk-spot { transition: none !important; }
+
+/* The rail: a wash from the bar's edge, a hairline of light along the top. */
+.pk-rail > .pk-spot {
+  z-index: -1;
+  background: radial-gradient(ellipse 110% 130% at 0% 50%, rgb(var(--sl-L) / 0.15), rgb(var(--sl-L) / 0.05) 55%, transparent 92%);
+  box-shadow: inset 0 1px 0 rgb(var(--sl-L) / 0.16), inset 0 -1px 0 rgb(var(--sl-L) / 0.06);
+}
+.pk-rail.is-js .pk-rail-opt:has(:checked) { background: none; }
+
+/* The builds: the key falls from the top edge of the card, in its trade's hue. */
+.pk-builds-wrap { position: relative; --shue: 245; }
+.pk-builds-wrap > .pk-spot {
+  z-index: 2; border-radius: 10px;
+  background: radial-gradient(ellipse 100% 62% at 50% 0%, oklch(0.93 0.06 var(--shue) / 0.17), oklch(0.85 0.08 var(--shue) / 0.06) 52%, transparent 88%);
+  box-shadow: inset 0 0 0 1px oklch(0.85 0.08 var(--shue) / 0.3), inset 0 1px 0 oklch(0.96 0.05 var(--shue) / 0.7);
+}
+
+/* ---- not sure + care plans: one row, two halves ---- */
+.pk-duo {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 48px); align-items: center;
+  padding-block: clamp(40px, 6vh, 72px); border-top: 1px solid var(--sl-line);
+}
+.pk-duo .int-cta { padding-block: 0; }
+.pk-care {
+  display: grid; gap: 6px; align-content: start;
+  padding: clamp(20px, 2.2vw, 28px); border-radius: 10px;
+  background: rgb(var(--sl-L) / 0.02); box-shadow: inset 0 0 0 1px var(--sl-line2);
+  scroll-margin-top: calc(var(--alv-nav-h) + 24px);
+}
+.pk-care-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.016em; color: var(--sl-ink1); }
+.pk-care-lede { font-size: 13.5px; color: var(--sl-ink3); max-width: 46ch; }
+.pk-care-plans { display: grid; gap: 4px; margin: 12px 0 8px; padding: 0; list-style: none; }
+.pk-plan { display: grid; gap: 4px; padding: 12px 0 12px 16px; box-shadow: inset 1px 0 0 var(--sl-line2); }
+/* The recommended plan's edge is the site's lit bar. */
+.pk-plan--rec { box-shadow: inset 2px 0 0 var(--sl-bar), -4px 0 12px -6px oklch(0.8 0.15 245 / 0.6); }
+.pk-plan-top { display: flex; align-items: baseline; gap: 8px; }
+.pk-plan-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; color: var(--sl-ink1); margin-right: 4px; }
+.pk-plan-top b { font-family: var(--sl-f-brand); font-weight: 620; font-size: 22px; letter-spacing: -0.024em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+.pk-plan-per { font-size: 12.5px; color: var(--sl-ink3); }
+.pk-plan-short { font-size: 13.5px; line-height: 1.45; color: var(--sl-ink2); max-width: 52ch; }
+.pk-care-go { justify-self: start; font-size: 14.5px; }
+
+/* ---- comparison chart: only what differs, a lit column that glides ---- */
+.pk-shared {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 0 0 clamp(18px, 3vh, 28px); padding: 0; list-style: none;
+}
+.pk-shared-lead { margin-right: 6px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 14px; color: var(--sl-ink1); }
+.pk-shared li:not(.pk-shared-lead) {
+  display: inline-flex; align-items: center; gap: 7px; padding: 6px 12px 6px 10px; border-radius: 99px;
+  font-size: 13.5px; color: var(--sl-ink2); box-shadow: inset 0 0 0 1px var(--sl-line2);
+}
+.pk-shared .int-ic { width: 14px; height: 14px; color: var(--sl-ink1); }
+
+.pk-cmp-in { position: relative; isolation: isolate; min-width: 600px; --c0: 34%; --cw: 22%; --i: 1; }
+.pk-cmp { position: relative; width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 14.5px; }
+.pk-cmp th, .pk-cmp td { padding: 13px 18px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--sl-line); }
+.pk-cmp th:first-child { width: var(--c0); padding-left: 0; }
+.pk-cmp thead th { padding-block: 22px 16px; vertical-align: bottom; border-bottom-color: var(--sl-line2); }
+.pk-cmp tbody tr:last-child > * { border-bottom: 0; }
+.pk-cmp-pick { display: grid; gap: 2px; cursor: pointer; }
+.pk-cmp-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.014em; color: var(--sl-ink2); transition: color 400ms; }
+.pk-cmp-price {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(24px, 2.2vw, 30px); letter-spacing: -0.03em; line-height: 1.05;
+  color: var(--sl-ink2); font-variant-numeric: tabular-nums; transition: color 400ms;
+}
+.pk-cmp-pick:hover > * { color: var(--sl-ink1); }
+.pk-cmp tbody th { font-weight: 400; color: var(--sl-ink2); }
+.pk-cmp td { color: var(--sl-ink3); transition: color 400ms; }
+/* What a package gains over the one before it reads brighter. */
+.pk-cmp td.is-up { color: var(--sl-ink1); }
+.pk-cmp td .int-ic { width: 18px; height: 18px; vertical-align: middle; color: var(--sl-ink1); transition: color 400ms; }
+
+/* The lit column: one slab behind the chart, the site's bar across its
+   top and a faint wash falling down it. It glides to the chosen package
+   (transform only), placed purely from the checked radio. */
+.pk-cmp-slab {
+  position: absolute; z-index: -1; top: 0; bottom: 0; left: var(--c0); width: var(--cw); border-radius: 10px 10px 0 0;
+  background: linear-gradient(180deg, rgb(var(--sl-L) / 0.065), rgb(var(--sl-L) / 0.025) 40%, rgb(var(--sl-L) / 0.01));
+  transform: translateX(calc(var(--i) * 100%)); transition: transform 850ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+.pk-cmp-slab::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+}
+#main:has(#pk-foundation:checked) .pk-cmp-in { --i: 0; }
+#main:has(#pk-standard:checked) .pk-cmp-in { --i: 1; }
+#main:has(#pk-complete:checked) .pk-cmp-in { --i: 2; }
+#main:has(#pk-foundation:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="foundation"],
+#main:has(#pk-standard:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="standard"],
+#main:has(#pk-complete:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="complete"],
+#main:has(#pk-foundation:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="foundation"] :is(.pk-cmp-name, .pk-cmp-price),
+#main:has(#pk-standard:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="standard"] :is(.pk-cmp-name, .pk-cmp-price),
+#main:has(#pk-complete:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="complete"] :is(.pk-cmp-name, .pk-cmp-price) { color: var(--sl-ink1); }
+#main:has(#pk-foundation:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="foundation"] .int-ic,
+#main:has(#pk-standard:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="standard"] .int-ic,
+#main:has(#pk-complete:checked) .pk-cmp-in:not(.is-js) .pk-cmp [data-col="complete"] .int-ic { color: var(--sl-bar); filter: drop-shadow(0 0 4px oklch(0.8 0.15 245 / 0.7)); }
+/* With script, the lit column follows the pointer as well as the choice
+   (data-on, set by packages.ts), and its type and ticks light with it. */
+.pk-cmp-in[data-on="foundation"] [data-col="foundation"],
+.pk-cmp-in[data-on="standard"] [data-col="standard"],
+.pk-cmp-in[data-on="complete"] [data-col="complete"],
+.pk-cmp-in[data-on="foundation"] [data-col="foundation"] :is(.pk-cmp-name, .pk-cmp-price),
+.pk-cmp-in[data-on="standard"] [data-col="standard"] :is(.pk-cmp-name, .pk-cmp-price),
+.pk-cmp-in[data-on="complete"] [data-col="complete"] :is(.pk-cmp-name, .pk-cmp-price) { color: var(--sl-ink1); }
+.pk-cmp-in[data-on="foundation"] [data-col="foundation"] .int-ic,
+.pk-cmp-in[data-on="standard"] [data-col="standard"] .int-ic,
+.pk-cmp-in[data-on="complete"] [data-col="complete"] .int-ic { color: var(--sl-bar); filter: drop-shadow(0 0 4px oklch(0.8 0.15 245 / 0.7)); }
+/* The key falls above the chart onto the lit column's head. */
+.pk-cmp-slab::after {
+  /* Held inside its own column, so the last one cannot push the chart's
+     scroll container wider and bring up a scrollbar. */
+  content: ""; position: absolute; left: 0; right: 0; top: -70px; height: 150px; pointer-events: none;
+  background: radial-gradient(ellipse 62% 60% at 50% 100%, oklch(0.92 0.06 245 / 0.13), transparent 75%);
+}
+.no-motion .pk-cmp-slab { transition: none; }
+
+/* ---- outside every package: two charges, side by side ---- */
+.pk-extras {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--sl-line2);
+}
+.pk-extra { display: grid; gap: 8px; align-content: start; padding: 26px clamp(24px, 4vw, 56px) 8px 0; }
+.pk-extra + .pk-extra { padding-left: clamp(24px, 4vw, 56px); box-shadow: inset 1px 0 0 var(--sl-line); }
+.pk-extra-price {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(30px, 3vw, 42px);
+  letter-spacing: -0.032em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.pk-extra-name { margin-top: 6px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 18px; letter-spacing: -0.014em; color: var(--sl-ink1); }
+.pk-extra-note { font-size: 15px; color: var(--sl-ink2); max-width: 40ch; }
+
+@media (max-width: 1100px) {
+  .pk-builds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .pk-pick { grid-template-columns: minmax(0, 1fr); }
+  /* The rail turns across the top; its bar lies along the foot. */
+  .pk-rail { position: relative; top: auto; grid-auto-rows: auto; grid-template-columns: repeat(3, minmax(0, 1fr)); box-shadow: inset 0 -1px 0 var(--sl-line2); }
+  .pk-rail-opt { padding: 12px 8px 16px; }
+  .pk-rail-opt + .pk-rail-opt { box-shadow: none; }
+  .pk-rail-opt:has(:checked) { background: radial-gradient(ellipse 80% 90% at 50% 100%, rgb(var(--sl-L) / 0.06), transparent 72%); }
+  .pk-rail-input { top: 12px; left: 8px; }
+  .pk-rail-rec { display: none; }
+  .pk-rail-bar { left: 0; top: auto; bottom: -0.5px; width: calc(100% / 3); height: 2px; transform: translateX(calc(var(--i) * 100%)); }
+  .pk-rail-bar::before { inset: 0 8px; }
+  .pk-duo { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 760px) {
+  .pk-rail-price { font-size: clamp(22px, 7vw, 30px); }
+  .pk-rail-name { font-size: 15px; }
+  .pk-rail-pages { font-size: 12.5px; }
+  .pk-file { padding: 20px 18px; }
+  .pk-file-price { justify-items: start; }
+  .pk-parts { grid-template-columns: minmax(0, 1fr); }
+  .pk-part-block, .pk-part-block:nth-child(even) { padding: 18px 0; box-shadow: none; }
+  .pk-part-block + .pk-part-block { border-top: 1px solid var(--sl-line); }
+  .pk-care-plans { grid-template-columns: minmax(0, 1fr); }
+  .pk-extras { grid-template-columns: minmax(0, 1fr); }
+  .pk-extra { padding-right: 0; padding-bottom: 22px; }
+  .pk-extra + .pk-extra { padding-left: 0; box-shadow: inset 0 1px 0 var(--sl-line); }
+  /* All three packages fit a phone; the feature column narrows and wraps. */
+  .pk-cmp-in { min-width: 0; --c0: 31%; --cw: 23%; }
+  .pk-cmp { font-size: 13px; }
+  .pk-cmp th, .pk-cmp td { padding: 10px 8px; }
+  .pk-cmp th:first-child { padding-left: 0; }
+  .pk-cmp-name { font-size: 13px; letter-spacing: -0.01em; }
+  .pk-cmp-price { font-size: 18px; }
+  .pk-shared li:not(.pk-shared-lead) { font-size: 12.5px; }
+}
+@media (max-width: 600px) {
+  .pk-builds { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .pk-build-trades, .pk-build-for { min-height: 0; }
+
+  /* The four builds as buttons: name and price, and See more. One opens at
+     a time (packages.ts); opening another folds the last back to a button.
+     Only once the script has run (.pk-acc): without it the cards stay open. */
+  .pk-acc .pk-build { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 12px; gap: 0 12px; padding: 4px 18px; }
+  .pk-acc .pk-build-top { grid-column: 1; grid-row: 1; padding-block: 14px 0; }
+  .pk-acc .pk-build-price { grid-column: 2; grid-row: 1; margin: 0; padding-top: 14px; }
+  .pk-acc .pk-build-price b { font-size: 22px; }
+  .pk-acc .pk-build-price span { display: none; }
+  .pk-acc .pk-build-toggle {
+    grid-column: 1 / -1; grid-row: 2; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; min-height: 44px; margin: 0; padding: 0; border: 0; background: none; cursor: pointer;
+    font: 500 14.5px/1 var(--sl-f-text); color: var(--sl-ink2); text-align: left; -webkit-tap-highlight-color: transparent;
+  }
+  .pk-acc .pk-build-toggle .int-ic { width: 18px; height: 18px; transition: transform 350ms var(--sl-e-out); }
+  .pk-acc .pk-build.is-open .pk-build-toggle .int-ic { transform: rotate(180deg); }
+  .pk-acc .pk-build-toggle:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; border-radius: 6px; }
+  .pk-acc .pk-build.is-open .pk-build-toggle { color: var(--sl-ink1); }
+
+  /* The fold: rows animate 0fr to 1fr, so the height is never measured. */
+  .pk-acc .pk-build-more {
+    grid-column: 1 / -1; grid-row: 3; display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows 380ms var(--sl-e-out);
+  }
+  .pk-acc .pk-build.is-open .pk-build-more { grid-template-rows: 1fr; }
+  .pk-acc .pk-build-more-in {
+    display: flex; flex-direction: column; gap: 10px; min-height: 0; overflow: hidden; visibility: hidden;
+    transition: visibility 0s linear 380ms;
+  }
+  .pk-acc .pk-build.is-open .pk-build-more-in { visibility: visible; transition-delay: 0s; padding-bottom: 6px; }
+  .pk-acc .pk-build-go { padding-top: 10px; padding-bottom: 12px; }
+  .pk-acc .pk-build.is-open { background: #111; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14); }
+  .pk-acc .pk-build.is-open::before, .pk-acc .pk-build.is-open::after { opacity: 1; }
+  /* No spotlight on a phone: a tap has no hover to follow. */
+  .pk-builds-wrap > .pk-spot { display: none !important; }
+}
+
+/* The package table on /pricing/ fits a phone instead of scrolling
+   sideways: the feature column wraps and the three packages share the rest. */
+@media (max-width: 760px) {
+  .int-cmp-table { min-width: 0; table-layout: fixed; font-size: 13px; }
+  .int-cmp-table th, .int-cmp-table td { padding: 10px 5px; }
+  .int-cmp-table th:first-child, .int-cmp-table td:first-child { position: static; width: 31%; padding-left: 0; white-space: normal; font-size: 13px; }
+  .int-cmp-table thead th { font-size: 13px; }
+  .int-cmp-table thead th small { font-size: 11.5px; }
+}
+
+/* ============================================================
+   HEADER EXTRAS: a way back, and a page's own mark
+   `head.back` is one level up, as a button (the breadcrumb beside it stays
+   the full path). `head.icon` is the page's mark, in a small tile.
+   ============================================================ */
+.int-head-top { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-bottom: 4px; }
+/* A titled page gives its heading the room the tile takes. */
+.int-head-in:has(.int-head-title) { max-width: 84ch; }
+.int-head-title .int-head-h1 { max-width: none; }
+.int-head-in:has(.int-head-title) .int-head-lede { max-width: 46ch; }
+.int-head-top .int-crumbs { margin: 0; }
+.int-back {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 18px 0 13px; border-radius: 999px;
+  border: 1px solid var(--sl-line2); color: var(--sl-ink1); text-decoration: none; white-space: nowrap;
+  font: 500 14px/1 var(--sl-f-text);
+  transition: border-color 250ms, background-color 250ms, transform 300ms var(--sl-e-out);
+}
+.int-back .int-ic { width: 17px; height: 17px; transform: rotate(180deg); transition: transform 350ms var(--sl-e-out); }
+.int-back:hover { border-color: rgb(var(--sl-L) / 0.42); background: rgb(var(--sl-L) / 0.045); }
+.int-back:hover .int-ic { transform: translateX(-3px) rotate(180deg); }
+.int-back:active { transform: scale(0.98); }
+.int-back:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+/* Docked: once its place scrolls under the nav, the button follows, fixed
+   below the nav at the content's left edge, on a pane of the room. */
+.int-back-slot { display: inline-flex; flex: none; }
+.int-back.is-docked {
+  position: fixed; z-index: 150; top: calc(var(--alv-nav-h) + 10px);
+  left: max(var(--sl-gutter), calc((100vw - var(--int-measure)) / 2));
+  background: rgb(14 14 14 / 0.82); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 12px 30px -12px rgb(0 0 0 / 0.8);
+  animation: int-back-in 420ms var(--sl-e-out) both;
+}
+/* The header is its own stacking context; while its button is docked it
+   rises above the page, so nothing scrolls over the button. */
+.int-head:has(.int-back.is-docked) { z-index: 150; }
+.int-back.is-docked:hover { background: rgb(24 24 24 / 0.9); }
+@keyframes int-back-in { from { opacity: 0; transform: translateY(-8px); } }
+.no-motion .int-back.is-docked { animation: none; }
+@media (prefers-reduced-motion: reduce) { .int-back.is-docked { animation: none; } }
+.int-head-title { display: flex; align-items: center; gap: clamp(14px, 1.8vw, 22px); }
+.int-head-badge {
+  position: relative; flex: none; display: grid; place-items: center; width: clamp(46px, 4.4vw, 58px); aspect-ratio: 1; border-radius: 10px;
+  background: rgb(var(--sl-L) / 0.03); box-shadow: inset 0 0 0 1px var(--sl-line2);
+}
+.int-head-badge .int-ic { width: 46%; height: 46%; }
+
+/* ============================================================
+   A THEMED PAGE
+   A page that names a hue (`head.hue`, set on <main> as --hue) is lit in
+   that one colour: the same subtle tinted light its card carries on
+   /services/. Colour lives in the light (a wash from the header's corner,
+   the edge of a surface, the icon), never in type, and the site's lit bar
+   stays its usual light blue. Only the alphas here are the dial: keep them
+   around 0.05 to 0.09.
+   ============================================================ */
+.int-themed .int-head::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 58% 95% at 12% 0%, oklch(0.72 0.12 var(--hue) / 0.085), transparent 70%),
+    radial-gradient(ellipse 38% 65% at 96% 0%, oklch(0.7 0.12 calc(var(--hue) - 35) / 0.045), transparent 72%);
+}
+.int-themed .int-head-badge {
+  background: oklch(0.72 0.12 var(--hue) / 0.08);
+  box-shadow: inset 0 0 0 1px oklch(0.85 0.08 var(--hue) / 0.34), inset 0 1px 0 oklch(0.95 0.05 var(--hue) / 0.5);
+}
+.int-themed .int-head-badge .int-ic { color: oklch(0.88 0.09 var(--hue)); }
+.int-themed .int-cta::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 62% 100% at 18% 100%, oklch(0.72 0.12 var(--hue) / 0.07), transparent 72%);
+}
+/* The sheet's top edge, the lit column's head and the stage behind the card. */
+.int-themed .sd-get::before { background: linear-gradient(90deg, transparent 4%, oklch(0.84 0.09 var(--hue)) 50%, transparent 96%); opacity: 0.65; }
+.int-themed .sd-slab { background: linear-gradient(180deg, oklch(0.75 0.11 var(--hue) / 0.09), rgb(var(--sl-L) / 0.025) 40%, rgb(var(--sl-L) / 0.008)); }
+.int-themed .sd-stage::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 62% 58% at 50% 34%, oklch(0.72 0.12 var(--hue) / 0.07), transparent 72%);
+}
+.int-themed .h-process::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 46% 100% at 84% 100%, oklch(0.72 0.12 var(--hue) / 0.055), transparent 72%);
+}
+
+@media (max-width: 760px) {
+  /* The way back stands above the path on a phone. */
+  .int-head-top { flex-direction: column; align-items: flex-start; gap: 14px; }
 }

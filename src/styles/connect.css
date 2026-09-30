@@ -1,0 +1,94 @@
+/* ============================================================
+   CONNECT (/connect/)
+   The business card's QR page: one lit card in a dark room. The actions
+   are a rail: its lit bar (the site's bar) and key light glide to the one
+   under the finger or pointer and rest on "Start a project"
+   (connect.ts writes --by --bh, and the spotlight's --sx ...; the
+   spotlight itself is services.css). The card rises into the light once,
+   on arrival. Shape rule as the rest of the site: surfaces 12px, controls
+   full pill. Imported by interior.css.
+   ============================================================ */
+.cn {
+  position: relative; isolation: isolate; overflow: clip;
+  min-height: 100dvh; display: grid; place-items: center; align-content: center; gap: 22px;
+  padding: clamp(40px, 8vh, 88px) var(--sl-gutter);
+  --kx: 50; --kw: 70; --ki: 1; --kpy: 98;
+  --sv-glide: 650ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+.cn > .key-cone, .cn > .key-pool { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+
+.cn-card {
+  position: relative; width: min(100%, 420px); display: grid; gap: 22px;
+  padding: clamp(26px, 6vw, 36px); border-radius: 12px;
+  background: radial-gradient(ellipse 80% 50% at 50% -10%, rgb(var(--sl-L) / 0.06), transparent 70%), #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 60px 110px -50px rgb(0 0 0 / 0.95);
+  animation: cn-rise 900ms var(--sl-e-out) 120ms both;
+}
+.cn-card::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.55) 50%, transparent 96%);
+}
+@keyframes cn-rise { from { opacity: 0; transform: translateY(14px); } }
+.no-motion .cn-card { animation: none; }
+
+.cn-brand { justify-self: start; text-decoration: none; border-radius: 6px; }
+.cn-brand:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 4px; }
+.cn-wm { font-size: 22px; }
+.cn-id { display: grid; gap: 4px; padding-bottom: 20px; border-bottom: 1px solid var(--sl-line); }
+.cn-name {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(32px, 8vw, 40px); line-height: 1.02; letter-spacing: -0.036em; color: var(--sl-ink1);
+}
+.cn-role { font-size: 15px; color: var(--sl-ink2); }
+
+/* ---- the actions: a rail ---- */
+.cn-acts-wrap { position: relative; isolation: isolate; box-shadow: inset 1px 0 0 var(--sl-line2); }
+.cn-acts { display: grid; margin: 0; padding: 0; list-style: none; }
+.cn-acts > li + li { box-shadow: inset 0 1px 0 var(--sl-line); }
+.cn-act {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  min-height: 58px; padding: 0 16px 0 20px; border-radius: 0 8px 8px 0; text-decoration: none;
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.012em; color: var(--sl-ink2);
+  transition: color 300ms;
+}
+.cn-act .int-ic { color: var(--sl-ink3); transition: color 300ms; }
+.cn-go { width: 17px; height: 17px; transition: transform 350ms var(--sl-e-out), color 300ms; }
+.cn-act.is-on, .cn-act:hover { color: var(--sl-ink1); }
+.cn-act.is-on .int-ic, .cn-act:hover .int-ic { color: var(--sl-ink1); }
+.cn-act:hover .cn-go { transform: translateX(3px); }
+.cn-act:active { transform: scale(0.99); }
+.cn-act:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+/* The first action reads first without script, too. */
+.cn-acts > li:first-child .cn-act { color: var(--sl-ink1); }
+.cn-acts > li:first-child .cn-act .int-ic { color: var(--sl-ink1); }
+.cn-bar {
+  display: none; position: absolute; left: -0.5px; top: 0; width: 2px; height: var(--bh, 0px); pointer-events: none;
+  transform: translateY(var(--by, 0px)); transition: transform var(--sv-glide), height var(--sv-glide);
+}
+.cn-bar::before { content: ""; position: absolute; inset: 14px 0; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); }
+.cn-acts-wrap.is-js .cn-bar { display: block; }
+.cn-acts-wrap > .sv-spot {
+  z-index: -1; border-radius: 0 8px 8px 0;
+  background: radial-gradient(ellipse 110% 130% at 0% 50%, rgb(var(--sl-L) / 0.12), rgb(var(--sl-L) / 0.04) 55%, transparent 92%);
+  box-shadow: inset 0 1px 0 rgb(var(--sl-L) / 0.12);
+}
+.no-motion .cn-bar { transition: none !important; }
+
+/* ---- the email, by hand ---- */
+.cn-copy-line { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; font-size: 13.5px; color: var(--sl-ink3); }
+.cn-copy {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 34px; padding: 0 12px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgb(var(--sl-L) / 0.03); box-shadow: inset 0 0 0 1px var(--sl-line2);
+  font: 500 13.5px/1 var(--sl-f-text); color: var(--sl-ink1); user-select: all;
+  transition: box-shadow 250ms, background-color 250ms;
+}
+.cn-copy:hover { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.4); }
+.cn-copy:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.cn-copy-ic { width: 15px; height: 15px; color: var(--sl-ink2); }
+.cn-copy-done { display: none; }
+.cn-copy.is-copied { box-shadow: 0 0 0 1px var(--sl-bar), 0 0 14px oklch(0.8 0.15 245 / 0.35); }
+.cn-copy.is-copied .cn-copy-ic:not(.cn-copy-done) { display: none; }
+.cn-copy.is-copied .cn-copy-done { display: block; color: var(--sl-ink1); }
+
+.cn-tag { font-size: 14px; line-height: 1.5; color: var(--sl-ink2); padding-top: 18px; border-top: 1px solid var(--sl-line); }
+.cn-foot { font-size: 12.5px; color: var(--sl-ink3); }

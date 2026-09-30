@@ -1,83 +1,84 @@
 ---
-layout: layouts/base.njk
+layout: layouts/interior.njk
 permalink: /policies/
 title: Policies
 description: How ALVSolutions handles domains, Google Business Profiles, payment, cancellation, scope changes, logo and brand files, and missing photos. Written in plain English.
+pageJs: doc
+head:
+  crumbs: [{ label: "Policies" }]
+  heading: "The terms, in<br>words you can read."
+  lede: "Who owns what, when money changes hands, and what happens if you want to stop. None of this is buried in a contract you sign without reading."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "See the price list", url: "/pricing/" }
+cta:
+  heading: "Anything here you want changed?"
+  lede: "Ask before you sign, not after. If something on this page does not work for your business, say so and I will tell you straight whether it can move."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "See the price list", url: "/pricing/" }
 ---
+{#
+  POLICIES: the commercial terms as a document, beside a contents rail
+  (doc.css, doc.ts). Each policy is a section with its mark; the rail's lit
+  bar follows the one being read and a lit bar stands beside its heading.
+  Then the questions people ask, as rows a key light glides to, and the two
+  formal documents. Every policy and answer is read from _data/policies.json;
+  the anchors other pages link to (#payment, #domain, #faq ...) stay.
+#}
+<div class="int-wrap dc-body">
 
-{%- set ph = {
-  heading: "The terms, in<br />words you can read.",
-  lead: "Who owns what, when money changes hands, and what happens if you want to stop. None of this is buried in a contract you sign without reading, because a client who is surprised later is a client I have failed.",
-  crumbs: [{ label: "Policies" }],
-  actions: [
-    { label: "Start a project", url: "/contact/" },
-    { label: "See the price list", url: "/pricing/", style: "btn-ghost" }
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
-
-<main id="main">
-
-  <!-- ══════════════ POLICIES ══════════════ -->
-  <section class="sec">
-    <div class="wrap">
-      <div class="policies">
+  <nav class="dc-toc" aria-label="On this page" data-toc>
+    <p class="dc-toc-h">On this page</p>
+    <div class="dc-toc-in">
+      <ol class="dc-toc-list">
         {%- for p in policies.policies %}
-        <article class="policy reveal" id="{{ p.slug }}" style="--d:{{ loop.index0 % 3 }}">
-          <div class="ic-box">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-{{ p.icon }}"/></svg>
-          </div>
-          <h2>{{ p.title }}</h2>
-          <p>{{ p.body }}</p>
-        </article>
+        <li><a class="dc-toc-a" href="#{{ p.slug }}">{{ p.title }}</a></li>
         {%- endfor %}
-      </div>
+        <li><a class="dc-toc-a" href="#faq">Questions people ask</a></li>
+        <li><a class="dc-toc-a" href="#formal">The formal versions</a></li>
+      </ol>
+      <span class="dc-toc-bar" aria-hidden="true"></span>
+      <span class="sv-spot" aria-hidden="true"></span>
     </div>
-  </section>
+  </nav>
 
-
-  <!-- ══════════════ FAQ ══════════════ -->
-  <section class="sec band sec-line" id="faq">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2>Questions people actually ask.</h2>
+  <div class="dc-doc">
+    {%- for p in policies.policies %}
+    <section class="dc-sec" id="{{ p.slug }}" aria-labelledby="{{ p.slug }}-h">
+      <div class="dc-pol-top">
+        <span class="dc-badge" aria-hidden="true"><svg class="int-ic" aria-hidden="true"><use href="#i-{{ p.icon }}"/></svg></span>
+        <h2 id="{{ p.slug }}-h">{{ p.title }}</h2>
       </div>
-      <div class="faq reveal">
-        {%- for item in policies.faq %}
-        <details>
-          <summary>{{ item.q }}</summary>
-          <div class="faq-a">{{ item.a }}</div>
-        </details>
-        {%- endfor %}
+      <p>{{ p.body }}</p>
+    </section>
+    {%- endfor %}
+
+    <section class="dc-sec" id="faq" aria-labelledby="faq-h">
+      <h2 id="faq-h">Questions people actually ask</h2>
+      <div class="dc-faq-wrap" data-spot=".dc-q">
+        <div class="dc-faq">
+          {%- for item in policies.faq %}
+          <details class="dc-q">
+            <summary>{{ item.q }}</summary>
+            <p class="dc-q-a">{{ item.a }}</p>
+          </details>
+          {%- endfor %}
+        </div>
+        <span class="sv-spot" aria-hidden="true"></span>
       </div>
-    </div>
-  </section>
+    </section>
 
-
-  <!-- ══════════════ LEGAL ══════════════ -->
-  <section class="sec sec-line">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 22px;">
-        <h2 style="font-size: clamp(21px, 2.2vw, 26px);">The formal versions</h2>
-        <p class="lead">
-          These policies are how the business actually works. The signed paperwork says
-          the same thing in longer sentences, and is still being written for this
-          business rather than copied from another one.
-        </p>
+    <section class="dc-sec" id="formal" aria-labelledby="formal-h">
+      <h2 id="formal-h">The formal versions</h2>
+      <p>These policies are how the business actually works. The formal documents say the same thing in longer sentences.</p>
+      <div class="dc-links-wrap" data-spot=".dc-link">
+        <ul class="dc-links">
+          <li><a class="dc-link" href="/legal/terms/"><svg class="int-ic" aria-hidden="true"><use href="#i-list"/></svg><span><b>Terms of service</b><span>Ownership, payment, scope and warranty</span></span><svg class="int-ic dc-link-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+          <li><a class="dc-link" href="/legal/privacy/"><svg class="int-ic" aria-hidden="true"><use href="#i-shield-check"/></svg><span><b>Privacy policy</b><span>What the contact form collects</span></span><svg class="int-ic dc-link-go" aria-hidden="true"><use href="#i-arrow"/></svg></a></li>
+        </ul>
+        <span class="sv-spot" aria-hidden="true"></span>
       </div>
-      <div class="hero-actions reveal">
-        {%- for link in site.legalLinks %}
-        {%- if link.url != "/policies/" %}
-        <a class="btn btn-ghost btn-sm" href="{{ link.url }}">{{ link.label }}</a>
-        {%- endif %}
-        {%- endfor %}
-      </div>
-    </div>
-  </section>
-
-
-  {%- set ctaHeading = "Anything here you want changed?" %}
-  {%- set ctaLead = "Ask before you sign, not after. If something on this page does not work for your business, say so and I will tell you straight whether it can move." %}
-  {% include "components/cta-band.njk" %}
-
-</main>
+    </section>
+  </div>
+</div>

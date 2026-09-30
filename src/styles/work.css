@@ -1,0 +1,263 @@
+/* ============================================================
+   WORK (/work/) - the gallery
+
+   A dark showroom. ALVSolutions supplies the room and one white key from
+   above; each project is a physical screen whose own light (sampled from
+   its pixels by scripts/work.ts into --e-all/--e-left/--e-right/--e-bottom
+   and --exp) is the only colour on the page. Type never takes that colour.
+
+   Two compositions so the page has rhythm, each carrying something of its
+   client:
+     Hacienda  flat and wide, phone standing in front, warm light thrown
+               onto the wall and pooled on the floor (it is lit by fire);
+     Lucid     turned on a glossy floor that reflects it, and a lamp passes
+               over the glass once it powers on (it is sold on finish).
+
+   Motion, all of it answering arrival and none of it holding the scroll:
+     - with html.wk-arm (work/prepaint.njk), screens wait as dark glass and
+       power on once they reach the viewport (.is-on); the key yields as
+       the work's own light rises;
+     - the strip inside each glass scrolls as the page passes it
+       (scroll-driven animation; browsers without it show the top frame).
+   ============================================================ */
+.wk {
+  --wk-max: 1240px;
+  --wk-ease: cubic-bezier(0.45, 0, 0.2, 1);
+  width: 100%;
+  max-width: calc(var(--wk-max) + 2 * var(--sl-gutter));
+  margin: 0 auto;
+  padding-inline: var(--sl-gutter);
+}
+/* The header band stays short here: the work starts right under it. */
+#main:has(> .wk) .int-head { padding-bottom: 0; }
+
+/* ---- A showcase --------------------------------------------- */
+.wk-show {
+  position: relative; isolation: isolate;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: clamp(16px, 2vw, 28px);
+  padding-block: clamp(36px, 6vh, 64px) clamp(72px, 11vh, 120px);
+  /* The work's light, until its own pixels have been sampled: white. */
+  --e-all: var(--sl-L); --e-left: var(--sl-L); --e-right: var(--sl-L); --e-bottom: var(--sl-L);
+  --exp: 0.6;
+  /* ALVSolutions' key over the stage; it yields once the work is on. */
+  --kx: 38; --kw: 62; --ki: 0.55;
+}
+.wk-show.is-on { --ki: 0.22; }
+
+/* The room around the stage: key, then the work's light. Bleeds sideways
+   past the content measure (#main clips it, so nothing scrolls). */
+.wk-room {
+  position: absolute; inset: -14% -22%; z-index: -1; pointer-events: none;
+  /* Light fades out into the dark above and below; it never ends on an edge. */
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 80%, transparent);
+}
+.wk-room > span { position: absolute; inset: 0; }
+.wk-room > .key-cone { transition: opacity 1600ms var(--wk-ease); }
+.wk-spill {
+  /* --sx/--sy: the stage's centre in the room; --fy: the floor line. */
+  background:
+    radial-gradient(ellipse 30% 40% at var(--sx) var(--sy), rgb(var(--e-all) / 0.2), transparent 70%),
+    radial-gradient(ellipse 16% 34% at calc(var(--sx) - 20%) calc(var(--sy) - 4%), rgb(var(--e-left) / 0.1), transparent 72%),
+    radial-gradient(ellipse 16% 34% at calc(var(--sx) + 20%) calc(var(--sy) - 4%), rgb(var(--e-right) / 0.1), transparent 72%),
+    radial-gradient(ellipse 30% 7% at var(--sx) var(--fy), rgb(var(--e-bottom) / 0.28), transparent 76%);
+  opacity: var(--exp);
+  transition: opacity 1500ms var(--wk-ease) 250ms;
+}
+
+.wk-stage { position: relative; min-width: 0; transition: transform 1400ms var(--sl-e-out); }
+
+/* ---- A screen ------------------------------------------------ */
+.wk-screen { position: relative; display: block; color: inherit; }
+.wk-glass {
+  position: relative; display: block; overflow: hidden;
+  border-radius: 10px; background: #040404;
+  aspect-ratio: 1440 / 900;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 50px 90px -40px rgb(0 0 0 / 0.95);
+  transition: box-shadow 400ms var(--sl-e-out);
+}
+.wk-screen--phone .wk-glass {
+  aspect-ratio: 430 / 880; border-radius: 22px;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.1), 0 0 0 5px #050505, 0 0 0 6px rgb(var(--sl-L) / 0.09), 0 40px 70px -26px rgb(0 0 0 / 0.95);
+}
+.wk-feed { width: 100%; height: auto; will-change: transform; }
+.wk-glass > span { position: absolute; inset: 0; pointer-events: none; }
+/* Power: an unpowered screen is dark glass. */
+.wk-off { background: #030303; opacity: 0; transition: opacity 1000ms var(--wk-ease); }
+.wk-screen--phone .wk-off { transition-delay: 380ms; }
+/* The key catches the top edge; strongest while the glass is dark. */
+.wk-catch {
+  background: linear-gradient(180deg, rgb(var(--sl-L) / 0.07), transparent 30%);
+  opacity: 0.3; transition: opacity 1200ms var(--wk-ease);
+}
+.wk-catch::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.55) 50%, transparent 96%);
+}
+.wk-lamp { display: none; }
+/* Grounding: a contact shadow where the screen meets the floor. */
+.wk-contact {
+  position: absolute; left: 6%; right: 6%; top: 100%; height: 16px; transform: translateY(-8px); z-index: -1;
+  background: radial-gradient(50% 50% at 50% 50%, rgb(0 0 0 / 0.95), transparent 72%);
+}
+a.wk-screen:hover .wk-glass { box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.2), 0 50px 90px -40px rgb(0 0 0 / 0.95); }
+
+/* ---- Armed: waiting in the dark (motion on, JS running) ------- */
+.wk-arm .wk-show:not(.is-on) .wk-off { opacity: 1; }
+.wk-arm .wk-show:not(.is-on) .wk-catch { opacity: 1; }
+.wk-arm .wk-show:not(.is-on) .wk-spill { opacity: 0; transition-delay: 0s; }
+.wk-arm .wk-show:not(.is-on) .wk-stage { transform: translateY(22px); }
+
+/* ---- The strip scrolls inside the glass as the page passes ----- */
+@supports (animation-timeline: view()) {
+  html:not(.no-motion) .wk-show { view-timeline: --wk-show block; }
+  html:not(.no-motion) .wk-feed {
+    animation: wk-feed linear both;
+    animation-timeline: --wk-show;
+    animation-range: cover 22% cover 84%;
+  }
+}
+@keyframes wk-feed {
+  0%, 12% { transform: translateY(0); animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); }
+  88%, 100% { transform: translateY(var(--travel, 0%)); }
+}
+
+/* ---- Caption ------------------------------------------------- */
+.wk-cap { min-width: 0; display: grid; justify-items: start; align-content: end; }
+.wk-name {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(28px, 2.5vw, 38px); line-height: 1.02; letter-spacing: -0.032em;
+  color: var(--sl-ink1); padding-bottom: 0.04em;
+}
+.wk-kind { margin-top: 6px; font-size: 15.5px; color: var(--sl-ink2); }
+.wk-caps {
+  display: grid; gap: 7px; width: 100%; max-width: 280px;
+  margin: 22px 0 0; padding: 16px 0 0; list-style: none;
+  border-top: 1px solid var(--sl-line2);
+  font-size: 14.5px; line-height: 1.35; color: var(--sl-ink2);
+}
+.wk-note { margin-top: 18px; max-width: 32ch; font-size: 13.5px; line-height: 1.5; color: var(--sl-ink3); }
+.wk-note b { font-weight: 600; color: var(--sl-ink2); }
+.wk-view {
+  display: inline-flex; align-items: center; gap: 10px;
+  min-height: 44px; margin-top: 22px; padding: 0 18px 0 20px;
+  border-radius: 999px; border: 1px solid var(--sl-line2);
+  color: var(--sl-ink1); text-decoration: none; font: 600 14.5px/1 var(--sl-f-text);
+  transition: border-color 250ms, background-color 250ms, transform 300ms var(--sl-e-out);
+}
+.wk-view .int-ic { width: 16px; height: 16px; color: var(--sl-ink2); }
+.wk-view:hover { border-color: rgb(var(--sl-L) / 0.5); background: rgb(var(--sl-L) / 0.05); transform: translateY(-1px); }
+.wk-view:active { transform: scale(0.98); }
+.wk-view:focus-visible { border-radius: 999px; }
+/* The maker signature, ending the caption. Armed (wk-arm), it waits unsigned
+   until work.ts signs it, as the homepage's chapters do; unarmed it rests. */
+.wk-sign { grid-column: 1 / -1; margin-top: 22px; }
+.wk-arm .wk-sign .alv-sign:not(.is-signed) .alv-sign-line { clip-path: inset(0 100% 0 0); transform: translateX(-4px); }
+
+/* ============================================================
+   HACIENDA: flat, wide, warm
+   ============================================================ */
+.wk-show--hac { --sx: 38%; --sy: 42%; --fy: 76%; }
+.wk-show--hac .wk-stage { grid-column: 2 / span 6; padding-bottom: 6%; }
+.wk-show--hac .wk-screen--desk { width: 85%; }
+.wk-show--hac .wk-screen--phone { position: absolute; right: 0; bottom: 0; width: 21%; z-index: 2; }
+.wk-show--hac .wk-cap { grid-column: 8 / span 4; padding: 0 0 7% clamp(16px, 2.4vw, 36px); }
+/* Firelight: the warm spill catches, flares a touch, and settles. */
+.wk-arm .wk-show--hac.is-on .wk-spill { animation: wk-catch-fire 2200ms var(--wk-ease) 200ms both; }
+@keyframes wk-catch-fire {
+  0% { opacity: 0; }
+  46% { opacity: calc(var(--exp) * 1.18); }
+  70% { opacity: calc(var(--exp) * 0.9); }
+  100% { opacity: var(--exp); }
+}
+
+/* ============================================================
+   LUCID: turned, glossy, inspected under a lamp
+   ============================================================ */
+.wk-show--luc { --sx: 62%; --sy: 42%; --fy: 74%; --kx: 60; }
+.wk-show--luc .wk-cap { grid-column: 2 / span 3; grid-row: 1; align-content: center; padding-bottom: 4%; }
+.wk-show--luc .wk-stage { grid-column: 5 / span 7; grid-row: 1; padding-bottom: 8%; perspective: 1900px; }
+.wk-show--luc .wk-screen--desk {
+  width: 88%; margin-left: auto;
+  transform: rotateY(15deg); transform-origin: 0% 50%;
+  transition: transform 1800ms var(--sl-e-out);
+}
+.wk-arm .wk-show--luc:not(.is-on) .wk-screen--desk { transform: rotateY(28deg); }
+.wk-show--luc .wk-screen--phone { position: absolute; left: 0; bottom: 0; width: 20%; z-index: 2; }
+/* A glossy floor: each screen is mirrored in it, scrolling strip and all. */
+.wk-show--luc .wk-glass { -webkit-box-reflect: below 3px linear-gradient(transparent 64%, rgb(255 255 255 / 0.2)); }
+/* The inspection lamp: one pass across the glass as it powers on, and
+   again under the pointer. */
+.wk-show--luc .wk-lamp {
+  display: block; mix-blend-mode: screen; transform: translateX(-130%);
+  background: linear-gradient(104deg, transparent 38%, rgb(var(--sl-L) / 0.05) 44%, rgb(var(--sl-L) / 0.2) 50%, rgb(var(--sl-L) / 0.05) 56%, transparent 62%);
+}
+.wk-arm .wk-show--luc.is-on .wk-lamp { animation: wk-lamp 1700ms var(--wk-ease) 700ms both; }
+.wk-arm .wk-show--luc.is-on .wk-screen--phone .wk-lamp { animation-delay: 1100ms; }
+html:not(.no-motion) .wk-show--luc a.wk-screen:hover .wk-lamp { animation: wk-lamp-again 1300ms var(--wk-ease) both; }
+@keyframes wk-lamp { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+@keyframes wk-lamp-again { from { transform: translateX(-130%); } to { transform: translateX(130%); } }
+
+/* ============================================================
+   CLOSE: ALVSolutions' key alone. The two clients' light stays at the
+   edges of the floor; the middle is left for the next business.
+   ============================================================ */
+.int-cta.wk-close {
+  justify-items: center; text-align: center;
+  padding-block: clamp(56px, 9vh, 104px) clamp(88px, 14vh, 150px);
+  --kx: 50; --kw: 64; --kpy: 90;
+}
+.int-cta.wk-close .int-cta-act { justify-content: center; }
+/* The key comes down out of the dark above, with no edge where the band starts. */
+.int-cta.wk-close > .key-cone {
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 38%);
+  mask-image: linear-gradient(to bottom, transparent, #000 38%);
+}
+.wk-close-h {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(32px, 4.2vw, 58px); line-height: 1.04; letter-spacing: -0.038em;
+  color: var(--sl-ink1); max-width: 19ch; padding-bottom: 0.06em; text-wrap: balance;
+}
+.wk-close-h span { display: block; margin-top: 0.18em; }
+.wk-embers {
+  position: absolute; inset: 0 -22%; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 22% 9% at 12% 90%, rgb(var(--wk-hac, var(--sl-L)) / 0.09), transparent 75%),
+    radial-gradient(ellipse 22% 9% at 88% 90%, rgb(var(--wk-luc, var(--sl-L)) / 0.09), transparent 75%);
+}
+
+/* ---- Tablet and phone: every showcase stacks, stage first ------ */
+@media (max-width: 899px) {
+  .wk-show { grid-template-columns: minmax(0, 1fr); row-gap: clamp(40px, 7vw, 56px); }
+  .wk-show--hac .wk-stage, .wk-show--hac .wk-cap,
+  .wk-show--luc .wk-stage, .wk-show--luc .wk-cap { grid-column: 1; grid-row: auto; padding-bottom: 0; }
+  .wk-show--hac .wk-stage, .wk-show--luc .wk-stage { width: 100%; max-width: 560px; }
+  .wk-show--hac .wk-stage { padding-bottom: 12%; }
+  .wk-show--luc .wk-stage { padding-bottom: 14%; }
+  .wk-show--hac .wk-screen--desk { width: 84%; }
+  .wk-show--hac .wk-screen--phone { width: 28%; }
+  .wk-show--luc .wk-screen--desk { width: 86%; transform: rotateY(10deg); }
+  .wk-arm .wk-show--luc:not(.is-on) .wk-screen--desk { transform: rotateY(22deg); }
+  .wk-show--luc .wk-screen--phone { width: 27%; }
+  .wk-show--hac { --sx: 46%; --sy: 28%; --fy: 40%; }
+  .wk-show--luc { --sx: 54%; --sy: 28%; --fy: 40%; }
+  .wk-show--luc .wk-cap { order: 2; }
+  .wk-cap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: 24px; align-items: start; }
+  .wk-name, .wk-kind, .wk-note { grid-column: 1; }
+  .wk-caps { grid-column: 2; grid-row: 1 / span 3; margin-top: 4px; }
+  .wk-view { grid-column: 1 / -1; }
+}
+@media (max-width: 560px) {
+  .wk-show { padding-bottom: 80px; }
+  .wk-show--hac .wk-screen--desk, .wk-show--luc .wk-screen--desk { width: 82%; }
+  .wk-show--hac .wk-screen--phone { width: 31%; }
+  .wk-show--luc .wk-screen--phone { width: 28%; }
+  .wk-screen--phone .wk-glass { border-radius: 14px; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.1), 0 0 0 3px #050505, 0 0 0 4px rgb(var(--sl-L) / 0.09), 0 30px 50px -20px rgb(0 0 0 / 0.95); }
+  .wk-cap { grid-template-columns: minmax(0, 1fr); }
+  .wk-caps { grid-column: 1; grid-row: auto; margin-top: 20px; max-width: none; }
+}
+
+@media (forced-colors: active) {
+  .wk-room, .wk-embers, .wk-off, .wk-lamp { display: none; }
+}

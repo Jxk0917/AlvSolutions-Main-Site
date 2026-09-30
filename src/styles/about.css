@@ -1,0 +1,87 @@
+/* ============================================================
+   ABOUT (/about/)
+   The person, then three things true of working with them, on a rail.
+   The rail's lit bar (the site's bar) and a key light glide to the point
+   under the pointer; the first time the list is reached the light walks
+   down it once. The spotlight's own rules (.sv-spot) are services.css.
+   Shape rule as /pricing/: surfaces 8-10px. about.ts writes the custom
+   properties. Imported by interior.css.
+   ============================================================ */
+.ab-intro {
+  position: relative; isolation: isolate;
+  display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(32px, 6vw, 96px); align-items: start;
+  padding-block: clamp(24px, 4vh, 40px) clamp(56px, 8vh, 96px);
+  --sv-glide: 850ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+/* The rail's own light, from behind it. */
+.ab-intro::before {
+  content: ""; position: absolute; z-index: -1; right: -6%; top: -8%; width: 62%; height: 110%; pointer-events: none;
+  background: radial-gradient(ellipse closest-side at 60% 40%, oklch(0.7 0.12 245 / 0.07), transparent);
+}
+
+/* ---- the person ---- */
+.ab-copy { display: grid; gap: 18px; justify-items: start; }
+.ab-copy .int-h2 { max-width: 15ch; }
+.ab-copy p { font-size: 16.5px; line-height: 1.6; color: var(--sl-ink2); max-width: 50ch; }
+.ab-figs {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px clamp(24px, 3vw, 44px);
+  width: 100%; max-width: 480px; margin: 10px 0 0; padding-top: 22px; border-top: 1px solid var(--sl-line2);
+}
+.ab-fig { display: grid; gap: 4px; align-content: start; margin: 0; }
+.ab-fig dt { font-size: 13.5px; color: var(--sl-ink3); }
+.ab-fig dd { margin: 0; }
+.ab-fig-v {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(32px, 3vw, 42px); letter-spacing: -0.034em; line-height: 1.05;
+  color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.ab-fig-note { font-size: 13.5px; line-height: 1.4; color: var(--sl-ink2); max-width: 22ch; }
+
+/* ---- the rail ---- */
+.ab-rail { position: relative; isolation: isolate; box-shadow: inset 1px 0 0 var(--sl-line2); }
+.ab-rows { display: grid; margin: 0; padding: 0; list-style: none; }
+.ab-row {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 6px clamp(14px, 2vw, 24px); align-items: start;
+  padding: clamp(22px, 3vh, 30px) clamp(16px, 2vw, 28px) clamp(22px, 3vh, 30px) clamp(24px, 3vw, 40px);
+}
+.ab-row + .ab-row { box-shadow: inset 0 1px 0 var(--sl-line); }
+.ab-ic { width: 22px; height: 22px; margin-top: 2px; color: var(--sl-ink2); transition: color 300ms; }
+.ab-row-h {
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: clamp(19px, 1.7vw, 22px); letter-spacing: -0.02em; line-height: 1.2;
+  color: var(--sl-ink1); margin-bottom: 6px;
+}
+.ab-row-text p { font-size: 15px; line-height: 1.55; color: var(--sl-ink2); max-width: 44ch; }
+.ab-row-v {
+  padding-top: 3px; font-family: var(--sl-f-brand); font-weight: 560; font-size: 15px; letter-spacing: -0.01em;
+  color: var(--sl-ink3); white-space: nowrap; transition: color 300ms;
+}
+/* The point in the light reads brighter; the others rest in the room. */
+.ab-rail.is-lit .ab-row.is-on .ab-ic,
+.ab-rail.is-lit .ab-row.is-on .ab-row-v { color: var(--sl-ink1); }
+
+/* The bar takes the measured place of the row it marks (--by, --bh). */
+.ab-bar {
+  display: none; position: absolute; left: -0.5px; top: 0; width: 2px; height: var(--bh, 0px); pointer-events: none;
+  transform: translateY(var(--by, 0px)); opacity: 0;
+}
+.ab-bar::before { content: ""; position: absolute; inset: 22px 0; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); }
+.ab-rail.is-js .ab-bar { display: block; }
+.ab-rail.is-lit .ab-bar { opacity: 1; }
+.ab-rail.is-placed .ab-bar { transition: transform var(--sv-glide), height var(--sv-glide), opacity 400ms; }
+.ab-rail.is-placed.is-snap .ab-bar { transition: opacity 400ms; }
+.ab-rail > .sv-spot {
+  z-index: -1; border-radius: 0 8px 8px 0;
+  background: radial-gradient(ellipse 110% 130% at 0% 50%, rgb(var(--sl-L) / 0.13), rgb(var(--sl-L) / 0.045) 55%, transparent 92%);
+  box-shadow: inset 0 1px 0 rgb(var(--sl-L) / 0.14), inset 0 -1px 0 rgb(var(--sl-L) / 0.05);
+}
+.no-motion .ab-bar { transition: none !important; }
+
+@media (max-width: 900px) {
+  .ab-intro { grid-template-columns: minmax(0, 1fr); }
+  .ab-copy .int-h2 { max-width: 20ch; }
+}
+@media (max-width: 600px) {
+  /* The value drops under the name, so a narrow row never crowds. */
+  .ab-row { grid-template-columns: auto minmax(0, 1fr); padding-right: 12px; }
+  .ab-row-v { grid-column: 2; padding-top: 0; white-space: normal; }
+  .ab-figs { grid-template-columns: minmax(0, 1fr); }
+}

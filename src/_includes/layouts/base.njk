@@ -14,6 +14,9 @@
         var pref = localStorage.getItem("alv-motion");
         if (pref === "off" || (pref !== "on" && matchMedia("(prefers-reduced-motion: reduce)").matches)) {
           r.className += " no-motion";
+        } else {
+          /* motion/deal.ts deals text in. */
+          r.className += " alv-deal";
         }
       } catch (e) {}
     })();
@@ -25,7 +28,7 @@
   {#- Centralised here so a brand rename or domain switch is one edit in
       site.json rather than a search-and-replace across every meta tag. -#}
   {%- set metaTitle = title and (title + " | " + site.name) or (site.name + " | Professional Websites for Local Businesses") %}
-  {%- set metaDesc = description | default("Professional websites built around how your business gets customers. Flat-price builds from " + site.startingPrice + ", live in " + site.turnaround + ", with hosting and support from " + site.carePlanFrom + ". " + site.city + ".") %}
+  {%- set metaDesc = description | default("Professional websites built around how your business gets customers. Flat-price builds from " + site.startingPrice + ", typically live " + site.turnaround + " after your content arrives, with hosting and support from " + site.carePlanFrom + ". " + site.city + ".") %}
   {%- set canonicalUrl = site.url + page.url %}
 
   <title>{{ metaTitle }}</title>
@@ -77,21 +80,9 @@
   <link rel="icon" href="/assets/brand/alv-favicon-48.png" type="image/png" sizes="48x48" />
   <link rel="apple-touch-icon" href="/assets/brand/alv-badge-180.png" />
 
-  <!-- Self-hosted variable fonts: Manrope for headings, Geist for body. Preloaded
-       because they are declared inside styles.css, so without this the browser
-       cannot discover either file until the stylesheet has finished parsing. -->
-  {#- `legacy: false` in a page's front matter marks it as migrated to the
-      Screen Light system: it skips the legacy stylesheets, fonts and main.js,
-      whose global body/heading/selection rules would otherwise fight it. -#}
-  {%- set useLegacy = legacy !== false %}
-  {%- if useLegacy %}
-  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Manrope-Variable.woff2" crossorigin />
-  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Geist-Variable.woff2" crossorigin />
-  {%- endif %}
-
-  <!-- Approved Phase 1 typography, used by the shared nav/footer/identity.
-       Self-hosted alongside the legacy pair above; interior page content
-       still renders in Manrope/Geist until it is migrated. -->
+  <!-- Screen Light typography, self-hosted. The two upright faces are
+       preloaded: they are declared inside the stylesheet, so without this the
+       browser cannot discover them until it has finished parsing it. -->
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Bricolage-Grotesque-Variable.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Instrument-Sans-Variable.woff2" crossorigin />
   <!-- Archivo sets the logo's wordmark in every header and footer, and nothing
@@ -103,10 +94,6 @@
   <link rel="preload" as="image" href="{{ preloadImage }}" />
   {%- endif %}
 
-  {%- if useLegacy %}
-  <link rel="stylesheet" href="/assets/styles.css" />
-  <link rel="stylesheet" href="/assets/pages.css" />
-  {%- endif %}
   <link rel="stylesheet" href="/assets/dist/site.css" />
   {%- if pageCss %}
   <link rel="stylesheet" href="/assets/dist/{{ pageCss }}.css" />
@@ -127,15 +114,9 @@
 {% include "components/footer.njk" %}
 {%- endif %}
 
-{%- if useLegacy %}
-<script src="/assets/main.js" defer></script>
-{%- endif %}
 <script src="/assets/dist/site.js" defer></script>
 {%- if pageJs %}
 <script src="/assets/dist/{{ pageJs }}.js" defer></script>
-{%- endif %}
-{%- if shader %}
-<script src="/assets/shader.js" defer></script>
 {%- endif %}
 </body>
 </html>

@@ -9,7 +9,9 @@
  *   5. the work is there too, waiting in the dark.
  *
  * Once per browser session (sessionStorage). Anyone who wants to move on -
- * scroll, touch, a key, a click - gets the finished room at once.
+ * a scroll, a touch that scrolls, a scrolling key - gets the finished room
+ * at once; it never waits for the opening. (A plain press on a link is not
+ * moving on: it is a click, and must reach the link.)
  *
  * The start state (hero words and nav mark hidden, the room dark) is set
  * before first paint by the head script, only when this will run; a
@@ -20,12 +22,23 @@ import { playIntro, finishIntro } from "../identity/motions";
 import type { Reel } from "./reel";
 
 export const SEEN_KEY = "alv-home-opened";
+const SCROLL_KEYS = new Set(["ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End", " ", "Spacebar"]);
 
 export class Opening {
   private tl: gsap.core.Timeline | null = null;
   private flight = { f: 0, copy: 0 };
   private geo = { x0: 0, y0: 0, x1: 0, y1: 0, s1: 1 };
   private readonly skipper = (): void => this.skip();
+  private startY = 0;
+  // Only keys that move the page. A press on a link or button is not a
+  // request to skip: the opening used to end on pointerdown, which
+  // rearranged the hero between press and release and dropped the click.
+  private readonly onKey = (e: KeyboardEvent): void => {
+    if (SCROLL_KEYS.has(e.key)) this.skip();
+  };
+  private readonly onScroll = (): void => {
+    if (Math.abs(scrollY - this.startY) >= 3) this.skip();
+  };
 
   constructor(
     private readonly reel: Reel,
@@ -66,6 +79,10 @@ export class Opening {
     this.navMark.classList.toggle("is-home", home);
     this.nav.style.setProperty("--nav", Math.max(0, (f - 0.5) / 0.5).toFixed(3));
     this.reel.writeCopy(this.flight.copy);
+    // Words still rising are a moving target: a press on a link that then
+    // slides out from under the pointer is a click that never lands. They
+    // take clicks from the moment they arrive, not before.
+    this.reel.copy.style.pointerEvents = this.flight.copy < 0.98 ? "none" : "";
   }
 
   play(): void {
@@ -94,10 +111,15 @@ export class Opening {
     });
     this.tl = tl;
 
+    // The opening yields to the visitor the moment they ask to move on:
+    // a wheel tick, a touch that scrolls, a scrolling key, or the page
+    // actually moving (scrollbar drag, a link that scrolls). All passive:
+    // nothing here can hold up the scroll it is reacting to.
+    this.startY = scrollY;
     addEventListener("wheel", this.skipper, { passive: true });
-    addEventListener("touchstart", this.skipper, { passive: true });
-    addEventListener("keydown", this.skipper);
-    addEventListener("pointerdown", this.skipper);
+    addEventListener("touchmove", this.skipper, { passive: true });
+    addEventListener("keydown", this.onKey);
+    addEventListener("scroll", this.onScroll, { passive: true });
   }
 
   /** Anyone who wants to move on gets the finished room at once. */
@@ -121,15 +143,16 @@ export class Opening {
       /* private mode: the opening may simply play again next visit */
     }
     removeEventListener("wheel", this.skipper);
-    removeEventListener("touchstart", this.skipper);
-    removeEventListener("keydown", this.skipper);
-    removeEventListener("pointerdown", this.skipper);
+    removeEventListener("touchmove", this.skipper);
+    removeEventListener("keydown", this.onKey);
+    removeEventListener("scroll", this.onScroll);
     Opening.settle(this.nav, this.navMark, this.fly);
   }
 
   /** The settled page: no opening start state left anywhere. */
   static settle(nav: HTMLElement, navMark: HTMLElement, fly: HTMLElement): void {
     document.documentElement.classList.remove("alv-opening");
+    document.querySelector<HTMLElement>(".h-copy")?.style.removeProperty("pointer-events");
     nav.style.removeProperty("--nav");
     navMark.classList.remove("is-home");
     fly.classList.remove("is-home");

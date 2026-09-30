@@ -1,269 +1,521 @@
+---js
+{
+  layout: "layouts/interior.njk",
+  pageJs: "service",
+  pagination: { data: "services", size: 1, alias: "svc", addAllPagesToCollections: true },
+  permalink: "/services/{{ svc.slug }}/",
+  cta: { inline: true },
+  eleventyComputed: {
+    title: (data) => data.svc.name,
+    description: (data) => data.svc.promise,
+    // The header band (layouts/interior.njk). Breadcrumbs carry the
+    // service's category, which is an anchor on /services/.
+    head: (data) => {
+      const s = data.svc;
+      const cat = {
+        web: { label: "Websites", id: "websites" },
+        care: { label: "Care & visibility", id: "care-visibility" },
+        brand: { label: "Branding & design", id: "branding-design" },
+        print: { label: "Print & apparel", id: "print-apparel" },
+      }[s.family];
+      const brand = s.family === "brand";
+      // The service's own light: the same hue its card carries on /services/
+      // (components/sv-card.njk hueFor): its category's base hue, stepped
+      // down 15 degrees per place in that category.
+      const base = { web: 285, care: 175, brand: 100, print: 40 }[s.family];
+      const idx = data.services.filter((x) => x.family === s.family).findIndex((x) => x.slug === s.slug);
+      return {
+        hue: base - idx * 15,
+        icon: s.icon,
+        back: { label: "Back to services", url: "/services/" },
+        crumbs: [
+          { label: "Services", url: "/services/" },
+          { label: cat.label, url: `/services/#${cat.id}` },
+          { label: s.name },
+        ],
+        heading: s.name,
+        lede: s.promise,
+        actions: [
+          { label: "Start a project", url: brand ? `/contact/?service=${s.slug}` : "/contact/" },
+          brand
+            ? { label: "See the price list", url: "/pricing/#brand-and-design" }
+            : { label: "See packages", url: "/packages/" },
+        ],
+      };
+    },
+  },
+}
 ---
-layout: layouts/base.njk
-pagination:
-  data: services
-  size: 1
-  alias: svc
-  addAllPagesToCollections: true
-permalink: "/services/{{ svc.slug }}/"
-eleventyComputed:
-  title: "{{ svc.name }}"
-  description: "{{ svc.promise }}"
----
+{#
+  ONE SERVICE: what it costs, what it is, how it gets made.
+    1. the price, in the shape the service is sold in:
+         levels  - a chart whose column heads are the choice. A lit column
+                   (the site's bar across its top) glides to the level chosen
+                   or pointed at, and a package row beneath lights the
+                   packages that include that level. Business cards also
+                   stand the card itself in the key light: ALVSolutions' own
+                   card, live in the identity, turning over to its back;
+         flat    - one price strip, plus the logo ladder on the branding
+                   pages (the key light glides along it, the bar rests under
+                   where this service stands);
+         package - the three packages on one floor line, the bar gliding;
+         care    - the two plans, the key resting on the recommended one;
+         soon    - a notice with its light off;
+    2. what it is, and what you get: the case set large, its words lighting
+       in order, then the detail as beats on a rail that fills with light;
+       beside them, a sheet whose lit ticks come on in order;
+    3. how it gets made: the homepage's scroll-lit line, shared;
+    4. questions, one open at a time, the open one lit along its edge;
+    5. often bought with this: service cards, their spotlight;
+    6. the close.
+  Every figure is read from _data. Motion lives in scripts/service.ts; the
+  page is complete without it.
+#}
+{%- from "components/sv-card.njk" import card, hueFor with context %}
+{%- from "components/identity.njk" import lockup %}
+{%- set p = svc.pricing %}
+{%- set brand = svc.family == "brand" %}
+{%- set startUrl = ("/contact/?service=" + svc.slug) if brand else "/contact/" %}
+{%- set myHue = hueFor(svc) | trim %}
 
-{%- set famLabel = { web: "Websites", brand: "Branding & design", care: "Care & visibility", print: "Print & apparel" } -%}
-{%- set fam = famLabel[svc.family] -%}
-{%- set p = svc.pricing -%}
-
-{#- ─────────── normalise pricing into the picker's `tiers` shape ───────────
-    The picker takes [{ label, price, unit, note, shot, rows }] and does not
-    care where any of it came from. Only `kind: "levels"` produces tiers; every
-    other kind renders as a single aside card instead, because one number does
-    not need a tab strip. -#}
-{%- set tiers = [] -%}
-{%- set hasFactors = false -%}
-{%- set cmpFactors = p.factors or [] -%}
-{%- set cmpName = p.cmpName or (svc.name | lower) -%}
-
-{%- if p.kind == "levels" -%}
-  {%- set hasFactors = true if p.factors else false -%}
-  {%- for l in p.levels -%}
-    {%- set li = loop.index0 -%}
-    {%- set rows = [] -%}
-    {%- for f in (p.factors or []) -%}
-      {%- set rows = (rows.push({ label: f.label, value: f.values[li], example: f.example }), rows) -%}
-    {%- endfor -%}
-    {%- set tiers = (tiers.push({ label: l.label, price: l.price, unit: l.unit,
-                                  note: l.note, shot: l.shot, rows: rows, addon: l.addon }), tiers) -%}
-  {%- endfor -%}
+{#- How one level of a service sits in each package, from that level's own
+    `addon` block: included outright, one of a package's picks, or added on
+    at its class price. A package that includes it gets the site's lit bar
+    beneath it. -#}
+{%- macro fitLevel(a) -%}
+{%- if a -%}
+{%- set incl = a.includedIn or [] -%}
+{%- set paid = a.packages or [] -%}
+{%- set classLC = (a.class or "") | lower -%}
+{%- set key = "power" if a.class == "Power feature" else "pages" -%}
+<ul class="sd-fit">
+  {%- for pt in packages.tiers %}
+  {%- set own = pt.slug in incl %}
+  {%- set pick = pt.slug in paid %}
+  {%- set n = (pt.picks[key] if pt.picks else 0) %}
+  <li class="sd-fit-slot{% if own or pick %} is-in{% endif %}">
+    <span class="sd-fit-pkg">{{ pt.name }}</span>
+    <span class="sd-fit-what">
+      {%- if own %}Included
+      {%- elif pick %}{% if n > 1 %}One of its {{ n }} {{ classLC }} picks{% else %}Its {{ classLC }} pick{% endif %}
+      {%- elif a.price %}Add for {{ a.price | price | safe }}
+      {%- else %}Not included{% endif -%}
+    </span>
+  </li>
+  {%- endfor %}
+</ul>
 {%- endif -%}
-{%- set ptid = svc.slug -%}
-{#- a plain `set` inside a for loop stays in the loop's scope; mutating an
-    array is what survives, so the flag is counted rather than assigned. -#}
-{%- set shotFlags = [] -%}
-{%- for t in tiers -%}{% if t.shot %}{% set shotFlags = (shotFlags.push(1), shotFlags) %}{% endif %}{%- endfor -%}
-{%- set hasShots = shotFlags.length > 0 -%}
+{%- endmacro -%}
 
-{%- set ph = {
-  heading: svc.name,
-  lead: svc.promise,
-  back: { label: "Services", url: "/services/" },
-  crumbs: [{ label: "Services", url: "/services/" }, { label: svc.name }],
-  actions: [
-    { label: "Start a project", url: ("/contact/?service=" + svc.slug) if svc.family == "brand" else "/contact/" },
-    ({ label: "See price list", url: "/pricing/#brand-and-design", style: "btn-ghost" }) if svc.family == "brand"
-      else ({ label: "See packages", url: "/packages/", style: "btn-ghost" })
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
+{#- The same row, read from a package's own facts (packages.json `has`). -#}
+{%- macro fitHas(key) -%}
+<ul class="sd-fit">
+  {%- for pt in packages.tiers %}
+  {%- set v = pt.has[key] %}
+  <li class="sd-fit-slot{% if v %} is-in{% endif %}">
+    <span class="sd-fit-pkg">{{ pt.name }}</span>
+    <span class="sd-fit-what">{% if v === true %}Included{% elif v %}{{ v }}{% else %}Add it on its own{% endif %}</span>
+  </li>
+  {%- endfor %}
+</ul>
+{%- endmacro -%}
 
-<main id="main">
+{#- ALVSolutions' own business card, set live in the identity: the same
+    treatment a client's card gets, in the client's brand. `face` is split
+    (the basic card's one face), mark (premium front) or back. -#}
+{%- macro bcFace(face) -%}
+{%- if face == "split" %}
+<div class="sd-bc-face sd-bc-split">
+  {{ lockup("card", "sd-bc-wm") }}
+  <div class="sd-bc-who">
+    <b>Sergio Alvarez</b>
+    <span class="sd-bc-role">Founder</span>
+    <span>{{ site.email }}</span>
+    <span>alvsolutions.co</span>
+    <span>{{ site.city }}</span>
+  </div>
+</div>
+{%- elif face == "mark" %}
+<div class="sd-bc-face sd-bc-mark">
+  <span class="sd-bc-glow" aria-hidden="true"></span>
+  {{ lockup("card", "sd-bc-wm") }}
+  <i class="sd-bc-bar" aria-hidden="true"></i>
+  <span class="sd-bc-tag">Professional business websites</span>
+</div>
+{%- else %}
+<div class="sd-bc-face sd-bc-back">
+  <img class="sd-bc-qr" src="/assets/showcase/alv-connect-qr.svg" alt="" width="41" height="41" />
+  <div class="sd-bc-who">
+    <b>Sergio Alvarez</b>
+    <span class="sd-bc-role">Founder, ALVSolutions</span>
+    <span>{{ site.email }}</span>
+    <span>alvsolutions.co</span>
+    <span>{{ site.city }}</span>
+  </div>
+</div>
+{%- endif %}
+{%- endmacro -%}
 
-  {#- ══════════════ ONE SECTION: cost on the left, the case on the right ═════
-      Side by side, the factor list answers "what will mine cost" while the
-      prose beside it answers "what is it", and neither has to be scrolled past
-      to reach the other. -#}
-  <section class="sec">
-    <div class="wrap">
-      <div class="svc-split">
 
-        <!-- ──────── left: what it costs ──────── -->
-        <div class="svc-money">
+{#- ══════════════ 1. THE PRICE ══════════════ #}
+{%- if p.kind == "levels" %}
+{%- set L = p.levels %}
+{%- set shotFlags = [] %}
+{%- for l in L %}{% if l.shot %}{% set _ = shotFlags.push(1) %}{% endif %}{% endfor %}
+{%- set hasShots = shotFlags.length > 0 %}
+<section class="int-wrap sd-sec sd-sec--first" id="price" aria-labelledby="price-h">
+  <div class="sd-head">
+    <h2 id="price-h" class="int-h2">Two levels, and the rule for each.</h2>
+    <p class="int-lede">Choose the one closest to your job. The rows below are what decides it, so the price is never a guess.</p>
+  </div>
 
-          {%- if tiers.length %}
-          <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <h2 class="svc-h2">Two levels, and the rule for each.</h2>
-            {%- if hasShots %}
-            <p class="body-3" style="margin-top: 12px;">
-              Both designed against the same brand as your site. The cards below
-              are mine, with the same treatment your business gets.
-            </p>
+  <div class="sd-lv{% if hasShots %} sd-lv--shots{% endif %}" data-lv style="--n: {{ L.length }}">
+    {%- if hasShots %}
+    {#- The card itself, standing in the key light. Only the chosen level's
+        card shows; the premium one turns over to its back. #}
+    <div class="sd-stage" data-stage>
+      <span class="key-cone" aria-hidden="true"></span>
+      {%- for l in L %}
+      {%- if l.shot %}
+      {%- set two = l.shot.faces.length > 1 %}
+      <figure class="sd-bc" data-for="{{ loop.index0 }}">
+        <div class="sd-bc-tilt">
+          <div class="sd-bc-card">
+            <div class="sd-bc-side sd-bc-side--front" role="img" aria-label="{{ l.label }} card, front: {{ 'the ALVSolutions wordmark on its own, with a lit bar beneath it' if two else 'the ALVSolutions wordmark, then name, role, email, website and city' }}.">
+              {{ bcFace("mark" if two else "split") }}
+            </div>
+            {%- if two %}
+            <div class="sd-bc-side sd-bc-side--back" role="img" aria-label="{{ l.label }} card, back: a QR code to the ALVSolutions contact page beside name, role, email, website and city." aria-hidden="true">
+              {{ bcFace("back") }}
+            </div>
             {%- endif %}
           </div>
-          {% include "components/pricing-tiers.njk" %}
-
-          {%- if p.extra %}
-          <p class="svc-extra reveal">
-            <span class="svc-extra-p">{{ p.extra.price | money | safe }}</span>
-            <span>
-              <b>{{ p.extra.label }}</b><br />
-              {{ p.extra.note }}
-            </span>
-          </p>
-          {%- endif %}
-
-          {%- elif p.kind == "package" %}
-          <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <h2 class="svc-h2">Priced as a package.</h2>
-          </div>
-          <div class="aside-card reveal">
-            <span class="aside-price">From {{ packages.tiers[0].price | price | safe }}</span>
-            <p class="aside-note">
-              A one-time price agreed before I start, plus a care plan from
-              {{ careplans.plans[0].price | price | safe }} a month for hosting, security and edits.
-            </p>
-            <a class="btn btn-ghost" href="/packages/">Compare the three packages</a>
-          </div>
-
-          {%- elif p.kind == "care" %}
-          <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <h2 class="svc-h2">Two plans. Pick one.</h2>
-          </div>
-          {% include "components/care-cards.njk" %}
-
-          {%- elif p.kind == "flat" %}
-          <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <h2 class="svc-h2">{{ p.heading or "One price, one time." }}</h2>
-          </div>
-          <div class="aside-card reveal">
-            <span class="aside-price">{% if p.from %}<span class="money-pre">From</span> {% endif %}{{ p.price | price | safe }}</span>
-            {%- if p.unit %}<span class="aside-unit">{{ p.unit }}</span>{% endif %}
-            <p class="aside-note">{{ p.note }}</p>
-            {%- if p.extras %}
-            <ul class="aside-extras">
-              {%- for x in p.extras %}
-              <li><span>{{ x.label }}</span><b>+{{ x.price | price | safe }}</b></li>
-              {%- endfor %}
-            </ul>
-            {%- endif %}
-            <a class="btn btn-ghost" href="/pricing/">See the full price list</a>
-          </div>
-
-          {%- elif p.kind == "soon" %}
-          <div class="sec-head reveal" style="margin-bottom: 20px;">
-            <h2 class="svc-h2">Not open for orders yet.</h2>
-          </div>
-          <div class="aside-card reveal">
-            <span class="tag-soon">Coming soon</span>
-            <p class="aside-note">
-              The pricing is not settled, so there is no number here. I would rather
-              say that than invent one and change it on you later.
-            </p>
-            <a class="btn btn-ghost" href="/contact/">Ask me where it stands</a>
-          </div>
-          {%- endif %}
-
-          {%- if svc.packageNote and not tiers.length %}
-          <p class="svc-pnote reveal">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
-            <span>{{ svc.packageNote | safe }}</span>
-          </p>
-          {%- endif %}
-
         </div>
+        <span class="sd-bc-shadow" aria-hidden="true"></span>
+        <figcaption class="sd-bc-cap">
+          {%- if two %}
+          <button class="sd-bc-flip" type="button" aria-pressed="false">
+            <svg class="int-ic" aria-hidden="true"><use href="#i-refresh"/></svg><span>Show the back</span>
+          </button>
+          {%- endif %}
+          <span>{{ "Front and back. The logo on its own, then your details and a QR code to your site." if two else "One face: the logo, your name and how to reach you." }} This is my own card, in the treatment your business gets.</span>
+        </figcaption>
+      </figure>
+      {%- endif %}
+      {%- endfor %}
+    </div>
+    {%- endif %}
 
-        <!-- ──────── right: what it is ──────── -->
-        <div class="svc-story">
-          <div class="svc-prose reveal">
-            {%- for para in svc.intro %}
-            <p>{{ para }}</p>
-            {%- endfor %}
-          </div>
-
-          <h2 class="svc-h2 reveal" style="margin-top: 36px;">What you get</h2>
-          <ul class="inc-list reveal" style="--d:1">
-            {%- for i in svc.includes %}
-            <li>{{ i }}</li>
-            {%- endfor %}
-          </ul>
-
-          <div class="svc-facts reveal" style="--d:1">
-            {%- if svc.packageKey %}
-            <div class="aside-card">
-              <h3>In which packages</h3>
-              <ul class="in-pack">
-                {%- for t in packages.tiers %}
-                {%- set v = t.has[svc.packageKey] %}
-                <li>
-                  {%- if v %}
-                  <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg>
-                  {%- else %}
-                  <svg class="ic no" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-dash"/></svg>
-                  {%- endif %}
-                  <span>
-                    <b>{{ t.name }}</b>
-                    {%- if v and v !== true %} <em>({{ v }})</em>
-                    {%- elif not v %} <em>(add it on its own)</em>{% endif %}
-                  </span>
-                </li>
+    <div class="sd-lv-main">
+      <div class="sd-chart-wrap">
+        <div class="sd-chart">
+          <span class="sd-slab" aria-hidden="true"></span>
+          <table class="sd-tbl">
+            <caption class="alv-sr-only">What decides the price of {{ p.cmpName or (svc.name | lower) }}</caption>
+            <thead>
+              <tr>
+                <th scope="col"><span class="alv-sr-only">What decides it</span></th>
+                {%- for l in L %}
+                <th scope="col" data-col="{{ loop.index0 }}">
+                  <label class="sd-pick">
+                    <input class="sd-pick-in" id="lv-{{ loop.index0 }}" type="radio" name="level" value="{{ l.label | lower }}"{% if loop.first %} checked{% endif %} />
+                    <span class="sd-pick-name">{{ l.label }}</span>
+                    <span class="sd-pick-price">{{ l.price | price | safe }}</span>
+                  </label>
+                </th>
                 {%- endfor %}
-              </ul>
-            </div>
-            {%- endif %}
-
-            {%- if svc.callout %}
-            <div class="aside-card">
-              <h3>{{ svc.callout.title }}</h3>
-              <p class="aside-note" style="margin-top: 0;">{{ svc.callout.body }}</p>
-            </div>
-            {%- endif %}
-
-            <div class="aside-card">
-              <h3>Turnaround</h3>
-              <p class="aside-note" style="margin-top: 0;">
-                {%- if svc.turnaroundNote %}
-                {{ svc.turnaroundNote | safe }}
-                {%- else %}
-                A standard build takes <b style="color:var(--text)">{{ site.turnaround }}</b>
-                from the day your content arrives. Need it sooner? Rush delivery is a
-                listed <a href="/pricing/#project-extras" style="color: var(--blue);">flat fee</a>,
-                not a renegotiation.
-                {%- endif %}
-              </p>
-            </div>
-          </div>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for f in p.factors %}
+              <tr{% if f.example %} class="is-eg"{% endif %}>
+                <th scope="row">{{ f.label }}</th>
+                {%- for v in f.values %}
+                <td data-col="{{ loop.index0 }}">
+                  {%- if v === true %}<svg class="int-ic" aria-hidden="true"><use href="#i-check"/></svg><span class="alv-sr-only">Included</span>
+                  {%- elif v === false %}<span class="int-cmp-dash" aria-hidden="true"></span><span class="alv-sr-only">Not included</span>
+                  {%- else %}{{ v }}{% endif -%}
+                </td>
+                {%- endfor %}
+              </tr>
+              {%- endfor %}
+            </tbody>
+          </table>
         </div>
+      </div>
 
+      {#- The chosen level, in a sentence, and where it sits in the packages. #}
+      {%- for l in L %}
+      <div class="sd-lv-sum" data-for="{{ loop.index0 }}">
+        <p class="sd-lv-note"><b>{{ l.label }}, {{ l.price | price | safe }}.</b> {{ l.note }}</p>
+        {%- if l.addon %}
+        <p class="sd-fit-k">In a package</p>
+        {{ fitLevel(l.addon) }}
+        {%- endif %}
+      </div>
+      {%- endfor %}
+
+      {%- if p.extra %}
+      <p class="sd-extra">
+        <b class="sd-extra-p">{{ p.extra.price | money | safe }}</b>
+        <span><span class="sd-extra-h">{{ p.extra.label }}</span> {{ p.extra.note }}</span>
+      </p>
+      {%- endif %}
+
+      <div class="sd-act">
+        <a class="alv-btn" href="{{ startUrl }}">Start a project</a>
+        <a class="alv-tlink" href="/packages/">Compare packages</a>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-
-  {%- if not svc.noProcess %}
-  {%- set processHeading = svc.processHeading or ("How " + svc.name | lower + " gets built.") %}
-  {% include "components/process-steps.njk" %}
-  {%- endif %}
-
-
-  <!-- ══════════════ FAQ ══════════════ -->
-  {%- if svc.faq %}
-  <section class="sec band sec-line">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2>Questions</h2>
-      </div>
-      <div class="faq reveal">
-        {%- for item in svc.faq %}
-        <details>
-          <summary>{{ item.q }}</summary>
-          <div class="faq-a">{{ item.a }}</div>
-        </details>
+{%- elif p.kind == "flat" %}
+<section class="int-wrap sd-sec sd-sec--first" id="price" aria-labelledby="price-h">
+  <div class="sd-head">
+    <h2 id="price-h" class="int-h2">{{ p.heading or "One price, one time." }}</h2>
+  </div>
+  <div class="sd-flat" style="--hue: {{ myHue }}">
+    <span class="key-cone" aria-hidden="true"></span>
+    <p class="sd-flat-price">
+      {%- if p.from %}<span class="sv-pre">From</span> {% endif %}<b>{{ p.price | price | safe }}</b>
+      <span class="sd-flat-unit">{{ p.unit or "quoted to the project" }}</span>
+    </p>
+    <div class="sd-flat-body">
+      <p class="sd-flat-note">{{ p.note }}</p>
+      {%- if p.extras %}
+      <ul class="sd-flat-extras">
+        {%- for x in p.extras %}
+        <li><span>{{ x.label }}</span><b>+{{ x.price | price | safe }}</b></li>
         {%- endfor %}
-      </div>
+      </ul>
+      {%- endif %}
     </div>
-  </section>
-  {%- endif %}
+    <a class="alv-btn sd-flat-go" href="{{ startUrl }}">Start a project</a>
+  </div>
+</section>
+
+{#- The branding ladder: which of the three logo services fits depends on
+    the logo you already have. The bar rests under this page's rung; the key
+    light glides along the rungs. -#}
+{%- if brand %}
+{%- set ladder = [
+  { slug: "brand-asset-setup", q: "Already have a logo?" },
+  { slug: "brand-starter-kit", q: "Need a new one?" },
+  { slug: "custom-identity", q: "Need something more developed?" }
+] %}
+{%- set onLadder = [] %}
+{%- for r in ladder %}{% if r.slug == svc.slug %}{% set _ = onLadder.push(1) %}{% endif %}{% endfor %}
+<section class="int-wrap sd-sec" aria-labelledby="ladder-h">
+  <div class="sd-head">
+    <h2 id="ladder-h" class="int-h2">{{ "Where you start depends on the logo you have." if onLadder.length else "Need a usable logo first?" }}</h2>
+    {%- if not onLadder.length %}<p class="int-lede">The banner set is built from your logo. If it is not in shape yet, one of these comes first.</p>{% endif %}
+  </div>
+  <div class="sv-grid-wrap sd-ladder-wrap" data-spot=".sd-rung">
+    <ol class="sd-ladder">
+      {%- for r in ladder %}
+      {%- set s = services | find("slug", r.slug) %}
+      {%- set here = s.slug == svc.slug %}
+      <li class="sd-rung{% if here %} is-here{% endif %}" style="--hue: {{ hueFor(s) | trim }}"{% if here %} data-rest{% endif %}>
+        <a class="sd-rung-a" href="/services/{{ s.slug }}/"{% if here %} aria-current="page"{% endif %}>
+          <span class="sd-rung-q">{{ r.q }}</span>
+          <span class="sd-rung-name">{{ s.name }}</span>
+          <span class="sd-rung-price">{% if s.pricing.from %}<span class="sv-pre">From</span> {% endif %}{{ s.pricing.price | price | safe }}</span>
+          {%- if here %}<span class="sd-rung-here">You are here</span>{% endif %}
+        </a>
+      </li>
+      {%- endfor %}
+    </ol>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+</section>
+{%- endif %}
+
+{%- elif p.kind == "package" %}
+<section class="int-wrap sd-sec sd-sec--first" id="price" aria-labelledby="price-h">
+  <div class="sd-head">
+    <h2 id="price-h" class="int-h2">Three packages, each one flat price.</h2>
+    <p class="int-lede">Agreed before I start. Every build also carries a care plan, from {{ careplans.plans[0].price | price | safe }} a month, for hosting, security and edits.</p>
+  </div>
+  <ul class="sv-tiers sd-tiers">
+    {%- for t in packages.tiers %}
+    <li><a class="sv-tier{% if t.recommended %} is-rec{% endif %}" href="/packages/#{{ t.slug }}">
+      <span class="sv-tier-name">{{ t.name }}{% if t.recommended %} <span class="sd-tier-rec">Recommended</span>{% endif %}</span>
+      <span class="sv-tier-price">{{ t.price | price | safe }}</span>
+      <span class="sv-tier-pages">{{ t.has.pages }} pages</span>
+      <span class="sd-tier-for">{{ t.for }}</span>
+    </a></li>
+    {%- endfor %}
+  </ul>
+  <div class="sd-act">
+    <a class="alv-btn" href="{{ startUrl }}">Start a project</a>
+    <a class="alv-tlink" href="/packages/#compare">Compare every feature</a>
+  </div>
+</section>
+
+{%- elif p.kind == "care" %}
+<section class="int-wrap sd-sec sd-sec--first" id="price" aria-labelledby="price-h">
+  <div class="sd-head">
+    <h2 id="price-h" class="int-h2">Two plans. Pick one.</h2>
+    <p class="int-lede">{{ careplans.required }}</p>
+  </div>
+  <div class="sv-grid-wrap" data-spot=".sd-plan">
+    <ul class="sd-plans">
+      {%- for pl in careplans.plans %}
+      <li class="sd-plan{% if pl.recommended %} is-rec{% endif %}" style="--hue: {{ myHue - loop.index0 * 15 }}"{% if pl.recommended %} data-rest{% endif %}>
+        <div class="sd-plan-top">
+          <h3 class="sd-plan-name">{{ pl.name }}</h3>
+          {%- if pl.recommended %}<span class="sd-plan-rec">Recommended</span>{% endif %}
+        </div>
+        <p class="sd-plan-price"><b>{{ pl.price | price | safe }}</b><span>a month</span></p>
+        <p class="sd-plan-for">{{ pl.for }}</p>
+        {%- if pl.builds %}<p class="sd-plan-builds">Everything in {{ pl.builds }}, plus:</p>{% endif %}
+        <ul class="sd-list">
+          {%- for i in pl.includes %}<li>{{ i }}</li>{% endfor %}
+        </ul>
+      </li>
+      {%- endfor %}
+    </ul>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+  <p class="sd-note">{{ careplans.minimum }}</p>
+</section>
+
+{%- elif p.kind == "soon" %}
+<section class="int-wrap sd-sec sd-sec--first" id="price" aria-labelledby="price-h">
+  <div class="sd-soon">
+    <i class="sd-soon-bar" aria-hidden="true"></i>
+    <div>
+      <h2 id="price-h" class="sd-soon-h">Not open for orders yet.</h2>
+      <p>The pricing is not settled, so there is no number here. I would rather say that than invent one and change it on you later.</p>
+    </div>
+    <a class="alv-tlink" href="/contact/">Ask me where it stands</a>
+  </div>
+</section>
+{%- endif %}
 
 
-  <!-- ══════════════ RELATED ══════════════ -->
-  {%- set rel = svc.related | resolve(services) %}
-  {%- if rel.length %}
-  <section class="sec">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 26px;">
-        <h2 style="font-size: clamp(22px, 2.4vw, 28px);">Often bought with this</h2>
+{#- ══════════════ 2. WHAT IT IS, AND WHAT YOU GET ══════════════ #}
+<section class="int-wrap sd-sec sd-story" aria-labelledby="about-h" style="--hue: {{ myHue }}">
+  <h2 id="about-h" class="alv-sr-only">About {{ svc.name }}</h2>
+  {#- The case: the first paragraph, its words lit in order by a pass of
+      light the first time it is reached. -#}
+  <div class="sd-about">
+   <div class="sd-main">
+    <p class="sd-lead" data-lead>{{ svc.intro[0] }}</p>
+    {#- The rest, one beat each. The first sentence of a beat is its point,
+        in the display face; what follows is the detail. -#}
+    <div class="sd-beats">
+      {%- for para in svc.intro %}
+      {%- if not loop.first %}
+      {%- set parts = para.split(". ") %}
+      {%- set lead = parts[0] + ("." if parts.length > 1 else "") %}
+      <div class="sd-beat" data-beat>
+        <p><span class="sd-beat-lead">{{ lead }}</span>{% if parts.length > 1 %} <span class="sd-beat-rest">{{ parts.slice(1).join(". ") }}</span>{% endif %}</p>
       </div>
-      <div class="related-grid">
-        {%- for card in rel %}
-        {%- set d = loop.index0 %}
-        {% include "components/service-card.njk" %}
+      {%- endif %}
+      {%- endfor %}
+    </div>
+   </div>
+    <div class="sd-get" data-get>
+      <h3 class="sd-get-h">What you get</h3>
+      <ul class="sd-list sd-list--lit">
+        {%- for i in svc.includes %}
+        <li style="--d: {{ loop.index0 }}">{{ i }}</li>
         {%- endfor %}
+      </ul>
+      {%- if not svc.soon %}
+      <div class="sd-get-foot">
+        <h4 class="sd-fact-h">Turnaround</h4>
+        <p>
+          {%- if svc.turnaroundNote %}{{ svc.turnaroundNote | safe }}
+          {%- else %}{%- set _rg = standalone | byGroup("project-extras") %}{%- set _rush = _rg.items | find("name", "Rush delivery") %}Typically <b>{{ site.turnaround }}</b> after the required content is received, depending on complexity. Need it sooner? <a class="alv-tlink" href="/packages/#extras">Rush delivery</a> is listed at {{ _rush.price | money | safe }}, and I quote the exact figure first.{% endif -%}
+        </p>
       </div>
+      {%- endif %}
     </div>
-  </section>
+  </div>
+
+  {%- if svc.packageKey or svc.callout %}
+  <div class="sd-facts">
+    {%- if svc.packageKey %}
+    <div class="sd-fact sd-fact--wide">
+      <h3 class="sd-fact-h">In which packages</h3>
+      {{ fitHas(svc.packageKey) }}
+    </div>
+    {%- endif %}
+    {%- if svc.callout %}
+    <div class="sd-fact{% if not svc.packageKey %} sd-fact--wide{% endif %}">
+      <h3 class="sd-fact-h">{{ svc.callout.title }}</h3>
+      <p>{{ svc.callout.body }}</p>
+    </div>
+    {%- endif %}
+  </div>
   {%- endif %}
+</section>
 
 
-  {% include "components/cta-band.njk" %}
+{#- ══════════════ 3. HOW IT GETS MADE ══════════════ #}
+{%- if not svc.noProcess %}
+{%- set procWrap = "int-wrap" %}
+{%- set processHeading = svc.processHeading or "How a project runs." %}
+{% include "home/process.njk" %}
+{%- endif %}
 
-</main>
+
+{#- ══════════════ 4. QUESTIONS ══════════════ #}
+{%- if svc.faq %}
+<section class="int-wrap sd-sec" aria-labelledby="faq-h">
+  <div class="sd-faq-grid">
+    <h2 id="faq-h" class="int-h2">Questions</h2>
+    <div class="sd-faq">
+      {%- for item in svc.faq %}
+      <details class="sd-q" name="faq"{% if loop.first %} open{% endif %}>
+        <summary>{{ item.q }}</summary>
+        <div class="sd-a"><p>{{ item.a }}</p></div>
+      </details>
+      {%- endfor %}
+    </div>
+  </div>
+</section>
+{%- endif %}
+
+
+{#- ══════════════ 5. OFTEN BOUGHT WITH THIS ══════════════ #}
+{%- set rel = svc.related | resolve(services) %}
+{%- if rel.length %}
+<section class="int-wrap sd-sec" aria-labelledby="rel-h">
+  <div class="sd-head">
+    <h2 id="rel-h" class="int-h2">Often bought with this.</h2>
+  </div>
+  <div class="sv-grid-wrap" data-spot=".sv-card">
+    <ul class="sv-grid sd-rel" style="--cols: {{ rel.length }}">
+      {%- for r in rel %}{{ card(r) }}{% endfor %}
+    </ul>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+  <p class="sd-note"><a class="alv-tlink" href="/services/">Every service</a></p>
+</section>
+{%- endif %}
+
+
+{#- ══════════════ 6. THE CLOSE ══════════════ #}
+<section class="int-cta int-wrap">
+  <span class="key-cone" aria-hidden="true"></span>
+  <span class="key-pool" aria-hidden="true"></span>
+  {%- if svc.soon %}
+  <h2 class="int-cta-h">Ask me where it stands.</h2>
+  <p>Tell me what the business needs. I will say honestly when this opens, and what I can do for you today.</p>
+  <div class="int-cta-act">
+    <a class="alv-btn" href="/contact/">Start a project</a>
+    <a class="alv-tlink" href="/services/">All services</a>
+  </div>
+  {%- else %}
+  <h2 class="int-cta-h">Want this for your business?</h2>
+  <p>Tell me what the business does and what you need. You get a plain answer and a quote, with no pressure.</p>
+  <div class="int-cta-act">
+    <a class="alv-btn" href="{{ startUrl }}">Start a project</a>
+    <a class="alv-tlink" href="/services/">All services</a>
+  </div>
+  {%- endif %}
+</section>

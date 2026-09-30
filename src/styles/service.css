@@ -1,0 +1,468 @@
+/* ============================================================
+   ONE SERVICE (/services/<slug>/)
+   The price in the shape the service is sold in, what it is and what you
+   get, the shared scroll-lit process, questions, related services, the
+   close. Same room and rules as /packages/ and /services/: surfaces 10px,
+   the sheet 12px, controls full pill; every bar is the site's lit bar
+   (tokens.css), every travelling light glides on the same gentle
+   ease-in-out. A service's own hue (sv-card.njk) only ever tints light on
+   a surface, never type. Imported by interior.css; scripts/service.ts adds
+   the motion, and the page is complete without it.
+   ============================================================ */
+.sd-sec { padding-block: clamp(48px, 7vh, 80px); border-top: 1px solid var(--sl-line); --sd-glide: 850ms cubic-bezier(0.45, 0, 0.2, 1); }
+.sd-sec--first { padding-top: clamp(16px, 3vh, 32px); border-top: 0; }
+.sd-head { display: grid; gap: 10px; margin-bottom: clamp(20px, 3.4vh, 34px); }
+.sd-head .int-h2 { max-width: 24ch; }
+.sd-head .int-lede { max-width: 60ch; }
+.sd-act { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; margin-top: clamp(22px, 3vh, 30px); }
+.sd-note { margin-top: 18px; font-size: 13.5px; color: var(--sl-ink3); max-width: 72ch; }
+@keyframes sd-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes sd-bar { from { transform: scaleX(0); } to { transform: none; } }
+
+/* ============================================================
+   LEVELS: a chart whose column heads are the choice
+   ============================================================ */
+.sd-lv { --n: 2; }
+.sd-lv--shots { display: grid; grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr); gap: clamp(28px, 4vw, 64px); align-items: start; }
+.sd-chart-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; contain: paint; scrollbar-width: thin; scrollbar-color: rgb(var(--sl-L) / 0.24) transparent; }
+.sd-chart { position: relative; isolation: isolate; --c0: 30%; --cw: calc((100% - var(--c0)) / var(--n)); --i: 0; }
+.sd-lv:has(#lv-1:checked) .sd-chart { --i: 1; }
+.sd-lv:has(#lv-2:checked) .sd-chart { --i: 2; }
+.sd-tbl { width: 100%; border-collapse: separate; border-spacing: 0; table-layout: fixed; font-size: 14.5px; }
+.sd-tbl th, .sd-tbl td { padding: 13px 16px; text-align: left; vertical-align: top; border-bottom: 1px solid var(--sl-line); }
+.sd-tbl th:first-child { width: var(--c0); padding-left: 0; }
+.sd-tbl thead th { padding-block: 22px 16px; vertical-align: bottom; border-bottom-color: var(--sl-line2); }
+.sd-tbl tbody tr:last-child > * { border-bottom: 0; }
+.sd-tbl tbody th { font-weight: 400; font-size: 13.5px; color: var(--sl-ink3); }
+.sd-tbl td { color: var(--sl-ink3); line-height: 1.45; transition: color 400ms; }
+.sd-tbl td .int-ic { width: 18px; height: 18px; color: var(--sl-ink2); transition: color 400ms; }
+.sd-tbl .is-eg > * { padding-top: 16px; font-style: italic; }
+.sd-tbl .is-eg th { font-style: normal; }
+
+/* A column head is its level's radio: the whole head is the label. */
+.sd-pick { position: relative; display: grid; gap: 2px; cursor: pointer; border-radius: 8px; }
+.sd-pick-in { position: absolute; top: 4px; left: 0; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.sd-pick:has(:focus-visible) { outline: 2px solid var(--sl-ink1); outline-offset: 6px; }
+.sd-pick-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.014em; color: var(--sl-ink2); transition: color 400ms; }
+.sd-pick-price {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(28px, 2.6vw, 38px); letter-spacing: -0.034em; line-height: 1.02;
+  color: var(--sl-ink2); font-variant-numeric: tabular-nums; transition: color 400ms;
+}
+.sd-pick:hover > span { color: var(--sl-ink1); }
+
+/* The lit column: one slab behind the chart, the site's bar across its
+   top, the key falling onto its head. It glides (transform only). */
+.sd-slab {
+  position: absolute; z-index: -1; top: 0; bottom: 0; left: var(--c0); width: var(--cw); border-radius: 10px 10px 0 0; pointer-events: none;
+  background: linear-gradient(180deg, rgb(var(--sl-L) / 0.065), rgb(var(--sl-L) / 0.025) 40%, rgb(var(--sl-L) / 0.008));
+  transform: translateX(calc(var(--i) * 100%)); transition: transform var(--sd-glide);
+}
+.sd-slab::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); }
+.sd-slab::after {
+  /* Held inside its own column: a glow that reaches past the last column
+     makes the chart's scroll container overflow, and the browser then draws
+     a scrollbar the moment that column is chosen. */
+  content: ""; position: absolute; left: 0; right: 0; top: -70px; height: 150px; pointer-events: none;
+  background: radial-gradient(ellipse 62% 60% at 50% 100%, oklch(0.92 0.06 245 / 0.13), transparent 75%);
+}
+.no-motion .sd-slab { transition: none; }
+/* What the lit column holds reads brighter. Statically from :checked; with
+   script from data-on, which also follows the pointer. */
+.sd-lv:has(#lv-0:checked) .sd-chart:not(.is-js) [data-col="0"],
+.sd-lv:has(#lv-1:checked) .sd-chart:not(.is-js) [data-col="1"],
+.sd-lv:has(#lv-2:checked) .sd-chart:not(.is-js) [data-col="2"],
+.sd-lv:has(#lv-0:checked) .sd-chart:not(.is-js) [data-col="0"] .sd-pick > span,
+.sd-lv:has(#lv-1:checked) .sd-chart:not(.is-js) [data-col="1"] .sd-pick > span,
+.sd-lv:has(#lv-2:checked) .sd-chart:not(.is-js) [data-col="2"] .sd-pick > span,
+.sd-chart[data-on="0"] [data-col="0"], .sd-chart[data-on="0"] [data-col="0"] .sd-pick > span,
+.sd-chart[data-on="1"] [data-col="1"], .sd-chart[data-on="1"] [data-col="1"] .sd-pick > span,
+.sd-chart[data-on="2"] [data-col="2"], .sd-chart[data-on="2"] [data-col="2"] .sd-pick > span { color: var(--sl-ink1); }
+.sd-chart[data-on="0"] [data-col="0"] .int-ic,
+.sd-chart[data-on="1"] [data-col="1"] .int-ic,
+.sd-chart[data-on="2"] [data-col="2"] .int-ic { color: var(--sl-bar); filter: drop-shadow(0 0 4px oklch(0.8 0.15 245 / 0.7)); }
+
+/* The chosen level in a sentence, and its place in the packages. Only the
+   chosen one shows; changing level is what the reader asked for, so it is
+   what animates in. */
+.sd-lv-sum { display: none; padding-top: 20px; }
+.sd-lv:has(#lv-0:checked) .sd-lv-sum[data-for="0"],
+.sd-lv:has(#lv-1:checked) .sd-lv-sum[data-for="1"],
+.sd-lv:has(#lv-2:checked) .sd-lv-sum[data-for="2"] { display: block; animation: sd-in 500ms var(--sl-e-out); }
+@supports not selector(:has(*)) { .sd-lv-sum { display: block; } }
+.no-motion .sd-lv-sum { animation: none !important; }
+.sd-lv-note { font-size: 15px; color: var(--sl-ink2); max-width: 66ch; }
+.sd-lv-note b { font-weight: 600; color: var(--sl-ink1); }
+.sd-fit-k { margin: 20px 0 2px; font-size: 12.5px; color: var(--sl-ink3); }
+
+/* ---- a package row: which packages hold this, lit beneath ---- */
+.sd-fit { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--sl-line2); }
+.sd-fit-slot { position: relative; display: grid; gap: 2px; align-content: start; padding: 10px 14px 14px 0; }
+.sd-fit-pkg { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15px; letter-spacing: -0.012em; color: var(--sl-ink3); }
+.sd-fit-what { font-size: 13px; line-height: 1.4; color: var(--sl-ink3); }
+.sd-fit-slot.is-in .sd-fit-pkg { color: var(--sl-ink1); }
+.sd-fit-slot.is-in .sd-fit-what { color: var(--sl-ink2); }
+.sd-fit-slot.is-in::after {
+  content: ""; position: absolute; left: 0; right: 14px; bottom: -1.5px; height: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); transform-origin: 0 50%;
+}
+.sd-lv-sum .sd-fit-slot.is-in::after { animation: sd-bar 700ms var(--sl-e-out) both; }
+.sd-lv-sum .sd-fit-slot.is-in:nth-child(2)::after { animation-delay: 90ms; }
+.sd-lv-sum .sd-fit-slot.is-in:nth-child(3)::after { animation-delay: 180ms; }
+.no-motion .sd-fit-slot::after { animation: none !important; }
+
+.sd-extra {
+  display: flex; align-items: baseline; gap: 16px; margin-top: 22px; padding: 16px 20px; border-radius: 10px;
+  box-shadow: inset 0 0 0 1px var(--sl-line2); font-size: 14.5px; color: var(--sl-ink2);
+}
+.sd-extra-p { flex: none; font-family: var(--sl-f-brand); font-weight: 620; font-size: 22px; letter-spacing: -0.024em; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+.sd-extra-h { font-weight: 600; color: var(--sl-ink1); }
+
+/* ============================================================
+   THE CARD, STANDING IN THE KEY LIGHT
+   ALVSolutions' own card, set live in the identity and sized in container
+   units so it prints the same at any width. The chosen level's card
+   shows; the premium one turns over (rotateY) to its back. With script it
+   leans a few degrees toward the pointer and the key's glint follows.
+   ============================================================ */
+.sd-stage {
+  position: relative; isolation: isolate; display: grid; justify-items: center; align-content: start;
+  padding: clamp(36px, 5vw, 64px) clamp(8px, 2vw, 24px) 8px; perspective: 1400px;
+  position: sticky; top: calc(var(--alv-nav-h) + 24px);
+  --kx: 50; --kw: 76; --ki: 0.95; --kpy: 86;
+}
+.sd-stage > .key-cone { position: absolute; inset: -40px -10% 0; z-index: -1; pointer-events: none; }
+.sd-bc { display: none; width: min(100%, 440px); margin: 0; }
+.sd-lv:has(#lv-0:checked) .sd-bc[data-for="0"],
+.sd-lv:has(#lv-1:checked) .sd-bc[data-for="1"] { display: block; animation: sd-card-in 700ms var(--sl-e-out); }
+@supports not selector(:has(*)) { .sd-bc { display: block; margin-bottom: 32px; } }
+@keyframes sd-card-in { from { opacity: 0; transform: translateY(16px) rotateX(10deg); } to { opacity: 1; transform: none; } }
+.no-motion .sd-bc { animation: none !important; }
+
+.sd-bc-tilt {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transform-style: preserve-3d;
+  transition: transform 600ms var(--sl-e-out);
+}
+.sd-bc-card {
+  position: relative; aspect-ratio: 3.5 / 2; transform-style: preserve-3d; container-type: inline-size;
+  transition: transform 950ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+.sd-bc.is-back .sd-bc-card { transform: rotateY(180deg); }
+.sd-bc-side {
+  position: absolute; inset: 0; overflow: hidden; border-radius: 3.2cqi;
+  -webkit-backface-visibility: hidden; backface-visibility: hidden;
+  background: radial-gradient(ellipse 90% 70% at 30% 0%, rgb(var(--sl-L) / 0.05), transparent 70%), #121212;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.1), 0 30px 60px -28px rgb(0 0 0 / 0.95);
+}
+.sd-bc-side--back { transform: rotateY(180deg); }
+/* The key catches the top edge, and glints where it strikes the face. */
+.sd-bc-side::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; z-index: 2; pointer-events: none;
+  background: linear-gradient(90deg, transparent 6%, rgb(var(--sl-L) / 0.55) 50%, transparent 94%);
+}
+.sd-bc-side::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: radial-gradient(ellipse 60% 70% at var(--gx, 50%) var(--gy, 0%), rgb(var(--sl-L) / 0.07), transparent 70%);
+}
+.sd-bc-shadow {
+  display: block; width: 78%; height: 22px; margin: 18px auto 0;
+  background: radial-gradient(50% 50% at 50% 50%, rgb(0 0 0 / 0.9), transparent 72%);
+}
+
+.sd-bc-face { position: absolute; inset: 0; padding: 8cqi 8.5cqi; }
+.sd-bc-wm { font-size: 5.6cqi; }
+.sd-bc-who { display: grid; gap: 0.9cqi; font-size: 3.3cqi; line-height: 1.35; color: var(--sl-ink2); }
+.sd-bc-who b { margin-bottom: 0.6cqi; font-family: var(--sl-f-brand); font-weight: 600; font-size: 5cqi; letter-spacing: -0.02em; color: var(--sl-ink1); }
+.sd-bc-role { margin-bottom: 1.6cqi; color: var(--sl-ink3); }
+/* The basic card: the wordmark, and everything else across a hairline. */
+.sd-bc-split { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 6cqi; }
+.sd-bc-split .sd-bc-wm { font-size: 4.7cqi; }
+.sd-bc-split .sd-bc-who { white-space: nowrap; padding-left: 6cqi; box-shadow: inset 1px 0 0 var(--sl-line2); }
+/* The premium front: the wordmark alone in its own key light, the site's
+   lit bar beneath it. */
+.sd-bc-mark { display: grid; place-content: center; justify-items: center; gap: 3.4cqi; text-align: center; }
+.sd-bc-mark .sd-bc-wm { font-size: 8.4cqi; }
+.sd-bc-glow { position: absolute; inset: -20% 10% 30%; background: radial-gradient(ellipse 50% 60% at 50% 0%, rgb(var(--sl-L) / 0.11), transparent 75%); pointer-events: none; }
+.sd-bc-bar { display: block; width: 13cqi; height: max(2px, 0.5cqi); border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+.sd-bc-tag { font-size: 3.2cqi; color: var(--sl-ink3); }
+/* The premium back: a QR code to the contact page, then the details. */
+.sd-bc-back { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 7cqi; }
+.sd-bc-qr { width: 25cqi; height: auto; padding: 1.4cqi; border-radius: 2cqi; background: #fff; }
+
+.sd-bc-cap {
+  display: grid; justify-items: center; gap: 14px; max-width: 46ch; margin: 22px auto 0;
+  text-align: center; font-size: 13.5px; color: var(--sl-ink3);
+}
+.sd-bc-flip {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 16px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--sl-line2); background: transparent; color: var(--sl-ink1); font: 500 14px/1 var(--sl-f-text);
+  transition: border-color 250ms, background-color 250ms;
+}
+.sd-bc-flip:hover { border-color: rgb(var(--sl-L) / 0.4); background: rgb(var(--sl-L) / 0.04); }
+.sd-bc-flip:active { transform: scale(0.98); }
+.sd-bc-flip:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.sd-bc-flip .int-ic { width: 16px; height: 16px; transition: transform 700ms var(--sl-e-out); }
+.sd-bc.is-back .sd-bc-flip .int-ic { transform: rotate(180deg); }
+
+/* ============================================================
+   FLAT: one price strip
+   ============================================================ */
+.sd-flat {
+  position: relative; isolation: isolate; overflow: hidden;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 20px clamp(28px, 4vw, 64px);
+  padding: clamp(24px, 3vw, 40px); border-radius: 10px; background: #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+  --kx: 14; --kw: 50; --ki: 0.8; --kpy: 96;
+}
+.sd-flat > .key-cone { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.sd-flat::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, oklch(0.84 0.09 var(--hue, 0)) 50%, transparent 96%); opacity: 0.6;
+}
+.sd-flat::after {
+  content: ""; position: absolute; inset: 0; z-index: -2; pointer-events: none;
+  background: radial-gradient(ellipse 60% 90% at 100% 0%, oklch(0.7 0.12 var(--hue, 0) / 0.06), transparent 72%);
+}
+.sd-flat-price { display: grid; gap: 4px; }
+.sd-flat-price b {
+  font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(44px, 5vw, 68px); letter-spacing: -0.04em; line-height: 0.95;
+  color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.sd-flat-unit { font-size: 13.5px; color: var(--sl-ink3); }
+.sd-flat-note { font-size: 15.5px; color: var(--sl-ink2); max-width: 54ch; }
+.sd-flat-extras { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+.sd-flat-extras li {
+  display: inline-flex; align-items: baseline; gap: 10px; padding: 7px 14px; border-radius: 999px;
+  font-size: 13.5px; color: var(--sl-ink2); box-shadow: inset 0 0 0 1px var(--sl-line2);
+}
+.sd-flat-extras b { font-weight: 600; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+
+/* ---- the logo ladder: one floor line, the bar under where you stand ---- */
+.sd-ladder {
+  position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+  margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--sl-line2);
+}
+.sd-rung { position: relative; border-radius: 10px 10px 0 0; }
+.sd-rung-a { display: grid; gap: 4px; align-content: start; height: 100%; padding: 20px 20px 22px; text-decoration: none; color: inherit; border-radius: inherit; }
+.sd-rung-a:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.sd-rung-q { font-size: 13.5px; color: var(--sl-ink3); }
+.sd-rung-name { margin-top: 6px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.016em; color: var(--sl-ink2); transition: color 300ms; }
+.sd-rung-price { font-family: var(--sl-f-brand); font-weight: 620; font-size: 26px; letter-spacing: -0.03em; color: var(--sl-ink2); font-variant-numeric: tabular-nums; transition: color 300ms; }
+.sd-rung-here { margin-top: 4px; font-size: 12.5px; color: var(--sl-ink2); }
+.sd-rung-a:hover :is(.sd-rung-name, .sd-rung-price),
+.sd-rung.is-here :is(.sd-rung-name, .sd-rung-price) { color: var(--sl-ink1); }
+.sd-rung.is-here::after {
+  content: ""; position: absolute; left: 20px; right: 20px; bottom: -1.5px; height: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+}
+.sd-ladder-wrap > .sv-spot { border-radius: 10px 10px 0 0; }
+
+/* ============================================================
+   PACKAGE: the three packages, larger than on /services/
+   ============================================================ */
+.sd-tiers .sv-tier { gap: 4px; padding: 18px 8% 22px 0; }
+.sd-tiers .sv-tier-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.014em; }
+.sd-tiers .sv-tier-price { font-size: clamp(36px, 3.6vw, 52px); }
+.sd-tiers .sv-tier-pages { font-size: 13.5px; }
+.sd-tier-rec { font-family: var(--sl-f-text); font-weight: 400; font-size: 12.5px; color: var(--sl-ink3); }
+.sd-tier-for { margin-top: 8px; font-size: 14px; color: var(--sl-ink2); max-width: 34ch; }
+.sd-tiers.sv-tiers::after { background: linear-gradient(90deg, var(--sl-bar) 0, var(--sl-bar) 88%, transparent 88%); }
+
+/* ============================================================
+   CARE: two plans, the key resting on the recommended one
+   ============================================================ */
+.sd-plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.sd-plan {
+  position: relative; isolation: isolate; overflow: hidden; display: grid; gap: 10px; align-content: start;
+  padding: clamp(22px, 2.6vw, 32px); border-radius: 10px; background: #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+}
+.sd-plan::after {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 90% 55% at 0% 0%, oklch(0.7 0.12 var(--hue, 0) / 0.06), transparent 72%);
+}
+/* The recommended plan's top edge is the site's lit bar. */
+.sd-plan.is-rec::before {
+  content: ""; position: absolute; left: 10%; right: 10%; top: 0; height: 2px; border-radius: 0 0 2px 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+}
+.sd-plan-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.sd-plan-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 22px; letter-spacing: -0.02em; color: var(--sl-ink1); }
+.sd-plan-rec { font-size: 12.5px; color: var(--sl-ink2); padding: 4px 10px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--sl-line2); }
+.sd-plan-price { display: flex; align-items: baseline; gap: 8px; }
+.sd-plan-price b { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(40px, 4vw, 54px); letter-spacing: -0.036em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+.sd-plan-price span { font-size: 14px; color: var(--sl-ink3); }
+.sd-plan-for { font-size: 15px; color: var(--sl-ink2); max-width: 44ch; }
+.sd-plan-builds { margin-top: 6px; font-size: 13.5px; color: var(--sl-ink3); }
+.sd-plan .sd-list { margin-top: 6px; padding-top: 16px; border-top: 1px solid var(--sl-line); }
+.sd-plan.is-rec .sd-list li::before { background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+.sd-plan.is-rec .sd-list li { color: var(--sl-ink1); }
+
+/* ============================================================
+   SOON: a notice with its light off
+   ============================================================ */
+.sd-soon {
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 16px clamp(20px, 3vw, 40px);
+  padding: 22px 26px; border-radius: 10px; border: 1px dashed rgb(var(--sl-L) / 0.22);
+}
+.sd-soon-bar { display: block; width: 3px; height: 44px; border-radius: 2px; background: var(--sl-ink3); opacity: 0.45; }
+.sd-soon-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 20px; letter-spacing: -0.016em; color: var(--sl-ink1); margin-bottom: 4px; }
+.sd-soon p { font-size: 15px; color: var(--sl-ink2); max-width: 62ch; }
+.sd-soon .alv-tlink { white-space: nowrap; font-size: 15px; }
+
+/* ============================================================
+   A LIST OF WHAT IS INCLUDED
+   Each line opens with a short bar. In "What you get" the bars are lit (the
+   site's bar); armed by script, they come on in order the first time the
+   sheet is reached.
+   ============================================================ */
+.sd-list { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+.sd-list li { display: flex; align-items: baseline; gap: 13px; font-size: 15px; line-height: 1.45; color: var(--sl-ink2); }
+.sd-list li::before {
+  content: ""; flex: none; width: 3px; height: 13px; border-radius: 2px; background: rgb(var(--sl-L) / 0.3); transform: translateY(1px);
+}
+.sd-list--lit li { color: var(--sl-ink1); }
+.sd-list--lit li::before { background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); transform-origin: 50% 100%; }
+.sd-get.is-armed .sd-list--lit li { color: var(--sl-ink3); transition: color 500ms var(--sl-e-out); transition-delay: calc(120ms + var(--d, 0) * 110ms); }
+.sd-get.is-armed .sd-list--lit li::before {
+  transform: translateY(1px) scaleY(0); opacity: 0.3;
+  transition: transform 500ms var(--sl-e-out), opacity 500ms; transition-delay: calc(120ms + var(--d, 0) * 110ms);
+}
+.sd-get.is-armed.is-on .sd-list--lit li { color: var(--sl-ink1); }
+.sd-get.is-armed.is-on .sd-list--lit li::before { transform: translateY(1px); opacity: 1; }
+
+/* ============================================================
+   WHAT IT IS, AND WHAT YOU GET
+   ============================================================ */
+.sd-about { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 32px clamp(32px, 5vw, 80px); align-items: start; }
+/* The case, set large under the service's own light (the hue its card carries).
+   Armed by script, its words come on in order the first time it is reached. */
+.sd-story { position: relative; isolation: isolate; }
+.sd-story::before {
+  content: ""; position: absolute; z-index: -1; left: 0; right: 0; top: -40px; height: min(560px, 100%); pointer-events: none;
+  background: radial-gradient(ellipse closest-side at 24% 38%, oklch(0.7 0.12 var(--hue, 0) / 0.1), transparent);
+}
+.sd-main { display: grid; gap: clamp(22px, 3.2vh, 30px); min-width: 0; }
+.sd-lead {
+  max-width: 24em; margin: 0;
+  font-family: var(--sl-f-brand); font-weight: 560; font-optical-sizing: auto;
+  font-size: clamp(24px, 2.5vw, 34px); line-height: 1.2; letter-spacing: -0.024em; color: var(--sl-ink1); text-wrap: balance;
+}
+/* A pass of light: each word flares as the light reaches it, then settles. */
+.sd-lead.is-armed .sd-w { color: var(--sl-shade); }
+.sd-lead.is-armed.is-on .sd-w { animation: sd-pass 1000ms var(--sl-e-out) both; animation-delay: calc(60ms + var(--i, 0) * 26ms); }
+@keyframes sd-pass {
+  0% { color: var(--sl-shade); text-shadow: none; }
+  32% { color: #fff; text-shadow: 0 0 12px oklch(0.92 0.08 245 / 0.75), 0 0 30px oklch(0.8 0.15 245 / 0.4); }
+  100% { color: var(--sl-ink1); text-shadow: 0 0 0 transparent; }
+}
+
+/* The rest, one beat each: a rail that fills with light as it is reached. */
+.sd-beats { display: grid; gap: clamp(18px, 2.6vh, 24px); }
+.sd-beat { position: relative; padding-left: clamp(16px, 1.8vw, 22px); }
+.sd-beat::before, .sd-beat::after { content: ""; position: absolute; left: 0; top: 3px; bottom: 3px; width: 2px; border-radius: 2px; }
+.sd-beat::before { background: rgb(var(--sl-L) / 0.1); }
+.sd-beat::after { background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); transform-origin: 50% 0; }
+.sd-beat.is-armed::after { transform: scaleY(0); transition: transform 900ms var(--sl-e-out); }
+.sd-beat.is-armed.is-on::after { transform: none; }
+.sd-beat p { margin: 0; max-width: 54ch; font-size: 15.5px; line-height: 1.6; color: var(--sl-ink2); }
+.sd-beat-lead { display: inline; font-family: var(--sl-f-brand); font-weight: 520; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.sd-beat-rest { color: var(--sl-ink2); }
+.sd-get {
+  position: sticky; top: calc(var(--alv-nav-h) + 28px);
+  padding: clamp(22px, 2.6vw, 32px); border-radius: 12px;
+  background: radial-gradient(ellipse 70% 90% at 22% -20%, rgb(var(--sl-L) / 0.05), transparent 70%), #0e0e0e;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 50px 90px -50px rgb(0 0 0 / 0.9);
+}
+.sd-get::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent 4%, rgb(var(--sl-L) / 0.5) 50%, transparent 96%);
+}
+.sd-get-h { margin-bottom: 18px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.016em; color: var(--sl-ink1); }
+
+.sd-facts {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px clamp(28px, 4vw, 64px);
+  margin-top: clamp(40px, 6vh, 64px); padding-top: 26px; border-top: 1px solid var(--sl-line);
+}
+.sd-fact--wide { grid-column: span 2; }
+.sd-get-foot { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--sl-line); }
+.sd-get-foot p { font-size: 14px; color: var(--sl-ink2); }
+.sd-get-foot b { font-weight: 600; color: var(--sl-ink1); }
+.sd-fact-h { margin-bottom: 8px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.sd-fact p { font-size: 14.5px; color: var(--sl-ink2); max-width: 60ch; }
+.sd-fact b { font-weight: 600; color: var(--sl-ink1); }
+
+/* ============================================================
+   QUESTIONS: one open at a time (details[name]); the open one lit along
+   its edge, and opening eases where the browser can size to auto.
+   ============================================================ */
+.sd-faq-grid { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 2fr); gap: 20px clamp(32px, 5vw, 88px); align-items: start; }
+.sd-faq-grid > .int-h2 { position: sticky; top: calc(var(--alv-nav-h) + 28px); }
+.sd-faq { border-top: 1px solid var(--sl-line); interpolate-size: allow-keywords; }
+.sd-q { position: relative; border-bottom: 1px solid var(--sl-line); }
+.sd-q::before {
+  content: ""; position: absolute; left: 0; top: 20px; bottom: 22px; width: 2px; border-radius: 2px; pointer-events: none;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); transform: scaleY(0); transform-origin: 50% 0;
+  transition: transform 550ms var(--sl-e-out);
+}
+.sd-q[open]::before { transform: none; }
+.sd-q summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 20px 0 20px 22px; cursor: pointer; list-style: none;
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.012em; color: var(--sl-ink2); transition: color 300ms;
+}
+.sd-q summary::-webkit-details-marker { display: none; }
+.sd-q summary::after {
+  content: ""; flex: none; width: 9px; height: 9px; margin-right: 4px; border-right: 1.5px solid var(--sl-ink3); border-bottom: 1.5px solid var(--sl-ink3);
+  transform: translateY(-2px) rotate(45deg); transition: transform 350ms var(--sl-e-out);
+}
+.sd-q[open] summary { color: var(--sl-ink1); }
+.sd-q[open] summary::after { transform: translateY(2px) rotate(-135deg); }
+.sd-q summary:hover { color: var(--sl-ink1); }
+.sd-q summary:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; border-radius: 6px; }
+.sd-q::details-content {
+  block-size: 0; overflow: clip;
+  transition: block-size 450ms var(--sl-e-out), content-visibility 450ms allow-discrete;
+}
+.sd-q[open]::details-content { block-size: auto; }
+.sd-a p { padding: 0 0 22px 22px; font-size: 15.5px; color: var(--sl-ink2); max-width: 66ch; }
+
+.sd-rel { --cols: 3; }
+
+@media (max-width: 1000px) {
+  .sd-lv--shots { grid-template-columns: minmax(0, 1fr); }
+  .sd-stage { position: relative; top: auto; }
+  .sd-about { grid-template-columns: minmax(0, 1fr); }
+  .sd-get { position: relative; top: auto; }
+  .sd-facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sd-faq-grid { grid-template-columns: minmax(0, 1fr); }
+  .sd-faq-grid > .int-h2 { position: static; }
+  .sd-flat { grid-template-columns: auto minmax(0, 1fr); }
+  .sd-flat-go { grid-column: 1 / -1; justify-self: start; }
+}
+@media (max-width: 760px) {
+  .sd-tbl { font-size: 13px; }
+  .sd-tbl th, .sd-tbl td { padding: 11px 8px; }
+  .sd-tbl th:first-child { padding-left: 0; }
+  .sd-chart { --c0: 28%; }
+  .sd-pick-price { font-size: clamp(22px, 7vw, 28px); }
+  .sd-pick-name { font-size: 14.5px; }
+  .sd-fit-slot { padding-right: 8px; }
+  .sd-fit-pkg { font-size: 13.5px; }
+  .sd-fit-what { font-size: 12px; }
+  .sd-extra { flex-direction: column; gap: 4px; }
+  .sd-flat { grid-template-columns: minmax(0, 1fr); justify-items: start; }
+  .sd-plans { grid-template-columns: minmax(0, 1fr); }
+  .sd-facts { grid-template-columns: minmax(0, 1fr); }
+  .sd-fact--wide { grid-column: auto; }
+  .sd-soon { grid-template-columns: auto minmax(0, 1fr); }
+  .sd-soon .alv-tlink { grid-column: 2; }
+  /* The ladder stands upright on a phone; the bar runs down its left edge. */
+  .sd-ladder { grid-template-columns: minmax(0, 1fr); gap: 0; border-bottom: 0; box-shadow: inset 1px 0 0 var(--sl-line2); }
+  .sd-rung + .sd-rung { box-shadow: inset 0 1px 0 var(--sl-line); }
+  .sd-rung-a { padding: 16px 0 16px 20px; }
+  .sd-rung.is-here::after { left: -0.5px; right: auto; top: 16px; bottom: 16px; width: 2px; height: auto; }
+  .sd-ladder-wrap > .sv-spot { display: none !important; }
+  .sd-tiers .sv-tier { padding-right: 6px; }
+  .sd-tier-for { display: none; }
+  .sd-rel, .sv-grid.sd-rel { --cols: 1 !important; }
+  .sd-bc-cap { font-size: 13px; }
+}

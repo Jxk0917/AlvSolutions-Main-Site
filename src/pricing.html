@@ -1,122 +1,218 @@
 ---
-layout: layouts/base.njk
+layout: layouts/interior.njk
 permalink: /pricing/
-title: Full price list
-description: Every service ALVSolutions sells on its own, with the price next to it. Pages, booking, Google Business Profile, logo and brand design, print, updates and project extras.
+title: Pricing
+description: Every ALVSolutions price in one place. Three build packages from $650, page add-ons and power features, care plans from $45/mo, branding, print and everything else.
+pageJs: pricing
+head:
+  crumbs: [{ label: "Pricing" }]
+  heading: "Every price,<br>in one place."
+  lede: "Every service I offer, what it costs and what it is. Prices are one-time unless marked monthly."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "Compare packages", url: "/packages/" }
+cta:
+  heading: "Not sure which one fits?"
+  lede: "Tell me what the business does and I will say plainly what it needs, even if that is the cheapest option."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "All services", url: "/services/" }
 ---
+{#
+  PRICING: every service and its price, in six categories beside a rail.
+    1. the rail: its lit bar (the site's bar) glides to the category being
+       read; on a tablet it lies across the top, under the nav; on a phone
+       the cards below take its place;
+    2. each category: a heading, one line, then its prices. A row is a name,
+       a one-line caption and the price; a row with a service page links to
+       it. A spotlight in the category's hue glides to the row under the
+       pointer, a lit bar along its edge. The prices come on in a pass of
+       light the first time the category is reached (pricing.ts, which
+       also numbers them for the stagger). On a phone each category folds
+       to a card, its name, count and lowest price, with See more; one
+       opens at a time, as the four builds do on /packages/;
+    3. how paying works, in four lines.
+  Every name, price and caption is read from _data (a `brief` caption where
+  the full blurb is too long for a list). The anchors other pages link to
+  stay: #packages, #founders, #add-ons, #care, #payment and each price-list
+  group's own slug (#brand-and-design, #project-extras, ...).
+#}
 
-{%- set ph = {
-  heading: "Everything I sell,<br />with the price next to it.",
-  lead: "This is the whole list, including the small things. If you want one page added to a site you already have, or one photo swapped, it is on here with a number beside it rather than behind an enquiry form.",
-  crumbs: [{ label: "Price list" }],
-  actions: [
-    { label: "Start a project", url: "/contact/" },
-    { label: "See packages instead", url: "/packages/", style: "btn-ghost" }
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
+{#- Each category is built as data first, then drawn by one loop below.
+    Nunjucks scopes a {% set %} to its loop, so lists are only ever pushed
+    into; `all` is every row of a category, for its count on the rail. -#}
+{%- set cats = [] %}
+{%- set plans = [] %}
+{%- for pl in careplans.plans %}
+{%- set _ = plans.push({ name: pl.name, cap: pl.for, price: pl.price | price, v: pl.price, unit: "/mo", url: "/services/care-plans/" }) %}
+{%- endfor %}
+{%- set builds = [] %}
+{%- for b in bundles %}
+{%- set _ = builds.push({ name: b.name, cap: b.brief, price: b.price | price, v: b.price, url: "/builds/" + b.slug + "/" }) %}
+{%- endfor %}
+{%- set picks = [] %}
+{%- for t in packages.tiers %}{% if t.picks %}{% set _ = picks.push(t) %}{% endif %}{% endfor %}
 
-<main id="main">
+{#- A category's groups: "addons" (every add-on class), "own" (rows already
+    built above, with a heading), or a price-list group's slug. -#}
+{%- set plan = [
+  { id: "packages", name: "Website packages", short: "Packages", hue: 285, tiers: true,
+    lede: "A complete website at one flat price, agreed before I start. Every build also needs a care plan.",
+    parts: [{ own: builds, id: "builds", h: "Built for your trade" }] },
+  { id: "add-ons", name: "Add to a build", short: "Add-ons", hue: 260,
+    lede: picks[0].name + " includes " + picks[0].picks.pages + " page add-ons and " + picks[0].picks.power + " power feature" + ("s" if picks[0].picks.power != 1) + ". " + picks[1].name + " includes " + picks[1].picks.pages + " and " + picks[1].picks.power + ". Page picks fit inside the package's page limit. Anything past that costs what is listed.",
+    parts: ["addons", "project-extras"] },
+  { id: "web-work", name: "Web work", short: "Web work", hue: 235,
+    lede: "Pages and features on their own, for a site I built or one you already have.",
+    parts: ["pages-and-content", "booking-and-ordering"] },
+  { id: "care", name: "Care & visibility", short: "Care", hue: 175,
+    lede: "Keeping the site hosted, current and found once it is live.",
+    parts: [{ own: plans, id: "care-plans", h: "Care plans", note: careplans.minimum }, "getting-found", "changes-after-launch"] },
+  { id: "branding", name: "Branding & design", short: "Branding", hue: 100, single: true,
+    lede: "A usable logo, and the files that go with your site.",
+    parts: ["brand-and-design"] },
+  { id: "print", name: "Print & apparel", short: "Print", hue: 40, single: true,
+    lede: "The same brand as the site, on paper and on your team.",
+    parts: ["print-and-apparel"] }
+] %}
+{%- for c in plan %}
+{%- set groups = [] %}
+{%- set all = [] %}
+{%- for p in c.parts %}
+{%- if p.own %}
+{%- set _ = groups.push({ id: p.id, h: p.h, items: p.own, note: p.note }) %}
+{%- for i in p.own %}{% set _ = all.push(i) %}{% endfor %}
+{%- elif p == "addons" %}
+{%- for cls in addons.classes %}
+{%- set items = [] %}
+{%- for i in cls.items %}
+{%- set r = { name: i.name, cap: i.brief or i.blurb, price: cls.price | price, v: cls.price, url: ("/services/" + i.service + "/") if i.service } %}
+{%- set _ = items.push(r) %}{% set _ = all.push(r) %}
+{%- endfor %}
+{%- set _ = groups.push({ id: cls.name | slugify, h: cls.name, items: items }) %}
+{%- endfor %}
+{%- else %}
+{%- set g = standalone | byGroup(p) %}
+{%- set items = [] %}
+{%- for i in g.items %}
+{%- set r = { name: i.name, cap: i.brief or i.note, price: i.price | money, v: i.price if i.price is number else i.price.from, url: ("/services/" + i.service + "/") if i.service } %}
+{%- set _ = items.push(r) %}{% set _ = all.push(r) %}
+{%- endfor %}
+{%- set _ = groups.push({ id: g.slug, h: g.name, items: items }) %}
+{%- endif %}
+{%- endfor %}
+{#- The lowest price in the category, for its folded card on a phone. A
+    surcharge (+$150) or a service not yet for sale has no figure of its own. -#}
+{%- set vals = [] %}
+{%- for i in all %}{% if i.v is number %}{% set _ = vals.push(i.v) %}{% endif %}{% endfor %}
+{%- if c.tiers %}{% for tp in packages.tiers %}{% set _ = vals.push(tp.price) %}{% endfor %}{% endif %}
+{%- set _ = cats.push({ id: c.id, name: c.name, short: c.short, hue: c.hue, tiers: c.tiers, single: c.single, lede: c.lede, groups: groups,
+  n: all.length + (packages.tiers.length if c.tiers else 0), from: (vals | sort)[0] }) %}
+{%- endfor %}
 
-  <section class="sec">
-    <div class="wrap">
 
-      <nav class="jump reveal" aria-label="Price list sections">
-        {%- for g in standalone %}
-        <a class="jump-link" href="#{{ g.slug }}">{{ g.name }}</a>
+<div class="int-wrap pl-body">
+
+  {#- ══════════════ THE RAIL ══════════════ #}
+  <nav class="pl-rail" aria-label="Price categories" data-rail>
+    <div class="pl-rail-in">
+    <ol class="pl-rail-list">
+      {%- for c in cats %}
+      <li><a class="pl-rail-a" href="#{{ c.id }}" style="--hue: {{ c.hue }}">
+        <span class="pl-rail-name"><span class="pl-rail-long">{{ c.name }}</span><span class="pl-rail-short" aria-hidden="true">{{ c.short }}</span></span>
+        <span class="pl-rail-n">{{ c.n }} prices</span>
+      </a></li>
+      {%- endfor %}
+    </ol>
+    <span class="pl-rail-bar" aria-hidden="true"></span>
+    <span class="sv-spot" aria-hidden="true"></span>
+    </div>
+  </nav>
+
+  {#- ══════════════ THE CATEGORIES ══════════════ #}
+  <div class="pl-cats">
+    {%- for c in cats %}
+    <section class="pl-cat" id="{{ c.id }}" aria-labelledby="{{ c.id }}-h" style="--hue: {{ c.hue }}" data-cat>
+      <div class="pl-cat-head">
+        <h2 id="{{ c.id }}-h" class="pl-cat-h">{{ c.name }}</h2>
+        {#- Only on a phone, where the category folds to a card. #}
+        <p class="pl-cat-count">{{ c.n }} prices</p>
+        <p class="pl-cat-from"><span>From</span> {{ c.from | price | safe }}</p>
+      </div>
+      {#- Everything below the heading. On a phone (pricing.ts) it folds away
+          behind a See more button; elsewhere it is simply the category. #}
+      <div class="pl-cat-more" id="more-{{ c.id }}"><div class="pl-cat-more-in">
+      <p class="pl-cat-lede">{{ c.lede }}</p>
+
+      {%- if c.tiers %}
+      <div class="sv-grid-wrap pl-tiers-wrap" data-spot=".pl-tier" style="--shue: {{ c.hue }}">
+        <ul class="pl-tiers">
+          {%- for t in packages.tiers %}
+          <li class="pl-tier{% if t.recommended %} is-rec{% endif %}"{% if t.recommended %} data-rest{% endif %}>
+            <a class="pl-tier-a" href="/packages/#{{ t.slug }}">
+              <span class="pl-tier-top">
+                <span class="pl-tier-name">{{ t.name }}</span>
+                {%- if t.recommended %}<span class="pl-tier-rec">Recommended</span>{% endif %}
+              </span>
+              <span class="pl-tier-price pl-p">{{ t.price | price | safe }}</span>
+              <span class="pl-tier-for">{{ t.for }}</span>
+              <span class="pl-tier-pages">{{ t.has.pages }} pages in total{% if t.picks %}, including {{ t.picks.pages }} page add-ons, plus {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}{% endif %}</span>
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+        <span class="sv-spot" aria-hidden="true"></span>
+      </div>
+      {%- endif %}
+
+      <div class="pl-rows-wrap" data-spot=".pl-row" style="--shue: {{ c.hue }}">
+        {%- for g in c.groups %}
+        <div class="pl-group" id="{{ g.id }}">
+          {%- if not c.single %}<h3 class="pl-group-h">{{ g.h }}</h3>{% endif %}
+          <ul class="pl-rows">
+            {%- for i in g.items %}
+            <li class="pl-row{% if i.url %} has-link{% endif %}">
+              <span class="pl-name">{% if i.url %}<a href="{{ i.url }}">{{ i.name }}</a>{% else %}{{ i.name }}{% endif %}</span>
+              <span class="pl-price pl-p">{{ i.price | safe }}{% if i.unit %}<span class="pl-unit">{{ i.unit }}</span>{% endif %}</span>
+              {%- if i.cap %}<span class="pl-cap">{{ i.cap }}</span>{% endif %}
+            </li>
+            {%- endfor %}
+          </ul>
+          {%- if g.note %}<p class="pl-note">{{ g.note }}</p>{% endif %}
+        </div>
         {%- endfor %}
-      </nav>
-
-      <div class="plist-groups">
-        {%- for group in standalone %}
-        {% include "components/price-list.njk" %}
-        {%- endfor %}
+        <span class="sv-spot" aria-hidden="true"></span>
       </div>
 
-    </div>
-  </section>
-
-
-  <!-- ══════════════ WHAT THIS PAGE IS NOT ══════════════ -->
-  <section class="sec band sec-line">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2>Buying more than one of these?</h2>
-        <p class="lead">Then a package is almost certainly cheaper, and that is worth saying on the page that stands to lose from it.</p>
-      </div>
-
-      <div class="forks reveal">
-        <div class="card fork">
-          <div class="ic-box">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
-          </div>
-          <h3>A new site, from {{ packages.tiers[0].price | price | safe }}</h3>
-          <p class="body-3">
-            Foundation covers up to three pages, hosting, a contact form and on-page SEO
-            for one price. Standard and Complete bundle in the extras above at less than
-            the list price of buying them one at a time.
-          </p>
-          <a class="btn btn-ghost btn-sm" href="/packages/">Compare the three packages</a>
+      {#- The Founders Special sits with the packages it discounts. #}
+      {%- if c.tiers and site.foundersSpecial.spots %}
+      {%- set fs = site.foundersSpecial.spots %}
+      <div class="pl-founders" id="founders">
+        <div class="pl-founders-marks" aria-hidden="true">
+          {%- for n in range(3) %}<i{% if n < fs %} class="is-open"{% endif %}></i>{% endfor %}
         </div>
-
-        <div class="card fork">
-          <div class="ic-box gold">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-refresh"/></svg>
-          </div>
-          <h3>Changes every month, from {{ careplans.plans[0].price | price | safe }}/mo</h3>
-          <p class="body-3">
-            If you are buying website updates one at a time, a care plan is the cheaper
-            shape. Host covers 15 minutes of edits a month; Grow covers four updates and
-            your Google listing.
-          </p>
-          <a class="btn btn-ghost btn-sm" href="/services/care-plans/">How care plans work</a>
-        </div>
+        <p><b>Founders Special.</b> The first 3 new clients get founding-client pricing, quoted per project. <span class="pl-founders-n">{{ fs }} spot{{ "s" if fs != 1 }} left.</span></p>
+        <a class="alv-tlink" href="/contact/">Start a project</a>
       </div>
-    </div>
-  </section>
+      {%- endif %}
+      </div></div>
+    </section>
+    {%- endfor %}
 
-
-  <!-- ══════════════ THE RULES ══════════════ -->
-  <section class="sec sec-line">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 26px;">
-        <h2>How these prices behave.</h2>
-      </div>
-
-      <div class="pts reveal">
-        <div class="pt">
-          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <div>
-            <h3>The number is the number</h3>
-            <p>A price on this list is what you pay, not a starting point that grows once I have seen the job. Where something genuinely cannot be fixed in advance it says so, with a floor or a range instead of a single figure.</p>
-          </div>
-        </div>
-        <div class="pt">
-          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <div>
-            <h3>Simple and complex are defined, not judged</h3>
-            <p>Every service page states exactly what puts a job in one bracket or the other, so you can work out which one you are before you ask me.</p>
-          </div>
-        </div>
-        <div class="pt">
-          <span class="ic-dot"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span>
-          <div>
-            <h3>You approve anything extra first</h3>
-            <p>If a job turns out to be bigger than what you paid for, you get a quote and a choice before I start, not an invoice afterwards.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="sec-close reveal" style="margin-top: 34px;">
-        <p>Payment, ownership, cancellation and what happens if you stop paying are all written out in plain English.</p>
-        <a class="btn btn-ghost" href="/policies/">Read the policies</a>
-      </div>
-    </div>
-  </section>
-
-
-  {%- set ctaHeading = "Tell me the job and I will tell you the line." %}
-  {%- set ctaLead = "Describe what you need in a sentence and I will point at the row on this page, or tell you that a package covers it for less." %}
-  {% include "components/cta-band.njk" %}
-
-</main>
+    {#- ══════════════ HOW PAYING WORKS ══════════════ #}
+    {%- set pay = policies.policies | find("slug", "payment") %}
+    {%- set dom = policies.policies | find("slug", "domain") %}
+    {%- set scope = policies.policies | find("slug", "scope") %}
+    {%- set third = policies.policies | find("slug", "third-party") %}
+    <section class="pl-terms" id="payment" aria-labelledby="payment-h">
+      <h2 id="payment-h" class="pl-cat-h">How paying works</h2>
+      <ul class="pl-terms-list">
+        <li><b>{{ pay.title }}</b><span>A 50% deposit to begin, the rest when you approve the finished site.</span></li>
+        <li><b>{{ scope.title }}</b><span>Anything beyond your package is quoted and approved before work starts.</span></li>
+        <li><b>{{ dom.title }}</b><span>You buy it in your own name. I connect it to your site.</span></li>
+        <li><b>{{ third.title }}</b><span>Domains, booking platforms and similar are paid to the provider directly.</span></li>
+      </ul>
+      <p class="pl-note"><a class="alv-tlink" href="/policies/">Read every policy</a></p>
+    </section>
+  </div>
+</div>

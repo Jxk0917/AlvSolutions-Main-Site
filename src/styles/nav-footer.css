@@ -33,6 +33,7 @@
   display: flex;
   gap: 4px;
   margin-left: auto;
+  white-space: nowrap;
 }
 .alv-nav-cta {
   margin-left: 4px;
@@ -66,6 +67,7 @@
   padding: 6px 0;
   justify-self: start;
 }
+.alv-menu-panel a:not(.alv-btn)[aria-current],
 .alv-menu-panel a:not(.alv-btn):hover,
 .alv-menu-panel a:not(.alv-btn):focus-visible {
   color: var(--sl-ink1);
@@ -81,7 +83,7 @@
   font-family: var(--sl-f-text);
 }
 
-@media (min-width: 761px) {
+@media (min-width: 981px) {
   .alv-menu {
     display: none;
   }
@@ -89,7 +91,7 @@
 /* Narrow: as the locked design, the links fold into Menu and the CTA stays,
    pushed right. Below ~420px the wordmark, CTA and Menu cannot share one
    row, so the CTA folds too; the menu panel still carries it. */
-@media (max-width: 760px) {
+@media (max-width: 980px) {
   .alv-nav-links {
     display: none;
   }

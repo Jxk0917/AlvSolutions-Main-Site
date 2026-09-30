@@ -23,15 +23,17 @@
 
   IMAGES
   Every image is served from the live site out of src/assets/, so a deploy is
-  all that is needed to make them resolve:
+  all that is needed to make them resolve (until the rebrand is deployed the
+  live site still has the old files, so deploy before sending):
 
     /assets/email/launch-hero.jpg   both demo builds with the headline over them
     /assets/email/ic-*.png          the six page add-on icons
-    /assets/brand/alv-mark.png      the header logo
+    /assets/email/alv-lockup.png    the header logo (ALV symbol + ALVSolutions)
 
-  They are rebuilt by the generator in the scratchpad, never edited by hand -
+  They are rebuilt by Brand_Assets/tools/build-email-assets.mjs, never edited by hand -
   the hero is rendered at 2x and declared at 600x560, and each icon is rendered
-  at 2x and declared at 52x52. Email clients will not render SVG (Gmail strips
+  at 2x and declared at 52x52. The header logo is a PNG of the lockup (the
+  wordmark is Archivo, which email clients cannot load). Email clients will not render SVG (Gmail strips
   it outright), which is why the icons ship as PNG rather than from the site's
   own sprite.
 
@@ -45,19 +47,18 @@
   ALVSolutions.co link in the body, the Start a Project button, the View
   Portfolio button, and the footer link. Both buttons carry it twice, once in
   the Outlook VML version and once in the HTML version, so replace all
-  occurrences rather than the first few. If the domain is not pointed yet, use
-  https://jxk0917.github.io/AlvSolutions-Main-Site so nothing 404s.
+  occurrences rather than the first few.
 
   {{ unsubscribe }} in the footer is Brevo's merge tag. Leave it in - Brevo
   requires a working unsubscribe link and it protects your sender reputation.
 
-  Palette and type are the official brand tokens from the website:
-  ink #070C14 / surface #0E1826 / blue #3DA8F8 / deep blue #1A72C6 /
-  gold #FFC811 / Manrope headings and Geist body, each with a system fallback
-  stack, because only Apple Mail and iOS will load the webfonts.
+  Palette and type are the site's Screen Light tokens, neutral only, with no
+  accent colour: room #0B0B0B / ink #F2F1EE / ink 2 #B9B8B4 / ink 3 #8E8D89,
+  Bricolage Grotesque headings and Instrument Sans body, each with a system
+  fallback stack, because only Apple Mail and iOS will load the webfonts.
 
-  The gold rule runs top of the shell and again under each section heading, so
-  one accent carries the structure the whole way down.
+  A light rule runs across the top of the shell and under each section
+  heading, so one line carries the structure the whole way down.
   ============================================================================
 -->
 
@@ -67,7 +68,7 @@
 <xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
 <![endif]-->
 
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&amp;family=Geist:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700;800&amp;family=Instrument+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
 
 <style type="text/css">
   /* ---- resets ---- */
@@ -80,30 +81,30 @@
   /* Outlook and Windows Mail ignore the webfonts, so the fallback stack is
      named on every text cell rather than inherited - otherwise they land on
      Times New Roman. .fnt is the body face, .fnth the heading face. */
-  .fnt  { font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
-  .fnth { font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .fnt  { font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
+  .fnth { font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; }
 
-  /* ---- the site's own button behaviour: blue at rest, gold on highlight.
-          Clients that strip <style> simply keep the blue resting state. ---- */
+  /* ---- the site's own button behaviour: light at rest, white on highlight.
+          Clients that strip <style> simply keep the light resting state. ---- */
   .cta { transition:background-color .18s ease, color .18s ease; }
-  .cta:hover { background-color:#FFC811 !important; color:#070C14 !important; }
+  .cta:hover { background-color:#FFFFFF !important; color:#0B0B0B !important; }
 
   /* the quiet outline button, same rule as the site's ghost variant */
   .cta2 { transition:border-color .18s ease, color .18s ease, background-color .18s ease; }
-  .cta2:hover { border-color:#FFC811 !important; color:#FFC811 !important; background-color:rgba(255,200,17,.08) !important; }
+  .cta2:hover { border-color:#F2F1EE !important; color:#F2F1EE !important; background-color:rgba(242,241,238,.06) !important; }
 
-  .txtlink:hover { color:#FFC811 !important; }
+  .txtlink:hover { color:#FFFFFF !important; }
 
   /* ---- keep Outlook.com and Apple dark mode from inverting an already dark
           design into a washed-out light one ---- */
   :root { color-scheme:dark; supported-color-schemes:dark; }
-  [data-ogsc] .dm-bg     { background-color:#070C14 !important; }
-  [data-ogsc] .dm-band   { background-color:#0A111C !important; }
-  [data-ogsc] .dm-panel  { background-color:#0E1826 !important; }
-  [data-ogsc] .dm-text   { color:#EDF2F8 !important; }
-  [data-ogsc] .dm-text-2 { color:#B4C2D2 !important; }
-  [data-ogsc] .dm-text-3 { color:#8698AC !important; }
-  [data-ogsc] .dm-gold   { color:#FFC811 !important; }
+  [data-ogsc] .dm-bg     { background-color:#0B0B0B !important; }
+  [data-ogsc] .dm-band   { background-color:#0E0E0E !important; }
+  [data-ogsc] .dm-panel  { background-color:#111111 !important; }
+  [data-ogsc] .dm-text   { color:#F2F1EE !important; }
+  [data-ogsc] .dm-text-2 { color:#B9B8B4 !important; }
+  [data-ogsc] .dm-text-3 { color:#8E8D89 !important; }
+  [data-ogsc] .dm-lit   { color:#F2F1EE !important; }
 
   /* ---- mobile ---- */
   @media only screen and (max-width:620px) {
@@ -121,51 +122,44 @@
 
     /* the two-up card grid becomes one column: the cells stack and the
        spacer column between them collapses */
-    .card  { display:block !important; width:100% !important; margin-bottom:12px !important; }
+    .card  { display:block !important; width:100% !important; box-sizing:border-box !important; margin-bottom:12px !important; }
     .gapx  { display:none !important; width:0 !important; }
     .cardrow-gap { height:0 !important; line-height:0 !important; font-size:0 !important; }
   }
 </style>
 </head>
 
-<body class="dm-bg" style="margin:0; padding:0; background-color:#04080E;">
+<body class="dm-bg" style="margin:0; padding:0; background-color:#050505;">
 
 <!-- preview text, then blank glyphs so Gmail does not trail body copy after it -->
-<div style="display:none; font-size:1px; color:#04080E; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">
+<div style="display:none; font-size:1px; color:#050505; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden; mso-hide:all;">
   Custom sites built to generate leads. Starting at $650.
   &#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;&#847;&zwnj;&nbsp;
 </div>
 
-<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg" style="background-color:#04080E;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" class="dm-bg" style="background-color:#050505;">
 <tr>
 <td align="center" style="padding:28px 12px 44px 12px;">
 
   <!--[if mso]><table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600"><tr><td><![endif]-->
-  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="shell" style="width:600px; max-width:600px; background-color:#070C14; border:1px solid #182534; border-radius:16px; overflow:hidden;">
+  <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" class="shell" style="width:600px; max-width:600px; background-color:#0B0B0B; border:1px solid #1F1F1E; border-radius:16px; overflow:hidden;">
 
-    <!-- ============ signature: one gold rule across the top ============ -->
+    <!-- ============ signature: one light rule across the top ============ -->
     <tr>
-      <td height="3" style="height:3px; line-height:3px; font-size:3px; background-color:#FFC811;">&nbsp;</td>
+      <td height="3" style="height:3px; line-height:3px; font-size:3px; background-color:#F2F1EE;">&nbsp;</td>
     </tr>
 
     <!-- ============ header: logo lockup ============ -->
     <tr>
-      <td class="dm-band pad-x-sm" style="background-color:#0A111C; border-bottom:1px solid #182534; padding:18px 32px;">
+      <td class="dm-band pad-x-sm" style="background-color:#0E0E0E; border-bottom:1px solid #1F1F1E; padding:18px 32px;">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
           <tr>
             <td align="left" valign="middle" style="vertical-align:middle;">
               <a href="https://alvsolutions.co" style="text-decoration:none;">
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                  <tr>
-                    <td valign="middle" style="padding-right:10px; vertical-align:middle; line-height:0;">
-                      <img src="https://alvsolutions.co/assets/brand/alv-mark.png" width="44" height="29" alt="" style="display:block; width:44px; height:29px; border:0;" />
-                    </td>
-                    <td valign="middle" class="fnth dm-text" style="vertical-align:middle; font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:20px; font-weight:800; letter-spacing:-.5px; color:#EDF2F8; line-height:1;">Alv<span style="color:#3DA8F8;">Solutions</span></td>
-                  </tr>
-                </table>
+                <img src="https://alvsolutions.co/assets/email/alv-lockup.png" width="150" height="30" alt="ALVSolutions" style="display:block; width:150px; height:30px; border:0; font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:18px; font-weight:700; color:#F2F1EE;" />
               </a>
             </td>
-            <td align="right" valign="middle" class="fnt dm-text-3 hide-sm" style="vertical-align:middle; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#8698AC;">San Antonio, TX</td>
+            <td align="right" valign="middle" class="fnt dm-text-3 hide-sm" style="vertical-align:middle; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11px; font-weight:600; letter-spacing:1.4px; text-transform:uppercase; color:#8E8D89;">San Antonio, TX</td>
           </tr>
         </table>
       </td>
@@ -178,11 +172,11 @@
                      it is, with the headline surviving as styled alt text
                      rather than a broken-image caption ============ -->
     <tr>
-      <td class="dm-panel" align="center" style="background-color:#070C14; line-height:0; font-size:0;">
+      <td class="dm-panel" align="center" style="background-color:#0B0B0B; line-height:0; font-size:0;">
         <a href="https://alvsolutions.co/work/" style="text-decoration:none;">
           <img src="https://alvsolutions.co/assets/email/launch-hero.jpg" width="600" height="560"
                alt="Your business deserves a better website."
-               style="display:block; width:100%; max-width:600px; height:auto; border:0; font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:24px; font-weight:800; letter-spacing:-.6px; line-height:1.6; color:#EDF2F8;" />
+               style="display:block; width:100%; max-width:600px; height:auto; border:0; font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:24px; font-weight:700; letter-spacing:-.6px; line-height:1.6; color:#F2F1EE;" />
         </a>
       </td>
     </tr>
@@ -190,21 +184,21 @@
     <!-- ============ the promise ============ -->
     <tr>
       <td class="pad-x" style="padding:34px 44px 0 44px;">
-        <h2 class="fnth h2 dm-text" style="margin:0; font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:30px; line-height:1.12; font-weight:800; letter-spacing:-.9px; color:#EDF2F8;">
+        <h2 class="fnth h2 dm-text" style="margin:0; font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:30px; line-height:1.12; font-weight:700; letter-spacing:-.9px; color:#F2F1EE;">
           Not just a website.<br />
           A business asset.
         </h2>
-        <!-- the gold rule from the top of the shell, cut short: it marks every
-             section heading so one accent carries the structure -->
+        <!-- the light rule from the top of the shell, cut short: it marks every
+             section heading so one line carries the structure -->
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:16px;">
-          <tr><td width="56" height="4" style="width:56px; height:4px; line-height:4px; font-size:4px; background-color:#FFC811; border-radius:2px;">&nbsp;</td></tr>
+          <tr><td width="56" height="4" style="width:56px; height:4px; line-height:4px; font-size:4px; background-color:#F2F1EE; border-radius:2px;">&nbsp;</td></tr>
         </table>
       </td>
     </tr>
 
     <tr>
       <td class="pad-x" style="padding:22px 44px 0 44px;">
-        <p class="fnt lead dm-text" style="margin:0; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16.5px; line-height:1.65; font-weight:500; color:#EDF2F8;">
+        <p class="fnt lead dm-text" style="margin:0; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16.5px; line-height:1.65; font-weight:500; color:#F2F1EE;">
           ALVSolutions is officially live.
         </p>
       </td>
@@ -212,7 +206,7 @@
 
     <tr>
       <td class="pad-x" style="padding:14px 44px 0 44px;">
-        <p class="fnt dm-text-2" style="margin:0; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15.5px; line-height:1.7; color:#B4C2D2;">
+        <p class="fnt dm-text-2" style="margin:0; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15.5px; line-height:1.7; color:#B9B8B4;">
           I build modern, custom websites for local businesses designed to look professional, generate leads, and turn visitors into customers.
         </p>
       </td>
@@ -221,11 +215,11 @@
     <!-- ============ what the build can carry ============ -->
     <tr>
       <td class="pad-x" style="padding:38px 44px 0 44px;">
-        <h3 class="fnth h3 dm-text" style="margin:0; font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:19px; line-height:1.35; font-weight:800; letter-spacing:-.4px; color:#EDF2F8;">
+        <h3 class="fnth h3 dm-text" style="margin:0; font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:19px; line-height:1.35; font-weight:700; letter-spacing:-.4px; color:#F2F1EE;">
           Professional websites built around how your business gets customers.
         </h3>
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin-top:14px;">
-          <tr><td width="56" height="4" style="width:56px; height:4px; line-height:4px; font-size:4px; background-color:#FFC811; border-radius:2px;">&nbsp;</td></tr>
+          <tr><td width="56" height="4" style="width:56px; height:4px; line-height:4px; font-size:4px; background-color:#F2F1EE; border-radius:2px;">&nbsp;</td></tr>
         </table>
       </td>
     </tr>
@@ -238,42 +232,42 @@
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
 
           <tr>
-            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#0E1826; border:1px solid #1E2E42; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
+            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#111111; border:1px solid #262625; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
               <img src="https://alvsolutions.co/assets/email/ic-services.png" width="52" height="52" alt="" style="display:block; width:52px; height:52px; border:0;" />
-              <div class="fnt dm-text" style="padding-top:14px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#EDF2F8;">Services page</div>
+              <div class="fnt dm-text" style="padding-top:14px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#F2F1EE;">Services page</div>
             </td>
             <td class="gapx" width="14" style="width:14px; font-size:0; line-height:0;">&nbsp;</td>
-            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#0E1826; border:1px solid #1E2E42; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
+            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#111111; border:1px solid #262625; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
               <img src="https://alvsolutions.co/assets/email/ic-menu.png" width="52" height="52" alt="" style="display:block; width:52px; height:52px; border:0;" />
-              <div class="fnt dm-text" style="padding-top:14px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#EDF2F8;">Menu page</div>
+              <div class="fnt dm-text" style="padding-top:14px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#F2F1EE;">Menu page</div>
             </td>
           </tr>
 
           <tr><td class="cardrow-gap" colspan="3" height="12" style="height:12px; line-height:12px; font-size:12px;">&nbsp;</td></tr>
 
           <tr>
-            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#0E1826; border:1px solid #1E2E42; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
+            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#111111; border:1px solid #262625; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
               <img src="https://alvsolutions.co/assets/email/ic-gallery.png" width="52" height="52" alt="" style="display:block; width:52px; height:52px; border:0;" />
-              <div class="fnt dm-text" style="padding-top:14px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#EDF2F8;">Photo gallery</div>
+              <div class="fnt dm-text" style="padding-top:14px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#F2F1EE;">Photo gallery</div>
             </td>
             <td class="gapx" width="14" style="width:14px; font-size:0; line-height:0;">&nbsp;</td>
-            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#0E1826; border:1px solid #1E2E42; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
+            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#111111; border:1px solid #262625; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
               <img src="https://alvsolutions.co/assets/email/ic-testimonials.png" width="52" height="52" alt="" style="display:block; width:52px; height:52px; border:0;" />
-              <div class="fnt dm-text" style="padding-top:14px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#EDF2F8;">Testimonials page</div>
+              <div class="fnt dm-text" style="padding-top:14px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#F2F1EE;">Testimonials page</div>
             </td>
           </tr>
 
           <tr><td class="cardrow-gap" colspan="3" height="12" style="height:12px; line-height:12px; font-size:12px;">&nbsp;</td></tr>
 
           <tr>
-            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#0E1826; border:1px solid #1E2E42; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
+            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#111111; border:1px solid #262625; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
               <img src="https://alvsolutions.co/assets/email/ic-quote.png" width="52" height="52" alt="" style="display:block; width:52px; height:52px; border:0;" />
-              <div class="fnt dm-text" style="padding-top:14px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#EDF2F8;">Quote / catering request system</div>
+              <div class="fnt dm-text" style="padding-top:14px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#F2F1EE;">Structured Quote / Request</div>
             </td>
             <td class="gapx" width="14" style="width:14px; font-size:0; line-height:0;">&nbsp;</td>
-            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#0E1826; border:1px solid #1E2E42; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
+            <td class="card dm-panel" width="249" valign="top" style="width:249px; background-color:#111111; border:1px solid #262625; border-radius:26px; padding:20px 18px 22px 18px; vertical-align:top;">
               <img src="https://alvsolutions.co/assets/email/ic-area.png" width="52" height="52" alt="" style="display:block; width:52px; height:52px; border:0;" />
-              <div class="fnt dm-text" style="padding-top:14px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#EDF2F8;">Service area page</div>
+              <div class="fnt dm-text" style="padding-top:14px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:600; line-height:1.45; letter-spacing:-.1px; color:#F2F1EE;">Service area page</div>
             </td>
           </tr>
 
@@ -282,40 +276,40 @@
     </tr>
 
     <!-- ============ what every build already carries, and where the rest
-                     lives: two quiet lines, each led by a gold phrase, so
+                     lives: two quiet lines, each led by a bright phrase, so
                      they read as footnotes to the grid above rather than
                      competing with it ============ -->
     <tr>
       <td class="pad-x" style="padding:24px 44px 0 44px;">
-        <p class="fnt dm-text-3" style="margin:0; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; line-height:1.7; color:#8698AC;">
-          <span class="dm-gold" style="color:#FFC811; font-weight:600;">Every site includes:</span>
-          Mobile-optimized custom design &#183; Lead &amp; contact forms &#183; On-page SEO setup &#183; Google Business Profile assistance &#183; Hosting, SSL &amp; backups
+        <p class="fnt dm-text-3" style="margin:0; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; line-height:1.7; color:#8E8D89;">
+          <span class="dm-lit" style="color:#F2F1EE; font-weight:600;">Every site includes:</span>
+          Mobile-optimized custom design &#183; A contact form &#183; On-page SEO &#183; Hosting, SSL &amp; backups on a care plan. Standard and Complete add Google Business Profile setup assistance and your choice of these pages and features.
         </p>
       </td>
     </tr>
 
     <tr>
       <td class="pad-x" style="padding:12px 44px 0 44px;">
-        <p class="fnt dm-text-3" style="margin:0; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; line-height:1.7; color:#8698AC;">
-          <span class="dm-gold" style="color:#FFC811; font-weight:600;">Need more?</span>
-          Visit <a class="txtlink" href="https://alvsolutions.co/services/" style="color:#3DA8F8; text-decoration:none; font-weight:600;">ALVSolutions.co</a> for our full services
+        <p class="fnt dm-text-3" style="margin:0; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; line-height:1.7; color:#8E8D89;">
+          <span class="dm-lit" style="color:#F2F1EE; font-weight:600;">Need more?</span>
+          Visit <a class="txtlink" href="https://alvsolutions.co/services/" style="color:#F2F1EE; text-decoration:underline; font-weight:600;">ALVSolutions.co</a> for the full list of services
         </p>
       </td>
     </tr>
 
     <!-- ============ price. a bar, not a panel: the label and the figure sit
                      on one line so it reads at a glance without taking the
-                     weight of a section. the figure carries the accent alone -
-                     a gold border as well made it shout twice ============ -->
+                     weight of a section. the figure is the brightest thing on the
+                     line and the bar stays quiet ============ -->
     <tr>
       <td class="pad-x" style="padding:32px 44px 0 44px;">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
           <tr>
-            <td class="dm-panel" style="background-color:#0E1826; border:1px solid #22344A; border-radius:26px; padding:13px 24px;">
+            <td class="dm-panel" style="background-color:#111111; border:1px solid #333331; border-radius:26px; padding:13px 24px;">
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
                 <tr>
-                  <td align="left" valign="middle" class="fnt dm-text-3" style="vertical-align:middle; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11.5px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#8698AC; line-height:1.2;">Websites start at</td>
-                  <td align="right" valign="middle" class="fnth amount dm-gold" style="vertical-align:middle; font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:25px; font-weight:800; letter-spacing:-.8px; line-height:1.2; color:#FFC811; white-space:nowrap;">$650</td>
+                  <td align="left" valign="middle" class="fnt dm-text-3" style="vertical-align:middle; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11.5px; font-weight:600; letter-spacing:1.6px; text-transform:uppercase; color:#8E8D89; line-height:1.2;">Websites start at</td>
+                  <td align="right" valign="middle" class="fnth amount dm-lit" style="vertical-align:middle; font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:25px; font-weight:700; letter-spacing:-.8px; line-height:1.2; color:#F2F1EE; white-space:nowrap;">$650</td>
                 </tr>
               </table>
             </td>
@@ -329,17 +323,17 @@
       <td class="pad-cta" align="center" style="padding:28px 44px 0 44px;">
 
         <!--[if mso]>
-        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://alvsolutions.co/contact/" style="height:52px; v-text-anchor:middle; width:230px;" arcsize="20%" strokecolor="#1A72C6" fillcolor="#1A72C6">
+        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://alvsolutions.co/contact/" style="height:52px; v-text-anchor:middle; width:230px;" arcsize="20%" strokecolor="#F2F1EE" fillcolor="#F2F1EE">
           <w:anchorlock/>
-          <center style="color:#ffffff; font-family:'Segoe UI',Arial,sans-serif; font-size:16px; font-weight:600;">Start a Project</center>
+          <center style="color:#0B0B0B; font-family:'Segoe UI',Arial,sans-serif; font-size:16px; font-weight:600;">Start a Project</center>
         </v:roundrect>
         <![endif]-->
 
         <!--[if !mso]><!-->
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" class="btn-wrap" style="margin:0 auto;">
           <tr>
-            <td align="center" style="border-radius:10px; background-color:#1A72C6;">
-              <a class="cta fnt" href="https://alvsolutions.co/contact/" style="display:inline-block; padding:16px 38px; border-radius:10px; background-color:#1A72C6; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16px; font-weight:600; letter-spacing:-.2px; color:#FFFFFF; text-decoration:none; text-align:center; mso-hide:all;">Start a Project&nbsp;&nbsp;&#8594;</a>
+            <td align="center" style="border-radius:10px; background-color:#F2F1EE;">
+              <a class="cta fnt" href="https://alvsolutions.co/contact/" style="display:inline-block; padding:16px 38px; border-radius:10px; background-color:#F2F1EE; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:16px; font-weight:600; letter-spacing:-.2px; color:#0B0B0B; text-decoration:none; text-align:center; mso-hide:all;">Start a Project&nbsp;&nbsp;&#8594;</a>
             </td>
           </tr>
         </table>
@@ -351,7 +345,7 @@
     <!-- ============ soft second option ============ -->
     <tr>
       <td class="pad-x" align="center" style="padding:22px 54px 0 54px;">
-        <p class="fnt dm-text-3" style="margin:0; text-align:center; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; line-height:1.65; color:#8698AC;">
+        <p class="fnt dm-text-3" style="margin:0; text-align:center; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; line-height:1.65; color:#8E8D89;">
           Not sure what you need? Tell me about your business and I&#8217;ll recommend the right setup.
         </p>
       </td>
@@ -363,9 +357,9 @@
       <td class="pad-cta" align="center" style="padding:26px 44px 44px 44px;">
 
         <!--[if mso]>
-        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://alvsolutions.co/work/" style="height:42px; v-text-anchor:middle; width:172px;" arcsize="24%" strokecolor="#22344A" fillcolor="#070C14">
+        <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://alvsolutions.co/work/" style="height:42px; v-text-anchor:middle; width:172px;" arcsize="24%" strokecolor="#333331" fillcolor="#0B0B0B">
           <w:anchorlock/>
-          <center style="color:#B4C2D2; font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:600;">View Portfolio</center>
+          <center style="color:#B9B8B4; font-family:'Segoe UI',Arial,sans-serif; font-size:14px; font-weight:600;">View Portfolio</center>
         </v:roundrect>
         <![endif]-->
 
@@ -373,7 +367,7 @@
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
           <tr>
             <td align="center" style="border-radius:10px;">
-              <a class="cta2 fnt" href="https://alvsolutions.co/work/" style="display:inline-block; padding:12px 28px; border-radius:10px; border:1px solid #22344A; background-color:transparent; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:600; letter-spacing:-.1px; color:#B4C2D2; text-decoration:none; text-align:center; mso-hide:all;">View Portfolio</a>
+              <a class="cta2 fnt" href="https://alvsolutions.co/work/" style="display:inline-block; padding:12px 28px; border-radius:10px; border:1px solid #333331; background-color:transparent; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:14px; font-weight:600; letter-spacing:-.1px; color:#B9B8B4; text-decoration:none; text-align:center; mso-hide:all;">View Portfolio</a>
             </td>
           </tr>
         </table>
@@ -384,29 +378,29 @@
 
     <!-- ============ footer ============ -->
     <tr>
-      <td class="dm-band pad-x-sm" style="background-color:#0A111C; border-top:1px solid #182534; padding:28px 32px;">
+      <td class="dm-band pad-x-sm" style="background-color:#0E0E0E; border-top:1px solid #1F1F1E; padding:28px 32px;">
         <table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%">
           <tr>
-            <td class="fnth dm-text" style="font-family:'Manrope','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:700; letter-spacing:-.2px; color:#EDF2F8; line-height:1.5;">Sergio Alvarez</td>
+            <td class="fnth dm-text" style="font-family:'Bricolage Grotesque','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:15px; font-weight:700; letter-spacing:-.2px; color:#F2F1EE; line-height:1.5;">Sergio Alvarez</td>
           </tr>
           <tr>
-            <td class="fnt dm-text-3" style="padding-top:2px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:13.5px; line-height:1.6; color:#8698AC;">ALVSolutions</td>
+            <td class="fnt dm-text-3" style="padding-top:2px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:13.5px; line-height:1.6; color:#8E8D89;">ALVSolutions</td>
           </tr>
           <tr>
-            <td class="fnt" style="padding-top:2px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:13.5px; line-height:1.6;">
-              <a class="txtlink" href="https://alvsolutions.co" style="color:#3DA8F8; text-decoration:none;">alvsolutions.co</a>
+            <td class="fnt" style="padding-top:2px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:13.5px; line-height:1.6;">
+              <a class="txtlink" href="https://alvsolutions.co" style="color:#F2F1EE; text-decoration:underline;">alvsolutions.co</a>
             </td>
           </tr>
           <tr>
             <td height="20" style="height:20px; line-height:20px; font-size:20px;">&nbsp;</td>
           </tr>
           <tr>
-            <td height="1" style="height:1px; line-height:1px; font-size:1px; background-color:#182534;">&nbsp;</td>
+            <td height="1" style="height:1px; line-height:1px; font-size:1px; background-color:#1F1F1E;">&nbsp;</td>
           </tr>
           <tr>
-            <td class="fnt dm-text-3" style="padding-top:16px; font-family:'Geist','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11.5px; line-height:1.7; color:#7C8B9C;">
+            <td class="fnt dm-text-3" style="padding-top:16px; font-family:'Instrument Sans','Segoe UI',Roboto,Helvetica,Arial,sans-serif; font-size:11.5px; line-height:1.7; color:#8E8D89;">
               You are receiving this because you connected with ALVSolutions.
-              <a class="txtlink" href="{{ unsubscribe }}" style="color:#8698AC; text-decoration:underline;">Unsubscribe</a>
+              <a class="txtlink" href="{{ unsubscribe }}" style="color:#8E8D89; text-decoration:underline;">Unsubscribe</a>
             </td>
           </tr>
         </table>

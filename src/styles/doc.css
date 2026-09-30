@@ -1,0 +1,248 @@
+/* ============================================================
+   DOCUMENTS AND PACKAGE SUB-PAGES
+   /policies/, /legal/privacy/, /legal/terms/ read as one document system:
+   a contents rail beside the text. The rail's lit bar (the site's bar)
+   glides to the section being read and the key light to the link under
+   the pointer, as /pricing/'s rail does; the section being read carries a
+   lit bar beside its heading. /packages/add-ons/ and
+   /packages/for-your-business/ use the same spotlit grids as /services/,
+   and the same two markers everywhere: a hairline square is a page add-on,
+   a short lit bar is a power feature. doc.ts writes the custom
+   properties; the spotlight itself (.sv-spot) is services.css. Shape rule
+   as /pricing/: surfaces 10-12px, controls full pill.
+   Imported by interior.css.
+   ============================================================ */
+
+/* ---- the document: a contents rail beside the text ---- */
+.dc-body {
+  display: grid; grid-template-columns: minmax(180px, 230px) minmax(0, 1fr); gap: clamp(28px, 5vw, 88px); align-items: start;
+  padding-block: clamp(20px, 3vh, 32px) clamp(56px, 8vh, 96px);
+  --sv-glide: 750ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+.dc-toc { position: sticky; top: calc(var(--alv-nav-h) + 32px); }
+.dc-toc-h { margin-bottom: 10px; font-size: 13px; color: var(--sl-ink3); }
+.dc-toc-in { position: relative; isolation: isolate; box-shadow: inset 1px 0 0 var(--sl-line2); }
+.dc-toc-list { display: grid; margin: 0; padding: 0; list-style: none; }
+.dc-toc-a {
+  display: block; padding: 9px 12px 9px 18px; border-radius: 0 8px 8px 0; text-decoration: none;
+  font-size: 14px; line-height: 1.35; color: var(--sl-ink3); transition: color 300ms;
+}
+.dc-toc-a:hover, .dc-toc-a[aria-current] { color: var(--sl-ink1); }
+.dc-toc-a:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+/* The bar takes the measured place of the link it marks (--by, --bh). */
+.dc-toc-bar {
+  display: none; position: absolute; left: -0.5px; top: 0; width: 2px; height: var(--bh, 0px); pointer-events: none;
+  transform: translateY(var(--by, 0px)); transition: transform var(--sv-glide), height var(--sv-glide);
+}
+.dc-toc-bar::before { content: ""; position: absolute; inset: 8px 0; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); }
+.dc-toc.is-js .dc-toc-bar { display: block; }
+.dc-toc-in > .sv-spot {
+  z-index: -1; border-radius: 0 8px 8px 0;
+  background: radial-gradient(ellipse 110% 130% at 0% 50%, rgb(var(--sl-L) / 0.11), rgb(var(--sl-L) / 0.035) 55%, transparent 92%);
+}
+.no-motion .dc-toc-bar { transition: none !important; }
+
+/* ---- the text ---- */
+.dc-doc { min-width: 0; max-width: 70ch; }
+.dc-updated { font-size: 13.5px; color: var(--sl-ink3); }
+.dc-intro { margin-top: 12px; font-size: 17.5px; line-height: 1.6; color: var(--sl-ink1); }
+.dc-sec { position: relative; scroll-margin-top: calc(var(--alv-nav-h) + 24px); padding-top: clamp(28px, 4.4vh, 40px); margin-top: clamp(28px, 4.4vh, 40px); border-top: 1px solid var(--sl-line); }
+.dc-sec:first-child { margin-top: 0; }
+.dc-sec h2 {
+  position: relative; margin-bottom: 12px;
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: clamp(20px, 1.8vw, 24px); line-height: 1.2; letter-spacing: -0.02em; color: var(--sl-ink1);
+}
+/* The section being read: a lit bar beside its heading. */
+.dc-sec h2::before {
+  content: ""; position: absolute; left: calc(-1 * clamp(14px, 1.6vw, 22px)); top: 0.18em; bottom: 0.18em; width: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); opacity: 0; transform: scaleY(0.4);
+  transition: opacity 500ms var(--sl-e-out), transform 600ms var(--sl-e-out);
+}
+.dc-doc.is-armed .dc-sec.is-current h2::before { opacity: 1; transform: none; }
+.dc-sec p, .dc-sec ul:not([class]) > li { font-size: 16px; line-height: 1.7; color: var(--sl-ink2); }
+.dc-sec p + p, .dc-sec ul + p, .dc-sec p + ul:not([class]) { margin-top: 12px; }
+.dc-sec ul:not([class]) { display: grid; gap: 4px; margin: 0; padding: 0; list-style: none; }
+.dc-sec ul:not([class]) > li { position: relative; padding-left: 22px; }
+.dc-sec ul:not([class]) > li::before { content: ""; position: absolute; left: 0; top: 0.85em; width: 10px; height: 1px; background: rgb(var(--sl-L) / 0.45); }
+.dc-sec :is(p, ul:not([class]) > li) a, .dc-intro a { color: var(--sl-ink1); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.35); text-underline-offset: 0.22em; transition: text-decoration-color 250ms; }
+.dc-sec :is(p, ul:not([class]) > li) a:hover, .dc-intro a:hover { text-decoration-color: var(--sl-ink1); }
+.dc-sec strong, .dc-sec b { font-weight: 600; color: var(--sl-ink1); }
+
+/* A policy: its mark beside its heading. */
+.dc-pol-top { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+.dc-pol-top h2 { margin-bottom: 0; }
+.dc-badge {
+  flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px;
+  background: rgb(var(--sl-L) / 0.03); box-shadow: inset 0 0 0 1px var(--sl-line2); color: var(--sl-ink2);
+  transition: color 400ms, box-shadow 400ms;
+}
+.dc-badge .int-ic { width: 19px; height: 19px; }
+.dc-doc.is-armed .dc-sec.is-current .dc-badge { color: var(--sl-ink1); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.3), 0 0 22px -6px oklch(0.8 0.15 245 / 0.45); }
+.dc-pol-top ~ p { padding-left: 54px; }
+
+/* ---- questions: each a row the key light glides to ---- */
+.dc-faq-wrap { position: relative; margin-top: 8px; --shue: 245; }
+.dc-faq { display: grid; margin: 0 -16px; }
+.dc-q { position: relative; z-index: 1; border-radius: 8px; }
+.dc-q + .dc-q::before { content: ""; position: absolute; left: 16px; right: 16px; top: 0; height: 1px; background: var(--sl-line); }
+.dc-q summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 17px 16px; cursor: pointer; list-style: none; border-radius: 8px;
+  font-family: var(--sl-f-brand); font-weight: 600; font-size: 16.5px; letter-spacing: -0.012em; color: var(--sl-ink1);
+}
+.dc-q summary::-webkit-details-marker { display: none; }
+.dc-q summary::after {
+  content: ""; flex: none; width: 9px; height: 9px; margin-top: -4px; border-right: 1.5px solid var(--sl-ink3); border-bottom: 1.5px solid var(--sl-ink3);
+  transform: rotate(45deg); transition: transform 300ms var(--sl-e-out);
+}
+.dc-q[open] summary::after { transform: rotate(-135deg); margin-top: 4px; }
+.dc-q summary:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.dc-q-a { padding: 0 16px 18px; max-width: 64ch; font-size: 15.5px; line-height: 1.65; color: var(--sl-ink2); }
+.dc-q[open] .dc-q-a { animation: dc-open 380ms var(--sl-e-out) both; }
+@keyframes dc-open { from { opacity: 0; transform: translateY(-4px); } }
+.no-motion .dc-q[open] .dc-q-a { animation: none; }
+.dc-faq-wrap > .sv-spot { z-index: 0; border-radius: 8px;
+  background: linear-gradient(90deg, oklch(0.85 0.09 var(--shue) / 0.1), oklch(0.85 0.09 var(--shue) / 0.03) 55%, transparent 96%);
+}
+.dc-faq-wrap > .sv-spot::before { content: ""; position: absolute; left: 0; top: 14px; width: 2px; height: 26px; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+
+/* ---- two documents to open: link cards ---- */
+.dc-links-wrap { position: relative; margin-top: 18px; --shue: 245; }
+.dc-links { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.dc-link {
+  position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  padding: 18px 20px; border-radius: 10px; text-decoration: none; color: inherit;
+  background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08);
+}
+.dc-link .int-ic { color: var(--sl-ink2); }
+.dc-link b { display: block; font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.014em; color: var(--sl-ink1); }
+.dc-link span { font-size: 13.5px; color: var(--sl-ink3); }
+.dc-link-go { transition: transform 350ms var(--sl-e-out); }
+.dc-link:hover .dc-link-go { transform: translateX(3px); }
+.dc-link:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.dc-links-wrap > .sv-spot { z-index: 2; border-radius: 10px;
+  background: radial-gradient(ellipse 100% 90% at 0% 50%, oklch(0.93 0.06 var(--shue) / 0.12), transparent 80%);
+  box-shadow: inset 0 0 0 1px oklch(0.85 0.08 var(--shue) / 0.28), inset 0 1px 0 oklch(0.96 0.05 var(--shue) / 0.55);
+}
+
+/* ============================================================
+   PACKAGE SUB-PAGES
+   ============================================================ */
+.pk2-sec { padding-block: clamp(48px, 7vh, 80px); border-top: 1px solid var(--sl-line); --sv-glide: 750ms cubic-bezier(0.45, 0, 0.2, 1); }
+.pk2-sec--first { padding-top: clamp(20px, 3vh, 32px); border-top: 0; }
+.pk2-head { display: grid; gap: 10px; margin-bottom: clamp(22px, 3.6vh, 36px); }
+.pk2-head .int-h2 { max-width: 22ch; }
+.pk2-head--price { grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 10px 32px; }
+.pk2-head--price .int-lede { grid-column: 1; }
+.pk2-price { grid-column: 2; grid-row: 1 / span 2; justify-self: end; display: grid; justify-items: end; gap: 2px; }
+.pk2-price b { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(38px, 4vw, 56px); letter-spacing: -0.04em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+.pk2-price span { font-size: 13.5px; color: var(--sl-ink3); }
+
+/* The two markers: a hairline square is a page, a lit bar is a power feature. */
+.mk { flex: none; display: inline-block; vertical-align: middle; }
+.mk--page { width: 11px; height: 11px; border-radius: 3px; box-shadow: inset 0 0 0 1.25px rgb(var(--sl-L) / 0.55); }
+.mk--power { width: 3px; height: 16px; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+.mk--inc { width: 11px; height: 1.5px; border-radius: 2px; background: rgb(var(--sl-L) / 0.45); }
+.pk2-legend { display: flex; flex-wrap: wrap; gap: 8px 26px; margin-bottom: 18px; font-size: 13.5px; color: var(--sl-ink2); }
+.pk2-legend span { display: inline-flex; align-items: center; gap: 10px; }
+
+/* ---- what each package covers: three allowances ---- */
+.pk2-allow-wrap { position: relative; }
+.pk2-allow { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.pk2-tier {
+  position: relative; display: grid; align-content: start; gap: 14px; padding: clamp(20px, 2.2vw, 26px); border-radius: 10px;
+  background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 40px 70px -48px rgb(0 0 0 / 0.9);
+}
+.pk2-tier-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.pk2-tier-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.016em; color: var(--sl-ink1); }
+.pk2-tier-price { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; color: var(--sl-ink2); font-variant-numeric: tabular-nums; }
+.pk2-slots { display: grid; gap: 10px; padding-top: 14px; border-top: 1px solid var(--sl-line); }
+.pk2-slot-row { display: flex; align-items: center; gap: 14px; font-size: 14px; color: var(--sl-ink2); }
+.pk2-slot-marks { display: inline-flex; align-items: center; gap: 6px; min-width: 96px; }
+.pk2-none { font-size: 14px; line-height: 1.5; color: var(--sl-ink3); }
+/* The recommended package's markers glow a little brighter under the light. */
+.pk2-tier .mk--power { transition: box-shadow 400ms; }
+
+/* "Why these four" reuses /about/'s rail of points; here it follows a section. */
+.pk2-why { border-top: 1px solid var(--sl-line); padding-top: clamp(48px, 7vh, 80px); }
+
+/* ---- a class of add-ons: the spotlit grid ---- */
+.pk2-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.pk2-item {
+  position: relative; display: grid; grid-template-rows: auto auto 1fr auto; gap: 10px; align-content: start;
+  padding: clamp(18px, 2vw, 24px); border-radius: 10px;
+  background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07);
+}
+.pk2-item-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pk2-item-top .int-ic { color: var(--sl-ink2); }
+.pk2-item h3 { font-family: var(--sl-f-brand); font-weight: 600; font-size: 17px; letter-spacing: -0.014em; line-height: 1.25; color: var(--sl-ink1); }
+.pk2-item p { font-size: 14px; line-height: 1.5; color: var(--sl-ink2); }
+.pk2-item-link { justify-self: start; font-size: 13.5px; color: var(--sl-ink1); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.22em; }
+.pk2-item-link:hover { text-decoration-color: var(--sl-ink1); }
+
+/* ---- the four builds ---- */
+.pk2-builds { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+.pk2-build {
+  position: relative; isolation: isolate; overflow: hidden; display: grid; gap: 16px; align-content: start;
+  padding: clamp(22px, 2.6vw, 32px); border-radius: 12px; scroll-margin-top: calc(var(--alv-nav-h) + 24px);
+  background: radial-gradient(ellipse 70% 60% at 0% 0%, oklch(0.72 0.1 var(--hue) / 0.07), transparent 72%), #0d0d0d;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 50px 90px -56px rgb(0 0 0 / 0.95);
+}
+.pk2-build-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 14px; }
+.pk2-build-top .dc-badge { color: oklch(0.9 0.05 var(--hue)); }
+.pk2-build h3 { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(21px, 1.9vw, 25px); letter-spacing: -0.024em; line-height: 1.1; color: var(--sl-ink1); }
+.pk2-build-trades { margin-top: 3px; font-size: 13.5px; color: var(--sl-ink3); }
+.pk2-build-price { display: grid; justify-items: end; }
+.pk2-build-price b { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(26px, 2.3vw, 32px); letter-spacing: -0.032em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; }
+.pk2-build-price span { font-size: 12.5px; color: var(--sl-ink3); }
+.pk2-build-for { font-size: 16px; line-height: 1.5; color: var(--sl-ink1); max-width: 40ch; }
+.pk2-inc { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 20px; margin: 0; padding: 16px 0 0; list-style: none; border-top: 1px solid var(--sl-line); }
+.pk2-inc li { display: flex; align-items: center; gap: 12px; font-size: 14.5px; line-height: 1.35; color: var(--sl-ink2); }
+.pk2-inc .mk { width: 11px; display: inline-flex; justify-content: center; }
+.pk2-inc .mk--power { width: 3px; margin-inline: 4px; }
+.pk2-build-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; margin-top: 4px; padding-top: 16px; border-top: 1px solid var(--sl-line); }
+.pk2-build-base { font-size: 13.5px; color: var(--sl-ink3); }
+.pk2-build-base a { color: var(--sl-ink2); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.22em; }
+
+/* ---- a closing sheet (Something else?) ---- */
+.pk2-sheet { justify-items: start; }
+.pk2-sheet .int-h2 { max-width: 20ch; }
+.pk2-sheet p { font-size: 16px; line-height: 1.6; color: var(--sl-ink2); max-width: 58ch; }
+.pk2-sheet .int-cta-act { margin-top: 4px; }
+.pk2-copy { display: grid; gap: 14px; max-width: 64ch; }
+.pk2-copy p { font-size: 16px; line-height: 1.65; color: var(--sl-ink2); }
+
+/* The grids' spotlight: the key falls from the top edge, in the item's hue. */
+:is(.pk2-allow-wrap, .pk2-grid-wrap, .pk2-builds-wrap) { position: relative; --shue: 245; }
+:is(.pk2-allow-wrap, .pk2-grid-wrap, .pk2-builds-wrap) > .sv-spot {
+  z-index: 2; border-radius: 10px;
+  background: radial-gradient(ellipse 100% 62% at 50% 0%, oklch(0.93 0.06 var(--shue) / 0.13), oklch(0.85 0.08 var(--shue) / 0.04) 52%, transparent 88%);
+  box-shadow: inset 0 0 0 1px oklch(0.85 0.08 var(--shue) / 0.28), inset 0 1px 0 oklch(0.96 0.05 var(--shue) / 0.65);
+}
+.pk2-builds-wrap > .sv-spot { border-radius: 12px; }
+
+/* ---- narrower ---- */
+@media (max-width: 1100px) {
+  .pk2-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  /* The rail becomes a plain contents list above the text. */
+  .dc-body { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .dc-toc { position: static; padding-bottom: 20px; border-bottom: 1px solid var(--sl-line); }
+  .dc-toc-in { box-shadow: none; }
+  .dc-toc-list { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 16px; }
+  .dc-toc-a { padding: 7px 0; }
+  .dc-toc-bar, .dc-toc-in > .sv-spot { display: none !important; }
+  .dc-sec h2::before { left: -12px; }
+  .pk2-allow, .pk2-builds { grid-template-columns: minmax(0, 1fr); }
+  :is(.pk2-allow-wrap, .pk2-grid-wrap, .pk2-builds-wrap, .dc-links-wrap) > .sv-spot { display: none !important; }
+}
+@media (max-width: 600px) {
+  .dc-toc-list { grid-template-columns: minmax(0, 1fr); }
+  .dc-pol-top ~ p { padding-left: 0; }
+  .pk2-grid, .pk2-inc, .dc-links { grid-template-columns: minmax(0, 1fr); }
+  .pk2-head--price { grid-template-columns: minmax(0, 1fr); }
+  .pk2-price { grid-column: 1; grid-row: auto; justify-self: start; justify-items: start; }
+  .pk2-build-top { grid-template-columns: auto minmax(0, 1fr); }
+  .pk2-build-price { grid-column: 1 / -1; justify-items: start; }
+  .dc-faq-wrap > .sv-spot { display: none !important; }
+}

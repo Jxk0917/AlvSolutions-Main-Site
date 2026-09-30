@@ -1,14 +1,17 @@
 [
   {
     "slug": "detailer",
+    "concept": "lucid-detailing",
     "name": "The Detailer",
     "shortName": "Detailer",
     "price": 1050,
     "basedOn": "Standard",
     "relation": "picks",
     "icon": "sparkle",
+    "hue": 245,
     "trades": "Mobile detailing, ceramic coating, paint correction",
     "for": "Work that is judged on the photographs, and booked on a phone.",
+    "brief": "Before-and-after gallery, booked online.",
     "includes": [
       { "name": "Services page",          "kind": "page" },
       { "name": "Before / after gallery", "kind": "page" },
@@ -24,13 +27,15 @@
     "basedOn": "Standard",
     "relation": "picks",
     "icon": "tools",
+    "hue": 150,
     "trades": "Lawn care, landscaping, pressure washing, handyman",
     "for": "Jobs that start with a quote, not a checkout.",
+    "brief": "Photo gallery and quote requests.",
     "includes": [
       { "name": "Services page",           "kind": "page" },
-      { "name": "Project gallery",         "kind": "page" },
+      { "name": "Photo gallery",         "kind": "page" },
       { "name": "Service area page",       "kind": "page" },
-      { "name": "Structured quote request","kind": "power" }
+      { "name": "Structured Quote / Request","kind": "power" }
     ]
   },
   {
@@ -41,8 +46,10 @@
     "basedOn": "Standard",
     "relation": "picks",
     "icon": "scissors",
+    "hue": 350,
     "trades": "Nails, hair, lashes, barbers",
     "for": "A chair that only earns when it is full.",
+    "brief": "Gallery, testimonials and booking.",
     "includes": [
       { "name": "Services page",      "kind": "page" },
       { "name": "Photo gallery",      "kind": "page" },
@@ -52,21 +59,23 @@
   },
   {
     "slug": "restaurant",
+    "concept": "hacienda-grill",
     "name": "The Restaurant",
     "shortName": "Restaurant",
     "price": 1450,
-    "basedOn": "Complete",
     "relation": "fixed",
     "icon": "menu",
+    "hue": 55,
     "trades": "Restaurants, food trucks, bakeries, cafes",
     "for": "A menu that changes, read at the table on a phone.",
+    "brief": "A full menu you update yourself.",
     "includes": [
-      { "name": "Full menu, 20+ items and categorized", "kind": "power" },
+      { "name": "Large menu with categories", "kind": "power" },
       { "name": "Photo gallery",         "kind": "page" },
-      { "name": "About page",            "kind": "page" },
+      { "name": "About / team page",            "kind": "page" },
       { "name": "Testimonials page",     "kind": "page" },
       { "name": "Delivery links section", "kind": "included" },
-      { "name": "A menu you update yourself", "kind": "power" }
+      { "name": "Self-editable content", "kind": "power" }
     ]
   }
 ]

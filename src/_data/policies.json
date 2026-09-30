@@ -20,14 +20,14 @@
       "icon": "tag",
       "title": "Half to start, half at launch",
       "short": "Half to start.",
-      "body": "A 50% deposit secures your project. The remaining 50% is due once you approve the finished site, and before it is published to your live domain. Care plans are billed automatically each month to a card on file."
+      "body": "A 50% deposit secures your project. If you cancel before project-specific work begins, it is refunded, less any approved third-party costs that cannot be refunded. Once project-specific work begins, the deposit is non-refundable. The remaining 50% is due once you approve the finished site, and before it is published to your live domain. Care plans are billed automatically each month to a card on file."
     },
     {
       "slug": "cancel",
       "icon": "shield-check",
-      "title": "Pause or cancel, and the site is still yours",
+      "title": "Cancel a care plan, with a clear handoff",
       "short": "Cancel any time after 3 months.",
-      "body": "Care plans have a 3-month minimum, then you can cancel any time with 30 days' notice. Cancellation takes effect at the end of your current billing period, and that period is not refunded. After that I stop hosting, maintaining and monitoring the site. Nothing is deleted and nothing is held back — I will help you move it to hosting you control, though any third-party cost to do that is yours."
+      "body": "Care plans have a 3-month minimum, then you can cancel any time with 30 days' notice. Cancellation takes effect at the end of your current billing period, and that period is not refunded. After that I stop hosting, maintaining and monitoring the site. You get a 30-day handoff window after cancellation takes effect, followed by a 30-day archive window. After the archive window ends I am no longer required to keep archived site files or backups, and recovery is not guaranteed. One basic handoff to a compatible hosting environment is included. A complex migration may need a quote you approve first, and any third-party cost is yours. Ownership of the finished site is covered in the terms: it transfers to you once the project is paid in full."
     },
     {
       "slug": "scope",
@@ -44,6 +44,12 @@
       "body": "One consolidated set of changes, submitted within 5 business days of delivery. Ten notes in one message is one round."
     },
     {
+      "slug": "inactive",
+      "icon": "clock",
+      "title": "If a project goes quiet",
+      "body": "If a project is waiting on something from you, I send a reminder after 14 days. After 30 days without a response I send a pause notice and the project is paused. After 60 days, and after notice, it is administratively closed. Reopening a closed project is at my discretion, and there is no automatic reactivation fee. The $75 reactivation fee applies only to hosting suspended for late payment."
+    },
+    {
       "slug": "warranty",
       "icon": "circle-check",
       "title": "30 days covered after launch",
@@ -53,7 +59,7 @@
       "slug": "third-party",
       "icon": "building",
       "title": "Outside services are billed by their own provider",
-      "body": "Things like domains, booking platforms, premium plugins or fonts, and payment processing fees are paid by you directly, unless a service is specifically included in your project agreement. I never sign you up for or pay for one of these without checking with you first."
+      "body": "Things like domains, booking platforms, premium plugins or fonts, and payment processing fees are paid by you directly, unless a service is specifically included in your ALVSolutions Client Services Agreement. I never sign you up for or pay for one of these without checking with you first."
     },
     {
       "slug": "assets",
@@ -72,7 +78,7 @@
   "faq": [
     {
       "q": "How long does a build take?",
-      "a": "Typically 1 to 2 weeks from the time I have your content, depending on the package and how complex the build is. The clock starts when your content arrives, not when you pay, so getting that together early is the single biggest thing you control."
+      "a": "Typically 1 to 2 weeks after I receive the required content, depending on the package and how complex the build is. The clock starts when your content arrives, not when you pay, so getting that together early is the single biggest thing you control."
     },
     {
       "q": "What if I do not have a logo or photos?",
@@ -84,11 +90,19 @@
     },
     {
       "q": "What happens if I stop paying for hosting?",
-      "a": "An overdue balance may affect hosting or service availability, but the site is suspended, not deleted. I will always reach out well before that happens. Restoring it just needs the outstanding balance paid in full, plus a flat $75 reactivation fee."
+      "a": "An overdue balance may affect hosting or service availability, but the site is suspended, not deleted. I will always reach out well before that happens. Restoring it just needs the outstanding balance paid in full, plus a flat $75 reactivation fee. That fee applies only to hosting suspended for late payment."
     },
     {
       "q": "Why is a care plan required?",
       "a": "Because a site nobody hosts, backs up or patches is not a working site, and I am not willing to hand over something that will quietly break. The plan covers hosting, SSL, backups, monitoring and small edits, starting at $45 a month with a 3-month minimum, then cancel any time with 30 days' notice."
+    },
+    {
+      "q": "Is my deposit refundable?",
+      "a": "Before project-specific work begins, yes: you get it back, less any approved third-party costs that cannot be refunded. Once project-specific work begins, the 50% deposit is non-refundable."
+    },
+    {
+      "q": "What if I go quiet during a project?",
+      "a": "I send a reminder after 14 days. After 30 days without a response I send a pause notice and the project is paused, and after 60 days, and after notice, it is administratively closed. Reopening a closed project is at my discretion, and there is no automatic reactivation fee."
     },
     {
       "q": "What counts as a revision round?",

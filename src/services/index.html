@@ -1,99 +1,131 @@
 ---
-layout: layouts/base.njk
+layout: layouts/interior.njk
+permalink: /services/
 title: Services
-description: Business websites, logo and brand design, menu and services pages, catering and quote pages, booking integration, care plans, Google Business Profile setup, business cards and shirt design.
+description: Business websites, menu and services pages, catering and quote pages, booking integration, care plans, Google Business Profile setup, logo and brand design, business cards and shirt design.
+pageJs: services
+head:
+  crumbs: [{ label: "Services" }]
+  heading: "Every service, sorted by the job it does."
+  lede: "Four groups, one person behind all of them. Each service has its own page with the price and exactly what is included."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "See packages", url: "/packages/" }
+cta:
+  heading: "Not sure which of these you need?"
+  lede: "Tell me what the business does and I will say so plainly, including which of these you can skip."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "See packages", url: "/packages/" }
 ---
+{#
+  SERVICES: every service, in four categories, each routing to its own page.
+    1. a category rail beside the list: a lit bar (the site's bar) glides to
+       the category being read as the page scrolls, and the key light glides
+       to whichever category is under the pointer (services.ts);
+    2. the four categories, ordered along the homepage's spectrum (the site,
+       keeping it found and running, the brand, print). Each card carries
+       its own hue as light on its surface, never on its type, and a
+       spotlight in that hue glides to the card under attention;
+    3. the two ways to buy any of it.
+  Every name, icon, route and price is read from _data; only the short card
+  wording for the services whose blurb restates a price lives here.
+#}
+{%- set cats = [
+  { slug: "web",   id: "websites",         name: "Websites",          short: "Websites", cols: 3,
+    lede: "The site itself, and the pages that make it earn: what you sell, the big jobs and the bookings." },
+  { slug: "care",  id: "care-visibility",  name: "Care & visibility", short: "Care",     cols: 2,
+    lede: "Keeping the site hosted, current and found once it is live." },
+  { slug: "brand", id: "branding-design",  name: "Branding & design", short: "Branding", cols: 4,
+    lede: "From preparing the logo you already have to building a new identity, plus the covers that match it." },
+  { slug: "print", id: "print-apparel",    name: "Print & apparel",   short: "Print",    cols: 2,
+    lede: "The same brand as the site, in a customer's hand and on your crew." }
+] %}
+{%- from "components/sv-card.njk" import card, hueFor with context %}
 
-{%- set ph = {
-  heading: "Everything you need<br />to run a business online.",
-  lead: "A website, the pages that make it earn, the listing that gets you found, and someone keeping all of it current afterwards. Most businesses start with a build and add the rest as they grow.",
-  crumbs: [{ label: "Services" }],
-  actions: [
-    { label: "Start a project", url: "/contact/" },
-    { label: "See packages", url: "/packages/", style: "btn-ghost" }
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
+<div class="int-wrap sv-body">
 
-<main id="main">
-
-  <section class="sec">
-    <div class="wrap">
-
-      {%- set fams = [
-        { slug: "web",   name: "Websites" },
-        { slug: "brand", name: "Branding &amp; design", id: "branding-design" },
-        { slug: "care",  name: "Care &amp; visibility" },
-        { slug: "print", name: "Print &amp; apparel" }
-      ] %}
-
-      <div class="families">
-      {%- for f in fams %}
-      {%- set list = services | byFamily(f.slug) %}
-      <div class="family{% if list.length == 2 %} family-half{% endif %}"{% if f.id %} id="{{ f.id }}"{% endif %}>
-        <div class="family-head reveal">
-          <h2>{{ f.name | safe }}</h2>
-          <span class="family-count">{{ list.length }} service{{ "s" if list.length != 1 }}</span>
-        </div>
-        {#- four cards in a three-column grid leaves one orphan on a row of its
-            own. A family of exactly four gets its own single row instead. -#}
-        <div class="svc-grid{% if list.length == 4 %} svc-grid-4{% endif %}">
-          {%- for card in list %}
-          {%- set d = loop.index0 %}
-          {% include "components/service-card.njk" %}
-          {%- endfor %}
-        </div>
-      </div>
+  {#- ══════════════ THE CATEGORY RAIL ══════════════ #}
+  <nav class="sv-rail" aria-label="Service categories" data-rail>
+    <ol class="sv-rail-list">
+      {%- for c in cats %}
+      {%- set n = (services | byFamily(c.slug)).length %}
+      <li><a class="sv-rail-a" href="#{{ c.id }}" data-for="{{ c.id }}">
+        <span class="sv-rail-name"><span class="sv-rail-long">{{ c.name }}</span><span class="sv-rail-short" aria-hidden="true">{{ c.short }}</span></span>
+        <span class="sv-rail-n">{{ n }} service{{ "s" if n != 1 }}</span>
+      </a></li>
       {%- endfor %}
+    </ol>
+    <span class="sv-spot" aria-hidden="true"></span>
+    <span class="sv-rail-bar" aria-hidden="true"></span>
+  </nav>
+
+  {#- ══════════════ THE FOUR CATEGORIES ══════════════ #}
+  <div class="sv-cats">
+    {%- for c in cats %}
+    {%- set list = services | byFamily(c.slug) %}
+    <section class="sv-cat" id="{{ c.id }}" aria-labelledby="{{ c.id }}-h" data-cat>
+      <div class="sv-cat-head">
+        <h2 id="{{ c.id }}-h" class="int-h2">{{ c.name }}</h2>
+        <p class="int-lede">{{ c.lede }}</p>
       </div>
 
+      <div class="sv-grid-wrap" data-spot>
+        <ul class="sv-grid{% if c.cols == 4 %} sv-grid--4{% endif %}" style="--cols: {{ c.cols }}">
+          {%- for s in list %}
+          {%- set hue = hueFor(s) | trim %}
+          {%- if s.pricing.kind == "package" %}
+          {#- The website is the centre of everything else: the widest
+              surface, standing in the key light, with the three packages
+              it is sold as. Two kinds of link, so not one card-wide link. #}
+          <li class="sv-card sv-lead" style="--hue: {{ hue }}">
+            <span class="key-cone" aria-hidden="true"></span>
+            <div class="sv-lead-copy">
+              <svg class="int-ic sv-card-ic" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>
+              <h3 class="sv-lead-h">{{ s.name }}</h3>
+              <p class="sv-card-body">{{ s.promise }} Custom-coded, fast on a phone, and yours once it is paid for.</p>
+              <a class="alv-tlink sv-lead-more" href="/services/{{ s.slug }}/">What every build includes</a>
+            </div>
+            <div class="sv-lead-tiers">
+              <p class="sv-lead-k">Three packages, each one flat price</p>
+              <ul class="sv-tiers">
+                {%- for t in packages.tiers %}
+                <li><a class="sv-tier{% if t.recommended %} is-rec{% endif %}" href="/packages/#{{ t.slug }}">
+                  <span class="sv-tier-name">{{ t.name }}</span>
+                  <span class="sv-tier-price">{{ t.price | price | safe }}</span>
+                  <span class="sv-tier-pages">{{ t.has.pages }} pages</span>
+                </a></li>
+                {%- endfor %}
+              </ul>
+            </div>
+          </li>
+          {%- else %}
+          {{ card(s) }}
+          {%- endif %}
+          {%- endfor %}
+        </ul>
+        <span class="sv-spot" aria-hidden="true"></span>
+      </div>
+    </section>
+    {%- endfor %}
+  </div>
+</div>
+
+{#- ══════════════ TWO WAYS TO BUY ══════════════ #}
+<section class="int-wrap sv-buy" aria-labelledby="buy-h">
+  <h2 id="buy-h" class="int-h2">Two ways to buy any of it.</h2>
+  <div class="sv-ways">
+    <div class="sv-way">
+      <svg class="int-ic" aria-hidden="true"><use href="#i-tag"/></svg>
+      <h3 class="sv-way-h">As a package</h3>
+      <p>Three packages from {{ packages.tiers[0].price | price | safe }}. Standard and Complete come with some of these services already included, for less than buying the same pieces one at a time, and four builds come set up for common trades.</p>
+      <a class="alv-tlink" href="/packages/">Compare packages</a>
     </div>
-  </section>
-
-
-  <!-- ══════════════ HOW PRICING WORKS ══════════════ -->
-  <section class="sec band sec-line">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2>Two ways to buy any of it.</h2>
-      </div>
-
-      <div class="forks reveal">
-        <div class="card fork">
-          <div class="ic-box">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tag"/></svg>
-          </div>
-          <h3>As a package</h3>
-          <p class="body-3">
-            Three builds from {{ packages.tiers[0].price | price | safe }}, each bundling a
-            website with a number of the services above. It works out cheaper than buying
-            the same pieces one at a time, and there is a build already configured for
-            four common trades.
-          </p>
-          <a class="btn btn-ghost btn-sm" href="/packages/">Compare packages</a>
-        </div>
-
-        <div class="card fork">
-          <div class="ic-box gold">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
-          </div>
-          <h3>One at a time</h3>
-          <p class="body-3">
-            Add any single thing to a site you already have. Every standard price is published,
-            including the small ones, and where a job can be simple or complex the rule
-            that decides it is written on the service page rather than quoted case by case.
-          </p>
-          <a class="btn btn-ghost btn-sm" href="/pricing/">See the full price list</a>
-        </div>
-      </div>
+    <div class="sv-way">
+      <svg class="int-ic" aria-hidden="true"><use href="#i-grid"/></svg>
+      <h3 class="sv-way-h">One at a time</h3>
+      <p>Add any single service to a site you already have. Every standard price is published, and where a job can be simple or complex, its service page says what decides it.</p>
+      <a class="alv-tlink" href="/pricing/">See the full price list</a>
     </div>
-  </section>
-
-
-  {% include "components/process-steps.njk" %}
-
-  {%- set ctaHeading = "Not sure which of these you need?" %}
-  {%- set ctaLead = "Tell me what the business does and I will say so plainly, including which of these you can skip." %}
-  {% include "components/cta-band.njk" %}
-
-</main>
+  </div>
+</section>

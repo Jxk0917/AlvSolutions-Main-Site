@@ -6,3 +6,17 @@
   transition-duration: 0s !important;
   transition-delay: 0s !important;
 }
+
+/* The deal (src/motion/deal.ts): text and information waiting to be dealt
+   into place. Only ever set by that script, and only with motion on, so a
+   page without it shows everything as usual. */
+.alv-deal .alv-wait {
+  opacity: 0 !important;
+}
+/* The legacy pages' own scroll reveal gives way to the deal, so the whole
+   site enters one way. */
+.alv-deal .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}

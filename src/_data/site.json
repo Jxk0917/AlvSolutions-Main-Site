@@ -11,23 +11,22 @@
   "_foundersSpecial": "Public Founders Special spots still open. Edit this one number by hand as clients secure a spot (agreement signed AND 50% deposit received); every Founders Special panel on the site reads it. Set to 0 to hide the promotion everywhere.",
   "foundersSpecial": { "spots": 3 },
 
-  "_primaryNav": "Real routes, not homepage anchors (Phase 4B foundation). 'What I build' points at the homepage's #build section until /builds/ exists (build order step 3), then it becomes that route.",
+  "_primaryNav": "The approved primary navigation, and nothing else: the logo is the Home link, then Work (/work/, the portfolio of concept builds), What I build (/builds/, the industry-build system), Services (/services/), Pricing (/pricing/), then Start a project as the separate button. No Home, About or Packages item: About and Packages are reached from the footer and in-page links.",
   "primaryNav": [
     { "label": "Work",         "url": "/work/" },
-    { "label": "What I build", "url": "/#build" },
+    { "label": "What I build", "url": "/builds/" },
     { "label": "Services",     "url": "/services/" },
     { "label": "Pricing",      "url": "/pricing/" }
   ],
 
-  "_footerGroups": "Three groups (Build / Services / ALVSolutions) per the approved architecture. Links marked below point at the closest real destination that exists today and are updated as later build-order steps add their real pages: /builds/ (step 3), /pricing/#care (step 2), /services/branding/ (step 7, a dedicated ladder page replacing the current /services/#branding-design anchor).",
+  "_footerGroups": "Three groups (Build / Services / ALVSolutions). Every link points at a route or anchor that exists; check-site.mjs and the audit script fail the build if one stops resolving.",
   "footerGroups": [
     {
       "title": "Build",
       "links": [
-        { "label": "What I build", "url": "/#build" },
-        { "label": "The 4 builds", "url": "/#build" },
-        { "label": "Pricing",      "url": "/pricing/" },
-        { "label": "Care plans",   "url": "/pricing/" }
+        { "label": "What I build", "url": "/builds/" },
+        { "label": "Packages",     "url": "/packages/" },
+        { "label": "Care plans",   "url": "/packages/#care" }
       ]
     },
     {

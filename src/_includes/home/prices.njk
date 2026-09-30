@@ -1,90 +1,58 @@
 {#
-  PRICES: a decision point, not the price book. Three rows only - pages,
-  revision rounds, picks - read across Foundation/Standard/Complete from
-  packages.json. Care, extras and the full comparison route to their
-  dedicated pages rather than repeating here.
+  PACKAGES: a decision point, not the price book. Each of the three packages
+  is a column head on one floor line - name, price, who it is for and its
+  three deciding facts - read from packages.json. The full comparison and care
+  plans live on /packages/.
 
-  Statically it is a real form: a native radio group (name="package") in the
-  column heads, Standard checked, submitting by GET to /contact/ so the
-  wizard receives ?package=<tier> with no JS. The three heads stand on one
-  floor line and the room's own key light falls on the chosen one: :has()
-  at rest, src/home/prices.ts (the same .key-cone/.key-pool) with JS.
+  Statically it is a real form: a native radio group (name="package"),
+  Standard checked, submitting by GET to /contact/ so the wizard receives
+  ?package=<tier> with no JS. At rest the chosen column carries its own lit
+  bar and a still cone (:has()). With JS (src/home/picker.ts) the room's
+  key light glides to the package under attention and one glowing
+  selection bar glides along the floor to the package chosen.
 
-  The Founders Special follows as its own section (index.html).
+  The same picker, smaller, carries the four industry builds (builds.njk).
 #}
-{%- set rowKeys = ["pages", "revisions", "seo", "addons", "power"] %}
-{%- set foundation = packages.tiers[0] %}
 <section class="h-prices h-wrap" id="prices" aria-labelledby="prices-h">
   <div class="h-prices-head">
     <h2 id="prices-h" class="h-h2">One flat price, agreed before any work starts.</h2>
-    <p class="h-lede">Three packages. Everything each one covers is written down before I begin, and if the job grows you approve the figure first.</p>
+    <p class="h-lede">Three packages. Everything each one covers is written down before I begin.</p>
   </div>
 
-  <form class="h-cmp-form" action="/contact/" method="get">
-    <fieldset class="h-cmp-set">
+  <form class="h-pick-form" action="/contact/" method="get">
+    <fieldset class="h-pick-set">
       <legend class="alv-sr-only">Choose a package</legend>
-      <div class="h-cmp" role="table" aria-label="Packages compared" data-cmp>
+      <div class="h-pick h-pick--tiers" data-pick>
         <span class="key-cone" aria-hidden="true"></span>
         <span class="key-pool" aria-hidden="true"></span>
-        <div role="rowgroup">
-          <div class="h-cmp-row h-cmp-head" role="row" data-cmp-head>
-            <span class="h-cmp-corner" role="columnheader"><span class="alv-sr-only">Package</span></span>
-            {%- for t in packages.tiers %}
-            <div class="h-cmp-col" role="columnheader" data-col="{{ t.slug }}">
-              <label class="h-tier" data-tier="{{ t.slug }}">
-                <input class="h-tier-input" type="radio" name="package" value="{{ t.slug }}"{% if t.recommended %} checked{% endif %} />
-                <span class="h-tier-mark">{% if t.recommended %}Recommended{% endif %}</span>
-                <span class="h-tier-name">{{ t.name }}</span>
-                <span class="h-tier-price">{{ t.price | price | safe }}</span>
-                <span class="h-tier-for">{{ t.for }}</span>
-                <span class="h-tier-state" aria-hidden="true"><span class="h-state-on">Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ t.name }}</span></span></span>
-              </label>
-            </div>
-            {%- endfor %}
-          </div>
-        </div>
-
-        <div class="h-cmp-body" role="rowgroup">
-          <div class="h-cmp-row" role="row">
-            <span class="h-cmp-label" role="rowheader">Pages</span>
-            {%- for t in packages.tiers %}
-            <span class="h-cmp-cell" role="cell" data-col="{{ t.slug }}">{{ t.has.pages }}</span>
-            {%- endfor %}
-          </div>
-          <div class="h-cmp-row" role="row">
-            <span class="h-cmp-label" role="rowheader">Revision rounds</span>
-            {%- for t in packages.tiers %}
-            <span class="h-cmp-cell" role="cell" data-col="{{ t.slug }}">{{ t.has.revisions }}</span>
-            {%- endfor %}
-          </div>
-          <div class="h-cmp-row" role="row">
-            <span class="h-cmp-label" role="rowheader">Your picks</span>
-            {%- for t in packages.tiers %}
-            <span class="h-cmp-cell" role="cell" data-col="{{ t.slug }}">
-              {%- if t.picks %}{{ t.picks.pages }} page add-on{{ "s" if t.picks.pages != 1 }}, {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}
-              {%- else %}<span class="h-cmp-none" aria-hidden="true"></span><span class="alv-sr-only">None</span>{% endif -%}
+        <div class="h-pick-row" data-pick-row>
+          {%- for t in packages.tiers %}
+          <label class="h-opt" data-opt="{{ t.slug }}">
+            <input class="h-opt-input" type="radio" name="package" value="{{ t.slug }}"{% if t.recommended %} checked{% endif %} />
+            <span class="h-opt-mark">{% if t.recommended %}Recommended{% endif %}</span>
+            <span class="h-opt-name">{{ t.name }}</span>
+            <span class="h-opt-price">{{ t.price | price | safe }}</span>
+            <span class="h-opt-for">{{ t.for }}</span>
+            <span class="h-opt-facts">
+              <span>{{ t.has.pages }} pages</span>
+              <span>{{ t.has.revisions }} revision round{{ "s" if t.has.revisions != "1" }}</span>
+              {%- if t.picks %}
+              <span>{{ t.picks.pages }} page add-ons, {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}</span>
+              {%- endif %}
             </span>
-            {%- endfor %}
-          </div>
+            <span class="h-opt-state" aria-hidden="true"><span class="h-state-on">Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ t.name }}</span></span></span>
+          </label>
+          {%- endfor %}
         </div>
+        <span class="h-pick-bar" aria-hidden="true"></span>
       </div>
     </fieldset>
 
-    <div class="h-prices-act">
+    <div class="h-pick-act">
       <button class="alv-btn" type="submit">Start with this package</button>
-      <a class="alv-tlink" href="/packages/">Full comparison</a>
+      <a class="alv-tlink" href="/packages/#compare">Compare every feature</a>
     </div>
   </form>
 
-  {#- Every package builds on Foundation, so whatever is true of Foundation
-      and does not vary by tier (the row keys above are excluded) holds for
-      all three: read from Foundation's own facts, not a separate list. #}
-  {%- set baseline = [] %}
-  {%- for f in packages.features %}
-  {%- if not (f.key in rowKeys) and foundation.has[f.key] %}{% set baseline = (baseline.push(f.label), baseline) %}{% endif %}
-  {%- endfor %}
-  <div class="h-facts">
-    <p class="h-fact"><span class="h-fact-k">Every package</span>{{ baseline | join(", ") }}.</p>
-    <p class="h-fact"><span class="h-fact-k">Every build takes a care plan</span>Host {{ careplans.plans[0].price | price | safe }}/mo, Grow {{ careplans.plans[1].price | price | safe }}/mo. {{ careplans.minimum }} <a class="alv-tlink" href="/packages/#care">Care plan details</a></p>
-  </div>
+  <p class="h-prices-note">Every build also takes a care plan for hosting and upkeep, from {{ careplans.plans[0].price | price | safe }}/mo. <a class="alv-tlink" href="/packages/#care">How care plans work</a></p>
 </section>

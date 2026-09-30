@@ -1,0 +1,125 @@
+/* ============================================================
+   ALVSolutions - the offer, shared by the homepage and /packages/
+
+   The package picker (one floor line, a key light that glides to the
+   option under attention, a glowing selection bar that glides to the
+   option chosen; src/home/picker.ts) and the Founders Special notice.
+   Moved here verbatim from home.css so both pages render the same
+   component; home.css and interior.css each import it.
+   ============================================================ */
+.h-pick > .key-cone, .h-pick > .key-pool {
+  position: absolute; inset: 0; z-index: -1; pointer-events: none;
+}
+
+/* ============================================================
+   THE PICKER: packages and builds
+   Options stand on one floor line. Two lights answer two things: the
+   room's key falls on the option under attention, and a glowing
+   selection bar lies on the floor under the option chosen. At rest (no
+   JS) both are :has() states on the checked option; with JS
+   (picker.ts) one key and one bar glide between them.
+   ============================================================ */
+.h-pick-set { border: 0; margin: 0; padding: 0; min-width: 0; }
+.h-pick { position: relative; isolation: isolate; --kx: 50; --kw: 40; --ki: 0.95; --kpy: 90; --n: 3; }
+.h-pick-row {
+  display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr));
+  column-gap: clamp(14px, 2vw, 28px); border-bottom: 1px solid var(--sl-line2);
+}
+.h-opt {
+  position: relative; display: grid; gap: 6px; align-content: start; justify-items: start; text-align: left;
+  padding: 22px 0; border-radius: 12px; cursor: pointer;
+}
+/* The radio stays in the page for keyboard and assistive technology; the
+   whole option is its visible label. */
+.h-opt-input { position: absolute; top: 26px; left: 0; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.h-opt:has(.h-opt-input:focus-visible) {
+  outline: 2px solid var(--sl-ink1); outline-offset: 6px;
+}
+.h-opt-mark { font-size: 13px; line-height: 1.3; color: var(--sl-ink2); min-height: 1.3em; }
+.h-opt-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 24px; letter-spacing: -0.022em; color: var(--sl-ink1); transition: color 300ms; }
+.h-opt-price { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(40px, 4.2vw, 62px); letter-spacing: -0.036em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; margin: 4px 0; transition: color 300ms; }
+.h-opt-for { font-size: 15px; color: var(--sl-ink2); max-width: 34ch; min-height: 3.2em; }
+.h-opt-facts { display: grid; gap: 3px; margin-top: 6px; font-size: 14px; color: var(--sl-ink2); transition: color 300ms; }
+.h-opt-state { position: relative; margin-top: 10px; font-size: 14.5px; color: var(--sl-ink2); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.25em; }
+.h-opt:hover .h-opt-state { color: var(--sl-ink1); text-decoration-color: var(--sl-ink1); }
+.h-state-on { display: none; }
+.h-opt:has(:checked) .h-state-on { display: inline; }
+.h-opt:has(:checked) .h-state-off { display: none; }
+.h-opt:has(:checked) .h-opt-state { color: var(--sl-ink1); text-decoration: none; font-weight: 600; }
+/* The chosen option reads as chosen; the others recede a step. */
+.h-pick:has(:checked) .h-opt:not(:has(:checked)) :is(.h-opt-name, .h-opt-price) { color: var(--sl-ink2); }
+.h-opt:has(:checked) .h-opt-facts { color: var(--sl-ink1); }
+
+/* The selection bar's light: the site's lit bar (tokens.css), a near-white
+   core with a light blue glow. The builds override it with their own hue. */
+.h-pick {
+  --bar: var(--sl-bar); --bar-glow: var(--sl-bar-glow);
+}
+
+/* At rest: a still cone and a bar on the checked option, from :checked alone. */
+.h-opt:has(:checked)::before {
+  content: ""; position: absolute; z-index: -1; left: -22%; right: -22%; top: -140px; bottom: 0; pointer-events: none;
+  background: radial-gradient(ellipse 44% 80% at 50% 0%, rgb(var(--sl-L) / 0.095), rgb(var(--sl-L) / 0.03) 55%, transparent 100%);
+}
+.h-opt:has(:checked)::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 2px; border-radius: 2px; pointer-events: none;
+  background: var(--bar); box-shadow: var(--bar-glow);
+}
+
+/* With JS: one key and one bar, travelling (transitioned transforms, so
+   they composite). Placed first, then allowed to glide (.is-placed).
+   The glide is a gentle ease-in-out over most of a second: the site's
+   usual fast-out curve covers most of the distance in the first tenth of
+   a second, which reads as a snap rather than light travelling. */
+.h-pick { --glide: 850ms cubic-bezier(0.45, 0, 0.2, 1); }
+.h-pick > .key-cone, .h-pick > .key-pool { display: none; }
+.h-pick-bar {
+  display: none; position: absolute; left: 0; top: 0; z-index: 1;
+  width: var(--bw, 0); height: 2px; border-radius: 2px; pointer-events: none;
+  background: var(--bar); box-shadow: var(--bar-glow);
+  transform: translate(var(--bx, 0), calc(var(--by, 0px) - 1.5px));
+}
+.h-pick.is-js > .key-cone, .h-pick.is-js > .key-pool, .h-pick.is-js .h-pick-bar { display: block; }
+.h-pick.is-js .h-opt::before, .h-pick.is-js .h-opt::after { content: none; }
+.h-pick.is-placed > .key-cone, .h-pick.is-placed > .key-pool { transition: transform var(--glide); }
+.h-pick.is-placed .h-pick-bar { transition: transform var(--glide), width var(--glide); }
+.no-motion .h-pick > .key-cone, .no-motion .h-pick > .key-pool, .no-motion .h-pick .h-pick-bar { transition: none; }
+
+.h-pick-act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 28px; }
+
+/* ============================================================
+   FOUNDERS SPECIAL: a notice, not a feature
+   One quiet line between the two ways to buy: a thin outlined strip, a
+   single lit bar (the site's bar, light blue glow) to catch the eye, the
+   offer, the open-spot count and a way in. The terms sit in small print
+   beneath it.
+   ============================================================ */
+.h-founders { padding-block: clamp(12px, 2vh, 20px) clamp(28px, 4vh, 44px); }
+.h-fs-note {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px;
+  padding: 16px 22px; border-radius: 10px;
+  background: rgb(var(--sl-L) / 0.025);
+  /* The lit bar runs the whole border: the bar's core as a 1.5px edge, with
+     its light-blue glow falling both outside and just inside the line. */
+  box-shadow: 0 0 0 1.5px var(--sl-bar), 0 0 7px oklch(0.92 0.08 245 / 0.7), 0 0 24px 1px oklch(0.8 0.15 245 / 0.3),
+    inset 0 0 16px oklch(0.8 0.15 245 / 0.07);
+}
+.h-fs-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.012em; color: var(--sl-ink1); white-space: nowrap; }
+.h-fs-text { flex: 1 1 320px; font-size: 15px; color: var(--sl-ink2); }
+.h-fs-count { color: var(--sl-ink1); font-weight: 500; }
+.h-fs-link { font-size: 15px; white-space: nowrap; }
+.h-fs-terms { margin-top: 14px; padding-left: 22px; font-size: 13px; color: var(--sl-ink3); }
+
+@media (max-width: 760px) {
+  /* Packages: three narrow heads, each still on the one floor line. */
+  .h-pick-row { column-gap: 10px; }
+  .h-opt { padding: 16px 0 18px; gap: 4px; }
+  .h-opt-input { top: 16px; }
+  .h-opt-name { font-size: 19px; }
+  .h-opt-price { font-size: clamp(26px, 7.6vw, 34px); }
+  .h-opt-for { display: none; }
+  .h-opt-mark { font-size: 12px; }
+  .h-opt-facts { font-size: 12.5px; }
+  .h-opt-state { font-size: 13.5px; }
+  .h-state-name { display: none; }
+}

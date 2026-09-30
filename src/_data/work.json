@@ -1,5 +1,5 @@
 {
-  "_comment": "Authoritative source for ALVSolutions' portfolio/demo builds. Project facts are pulled from the existing work.html copy and screenshots — no new claims invented. The homepage reads `chapters` (its four-part work story, in reading order) and resolves each chapter's project from `projects`. work.html still carries its own markup until /work/ is migrated. `reelKey` names the screen objects the held reel animates (hacD, hacP, lucD, lucP).",
+  "_comment": "Authoritative source for ALVSolutions' portfolio/demo builds. Project facts are pulled from the existing work.html copy and screenshots — no new claims invented. The homepage reads `chapters` (its four-part work story, in reading order) and resolves each chapter's project from `projects`. /work/ (Work) reads each project's `showcase` screens. `reelKey` names the screen objects the held reel animates (hacD, hacP, lucD, lucP).",
 
   "disclosure": "Fictional concept website created by ALVSolutions for portfolio demonstration.",
 
@@ -66,6 +66,12 @@
           "alt": "Hacienda Grill homepage on mobile"
         }
       },
+      "showcase": {
+        "business": "restaurant",
+        "_note": "/work/ screens: tall strips captured from the live demo by shot-work.mjs, scrolled inside the glass as the page passes.",
+        "desktop": { "src": "/assets/work/hacienda-grill-desktop.jpg", "small": "/assets/work/hacienda-grill-desktop-960.jpg", "width": 1800, "height": 2575, "alt": "Hacienda Grill on a desktop screen: the Cooked Over Fire homepage above the fan-favorites menu" },
+        "mobile": { "src": "/assets/work/hacienda-grill-mobile.jpg", "width": 645, "height": 3000, "alt": "Hacienda Grill on a phone: the homepage and menu" }
+      },
       "reelCrop": null,
       "clientLight": null
     },
@@ -93,6 +99,11 @@
           "height": 860,
           "alt": "Lucid Detailing homepage on mobile"
         }
+      },
+      "showcase": {
+        "business": "mobile detailing business",
+        "desktop": { "src": "/assets/work/lucid-detailing-desktop.jpg", "small": "/assets/work/lucid-detailing-desktop-960.jpg", "width": 1800, "height": 2675, "alt": "Lucid Detailing on a desktop screen: the Light Doesn't Lie homepage above the services list" },
+        "mobile": { "src": "/assets/work/lucid-detailing-mobile.jpg", "width": 645, "height": 2850, "alt": "Lucid Detailing on a phone: the homepage and services" }
       },
       "reelCrop": {
         "desktopAspectRatio": "1440 / 780",

@@ -1,0 +1,267 @@
+/* ============================================================
+   PRICING (/pricing/)
+   Every price, in six categories beside a rail. The rail's lit bar (the
+   site's bar) glides to the category being read; the key light glides to
+   the category under the pointer. Each category is lit in its own hue, as
+   light only, never on type: a spotlight in that hue glides to the row or
+   package under the pointer, with a lit bar along its edge. The prices come
+   on in a pass of light the first time a category is reached. Shape rule
+   as /services/: surfaces 10px, controls full pill. pricing.ts writes the
+   custom properties; the spotlight's own rules (.sv-spot) are services.css.
+   Imported by interior.css.
+   ============================================================ */
+.pl-body {
+  display: grid; grid-template-columns: minmax(170px, 200px) minmax(0, 1fr); gap: clamp(28px, 4.4vw, 72px); align-items: start;
+  padding-block: clamp(20px, 3vh, 32px) clamp(48px, 7vh, 80px);
+  --sv-glide: 850ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+
+/* ---- the rail ---- */
+.pl-rail { position: sticky; top: calc(var(--alv-nav-h) + 32px); }
+.pl-rail-in { position: relative; isolation: isolate; box-shadow: inset 1px 0 0 var(--sl-line2); }
+.pl-rail-list { display: grid; margin: 0; padding: 0; list-style: none; }
+.pl-rail-list > li + li { box-shadow: inset 0 1px 0 var(--sl-line); }
+.pl-rail-a { display: grid; gap: 2px; padding: 13px 0 13px 20px; text-decoration: none; color: inherit; border-radius: 8px; }
+.pl-rail-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; letter-spacing: -0.012em; line-height: 1.2; color: var(--sl-ink2); transition: color 300ms; }
+.pl-rail-short { display: none; }
+.pl-rail-n { font-size: 12.5px; color: var(--sl-ink3); }
+.pl-rail-a:hover .pl-rail-name, .pl-rail-a[aria-current] .pl-rail-name { color: var(--sl-ink1); }
+.pl-rail-a:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+/* The bar takes the measured place of the link it marks (--by, --bh). */
+.pl-rail-bar {
+  display: none; position: absolute; left: -0.5px; top: 0; width: 2px; height: var(--bh, 0px); pointer-events: none;
+  transform: translateY(var(--by, 0px)); transition: transform var(--sv-glide), height var(--sv-glide);
+}
+.pl-rail-bar::before { content: ""; position: absolute; inset: 12px 0; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow); }
+.pl-rail.is-js .pl-rail-bar { display: block; }
+.pl-rail-in > .sv-spot {
+  z-index: -1; border-radius: 0 8px 8px 0;
+  background: radial-gradient(ellipse 110% 130% at 0% 50%, rgb(var(--sl-L) / 0.13), rgb(var(--sl-L) / 0.045) 55%, transparent 92%);
+  box-shadow: inset 0 1px 0 rgb(var(--sl-L) / 0.14), inset 0 -1px 0 rgb(var(--sl-L) / 0.05);
+}
+.no-motion .pl-rail-bar { transition: none !important; }
+
+/* ---- a category ---- */
+.pl-cat { position: relative; isolation: isolate; scroll-margin-top: calc(var(--alv-nav-h) + 24px); }
+.pl-cat + .pl-cat, .pl-terms { margin-top: clamp(44px, 6.4vh, 72px); padding-top: clamp(36px, 5vh, 56px); border-top: 1px solid var(--sl-line); }
+/* The category's own light, from behind its heading. */
+.pl-cat::before {
+  content: ""; position: absolute; z-index: -1; left: -8%; top: 0; width: 70%; height: 320px; pointer-events: none;
+  background: radial-gradient(ellipse closest-side at 30% 36%, oklch(0.7 0.12 var(--hue, 245) / 0.075), transparent);
+}
+.pl-cat-head { display: grid; gap: 8px; margin-bottom: 8px; }
+/* The count, lowest price and See more belong to the folded card on a phone. */
+.pl-cat-count, .pl-cat-from, .pl-cat-toggle { display: none; }
+/* The fold's wrappers take no part in the layout except on a phone. */
+.pl-cat-more, .pl-cat-more-in { display: contents; }
+.pl-cat-h {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(26px, 2.6vw, 36px); line-height: 1.08; letter-spacing: -0.028em; color: var(--sl-ink1); text-wrap: balance;
+}
+.pl-cat-lede { margin-bottom: clamp(18px, 2.8vh, 26px); font-size: 15.5px; line-height: 1.55; color: var(--sl-ink2); max-width: 62ch; }
+
+/* ---- a group of rows ---- */
+.pl-rows-wrap { position: relative; }
+.pl-group { scroll-margin-top: calc(var(--alv-nav-h) + 24px); }
+.pl-group + .pl-group { margin-top: clamp(22px, 3.4vh, 32px); }
+.pl-group-h {
+  margin-bottom: 6px; font-family: var(--sl-f-brand); font-weight: 600; font-size: 15px; letter-spacing: -0.008em; color: var(--sl-ink2);
+}
+.pl-rows { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: clamp(12px, 2vw, 28px); margin: 0 -14px; padding: 0; list-style: none; }
+
+/* A row: the name and its price on one line, the caption beneath. */
+.pl-row {
+  position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 3px 18px;
+  padding: 13px 14px 14px;
+}
+.pl-row::before { content: ""; position: absolute; left: 14px; right: 14px; top: 0; height: 1px; background: var(--sl-line); }
+.pl-name { font-family: var(--sl-f-brand); font-weight: 560; font-size: 16px; letter-spacing: -0.01em; line-height: 1.3; color: var(--sl-ink1); }
+.pl-name a { color: inherit; text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 3px; text-decoration-thickness: 1px; transition: text-decoration-color 250ms; }
+/* The whole row is the link's target. */
+.pl-name a::after { content: ""; position: absolute; inset: 0; border-radius: 8px; }
+@media (hover: hover) { .pl-name a:hover { text-decoration-color: rgb(var(--sl-L) / 0.5); } }
+.pl-name a:focus-visible { outline: none; }
+.pl-name a:focus-visible::after { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.pl-cap { grid-column: 1 / -1; font-size: 13.5px; line-height: 1.45; color: var(--sl-ink3); max-width: 52ch; }
+.pl-price {
+  justify-self: end; white-space: nowrap; font-family: var(--sl-f-brand); font-weight: 620; font-size: 18px; letter-spacing: -0.02em;
+  color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.pl-unit, .pl-price .money-pre { font-family: var(--sl-f-text); font-weight: 450; font-size: 12.5px; letter-spacing: 0; color: var(--sl-ink3); }
+.pl-unit { margin-left: 2px; }
+.pl-price .money-pre { margin-right: 2px; }
+.pl-price .tag-soon {
+  display: inline-block; padding: 3px 10px; border-radius: 999px; font-family: var(--sl-f-text); font-weight: 500; font-size: 12px;
+  letter-spacing: 0; color: var(--sl-ink2); box-shadow: inset 0 0 0 1px var(--sl-line2);
+}
+.pl-note { margin-top: 10px; font-size: 13.5px; color: var(--sl-ink3); }
+
+/* The row spotlight: a wash in the category's hue, a lit bar along its edge. */
+.pl-rows-wrap { --shue: 245; }
+.pl-rows-wrap > .sv-spot { z-index: 0; border-radius: 8px;
+  background: linear-gradient(90deg, oklch(0.85 0.09 var(--shue) / 0.11), oklch(0.85 0.09 var(--shue) / 0.035) 55%, transparent 96%);
+}
+.pl-rows-wrap > .sv-spot::before {
+  content: ""; position: absolute; left: 0; top: 12px; bottom: 12px; width: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+}
+
+/* ---- the three packages ---- */
+.pl-tiers-wrap { margin-bottom: clamp(26px, 4vh, 38px); }
+.pl-tiers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+.pl-tier { position: relative; border-radius: 10px; background: #0e0e0e; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 40px 70px -48px rgb(0 0 0 / 0.9); }
+/* The recommended package carries the site's lit bar across its top. */
+.pl-tier.is-rec::before {
+  content: ""; position: absolute; left: 18px; right: 18px; top: -1px; height: 2px; border-radius: 2px; z-index: 3; pointer-events: none;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+}
+.pl-tier-a { display: grid; grid-template-rows: auto auto auto 1fr; gap: 6px; height: 100%; padding: clamp(18px, 2vw, 24px); text-decoration: none; color: inherit; border-radius: 10px; }
+.pl-tier-a:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.pl-tier-top { min-height: 26px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.pl-tier-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.pl-tier-rec { padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 500; color: var(--sl-ink1); box-shadow: inset 0 0 0 1px var(--sl-line2); }
+.pl-tier-price {
+  margin-top: 4px; font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(34px, 3.2vw, 44px); line-height: 1; letter-spacing: -0.04em;
+  color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+}
+.pl-tier-for { margin-top: 4px; font-size: 14px; line-height: 1.45; color: var(--sl-ink2); }
+.pl-tier-pages { align-self: end; padding-top: 10px; font-size: 12.5px; color: var(--sl-ink3); }
+
+/* ---- the Founders Special: its open spots are lit bars ---- */
+.pl-founders {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: clamp(22px, 3.4vh, 30px); padding: 16px 20px;
+  border-radius: 10px; box-shadow: inset 0 0 0 1px var(--sl-line2); scroll-margin-top: calc(var(--alv-nav-h) + 24px);
+}
+.pl-founders p { flex: 1 1 320px; font-size: 14.5px; color: var(--sl-ink2); }
+.pl-founders b { font-family: var(--sl-f-brand); font-weight: 600; color: var(--sl-ink1); }
+.pl-founders-n { color: var(--sl-ink1); }
+.pl-founders-marks { display: flex; gap: 5px; }
+.pl-founders-marks i { width: 3px; height: 18px; border-radius: 2px; background: rgb(var(--sl-L) / 0.16); }
+.pl-founders-marks i.is-open { background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+
+/* ---- how paying works ---- */
+.pl-terms-list {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px clamp(24px, 4vw, 56px); margin: clamp(18px, 2.8vh, 26px) 0 0; padding: 0; list-style: none;
+}
+.pl-terms-list li { display: grid; gap: 4px; padding-left: 16px; box-shadow: inset 2px 0 0 var(--sl-line2); }
+.pl-terms-list b { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15.5px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.pl-terms-list span { font-size: 14px; line-height: 1.5; color: var(--sl-ink2); }
+.pl-terms .pl-note { margin-top: 20px; }
+
+/* ---- the prices come on: a pass of light down the list, once ---- */
+.pl-cat.is-armed .pl-p { color: var(--sl-shade); }
+.pl-cat.is-armed.is-on .pl-p { animation: pl-pass 1000ms var(--sl-e-out) both; animation-delay: calc(100ms + var(--d, 0) * 45ms); }
+@keyframes pl-pass {
+  0% { color: var(--sl-shade); text-shadow: none; }
+  35% { color: #fff; text-shadow: 0 0 12px oklch(0.92 0.08 245 / 0.7), 0 0 28px oklch(0.8 0.15 245 / 0.35); }
+  100% { color: var(--sl-ink1); text-shadow: 0 0 0 transparent; }
+}
+
+@media (max-width: 1100px) {
+  .pl-rows { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 900px) {
+  .pl-body { grid-template-columns: minmax(0, 1fr); gap: 24px; padding-top: 8px; }
+  /* The rail turns across the top, under the nav, and scrolls sideways;
+     its bar lies along its foot (--bx, --bw). */
+  .pl-rail {
+    top: var(--alv-nav-h); z-index: 20; margin-inline: calc(-1 * var(--sl-gutter));
+    background: rgb(11 11 11 / 0.92); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    box-shadow: inset 0 -1px 0 var(--sl-line2);
+  }
+  .pl-rail.is-stuck::before {
+    content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: var(--alv-nav-h); z-index: -1; pointer-events: none;
+    background: var(--sl-room);
+  }
+  .pl-rail-in { overflow-x: auto; scrollbar-width: none; box-shadow: none; padding-inline: calc(var(--sl-gutter) - 12px); }
+  .pl-rail-in::-webkit-scrollbar { display: none; }
+  .pl-rail-list { grid-auto-flow: column; grid-auto-columns: max-content; }
+  .pl-rail-list > li + li { box-shadow: none; }
+  .pl-rail-a { padding: 15px 12px; }
+  .pl-rail-long, .pl-rail-n { display: none; }
+  .pl-rail-short { display: inline; }
+  .pl-rail-name { font-size: 14.5px; }
+  .pl-rail-bar {
+    left: 0; top: auto; bottom: 0; width: var(--bw, 0px); height: 2px;
+    transform: translateX(var(--bx, 0px)); transition: transform var(--sv-glide), width var(--sv-glide);
+  }
+  .pl-rail-bar::before { inset: 0 12px; }
+  .pl-rail-in > .sv-spot { display: none !important; }
+  .pl-cat, .pl-group, .pl-founders { scroll-margin-top: calc(var(--alv-nav-h) + 72px); }
+  .pl-tiers { grid-template-columns: minmax(0, 1fr); gap: 10px; }
+  .pl-tier-a { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: none; column-gap: 16px; }
+  .pl-tier-top, .pl-tier-for, .pl-tier-pages { grid-column: 1; }
+  .pl-tier-price { grid-column: 2; grid-row: 1 / span 2; align-self: center; font-size: 32px; margin: 0; }
+  .pl-tier-pages { padding-top: 2px; }
+  /* No spotlight on a phone: a tap has no hover to follow. */
+  .pl-rows-wrap > .sv-spot, .pl-tiers-wrap > .sv-spot { display: none !important; }
+}
+@media (max-width: 600px) {
+  .pl-terms-list { grid-template-columns: minmax(0, 1fr); }
+  .pl-price { font-size: 17px; }
+
+  /* Each category as a button: name, count and lowest price, and See more,
+     as the four builds are on /packages/. One opens at a time (pricing.ts).
+     Only once the script has run (.pl-acc): without it the categories stay
+     open, with the rail above them. */
+  .pl-body:has(.pl-acc) .pl-rail { display: none; }
+  .pl-acc .pl-cat {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 12px;
+    padding: 4px 18px; border-radius: 10px; overflow: hidden; background: #0d0d0d;
+    box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 40px 70px -44px rgb(0 0 0 / 0.95);
+    scroll-margin-top: calc(var(--alv-nav-h) + 12px); transition: background-color 350ms, box-shadow 350ms;
+  }
+  .pl-acc .pl-cat + .pl-cat { margin-top: 10px; padding-top: 4px; border-top: 0; }
+  .pl-acc .pl-group, .pl-acc .pl-founders { scroll-margin-top: calc(var(--alv-nav-h) + 12px); }
+  /* The category's light: a wash from its corner, a line along its top. */
+  .pl-acc .pl-cat::before {
+    left: 0; top: 0; width: 100%; height: 100%;
+    background: radial-gradient(ellipse 95% 50% at 0% 0%, oklch(0.7 0.12 var(--hue, 245) / 0.08), transparent 72%);
+  }
+  .pl-acc .pl-cat::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
+    background: linear-gradient(90deg, transparent 4%, oklch(0.84 0.09 var(--hue, 245)) 50%, transparent 96%);
+    opacity: 0.45; transition: opacity 400ms var(--sl-e-out);
+  }
+  .pl-acc .pl-cat.is-open { background: #111; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -44px rgb(0 0 0 / 0.95); }
+  .pl-acc .pl-cat.is-open::after { opacity: 1; }
+
+  .pl-acc .pl-cat-head { display: contents; }
+  .pl-acc .pl-cat-h { grid-column: 1; grid-row: 1; padding-top: 16px; font-size: 20px; letter-spacing: -0.02em; }
+  .pl-acc .pl-cat-count { display: block; grid-column: 1; grid-row: 2; margin-top: 3px; font-size: 13px; color: var(--sl-ink3); }
+  .pl-acc .pl-cat-from {
+    display: flex; align-items: baseline; gap: 5px; grid-column: 2; grid-row: 1 / span 2; align-self: center; padding-top: 12px;
+    font-family: var(--sl-f-brand); font-weight: 620; font-size: 22px; letter-spacing: -0.03em; color: var(--sl-ink1); font-variant-numeric: tabular-nums;
+  }
+  .pl-acc .pl-cat-from span { font-family: var(--sl-f-text); font-weight: 450; font-size: 12.5px; letter-spacing: 0; color: var(--sl-ink3); }
+
+  .pl-acc .pl-cat-toggle {
+    grid-column: 1 / -1; grid-row: 3; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    width: 100%; min-height: 48px; margin: 6px 0 0; padding: 0; border: 0; border-top: 1px solid var(--sl-line); background: none; cursor: pointer;
+    font: 500 14.5px/1 var(--sl-f-text); color: var(--sl-ink2); text-align: left; -webkit-tap-highlight-color: transparent;
+  }
+  .pl-acc .pl-cat-toggle .int-ic { width: 18px; height: 18px; transition: transform 350ms var(--sl-e-out); }
+  .pl-acc .pl-cat.is-open .pl-cat-toggle { color: var(--sl-ink1); }
+  .pl-acc .pl-cat.is-open .pl-cat-toggle .int-ic { transform: rotate(180deg); }
+  .pl-acc .pl-cat-toggle:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; border-radius: 6px; }
+
+  /* The fold: rows animate 0fr to 1fr, so the height is never measured. */
+  .pl-acc .pl-cat-more {
+    grid-column: 1 / -1; grid-row: 4; display: grid; grid-template-rows: 0fr;
+    transition: grid-template-rows 420ms var(--sl-e-out);
+  }
+  .pl-acc .pl-cat.is-open .pl-cat-more { grid-template-rows: 1fr; }
+  .pl-acc .pl-cat-more-in { display: block; min-height: 0; overflow: hidden; visibility: hidden; transition: visibility 0s linear 420ms; }
+  .pl-acc .pl-cat.is-open .pl-cat-more-in { visibility: visible; transition-delay: 0s; padding-bottom: 10px; }
+  .pl-acc .pl-cat-lede { margin: 4px 0 14px; font-size: 14.5px; color: var(--sl-ink2); }
+
+  /* Inside a card the three packages are rows, not cards of their own. */
+  .pl-acc .pl-tiers-wrap { margin-bottom: 18px; }
+  .pl-acc .pl-tiers { gap: 0; }
+  .pl-acc .pl-tier { background: none; border-radius: 0; box-shadow: inset 0 1px 0 var(--sl-line); }
+  .pl-acc .pl-tier.is-rec::before { left: 0; right: 0; top: 0; }
+  .pl-acc .pl-tier-a { padding: 14px 0; border-radius: 0; }
+  .pl-acc .pl-tier-price { font-size: 26px; }
+  .pl-acc .pl-founders { padding: 14px 16px; }
+  .no-motion .pl-acc :is(.pl-cat-more, .pl-cat-more-in, .pl-cat-toggle .int-ic) { transition: none; }
+}

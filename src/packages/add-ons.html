@@ -1,87 +1,105 @@
 ---
-layout: layouts/base.njk
+layout: layouts/interior.njk
 permalink: /packages/add-ons/
 title: Add-ons and power features
-description: Eight page add-ons at $125 each and seven power features at $225 each. Standard and Complete include a number of picks; any of them can also be bought on its own.
+description: Eight page add-ons at $125 each, six power features at $225 each and one $50 small enhancement. Standard and Complete include a number of picks; any of them can also be bought on its own.
+pageJs: doc
+head:
+  crumbs: [{ label: "Packages", url: "/packages/" }, { label: "Add-ons" }]
+  back: { label: "Back to Packages", url: "/packages/" }
+  heading: "Fifteen things you<br>can add to a build."
+  lede: "Eight are pages, six are things the site does and one is a small enhancement. Standard and Complete include some pages and features, and page picks count inside the package's page limit. Anything past that is the flat price below."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "Compare packages", url: "/packages/" }
+cta:
+  heading: "Not sure which of these you need?"
+  lede: "Send me what you have, a menu, a service list, a booking system you already use, and I will tell you which picks your business would actually use."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "Compare packages", url: "/packages/" }
 ---
-
-{%- set ph = {
-  heading: "Fifteen things you<br />can add to a build.",
-  lead: "Eight are pages. Seven are things the site does. Standard includes three pages and one feature, Complete includes five and two, and anything past that is the flat price below. There is no third number hiding anywhere.",
-  back: { label: "Packages", url: "/packages/" },
-  crumbs: [{ label: "Packages", url: "/packages/" }, { label: "Add-ons" }],
-  actions: [
-    { label: "Start a project", url: "/contact/" },
-    { label: "Compare packages", url: "/packages/", style: "btn-ghost" }
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
-
-<main id="main">
-
-  <!-- ══════════════ HOW THE PICKS WORK ══════════════ -->
-  <section class="sec sec-tight">
-    <div class="wrap">
-      <div class="allowance reveal">
-        <h2 class="allowance-h">What your package already covers</h2>
-        <div class="allow-grid">
-          {%- for t in packages.tiers %}
-          <div class="allow{% if not t.picks %} allow-none{% endif %}">
-            <span class="allow-name">{{ t.name }}</span>
-            {%- if t.picks %}
-            <div class="picks-line">
-              <span class="slots" aria-hidden="true">
-                {%- for n in range(0, t.picks.pages) %}<i class="slot"></i>{% endfor %}
-              </span>
-              <span class="picks-txt">{{ t.picks.pages }} page add-ons</span>
-            </div>
-            <div class="picks-line">
-              <span class="slots" aria-hidden="true">
-                {%- for n in range(0, t.picks.power) %}<i class="slot slot-hi"></i>{% endfor %}
-              </span>
-              <span class="picks-txt">{{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}</span>
-            </div>
-            {%- else %}
-            <p class="picks-txt">No picks included. Add any of them at the price on this page.</p>
-            {%- endif %}
-          </div>
-          {%- endfor %}
+{#
+  ADD-ONS: what each package already covers, then the two classes of extra.
+    1. the three packages' allowances, as markers: a hairline square is a
+       page add-on, a short lit bar (the site's bar) is a power feature, the
+       same two markers /builds/ uses;
+    2. each class: its one flat price stated once, large, then its items in
+       a grid a spotlight glides across (doc.ts), each item in its own hue;
+    3. adding one after launch.
+  Every name, price and count is read from _data (addons.json,
+  packages.json). The anchors #page-add-ons and #power-features stay.
+#}
+<section class="int-wrap pk2-sec pk2-sec--first" aria-labelledby="cover-h">
+  <div class="pk2-head">
+    <h2 id="cover-h" class="int-h2">What your package already covers</h2>
+  </div>
+  <p class="pk2-legend">
+    <span><i class="mk mk--page" aria-hidden="true"></i>Page add-on</span>
+    <span><i class="mk mk--power" aria-hidden="true"></i>Power feature</span>
+  </p>
+  <div class="pk2-allow-wrap" data-spot=".pk2-tier">
+    <ul class="pk2-allow">
+      {%- for t in packages.tiers %}
+      <li class="pk2-tier"{% if t.recommended %} data-rest{% endif %}>
+        <div class="pk2-tier-top">
+          <span class="pk2-tier-name">{{ t.name }}</span>
+          <span class="pk2-tier-price">{{ t.price | price | safe }}</span>
         </div>
-      </div>
-    </div>
-  </section>
+        <div class="pk2-slots">
+          {%- if t.picks %}
+          <p class="pk2-slot-row">
+            <span class="pk2-slot-marks" aria-hidden="true">{% for n in range(0, t.picks.pages) %}<i class="mk mk--page"></i>{% endfor %}</span>
+            {{ t.picks.pages }} page add-ons
+          </p>
+          <p class="pk2-slot-row">
+            <span class="pk2-slot-marks" aria-hidden="true">{% for n in range(0, t.picks.power) %}<i class="mk mk--power"></i>{% endfor %}</span>
+            {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}
+          </p>
+          {%- else %}
+          <p class="pk2-none">No picks included. Add any of them at the price on this page.</p>
+          {%- endif %}
+        </div>
+      </li>
+      {%- endfor %}
+    </ul>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+</section>
 
+{%- for cls in addons.classes %}
+{%- set power = cls.slug == "power-features" %}
+<section class="int-wrap pk2-sec" id="{{ cls.slug }}" aria-labelledby="{{ cls.slug }}-h">
+  <div class="pk2-head pk2-head--price">
+    <h2 id="{{ cls.slug }}-h" class="int-h2">{{ cls.name }}</h2>
+    <p class="int-lede">{{ cls.blurb }}</p>
+    <p class="pk2-price"><b>{{ cls.price | price | safe }}</b><span>{{ cls.unit }}{% if cls.slug in ["page-add-ons", "power-features"] %}, or included in a package{% endif %}</span></p>
+  </div>
+  <div class="pk2-grid-wrap" data-spot=".pk2-item" style="--shue: {{ 285 if power else 235 }}">
+    <ul class="pk2-grid">
+      {%- for i in cls.items %}
+      <li class="pk2-item" style="--hue: {{ (285 if power else 235) - loop.index0 * 6 }}">
+        <div class="pk2-item-top">
+          <svg class="int-ic" aria-hidden="true"><use href="#i-{{ i.icon or 'sparkle' }}"/></svg>
+          <i class="mk {{ 'mk--power' if power else ('mk--page' if cls.slug == 'page-add-ons' else 'mk--inc') }}" aria-hidden="true"></i>
+        </div>
+        <h3>{{ i.name }}</h3>
+        <p>{{ i.blurb }}</p>
+        {%- if i.service %}
+        <a class="pk2-item-link" href="/services/{{ i.service }}/">How this one works</a>
+        {%- endif %}
+      </li>
+      {%- endfor %}
+    </ul>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+</section>
+{%- endfor %}
 
-  <!-- ══════════════ THE TWO CLASSES ══════════════ -->
-  {%- for cls in addons.classes %}
-  {%- set band = loop.index0 % 2 == 0 %}
-  {% include "components/addon-class.njk" %}
-  {%- endfor %}
-
-
-  <!-- ══════════════ AFTER LAUNCH ══════════════ -->
-  <section class="sec band sec-line">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 26px;">
-        <h2>Adding one later.</h2>
-        <p class="lead">
-          Nothing here has to be decided before launch. Adding a gallery or a booking
-          system to a site that is already live costs the same flat price it would have
-          cost on day one.
-        </p>
-      </div>
-      <p class="body-3 reveal" style="max-width: 62ch;">
-        The one thing that changes is scale. A services page with sixty items and
-        photography is a different job from one with five lines, and both are priced
-        separately on the <a href="/pricing/" style="color: var(--blue);">price list</a>
-        so you can see which one you are.
-      </p>
-    </div>
-  </section>
-
-
-  {%- set ctaHeading = "Not sure which of these you need?" %}
-  {%- set ctaLead = "Send me what you have — a menu, a service list, a booking system you already use — and I will tell you which picks your business actually uses and which ones it would never open." %}
-  {% include "components/cta-band.njk" %}
-
-</main>
+<section class="int-wrap pk2-sec" aria-labelledby="later-h">
+  <div class="pk2-copy">
+    <h2 id="later-h" class="int-h2">Adding one later</h2>
+    <p>Nothing here has to be decided before launch. Adding a gallery or a booking system to a site that is already live costs the same flat price it would have cost on day one.</p>
+    <p>The one thing that changes is scale. A services page with sixty items and photography is a different job from one with five lines, and both are priced separately on the <a class="alv-tlink" href="/pricing/">price list</a>.</p>
+  </div>
+</section>

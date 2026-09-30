@@ -1,0 +1,15 @@
+<script>
+  /* /work/, before first paint: when motion is on, the showcase screens
+     start as dark glass and power on as they arrive (scripts/work.ts), so
+     arm them now rather than letting a lit screen draw and then go dark.
+     Without JS none of this runs and every screen is simply lit. If the
+     script has not taken over within 4s, the lit page comes back. */
+  (function () {
+    var r = document.documentElement;
+    if (/\bno-motion\b/.test(r.className)) return;
+    r.className += " wk-arm";
+    setTimeout(function () {
+      if (!window.__alvWorkReady) r.classList.remove("wk-arm");
+    }, 4000);
+  })();
+</script>

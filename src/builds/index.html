@@ -1,0 +1,119 @@
+---
+layout: layouts/interior.njk
+permalink: /builds/
+title: What I build
+description: Four website builds with the extras already chosen. Detailing $1,050, home services $1,050, salons $1,050, restaurants $1,450. Three are the Standard package with the picks already made, and the Restaurant is a fixed, curated build of its own.
+pageJs: doc
+head:
+  crumbs: [{ label: "What I build" }]
+  heading: "Four builds with<br>the picks already made."
+  lede: "Three are the Standard package with the extras already chosen for the trade. The Restaurant is a fixed, curated build of its own. Either way, none of the deciding."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "See all prices", url: "/pricing/" }
+cta:
+  heading: "Close, but not quite one of these?"
+  lede: "Tell me what the business does. Most of the time the answer is one of these four with one swap, and I will say which."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "See what you can pick", url: "/packages/add-ons/" }
+---
+{#
+  WHAT I BUILD (/builds/): the index of the four industry builds. It compares
+  and routes them; each has its own page at /builds/<slug>/ (build.njk).
+  Work (/work/) is the separate portfolio of concept sites.
+    1. the four builds, each a surface lit in its trade's own hue (bundles.json
+       `hue`), in a grid a spotlight glides across (doc.ts). What each
+       includes is marked the same way /packages/add-ons/ marks it: a
+       hairline square is a page, a short lit bar is a power feature;
+    2. why these four, on a rail of points whose lit bar and key light glide
+       to the point under attention and walk down it once when first reached
+       (interior/point-rail.ts, the rail /about/ uses);
+    3. a trade that is not one of the four.
+  Every name, price, trade and inclusion is read from _data/bundles.json;
+  each build keeps its #slug anchor.
+#}
+<section class="int-wrap pk2-sec pk2-sec--first" aria-label="The four builds">
+  <p class="pk2-legend">
+    <span><i class="mk mk--page" aria-hidden="true"></i>Page add-on</span>
+    <span><i class="mk mk--power" aria-hidden="true"></i>Power feature</span>
+    <span><i class="mk mk--inc" aria-hidden="true"></i>Included</span>
+  </p>
+  <div class="pk2-builds-wrap" data-spot=".pk2-build">
+    <ul class="pk2-builds">
+      {%- for b in bundles %}
+      {%- set base = (packages.tiers | find("name", b.basedOn)) if b.basedOn else null %}
+      <li class="pk2-build" id="{{ b.slug }}" style="--hue: {{ b.hue }}">
+        <div class="pk2-build-top">
+          <span class="dc-badge" aria-hidden="true"><svg class="int-ic" aria-hidden="true"><use href="#i-{{ b.icon }}"/></svg></span>
+          <div>
+            <h3>{{ b.name }}</h3>
+            <p class="pk2-build-trades">{{ b.trades }}</p>
+          </div>
+          <p class="pk2-build-price"><b>{{ b.price | price | safe }}</b><span>one-time</span></p>
+        </div>
+        <p class="pk2-build-for">{{ b.for }}</p>
+        <ul class="pk2-inc" aria-label="What {{ b.name }} includes">
+          {%- for i in b.includes %}
+          <li><i class="mk mk--{{ i.kind if i.kind in ['page', 'power'] else 'inc' }}" aria-hidden="true"></i>{{ i.name }}</li>
+          {%- endfor %}
+        </ul>
+        <div class="pk2-build-foot">
+          {%- if base %}
+          <p class="pk2-build-base">The <a href="/packages/#{{ base.slug }}">{{ b.basedOn }} package</a>, with the picks already made.</p>
+          {%- else %}
+          <p class="pk2-build-base">A fixed, curated build of its own. What is listed is what is included.</p>
+          {%- endif %}
+          <span class="bd-links">
+            <a class="alv-tlink" href="/builds/{{ b.slug }}/">See the {{ b.shortName }} build</a>
+            <a class="alv-tlink" href="/contact/?package={{ b.slug }}">Start with {{ b.name | replace("The ", "") }}</a>
+          </span>
+        </div>
+      </li>
+      {%- endfor %}
+    </ul>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+</section>
+
+{%- set why = [
+  { icon: "photo", name: "The proof is visual", value: "A gallery",
+    cap: "Detailing, landscaping and salon work are bought off photographs. On those sites the gallery is the sales page, so every one of these builds has one." },
+  { icon: "calendar", name: "The next step is a booking or a quote", value: "The right button",
+    cap: "A salon needs a slot booked. A landscaper needs enough detail to price the job. Each build carries the button its trade needs." },
+  { icon: "menu", name: "The content changes", value: "Yours to edit",
+    cap: "A restaurant menu moves more than any other page, which is why the restaurant build comes with a menu you can edit yourself." }
+] %}
+<section class="int-wrap ab-intro pk2-why" aria-labelledby="why-h">
+  <div class="ab-copy">
+    <h2 id="why-h" class="int-h2">Why these four</h2>
+    <p>They are the trades where the same three or four things decide whether the site works, and where guessing wrong costs you real bookings.</p>
+  </div>
+  <div class="ab-rail" data-ab-rail>
+    <ul class="ab-rows">
+      {%- for p in why %}
+      <li class="ab-row">
+        <svg class="int-ic ab-ic" aria-hidden="true"><use href="#i-{{ p.icon }}"/></svg>
+        <div class="ab-row-text">
+          <h3 class="ab-row-h">{{ p.name }}</h3>
+          <p>{{ p.cap }}</p>
+        </div>
+        <span class="ab-row-v">{{ p.value }}</span>
+      </li>
+      {%- endfor %}
+    </ul>
+    <span class="ab-bar" aria-hidden="true"></span>
+    <span class="sv-spot" aria-hidden="true"></span>
+  </div>
+</section>
+
+<section class="int-wrap pk2-sec" aria-labelledby="else-h">
+  <div class="int-sheet pk2-sheet">
+    <h2 id="else-h" class="int-h2">Something else?</h2>
+    <p>Three of these builds start from the Standard package, and the Restaurant is a fixed build of its own. If your trade is not one of the four, you are not on the wrong page. Start from a package and pick exactly what you need.</p>
+    <div class="int-cta-act">
+      <a class="alv-btn" href="/packages/">See the packages</a>
+      <a class="alv-tlink" href="/packages/add-ons/">See what you can pick</a>
+    </div>
+  </div>
+</section>

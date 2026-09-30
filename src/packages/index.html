@@ -1,180 +1,310 @@
 ---
-layout: layouts/base.njk
-title: Build packages and care plans
-description: Three website packages for San Antonio small businesses. Foundation $650, Standard $1,050, Complete $1,450, each a one-time price with a care plan from $45 a month.
+layout: layouts/interior.njk
+permalink: /packages/
+title: Packages
+description: Three website packages for San Antonio small businesses, Foundation $650, Standard $1,050 and Complete $1,450, four ready-made builds for detailers, home services, salons and restaurants, and care plans from $45 a month.
+pageJs: packages
+head:
+  crumbs: [{ label: "Packages" }]
+  heading: "One flat price,<br>agreed before I start."
+  lede: "Three packages, four builds already planned for a trade, and the monthly care plan that keeps any of them running."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
+    - { label: "Compare every feature", url: "#compare" }
+cta:
+  inline: true
+  heading: "Not sure which one fits?"
+  lede: "Tell me what the business does and I will say plainly which package it needs, even if that is the cheapest one."
+  actions:
+    - { label: "Start a project", url: "/contact/" }
 ---
+{#
+  PACKAGES: the offer, in the order a buyer decides it. Deliberately not the
+  homepage's picker: the homepage names three prices, this page opens each
+  package up.
+    1. the three packages as a rail and a package file: the rail is a
+       native radio group (name="package"); the file beside it opens the
+       checked package into four parts, lighting what it adds over the
+       package below it. A lit bar glides along the rail to the choice
+       (pure :has(), so it holds without JS), and the choice carries into
+       /contact/ as ?package=<slug> and lights its column in the chart;
+    2. the Founders Special notice;
+    3. the four builds as cards, each in its trade's own hue;
+    4. the CTA band, for anyone who has read this far and still can't choose;
+    5. the care plans, as one strip;
+    6. the comparison chart: only the rows that differ, with a lit column
+       that glides to the chosen package;
+    7. the two charges that sit outside every package.
+  Every figure is read from _data; nothing is restated here by hand.
+#}
+{%- set host = careplans.plans[0] %}
+{%- set extras = standalone | byGroup("project-extras") %}
 
-{%- set ph = {
-  heading: "A one-time build,<br />and a plan that keeps it running.",
-  lead: "Three packages, each a flat price agreed before I start. Every build comes with a care plan covering hosting, security, backups and edits, from $45 a month. Both numbers are on this page. Nothing appears on your invoice that is not.",
-  crumbs: [{ label: "Packages" }],
-  actions: [
-    { label: "Start a project", url: "/contact/" },
-    { label: "See what you can add", url: "/packages/add-ons/", style: "btn-ghost" }
-  ]
-} -%}
-{% include "components/pagehead.njk" %}
+{#- ══════════════ THE THREE PACKAGES ══════════════ #}
+{%- set pagePrice = addons.classes[0].price %}
+{%- set powerPrice = addons.classes[1].price %}
+{%- macro line(text, isNew) -%}
+<li{% if isNew %} class="is-new"{% endif %}>{{ text | safe }}</li>
+{%- endmacro %}
+<section class="int-wrap pk-sec pk-sec--first" id="packages" aria-labelledby="packages-h">
+  <div class="pk-head">
+    <h2 id="packages-h" class="int-h2">Three packages, opened up.</h2>
+    <p class="int-lede">Choose one to see exactly what it covers. Each builds on the one before it.</p>
+  </div>
 
-<main id="main">
-
-  <!-- ══════════════ BUILD PACKAGES ══════════════ -->
-  <section class="sec">
-    <div class="wrap">
-      {% include "components/tier-cards.njk" %}
-
-      <p class="body-3 reveal" style="margin-top: 26px; max-width: 64ch;">
-        {{ packages.revisionRule }}
-      </p>
-
-      {%- set fsVariant = "callout" %}
-      {% include "components/founders-special.njk" %}
-    </div>
-  </section>
-
-
-  <!-- ══════════════ TWO WAYS TO CHOOSE ══════════════ -->
-  <section class="sec sec-tight band sec-line">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 24px;">
-        <h2>Two ways to fill a package.</h2>
-        <p class="lead">Same builds, same prices. The only difference is whether you pick the extras or I already have.</p>
-      </div>
-
-      <div class="forks reveal">
-        <div class="card fork">
-          <div class="ic-box">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-grid"/></svg>
-          </div>
-          <h3>Pick your own</h3>
-          <p class="body-3">
-            Eight page add-ons and seven power features. Standard takes three and one,
-            Complete takes five and two. Choose the ones your business actually uses.
-          </p>
-          <a class="btn btn-ghost btn-sm" href="/packages/add-ons/">See all fifteen</a>
-        </div>
-
-        <div class="card fork">
-          <div class="ic-box gold">
-            <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-tools"/></svg>
-          </div>
-          <h3>Start from your trade</h3>
-          <p class="body-3">
-            Four builds with the picks already made: detailing, home services, salons and
-            restaurants. Same package, same price, none of the deciding.
-          </p>
-          <a class="btn btn-ghost btn-sm" href="/packages/for-your-business/">See the four builds</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-  <!-- ══════════════ CARE PLANS ══════════════ -->
-  <section class="sec sec-tight sec-line" id="care">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 26px;">
-        <h2>The monthly half.</h2>
-        <p class="lead">{{ careplans.required }}</p>
-      </div>
-
-      {% include "components/care-cards.njk" %}
-    </div>
-  </section>
-
-
-  <!-- ══════════════ COMPARISON CHART ══════════════ -->
-  <section class="sec band sec-line" id="compare">
-    <div class="wrap">
-      <div class="sec-head reveal" style="margin-bottom: 36px;">
-        <h2>What changes between them.</h2>
-        <p class="lead">Scroll the table sideways on a phone. The feature column stays put.</p>
-      </div>
-
-      {#- columns and rows are derived from packages.json, so a card and its
-          column can never disagree about what a tier includes -#}
-      {%- set cols = [] %}
+  <form class="pk-pick" action="/contact/" method="get">
+    <fieldset class="pk-rail" data-spot="rail">
+      <legend class="alv-sr-only">Choose a package</legend>
       {%- for t in packages.tiers %}
-      {%- set cols = (cols.push({ label: t.name, sub: (t.price | price) + " one-time", recommended: t.recommended }), cols) %}
+      <label class="pk-rail-opt" id="{{ t.slug }}">
+        <input class="pk-rail-input" id="pk-{{ t.slug }}" type="radio" name="package" value="{{ t.slug }}"{% if t.recommended %} checked{% endif %} />
+        <span class="pk-rail-name">{{ t.name }}{% if t.recommended %} <span class="pk-rail-rec">Recommended</span>{% endif %}</span>
+        <span class="pk-rail-price">{{ t.price | price | safe }}</span>
+        <span class="pk-rail-pages">{{ t.has.pages }} pages</span>
+      </label>
       {%- endfor %}
+      <span class="pk-spot" aria-hidden="true"></span>
+      <span class="pk-rail-bar" aria-hidden="true"></span>
+    </fieldset>
 
-      {%- set rows = [] %}
-      {%- for f in packages.features %}
-      {%- set vals = [] %}
-      {%- for t in packages.tiers %}{% set vals = (vals.push(t.has[f.key]), vals) %}{% endfor %}
-      {%- set rows = (rows.push({ label: f.label, values: vals }), rows) %}
-      {%- endfor %}
+    {%- for t in packages.tiers %}
+    {%- set prev = packages.tiers[loop.index0 - 1] if not loop.first else null %}
+    <div class="pk-file" data-for="{{ t.slug }}">
+      <div class="pk-file-head">
+        <div>
+          <h3 class="pk-file-name">{{ t.name }}</h3>
+          <p class="pk-file-for">{{ t.for }}</p>
+        </div>
+        <p class="pk-file-price"><b>{{ t.price | price | safe }}</b><span>one-time</span></p>
+      </div>
+      {%- if prev %}
+      <p class="pk-file-key"><i aria-hidden="true"></i>Everything in {{ prev.name }}, plus what is lit.</p>
+      {%- endif %}
 
-      {%- set caption = "What each build package includes" %}
-      <div class="reveal">
-        {% include "components/price-matrix.njk" %}
+      <div class="pk-parts">
+        <section class="pk-part-block">
+          <svg class="int-ic" aria-hidden="true"><use href="#i-browser"/></svg>
+          <h4>The site</h4>
+          <p class="pk-part-val{% if prev %} is-new{% endif %}">{{ t.has.pages }} pages in total</p>
+          <ul>
+            {{ line("Custom-coded and mobile-optimized, not a template") }}
+            {{ line("Contact form and Google Maps embed") }}
+            {{ line("Hosting, SSL and backups, on your care plan") }}
+          </ul>
+        </section>
+
+        <section class="pk-part-block">
+          <svg class="int-ic" aria-hidden="true"><use href="#i-search"/></svg>
+          <h4>Getting found</h4>
+          <p class="pk-part-val{% if prev and prev.has.seo != t.has.seo %} is-new{% endif %}">{{ t.has.seo }} on-page SEO</p>
+          <ul>
+            {{ line("Built in, not sold back to you as an extra") }}
+            {%- if t.has.gbp %}{{ line("Google Business Profile " + (t.has.gbp | lower), prev and not prev.has.gbp) }}{% endif %}
+            {%- if t.has.schema %}{{ line("Schema markup, so search engines read your hours, services and location", prev and not prev.has.schema) }}{% endif %}
+          </ul>
+        </section>
+
+        <section class="pk-part-block">
+          <svg class="int-ic" aria-hidden="true"><use href="#i-grid"/></svg>
+          <h4>Picked for your business</h4>
+          {%- if t.picks %}
+          <p class="pk-part-val is-new">{{ t.picks.pages }} pages, {{ t.picks.power }} feature{{ "s" if t.picks.power != 1 }}</p>
+          <ul>
+            {{ line("Pages such as a photo gallery, services page or FAQ. They fit inside the page limit, they are not extra pages.") }}
+            {{ line("Features such as online booking or a quote request form") }}
+            {{ line("Worth " + ((t.picks.pages * pagePrice + t.picks.power * powerPrice) | price) + " at the add-on price", true) }}
+            {%- if t.has.booking %}{{ line("Booking integration " + (t.has.booking | lower) + ", on top of your power feature picks", prev and not prev.has.booking) }}{% endif %}
+            {%- if t.has.card %}{{ line("Business card, " + (t.has.card | lower), prev and not prev.has.card) }}{% endif %}
+          </ul>
+          {%- else %}
+          <p class="pk-part-val">Add as you need</p>
+          <ul>
+            {{ line("Any extra page, " + (pagePrice | price) + " each") }}
+            {{ line("Any power feature, " + (powerPrice | price) + " each") }}
+          </ul>
+          {%- endif %}
+        </section>
+
+        <section class="pk-part-block">
+          <svg class="int-ic" aria-hidden="true"><use href="#i-rocket"/></svg>
+          <h4>Revisions and launch</h4>
+          <p class="pk-part-val{% if prev %} is-new{% endif %}">{{ t.has.revisions }} revision round{{ "s" if t.has.revisions != "1" }}</p>
+          <ul>
+            {{ line("Each round is one list of changes, sent within 5 business days") }}
+            {{ line("Half to start, half at your approval before launch") }}
+            {{ line("A 30-day launch warranty once it is live") }}
+          </ul>
+        </section>
       </div>
 
-      <p class="body-3 reveal" style="margin-top: 18px; max-width: 64ch;">
-        Standard and Complete let you choose which extras go in.
-        <a href="/packages/add-ons/" style="color: var(--blue);">The add-ons page</a>
-        lists all fifteen, and every one of them can also be bought on its own later.
-      </p>
+      <div class="pk-file-act">
+        <button class="alv-btn" type="submit">Start with {{ t.name }}</button>
+        <a class="alv-tlink" href="#compare">Compare every feature</a>
+      </div>
     </div>
-  </section>
+    {%- endfor %}
+  </form>
+</section>
 
+{#- ══════════════ FOUNDERS SPECIAL ══════════════ #}
+{%- set fsVariant = "packages" %}
+{% include "components/founders-special.njk" %}
 
-  <!-- ══════════════ BEYOND THE PACKAGE ══════════════ -->
-  {%- set extras = standalone | byGroup("project-extras") %}
-  <section class="sec sec-line" id="extras">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 28px;">
-        <h2>The two charges that are not in a package.</h2>
-        <p class="lead">
-          Listed here rather than discovered on an invoice. Neither applies unless you
-          ask for it, and you get the exact figure before any work starts.
+{#- ══════════════ THE FOUR BUILDS ══════════════ #}
+<section class="int-wrap pk-sec" id="builds" aria-labelledby="builds-h">
+  <div class="pk-head">
+    <h2 id="builds-h" class="int-h2">Or start from a build made for your trade.</h2>
+    <p class="int-lede">Three are the Standard package with the extras already chosen for the trade. The Restaurant is a fixed, curated build of its own. Pick the closest one. <a class="alv-tlink" href="/builds/">Compare all four builds</a></p>
+  </div>
+
+  <div class="pk-builds-wrap" data-spot="builds">
+  <ul class="pk-builds">
+    {%- for b in bundles %}
+    <li class="pk-build" id="build-{{ b.slug }}" style="--hue: {{ b.hue }}">
+      <div class="pk-build-top">
+        <svg class="int-ic pk-build-ic" aria-hidden="true"><use href="#i-{{ b.icon }}"/></svg>
+        <h3 class="pk-build-name">{{ b.name }}</h3>
+      </div>
+      <p class="pk-build-price"><b>{{ b.price | price | safe }}</b><span>one-time</span></p>
+      {#- Everything below the price. On a phone (packages.ts) it folds away
+          behind a See more button; elsewhere it is simply the card. #}
+      <div class="pk-build-more" id="more-{{ b.slug }}"><div class="pk-build-more-in">
+      <p class="pk-build-trades">{{ b.trades }}</p>
+      <p class="pk-build-for">{{ b.for }}</p>
+
+      <div class="pk-build-parts">
+        <p class="pk-build-base">
+          {%- if b.relation == "fixed" %}A fixed, curated build of its own. What is listed is what is included.
+          {%- else %}{{ b.basedOn }}, with the picks made for you.{% endif %}
         </p>
+        <ul class="pk-build-list">
+          {%- for i in b.includes %}
+          <li class="pk-part pk-part--{{ i.kind }}">
+            <span>{{ i.name }}</span>
+            <span class="pk-part-kind">{% if i.kind == "power" %}Feature{% elif i.kind == "page" %}Page{% else %}Included{% endif %}</span>
+          </li>
+          {%- endfor %}
+        </ul>
+        <a class="alv-tlink pk-build-see" href="/builds/{{ b.slug }}/">See the {{ b.shortName }} build</a>
       </div>
 
-      <div class="reveal">
-        {%- set group = extras %}
-        {%- set bare = true %}
-        {% include "components/price-list.njk" %}
-      </div>
+      <a class="alv-tlink pk-build-go" href="/contact/?package={{ b.slug }}">Start with {{ b.shortName }}</a>
+      </div></div>
+    </li>
+    {%- endfor %}
+  </ul>
+  <span class="pk-spot" aria-hidden="true"></span>
+  </div>
+</section>
 
-      <div class="sec-close reveal" style="margin-top: 34px;">
-        <p>Everything else I sell on its own, from a $30 text change to a $400 ordering system, is on one page.</p>
-        <a class="btn btn-ghost" href="/pricing/">See the full price list</a>
-      </div>
+{#- ══════════════ NOT SURE + CARE PLANS, side by side ══════════════
+    The question a reader still has after the builds, and the monthly cost
+    every build carries, in one row. #}
+<section class="int-wrap pk-duo" aria-label="Choosing, and the monthly care plan">
+  <div class="int-cta pk-cta">
+    <span class="key-cone" aria-hidden="true"></span>
+    <span class="key-pool" aria-hidden="true"></span>
+    <h2 class="int-cta-h">{{ cta.heading }}</h2>
+    <p>{{ cta.lede }}</p>
+    <div class="int-cta-act">
+      {%- for a in cta.actions %}
+      <a class="{{ 'alv-btn' if loop.first else 'alv-tlink' }}" href="{{ a.url }}">{{ a.label }}</a>
+      {%- endfor %}
     </div>
-  </section>
+  </div>
 
+  <div class="pk-care" id="care" aria-labelledby="care-h">
+    <h2 id="care-h" class="pk-care-h">Care plans</h2>
+    <p class="pk-care-lede">Every build includes one. {{ careplans.minimum }}</p>
+    <ul class="pk-care-plans">
+      {%- for p in careplans.plans %}
+      <li class="pk-plan{% if p.recommended %} pk-plan--rec{% endif %}">
+        <p class="pk-plan-top"><span class="pk-plan-name">{{ p.name }}</span><b>{{ p.price | price | safe }}</b><span class="pk-plan-per">a month</span></p>
+        <p class="pk-plan-short">{{ p.short }}</p>
+      </li>
+      {%- endfor %}
+    </ul>
+    <a class="alv-tlink pk-care-go" href="/services/care-plans/">What each plan covers</a>
+  </div>
+</section>
 
-  {%- set processHeading = "How a project runs." %}
-  {% include "components/process-steps.njk" %}
+{#- ══════════════ COMPARISON ══════════════
+    Only the rows where the packages differ. What every package shares is
+    said once, above the chart. A lit column (the site's bar across its
+    top, a faint wash beneath) glides to the chosen package; each column
+    head is a label for that package's radio, so the chart chooses too. #}
+{%- set shared = [] %}
+{%- set differs = [] %}
+{%- for f in packages.features %}
+{%- set a = packages.tiers[0].has[f.key] %}
+{%- if packages.tiers[1].has[f.key] === a and packages.tiers[2].has[f.key] === a %}{% set _ = shared.push(f) %}{% else %}{% set _ = differs.push(f) %}{% endif %}
+{%- endfor %}
+<section class="int-wrap pk-sec" id="compare" aria-labelledby="compare-h">
+  <div class="pk-head">
+    <h2 id="compare-h" class="int-h2">Side by side.</h2>
+  </div>
 
+  <ul class="pk-shared" aria-label="In every package">
+    <li class="pk-shared-lead">In every package</li>
+    {%- for f in shared %}
+    <li><svg class="int-ic" aria-hidden="true"><use href="#i-check"/></svg>{{ f.label }}</li>
+    {%- endfor %}
+  </ul>
 
-  <!-- ══════════════ PRICING FAQ ══════════════ -->
-  <section class="sec band sec-line">
-    <div class="wrap wrap-mid">
-      <div class="sec-head reveal" style="margin-bottom: 30px;">
-        <h2>Questions about the price.</h2>
-      </div>
-      <div class="faq reveal">
-        {%- for item in policies.faq %}
-        {%- if loop.index <= 4 %}
-        <details>
-          <summary>{{ item.q }}</summary>
-          <div class="faq-a">{{ item.a }}</div>
-        </details>
-        {%- endif %}
-        {%- endfor %}
-      </div>
-
-      <div class="sec-close reveal" style="margin-top: 30px;">
-        <p>How payment, ownership and cancellation work is written out in plain English too.</p>
-        <a class="btn btn-ghost" href="/policies/">Read the policies</a>
-      </div>
+  <div class="int-cmp-wrap pk-cmp-wrap">
+    <div class="pk-cmp-in">
+      <span class="pk-cmp-slab" aria-hidden="true"></span>
+      <table class="pk-cmp">
+        <caption class="alv-sr-only">Where the three packages differ</caption>
+        <thead>
+          <tr>
+            <th scope="col"><span class="alv-sr-only">Feature</span></th>
+            {%- for t in packages.tiers %}
+            <th scope="col" data-col="{{ t.slug }}">
+              <label class="pk-cmp-pick" for="pk-{{ t.slug }}">
+                <span class="pk-cmp-name">{{ t.name }}</span>
+                <span class="pk-cmp-price">{{ t.price | price | safe }}</span>
+              </label>
+            </th>
+            {%- endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {%- for f in differs %}
+          <tr>
+            <th scope="row">{{ f.label }}</th>
+            {%- for t in packages.tiers %}
+            {%- set v = t.has[f.key] %}
+            {%- set pv = packages.tiers[loop.index0 - 1].has[f.key] if not loop.first else v %}
+            <td data-col="{{ t.slug }}"{% if not loop.first and v !== pv and v !== false %} class="is-up"{% endif %}>
+              {%- if v === true %}<svg class="int-ic" aria-hidden="true"><use href="#i-check"/></svg><span class="alv-sr-only">Included</span>
+              {%- elif v === false %}<span class="int-cmp-dash" aria-hidden="true"></span><span class="alv-sr-only">Not included</span>
+              {%- else %}{{ v | replace("Up to ", "") }}{% endif %}
+            </td>
+            {%- endfor %}
+          </tr>
+          {%- endfor %}
+        </tbody>
+      </table>
     </div>
-  </section>
+  </div>
+  <p class="pk-note">{{ packages.pagesNote }} {{ packages.revisionRule }}</p>
+</section>
 
+{#- ══════════════ OUTSIDE EVERY PACKAGE ══════════════ #}
+<section class="int-wrap pk-sec" id="extras" aria-labelledby="extras-h">
+  <div class="pk-head">
+    <h2 id="extras-h" class="int-h2">Not in a package.</h2>
+    <p class="int-lede">{{ extras.blurb }}</p>
+  </div>
 
-  {%- set ctaHeading = "Not sure which one fits?" %}
-  {%- set ctaLead = "Tell me what the business does and I will say plainly which package it needs, even if that is the cheapest one." %}
-  {% include "components/cta-band.njk" %}
-
-</main>
+  <ul class="pk-extras">
+    {%- for i in extras.items %}
+    <li class="pk-extra">
+      <p class="pk-extra-price">{{ i.price | money | safe }}</p>
+      <h3 class="pk-extra-name">{{ i.name }}</h3>
+      <p class="pk-extra-note">{{ i.note }}</p>
+    </li>
+    {%- endfor %}
+  </ul>
+</section>

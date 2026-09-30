@@ -5,7 +5,17 @@
      src/home/reel-geometry.ts (layoutFor / geoFor) and the session key in
      src/home/opening.ts. Without JS none of this runs and the static page
      is untouched. If the enhancement has not taken over within 4.5s
-     (script blocked, failed or very slow) the static page comes back. */
+     (script blocked, failed or very slow) the static page comes back.
+
+     The opening yields to the visitor from the very first moment. Until
+     home.js has loaded and measured, the room is dark; a visitor who
+     scrolls, or presses a scrolling key, in that time must not be left
+     looking at black while the page waits on fonts. The first such input is
+     latched here (window.__alvIntent, and an "alv-intent" event), the dark
+     start state is dropped at once so the page shows itself, and home.js
+     then skips the opening instead of waiting to play it. Pointer presses
+     are deliberately not intent: a press on a link is a click, not a
+     request to move the page. */
   (function () {
     var r = document.documentElement;
     if (/\bno-motion\b/.test(r.className)) return;
@@ -15,7 +25,24 @@
     r.className += " alv-enhance" + (held ? " alv-reel" : "");
     var seen = false;
     try { seen = sessionStorage.getItem("alv-home-opened") === "1"; } catch (e) {}
-    if (!seen && !location.hash) r.className += " alv-opening";
+    if (!seen && !location.hash) {
+      r.className += " alv-opening";
+      var y0 = scrollY;
+      var KEYS = { ArrowDown: 1, ArrowUp: 1, PageDown: 1, PageUp: 1, Home: 1, End: 1, " ": 1, Spacebar: 1 };
+      var opts = { passive: true, capture: true };
+      var TYPES = ["wheel", "touchmove", "keydown", "scroll"];
+      var latch = function (e) {
+        // A scroll counts only if the page actually moved: the browser
+        // restoring a position is not the visitor asking to move on.
+        if (e.type === "scroll" && Math.abs(scrollY - y0) < 3) return;
+        if (e.type === "keydown" && !KEYS[e.key]) return;
+        window.__alvIntent = true;
+        r.classList.remove("alv-opening");
+        TYPES.forEach(function (t) { removeEventListener(t, latch, opts); });
+        window.dispatchEvent(new Event("alv-intent"));
+      };
+      TYPES.forEach(function (t) { addEventListener(t, latch, opts); });
+    }
     setTimeout(function () {
       if (window.__alvHomeReady) return;
       r.classList.remove("alv-enhance", "alv-reel", "alv-opening");

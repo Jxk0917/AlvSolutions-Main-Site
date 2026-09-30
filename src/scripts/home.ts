@@ -39,8 +39,8 @@ async function boot(): Promise<void> {
   try {
     await Promise.race([
       Promise.all([
-        document.fonts.load('620 100px "Bricolage Grotesque Variable"', "ALVSolutions"),
-        document.fonts.load('700 100px "Bricolage Grotesque Variable"', "ALV"),
+        document.fonts.load('640 100px "Archivo Variable"', "ALVSolutions"),
+        document.fonts.load('620 100px "Bricolage Grotesque Variable"', "Built around your business."),
         document.fonts.load('italic 560 20px "Instrument Sans Variable"', "ALVSolutions"),
       ]),
       wait(2500),

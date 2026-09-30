@@ -1,5 +1,12 @@
 # AlvSolutions brand kit
 
+> **Superseded for the website.** The site now runs on the master identity: the
+> Dark Precision ALV symbol plus an Archivo "ALVSolutions" wordmark, in Screen
+> Light neutrals (see `src/_includes/components/identity.njk` and
+> `src/styles/identity.css`). Its favicon set is built by `tools/build-favicons.mjs`.
+> Everything below documents the earlier blue kit, kept for reference and for
+> the launch email, which still points at `alv-mark.png`.
+
 Revised September 2026. Replaces `Brand Guidelines.png`, which is kept for reference only.
 Share `brand/alvsolutions-brand-guidelines.png`.
 

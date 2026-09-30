@@ -22,6 +22,8 @@
 
   --sl-f-brand: "Bricolage Grotesque Variable", system-ui, sans-serif;
   --sl-f-text: "Instrument Sans Variable", system-ui, sans-serif;
+  /* The logo's wordmark only. Page typography stays Bricolage + Instrument Sans. */
+  --sl-f-logo: "Archivo Variable", system-ui, sans-serif;
   --sl-gutter: clamp(18px, 4vw, 56px);
   --sl-e-out: cubic-bezier(0.16, 1, 0.3, 1);
 

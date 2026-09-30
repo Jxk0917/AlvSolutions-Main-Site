@@ -9,7 +9,7 @@
   .h-fly/[data-intro]/[data-wm], [data-copy], [data-panel], [data-obj],
   [data-go], [data-work-live] and the .h-track steps.
 #}
-{% from "components/identity.njk" import wordmark, signature %}
+{% from "components/identity.njk" import lockup, signature %}
 {% from "home/macros.njk" import device %}
 <section class="h-work" id="top" aria-label="ALVSolutions and its work">
   <div class="room h-room" data-room="work">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="h-fly" data-fly aria-hidden="true">
-      <div class="wm-stage" data-intro>{{ wordmark("hero", "", "data-wm") }}</div>
+      <div class="wm-stage" data-intro>{{ lockup("hero", "", "data-wm") }}</div>
     </div>
 
     <div class="h-col">

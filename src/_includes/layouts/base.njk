@@ -30,7 +30,7 @@
 
   <title>{{ metaTitle }}</title>
   <meta name="description" content="{{ metaDesc }}" />
-  <meta name="theme-color" content="{{ themeColor or '#070C14' }}" />
+  <meta name="theme-color" content="{{ themeColor or '#0B0B0B' }}" />
   <link rel="canonical" href="{{ canonicalUrl }}" />
   {#- Utility pages like /connect/ (a QR/business-card landing page) opt out of
       search indexing per-page without touching robots.txt or any other page. #}
@@ -69,11 +69,13 @@
     }
   }
   </script>
-  <!-- Brand kit favicon: white mark on Deep Blue, legible in light and dark tabs.
-       PNG fallback for browsers without SVG favicons. -->
+  <!-- The ALV symbol. The SVG flips its ink with the tab's colour scheme; the
+       PNGs (light symbol on the room tile) are for browsers without SVG
+       favicons, search results and iOS. Built by Brand_Assets/tools/build-favicons.mjs. -->
   <link rel="icon" href="/assets/brand/alv-favicon.svg" type="image/svg+xml" />
   <link rel="icon" href="/assets/brand/alv-favicon-32.png" type="image/png" sizes="32x32" />
-  <link rel="apple-touch-icon" href="/assets/brand/alv-badge-256.png" />
+  <link rel="icon" href="/assets/brand/alv-favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="apple-touch-icon" href="/assets/brand/alv-badge-180.png" />
 
   <!-- Self-hosted variable fonts: Manrope for headings, Geist for body. Preloaded
        because they are declared inside styles.css, so without this the browser
@@ -92,6 +94,9 @@
        still renders in Manrope/Geist until it is migrated. -->
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Bricolage-Grotesque-Variable.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Instrument-Sans-Variable.woff2" crossorigin />
+  <!-- Archivo sets the logo's wordmark in every header and footer, and nothing
+       else, so it is preloaded for the same reason (declared in the stylesheet). -->
+  <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/Archivo-Variable.woff2" crossorigin />
   <!-- Italic is self-hosted and available via @font-face (the signing
        treatment), but it's used sparingly enough not to earn a preload. -->
   {%- if preloadImage %}

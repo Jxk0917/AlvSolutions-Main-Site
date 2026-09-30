@@ -21,6 +21,10 @@
   gap: 24px;
 }
 .alv-nav-mark {
+  /* A flex container, so the lockup's box is the link's box: an inline-flex
+     child would sit on a line-box strut and hang ~4px off-centre. */
+  display: inline-flex;
+  align-items: center;
   flex: none;
   text-decoration: none;
   border-radius: 4px;

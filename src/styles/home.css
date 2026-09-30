@@ -656,6 +656,9 @@
 /* ---- The opening: the name, opening, then flying to the nav ---- */
 .h-fly { position: absolute; left: 0; top: 0; z-index: 250; transform-origin: 0 0; will-change: transform; }
 .alv-opening .h-fly { display: block; }
+/* A flex stage, so the lockup's own box is the stage's box (no line-box strut
+   under it): the flight measures this box against the nav lockup's. */
+.wm-stage { display: flex; }
 .alv-opening .h-fly.is-home { visibility: hidden; }
 .alv-opening [data-intro]:not(.is-ready) [data-wm] { visibility: hidden; }
 /* The room stops isolating its layers so the name can pass over the nav. */

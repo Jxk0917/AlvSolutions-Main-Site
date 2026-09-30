@@ -1,14 +1,32 @@
 {#
-  Reusable Phase 1 identity primitives: the live-set wordmark, its compact
-  ALV form, and the italic signing treatment used to credit ALVSolutions on
-  work that carries someone else's name. Same type throughout, never a
-  symbol, and never a client's colour.
+  Reusable identity primitives (the master identity, which supersedes the
+  Phase 1 text-only "no symbol" decision).
 
-  wordmark(size, cls, attrs): `cls` adds classes, `attrs` adds raw
-  attributes (e.g. data-wm for the opening motion's hook).
+  The ALV symbol is the original Dark Precision drawing, geometry unchanged:
+  a block raked 8deg, 78 wide x 88 tall on a 100 grid, split by a seam
+  (y 57 to 63), with an upright A knocked out of it. The A has no crossbar of
+  its own; the seam completes it. It takes its colour from `color`
+  (currentColor) and its cut from the shared #alvCut mask in icon-sprite.njk.
+
+  The wordmark is live text in Archivo (weight 640, normal width, -0.024em),
+  the one place Archivo is used; everything else stays Bricolage + Instrument
+  Sans. Neutral Screen Light ink only.
+
+    symbol(cls)          the bare symbol (a decorative svg)
+    mark(size, cls)      the compact mark: the symbol alone. Replaces the old
+                         text-only "ALV".
+    lockup(size, cls, attrs)
+                         symbol + ALVSolutions, horizontal. `size` picks
+                         alv-lockup--<size> (font-size drives everything: the
+                         symbol is 1.667em, the gap 0.611em). `attrs` adds raw
+                         attributes (data-wm marks the opening motion's hook).
+    signature(size)      the italic "Built by ALVSolutions" signing treatment
+                         used on work that carries someone else's name.
 #}
-{% macro wordmark(size="nav", cls="", attrs="") %}<span class="alv-wm alv-wm--{{ size }}{% if cls %} {{ cls }}{% endif %}"{% if attrs %} {{ attrs | safe }}{% endif %}><span class="alv-wm-alv">ALV</span><span class="alv-wm-sol">Solutions</span></span>{% endmacro %}
+{% macro symbol(cls="") %}<svg class="alv-symbol{% if cls %} {{ cls }}{% endif %}" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor" mask="url(#alvCut)"><path d="M17.25 6 L95.25 6 L88.01 57 L10.01 57 Z"/><path d="M9.15 63 L87.15 63 L82.75 94 L4.75 94 Z"/></g></svg>{% endmacro %}
 
-{% macro mark(size="m") %}<span class="alv-mark alv-mark--{{ size }}">ALV</span>{% endmacro %}
+{% macro mark(size="m", cls="") %}<svg class="alv-symbol alv-mark alv-mark--{{ size }}{% if cls %} {{ cls }}{% endif %}" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor" mask="url(#alvCut)"><path d="M17.25 6 L95.25 6 L88.01 57 L10.01 57 Z"/><path d="M9.15 63 L87.15 63 L82.75 94 L4.75 94 Z"/></g></svg>{% endmacro %}
+
+{% macro lockup(size="nav", cls="", attrs="") %}<span class="alv-lockup alv-lockup--{{ size }}{% if cls %} {{ cls }}{% endif %}"{% if attrs %} {{ attrs | safe }}{% endif %}><svg class="alv-symbol alv-lockup-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor" mask="url(#alvCut)"><path d="M17.25 6 L95.25 6 L88.01 57 L10.01 57 Z"/><path d="M9.15 63 L87.15 63 L82.75 94 L4.75 94 Z"/></g></svg><span class="alv-lockup-word">ALVSolutions</span></span>{% endmacro %}
 
 {% macro signature(size="foot") %}<span class="alv-sign alv-sign--{{ size }}"><span class="alv-sign-line"><span class="alv-sign-by">Built by</span><span class="alv-sign-name">ALVSolutions</span></span></span>{% endmacro %}

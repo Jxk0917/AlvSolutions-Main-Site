@@ -1,9 +1,10 @@
 /* ============================================================
    ALVSolutions - approved typography (Phase 1, locked)
 
-   Bricolage Grotesque Variable for display/identity (variable wdth 75-100%,
-   wght 200-800: the width axis the ALV wordmark motion needs is preserved
-   even though that motion isn't wired up in this pass). Instrument Sans
+   Bricolage Grotesque Variable for display (variable wdth 75-100%, wght
+   200-800; the width axis is kept in the file, though the logo no longer
+   uses it - the logo's own face, Archivo, is declared at the foot of this
+   file). Instrument Sans
    Variable for body/UI, regular and italic (the italic is reserved for the
    signing treatment). Self-hosted to match this repo's existing font
    convention rather than the exploration's @fontsource-variable packages;
@@ -37,6 +38,21 @@
   font-stretch: 75% 100%;
   font-style: italic;
   font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+    U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+/* Archivo Variable: the ALVSolutions logo only, never page typography. The
+   wordmark is set in it at weight 640 and normal width. This is the
+   weight-axis file (no width axis), exactly as the original Dark Precision
+   logo actually rendered; do not swap in a wdth build. block, not swap: the
+   logo must never flash in a fallback face. */
+@font-face {
+  font-family: "Archivo Variable";
+  src: url("/assets/fonts/Archivo-Variable.woff2") format("woff2-variations");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
     U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }

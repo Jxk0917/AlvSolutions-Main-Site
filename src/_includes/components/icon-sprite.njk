@@ -9,6 +9,19 @@
   The home page still inlines its icons. It is converted in the home-rewiring
   phase, not before: this sprite is additive so nothing already working moves.
 #}
+{#- The ALVSolutions symbol's one shared cut: the A, knocked out of the two
+    slabs. Every inline instance (identity.njk: symbol/mark/lockup) references
+    this mask, exactly as the original Dark Precision page did, so the
+    geometry is defined once. Kept in its own zero-size svg, not display:none,
+    which some browsers refuse to resolve masks from. -#}
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <mask id="alvCut" maskUnits="userSpaceOnUse" x="-40" y="-40" width="180" height="180">
+      <rect x="-40" y="-40" width="180" height="180" fill="#fff"/>
+      <path fill="#000" d="M44 19 L56 19 L78 83 L60 83 L50 33 L40 83 L22 83 Z"/>
+    </mask>
+  </defs>
+</svg>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
 

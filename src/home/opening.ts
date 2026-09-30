@@ -2,8 +2,8 @@
  * The homepage opening, as locked in Phase 3 (phase3-home.ts, playOpening):
  *
  *   1. darkness, then ALVSolutions' light comes up;
- *   2. the name opens inside it - the approved Phase 1 introduction, ALV
- *      widening on Bricolage's width axis into ALVSolutions;
+ *   2. the name opens inside it - the brand introduction: the ALV symbol
+ *      stands alone, then ALVSolutions unfolds out of it (identity/motions.ts);
  *   3. it goes to its place in the navigation, and the key moves to the words;
  *   4. the promise rises into that light;
  *   5. the work is there too, waiting in the dark.

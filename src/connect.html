@@ -5,14 +5,14 @@ description: Sergio Alvarez's digital contact card for ALVSolutions. Start a pro
 hideChrome: true
 noindex: true
 ---
+{% from "components/identity.njk" import lockup %}
 
 <main id="main" class="connect-page">
   <section class="connect">
 
     <div class="connect-card reveal">
       <a class="brand connect-brand" href="/" aria-label="{{ site.name }} home">
-        <img src="/assets/brand/alv-mark-reverse.svg" alt="" width="48" height="31" />
-        <span class="wordmark">Alv<span>Solutions</span></span>
+        {{ lockup("nav") }}
       </a>
 
       <div class="connect-id">

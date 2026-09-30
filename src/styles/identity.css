@@ -1,36 +1,63 @@
 /* ============================================================
-   ALVSolutions - identity primitives (Phase 1, locked)
+   ALVSolutions - master identity
 
-   Ported from phase1-final.css / phase2-screen-light.css.
+   The Dark Precision ALV symbol plus an Archivo wordmark, in Screen Light
+   neutrals. This supersedes Phase 1's text-only "no symbol" identity; the
+   signature at the foot of this file is unchanged. Markup lives in
+   components/identity.njk (symbol / mark / lockup).
+
+   Everything scales from one font-size: the symbol is 1.6667em square, the
+   gap 0.6111em, the wordmark 1em. At the nav's 18px that is the approved
+   30px symbol, 11px gap, 18px wordmark.
    ============================================================ */
-.alv-wm {
-  font-family: var(--sl-f-brand);
-  font-weight: 620;
-  font-optical-sizing: auto;
-  letter-spacing: -0.038em;
+
+/* The symbol. Colour is currentColor; the A is cut by the shared #alvCut
+   mask in icon-sprite.njk. Geometry is never restyled, only sized. */
+.alv-symbol {
+  display: block;
+  width: 1em;
+  height: 1em;
+  flex: none;
+  overflow: visible;
+}
+
+/* The compact mark: the symbol alone, where the full lockup will not fit or
+   is not wanted (avatars, tight credits). Replaces the old text "ALV". */
+.alv-mark {
+  color: var(--sl-ink1);
+}
+.alv-mark--m {
+  font-size: 30px;
+}
+.alv-mark--l {
+  font-size: clamp(64px, 9vw, 116px);
+}
+
+/* The horizontal lockup: symbol, then ALVSolutions. */
+.alv-lockup {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6111em;
+  font-size: 18px;
   line-height: 1;
+  letter-spacing: -0.024em;
   color: var(--sl-ink1);
   white-space: nowrap;
-  display: inline-block;
 }
-.alv-wm--nav {
-  font-size: 19px;
-  letter-spacing: -0.02em;
+.alv-lockup-mark {
+  width: 1.6667em;
+  height: 1.6667em;
 }
-.alv-wm--hero {
-  font-size: clamp(56px, 12vw, 172px);
-}
-/* Parts driven by the opening motion. Every property reads a custom property
-   that is unset at rest, and an unset variable falls back to the inherited
-   or initial value - full width, 620 weight, no transform, no mask. So at
-   rest ALV and Solutions are one even word; the 75%/700 compact form is only
-   the first frame of the motion, never the resting state. */
-.alv-wm-alv {
-  display: inline-block;
-  font-stretch: var(--alv-w);
-  font-weight: var(--alv-wght);
-}
-.alv-wm-sol {
+.alv-lockup-word {
+  font-family: var(--sl-f-logo);
+  font-weight: 640;
+  font-stretch: 100%;
+  line-height: 1;
+  /* Parts driven by the opening motion. Every property reads a custom
+     property that is unset at rest, and an unset variable falls back to the
+     inherited or initial value - full opacity, no transform, no mask, the
+     lockup's own tracking. So at rest the lockup is one even composition; the
+     symbol-alone first frame is only ever the first frame of the motion. */
   display: inline-block;
   letter-spacing: var(--sol-ls);
   opacity: var(--sol-op);
@@ -42,23 +69,13 @@
   transform: translateX(var(--shift));
 }
 
-/* The compact form: the same face closed to its narrowest width, a step
-   heavier so the narrower letters hold their weight at small sizes. */
-.alv-mark {
-  font-family: var(--sl-f-brand);
-  font-weight: 700;
-  font-stretch: 75%;
-  font-optical-sizing: auto;
-  letter-spacing: -0.02em;
-  line-height: 1;
-  color: currentColor;
-  white-space: nowrap;
+.alv-lockup--nav {
+  font-size: 18px;
 }
-.alv-mark--l {
-  font-size: clamp(64px, 9vw, 116px);
-}
-.alv-mark--m {
-  font-size: 30px;
+/* The homepage opening's large lockup: the same width the Phase 1 wordmark
+   held at each viewport (8.3 lockup-widths to the em). */
+.alv-lockup--hero {
+  font-size: clamp(38px, 8.7vw, 126px);
 }
 
 /* The maker signature: "Built by" in roman, "ALVSolutions" in italic. */

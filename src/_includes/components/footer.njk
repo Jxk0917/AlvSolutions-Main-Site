@@ -5,12 +5,12 @@
   site.city) rather than duplicating business information. Screen Light
   styling only.
 #}
-{% from "components/identity.njk" import wordmark %}
+{% from "components/identity.njk" import lockup %}
 <footer class="alv-foot">
   <div class="alv-wrap">
     <div class="alv-foot-grid">
       <div>
-        <a class="alv-nav-mark" href="/" aria-label="{{ site.name }}, home">{{ wordmark("nav") }}</a>
+        <a class="alv-nav-mark" href="/" aria-label="{{ site.name }}, home">{{ lockup("nav") }}</a>
         <p style="margin-top: 12px; max-width: 32ch;">{{ site.tagline }}</p>
         <p style="margin-top: 12px;">
           <a class="alv-foot-contact" href="mailto:{{ site.email }}">{{ site.email }}</a><br />

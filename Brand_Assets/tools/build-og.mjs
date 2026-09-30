@@ -1,24 +1,19 @@
-// Renders the website's social share image (og:image, 1200 x 630) and copies the logo
-// files the site uses into src/assets/brand.
+// Renders the website's social share image (og:image, 1200 x 630). Still the old-identity
+// artwork: the OG image is its own asset project and has not been redone yet.
 // Run from the repo root after build-logo.mjs and export-png.mjs:
 //   node Brand_Assets/tools/build-og.mjs
 import puppeteer from "puppeteer";
-import { copyFileSync, writeFileSync, rmSync } from "node:fs";
+import { writeFileSync, rmSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
 
 const SITE = "src/assets/brand";
 const url = (p) => pathToFileURL(resolve(p)).href;
 
-for (const [from, to] of [
-  ["Brand_Assets/logo/svg/alv-mark-reverse.svg", "alv-mark-reverse.svg"],
-  ["Brand_Assets/logo/svg/alv-favicon.svg", "alv-favicon.svg"],
-  ["Brand_Assets/logo/png/alv-favicon-32.png", "alv-favicon-32.png"],
-  ["Brand_Assets/logo/png/alv-badge-256.png", "alv-badge-256.png"],
-]) {
-  copyFileSync(from, resolve(SITE, to));
-  console.log(`copied ${to}`);
-}
+// The favicon, apple-touch badge and header mark used to be copied from the old
+// Brand_Assets/logo set here. They are now built from the approved ALV symbol by
+// build-favicons.mjs, so nothing is copied: doing so would put the old blue
+// identity back into src/assets/brand.
 
 // Left-aligned like the site's hero. Headline is the home page H1, so the card and
 // the page it previews say the same thing.

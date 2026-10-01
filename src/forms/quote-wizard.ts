@@ -440,14 +440,15 @@ export function initQuoteForm(form: HTMLFormElement): void {
   const wanted = params.get("package");
   if (wanted && names[wanted]) showTag(names[wanted]);
 
-  /* Service pages link to /contact/?service=brand-starter-kit. The request
+  /* Service pages link to /contact/?service=logo-design. The request
      starts from that service: named in the tag above the form, and the
      matching "What do you need?" option already ticked. */
   const services: Record<string, { label: string; need: string }> = {
-    "brand-asset-setup": { label: "Brand Asset Setup", need: "Existing logo / brand asset preparation" },
-    "brand-starter-kit": { label: "Brand Starter Kit", need: "Logo / branding" },
-    "custom-identity": { label: "Custom Identity", need: "Logo / branding" },
-    "social-web-banner-set": { label: "Social/Web Banner Set", need: "Social / web graphics" },
+    "logo-design": { label: "Logo Design", need: "Logo design" },
+    "brand-identity": { label: "Brand Identity", need: "Brand identity" },
+    "simple-social-graphic": { label: "Simple Social Graphic", need: "Simple social graphic" },
+    "custom-business-graphics": { label: "Custom Business Graphics", need: "Custom business graphics" },
+    "business-cards": { label: "Business Cards", need: "Business cards" },
   };
   const svc = services[params.get("service") ?? ""];
   if (svc) {
@@ -483,7 +484,7 @@ export function initQuoteForm(form: HTMLFormElement): void {
   /* A new website starts at the cheapest package, so once the request
      includes one (ticked, or arriving from a package or trade build) the
      budget choices begin there. The smaller ranges stay for services on
-     their own: a logo, a banner set, a page or booking added to a site the
+     their own: a logo, a social graphic, a page or booking added to a site the
      visitor already has. A choice that stops being offered is cleared, so a
      request never carries a website budget below the price of a website. */
   const arrivedForSite = Boolean(wanted && names[wanted]);

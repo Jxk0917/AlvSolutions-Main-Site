@@ -114,7 +114,7 @@ cta:
             {{ line("Features such as online booking or a quote request form") }}
             {{ line("Worth " + ((t.picks.pages * pagePrice + t.picks.power * powerPrice) | price) + " at the add-on price", true) }}
             {%- if t.has.booking %}{{ line("Booking integration " + (t.has.booking | lower) + ", on top of your power feature picks", prev and not prev.has.booking) }}{% endif %}
-            {%- if t.has.card %}{{ line("Business card, " + (t.has.card | lower), prev and not prev.has.card) }}{% endif %}
+            {%- if t.has.card %}{{ line("Business card " + (t.has.card | lower) + ", with print-ready files. Printing is not included.", prev and not prev.has.card) }}{% endif %}
           </ul>
           {%- else %}
           <p class="pk-part-val">Add as you need</p>

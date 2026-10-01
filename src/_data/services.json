@@ -334,98 +334,42 @@
     "processHeading": "How booking gets wired in."
   },
   {
-    "slug": "brand-asset-setup",
+    "slug": "logo-design",
     "family": "brand",
-    "name": "Brand Asset Setup",
-    "icon": "adjust",
-    "promise": "Your existing logo, prepared so it works properly on a website.",
-    "blurb": "Already have a logo? I prepare it for the web. No redesign.",
-    "noProcess": true,
-    "intro": [
-      "You have a logo, but only as a screenshot or a profile picture. On a website it looks soft or jagged.",
-      "I prepare it to load fast, sit properly on the page and show as the browser-tab icon. The logo itself is not redesigned.",
-      "A clean vector file gives the best result. I will tell you what you have before I start."
-    ],
-    "includes": [
-      "Web-ready logo files, prepared for your site",
-      "SVG and PNG versions, where your source artwork permits",
-      "Favicon package for browser tabs and home screens",
-      "Your logo exactly as it is, with no redesign"
-    ],
-    "pricing": {
-      "kind": "flat",
-      "price": 75,
-      "unit": "one-time, standalone",
-      "note": "For a logo you already have. If it needs rebuilding rather than preparing, the Brand Starter Kit is the next step."
-    },
-    "turnaroundNote": "Timing is agreed when you send the artwork. It depends mostly on the condition of the original file.",
-    "faq": [
-      {
-        "q": "What if I only have a low-quality image?",
-        "a": "I prepare what your artwork allows. A small or blurry image cannot be made sharp, and I will say so before I start. If the logo needs rebuilding, that is what the Brand Starter Kit is for."
-      },
-      {
-        "q": "Do I need this to order a website?",
-        "a": "No. If your logo is already in a usable shape, I use it as it is. This is for when it is not."
-      },
-      {
-        "q": "Will these files work for print, signs or embroidery?",
-        "a": "They are prepared for digital use. Digital files can be a starting point for print, signage, vinyl, decals or embroidery, but whether they suit physical production has to be confirmed with the vendor making the item, through their own proofing process."
-      }
-    ],
-    "related": [
-      "brand-starter-kit",
-      "social-web-banner-set",
-      "business-websites"
-    ]
-  },
-  {
-    "slug": "brand-starter-kit",
-    "family": "brand",
-    "name": "Brand Starter Kit",
+    "name": "Logo Design",
     "icon": "pencil",
-    "promise": "A straightforward, professional logo for a business that does not have one yet.",
-    "blurb": "Need a straightforward new logo? Two concepts, delivered web-ready.",
+    "promise": "A custom logo for your business, with two design directions to choose from.",
+    "blurb": "A custom logo: two design directions, two revision rounds, light and dark versions.",
     "noProcess": true,
     "intro": [
-      "A clean logo for the business with a name and no mark, built from type and simple shapes.",
-      "You get two different concepts. Pick one, send one round of revisions, and I finish it and deliver the files.",
-      "It is designed to read at small sizes, on light and dark backgrounds and as a favicon. Need a detailed emblem or a fuller set of variants? That is Custom Identity."
+      "A custom primary logo, designed for your business.",
+      "You get two design directions. Pick one, and it is refined through two revision rounds.",
+      "It is delivered in light and dark versions as final PNG and SVG files. Want colors, type and social assets around it? That is Brand Identity."
     ],
     "includes": [
-      "Two distinct logo concepts",
-      "One round of revisions on the concept you choose",
-      "Primary logo",
-      "SVG and PNG files",
-      "Light and dark variants",
-      "Icon or symbol version, where it applies",
-      "Favicon package"
+      "Custom primary logo",
+      "2 design directions",
+      "2 revision rounds",
+      "Light and dark versions",
+      "Final PNG and SVG files"
     ],
     "pricing": {
       "kind": "flat",
-      "price": 250,
+      "price": 200,
       "unit": "one-time, standalone",
-      "note": "Two concepts and one revision round are included. A round is one consolidated list of changes.",
+      "note": "Two design directions and two revision rounds are included. A round is one consolidated list of changes.",
       "extras": [
         {
-          "label": "Additional concept",
-          "price": 35
-        },
-        {
-          "label": "Additional revision round",
+          "label": "Additional design direction",
           "price": 50
         }
       ]
     },
-    "turnaroundNote": "Timing is agreed when we start. It depends on how quickly you choose a concept and send your revision notes.",
+    "turnaroundNote": "Timing is agreed when we start. It depends on how quickly you choose a direction and send your revision notes.",
     "faq": [
       {
         "q": "What kind of logos does this cover?",
         "a": "Wordmarks, monograms, typography-based marks and simple geometric or custom symbols. Detailed mascots, hand-drawn illustration and specialized lettering are outside what I do in-house."
-      },
-      {
-        "q": "What if I want more concepts or more revisions?",
-        "a": "An additional concept is $35 and an additional revision round is $50. Either is agreed with you before I start on it."
       },
       {
         "q": "Can you check that my name and logo are not already trademarked?",
@@ -437,111 +381,161 @@
       }
     ],
     "related": [
-      "brand-asset-setup",
-      "social-web-banner-set",
+      "brand-identity",
+      "simple-social-graphic",
       "business-websites"
     ]
   },
   {
-    "slug": "custom-identity",
+    "slug": "brand-identity",
     "family": "brand",
-    "name": "Custom Identity",
+    "name": "Brand Identity",
     "icon": "sparkle",
-    "promise": "A more developed, custom identity for a business that needs more than a simple mark.",
-    "blurb": "Need something more custom? Developed marks and expanded variants, quoted to fit.",
+    "promise": "A logo plus the colors, type and social assets that make your business look consistent.",
+    "blurb": "Everything in Logo Design, plus colors, typography, social assets and a mini brand guide.",
     "noProcess": true,
     "intro": [
-      "For a business whose identity has to do more: a constructed mark, an emblem or badge, a logo that works across sizes and layouts.",
-      "It is scoped to the job. We talk it through, I quote it, and you approve the price before I start.",
-      "Built in-house for digital use: your website, social profiles and listings, with the files that go with them."
+      "Everything in Logo Design, plus the pieces that make a business look the same everywhere.",
+      "A secondary logo or mark, a color palette and a typography system set the look. A social profile image and cover assets put it to work.",
+      "A mini brand guide pulls it together, so you can keep using it consistently."
     ],
     "includes": [
-      "A custom-constructed mark, more developed than the Starter Kit",
-      "Emblems or badges, where they suit the business",
-      "Responsive logo variants, where appropriate",
-      "Expanded lockups and variants",
-      "Broader digital asset preparation",
-      "Concise usage guidance"
+      "Everything in Logo Design",
+      "Secondary logo/mark",
+      "Color palette",
+      "Typography system",
+      "Social profile image",
+      "Social cover/banner assets",
+      "Mini brand guide"
     ],
     "pricing": {
       "kind": "flat",
-      "heading": "Priced to the project.",
-      "from": true,
-      "price": 550,
-      "note": "Custom Identity projects start at $550 and are quoted according to complexity and deliverables. You approve the figure before any work begins."
+      "price": 350,
+      "unit": "one-time, standalone",
+      "note": "Includes everything in Logo Design: two design directions and two revision rounds."
     },
     "callout": {
       "title": "When it needs a specialist",
       "body": "Detailed mascots, character or hand-drawn illustration and specialized lettering are outside what I do in-house. I can coordinate an outside designer for $75, and you pay the designer or platform directly. If you only want a referral and would rather manage them yourself, there is no coordination charge."
     },
-    "turnaroundNote": "Timing is set in the quote, because it depends on the scope of the work.",
+    "turnaroundNote": "Timing is agreed when we start. It depends on how quickly you choose a direction and send your revision notes.",
     "faq": [
       {
-        "q": "Why is it a starting price rather than a fixed one?",
-        "a": "Identity work varies a lot. A single developed mark and a full set of lockups and variants are different amounts of work, so I quote it once I understand the scope, and you approve it before I start. $550 is where it starts, not a fixed price or a ceiling."
+        "q": "Is this a full brand manual?",
+        "a": "No. You get a mini brand guide, not a full brand manual."
       },
       {
         "q": "What if I need a mascot or hand-drawn illustration?",
         "a": "That is outside my in-house scope and may need an outside specialist. I can coordinate one for $75, which covers my project handling, while you pay the specialist or platform directly. If you would rather have a referral and manage them yourself, the $75 does not apply. Third-party costs are yours unless we agree otherwise in writing."
       },
       {
-        "q": "Is this a full brand guidelines package?",
-        "a": "No. It includes concise usage guidance covering how to use the logo and its variants, not a full brand manual."
-      },
-      {
         "q": "Do you check that my name and logo are clear to use?",
         "a": "No. I do not perform trademark searches or trademark clearance. Confirming that a name or mark does not infringe existing rights is your responsibility."
       },
       {
-        "q": "Will the files be ready for signage, vinyl, decals or embroidery?",
-        "a": "They can be prepared as digital files for those uses, but I do not supply validated production specifications. Final suitability is confirmed through the relevant vendor and their proofing process."
+        "q": "Can the files go straight to a printer, sign maker or embroiderer?",
+        "a": "The files are prepared for digital use and can be a starting point for physical production. I do not supply validated Pantone, CMYK, vinyl, thread or embroidery specifications, so final suitability is confirmed with the vendor through their own proofing process."
       }
     ],
     "related": [
-      "brand-starter-kit",
-      "social-web-banner-set",
+      "logo-design",
+      "simple-social-graphic",
       "business-websites"
     ]
   },
   {
-    "slug": "social-web-banner-set",
+    "slug": "simple-social-graphic",
     "family": "brand",
-    "name": "Social/Web Banner Set",
+    "name": "Simple Social Graphic",
     "icon": "photo",
-    "promise": "Cover graphics for the places customers look you up, matched to your logo.",
-    "blurb": "Google Business Profile and Facebook covers, plus one square graphic.",
+    "promise": "One social graphic, made in the branding you already have.",
+    "blurb": "One graphic in one size, using your existing branding and style.",
     "noProcess": true,
     "intro": [
-      "When someone looks you up, they often see a cover image before your site. A blank or mismatched one looks unfinished.",
-      "You get a matching cover for your Google Business Profile and Facebook page, plus one square graphic for posts, built from your logo and colors."
+      "One graphic, in one size, using the branding and style you already have.",
+      "You supply the final wording, assets and photos. I lay them out in your style.",
+      "One revision is included. Need more than one graphic or something more involved? That is Custom Business Graphics."
     ],
     "includes": [
-      "Google Business Profile cover",
-      "Facebook cover",
-      "One square social graphic or template",
-      "Built from your existing logo and brand colors"
+      "1 graphic",
+      "1 size",
+      "Uses your existing branding and style",
+      "You supply the final wording, assets and photos",
+      "1 revision"
     ],
     "pricing": {
       "kind": "flat",
-      "price": 60,
+      "price": 75,
       "unit": "one-time, standalone",
-      "note": "You need a usable logo first. If yours is not in good shape, start with Brand Asset Setup or the Brand Starter Kit."
+      "note": "One graphic, one size and one revision."
     },
-    "turnaroundNote": "Timing is agreed when you send your logo and any photos you want used.",
+    "turnaroundNote": "Timing is agreed when you send your wording, assets and photos.",
     "faq": [
       {
-        "q": "Do I need a logo before ordering?",
-        "a": "Yes, a usable one. If you have a logo that needs preparing, that is Brand Asset Setup. If you do not have one, that is the Brand Starter Kit."
+        "q": "Do I need a logo or brand style first?",
+        "a": "Yes. This uses the branding and style you already have. If you do not have a logo yet, start with Logo Design or Brand Identity."
       },
       {
-        "q": "Can I get other sizes or platforms?",
-        "a": "The set is the three pieces listed. Anything beyond them is a separate conversation, and I will tell you the price before I start."
+        "q": "Can I get other sizes or more graphics?",
+        "a": "This covers one graphic in one size. Anything beyond that is a Custom Business Graphics project, and I tell you the price before I start."
       }
     ],
     "related": [
-      "google-business-profile",
-      "brand-asset-setup",
+      "custom-business-graphics",
+      "logo-design",
       "business-websites"
+    ]
+  },
+  {
+    "slug": "custom-business-graphics",
+    "family": "brand",
+    "name": "Custom Business Graphics",
+    "icon": "grid",
+    "promise": "Custom-designed flyers, promotions, menus and other graphics for your business.",
+    "blurb": "Custom design projects, starting at $125 per design or project.",
+    "noProcess": true,
+    "getHeading": "Examples of what I design",
+    "intro": [
+      "Custom design for the materials your business shares and hands out.",
+      "Flyers, promotional designs, menus, service and pricing graphics, covers, multi-format designs and other custom business materials.",
+      "$125 is where an individual design project starts. Final pricing depends on scope, complexity, number of deliverables and required formats."
+    ],
+    "includes": [
+      "Flyers",
+      "Promotional designs",
+      "Menus",
+      "Service and pricing graphics",
+      "Covers",
+      "Multi-format designs",
+      "Other custom business materials"
+    ],
+    "pricing": {
+      "kind": "flat",
+      "heading": "Priced to the project.",
+      "from": true,
+      "price": 125,
+      "unit": "per design / project",
+      "note": "$125 is the starting price for an individual custom design project. It is not a bundle of everything listed. Final pricing depends on scope, complexity, number of deliverables and required formats, and you approve the price before any work begins."
+    },
+    "turnaroundNote": "Timing is set in the quote, because it depends on the scope of the work.",
+    "faq": [
+      {
+        "q": "Is $125 the price for everything listed?",
+        "a": "No. $125 is the starting price for one custom design project. The list shows the kinds of work I take on, not a bundle. Final pricing depends on scope, complexity, number of deliverables and required formats."
+      },
+      {
+        "q": "How do I know what my project costs?",
+        "a": "Tell me what you need, and I quote it. You approve the price before any work begins."
+      },
+      {
+        "q": "Can the files go straight to a printer, sign maker or embroiderer?",
+        "a": "The files are prepared for digital use and can be a starting point for physical production. I do not supply validated Pantone, CMYK, vinyl, thread or embroidery specifications, so final suitability is confirmed with the vendor through their own proofing process."
+      }
+    ],
+    "related": [
+      "simple-social-graphic",
+      "brand-identity",
+      "business-cards"
     ]
   },
   {
@@ -635,7 +629,7 @@
     ],
     "related": [
       "care-plans",
-      "social-web-banner-set",
+      "simple-social-graphic",
       "business-websites"
     ],
     "processHeading": "How the listing gets set up."
@@ -646,53 +640,36 @@
     "name": "Business cards",
     "icon": "card",
     "promise": "Cards that match the site exactly, so your brand looks the same on screen and in hand.",
-    "blurb": "$85 basic, $165 premium. Same brand as the site.",
+    "blurb": "$85 for the design alone. $175 or $225 with printing and delivery.",
     "intro": [
       "A card designed apart from your website looks like it: a different blue, a different typeface, a logo at another weight.",
       "I design it against the same brand as the site, so people who find you online and people handed your card meet the same business.",
-      "Basic is design only: print-ready files for the printer you choose, who confirms specifications and proofs. Premium is front and back on thick stock with a QR code, printed and delivered to you."
+      "Business Card Design is design only: print-ready files, and you handle and pay for printing. Premium Business Cards add professional printing on 16pt matte cardstock, delivered to your door, in 100 or 250 cards."
     ],
     "includes": [
-      "Designed against your site's exact brand",
-      "Files prepared for professional printing, with bleed and resolution set up",
-      "Front, or front and back on premium",
-      "QR code to your site on premium",
-      "Printed and delivered on premium"
+      "Custom double-sided design, front and back",
+      "1 revision on every option",
+      "Business Card Design: print-ready PDF and digital PNG",
+      "Premium Business Cards: 100 or 250 professionally printed cards",
+      "Premium 16pt matte cardstock",
+      "Delivered directly to your door"
     ],
     "pricing": {
       "kind": "levels",
+      "heading": "Three options, and the rule for each.",
       "cmpName": "a business card",
       "levels": [
         {
-          "label": "Basic",
+          "label": "Business Card Design",
           "price": 85,
-          "note": "Front design, files prepared for professional printing.",
+          "note": "Custom standard business-card design, front and back, with 1 revision. You receive a print-ready PDF and a digital PNG. This is design only: no physical cards, printing or delivery are included, and you handle and pay for printing. The Complete package includes this design and its print-ready files.",
           "addon": {
             "includedIn": [
               "complete"
             ]
           },
           "shot": {
-            "caption": "One face. Logo, name and the three ways to reach you.",
-            "faces": [
-              {
-                "label": "Front",
-                "w": 800,
-                "h": 457,
-                "src": "/assets/showcase/card-basic-front-800.jpg",
-                "small": "/assets/showcase/card-basic-front-400.jpg",
-                "alt": "The basic card: logo on the left, then name, phone number, city and website on a dark navy background."
-              }
-            ]
-          }
-        },
-        {
-          "label": "Premium",
-          "price": 165,
-          "note": "Front and back, thick stock, QR code, delivered.",
-          "addon": {},
-          "shot": {
-            "caption": "Front is the logo on its own. Flip it for your details and a QR code to your site.",
+            "caption": "Front and back, designed against your brand.",
             "faces": [
               {
                 "label": "Front",
@@ -700,7 +677,7 @@
                 "h": 457,
                 "src": "/assets/showcase/card-premium-front-800.jpg",
                 "small": "/assets/showcase/card-premium-front-400.jpg",
-                "alt": "The premium card, front: the full AlvSolutions logo lockup centred on a dark navy background with a gold underline."
+                "alt": "A business card, front: the full AlvSolutions logo lockup centred on a dark navy background with a gold underline."
               },
               {
                 "label": "Back",
@@ -708,7 +685,61 @@
                 "h": 457,
                 "src": "/assets/showcase/card-premium-back-800.jpg",
                 "small": "/assets/showcase/card-premium-back-400.jpg",
-                "alt": "The premium card, back: a scannable QR code beside the logo, with name, phone number, city and website on the right."
+                "alt": "A business card, back: a scannable QR code beside the logo, with name, phone number, city and website on the right."
+              }
+            ]
+          }
+        },
+        {
+          "label": "Premium, 100 cards",
+          "price": 175,
+          "note": "Custom double-sided design, 100 professionally printed cards on premium 16pt matte cardstock, delivered directly to your door. 1 revision is included.",
+          "addon": {},
+          "shot": {
+            "caption": "Front and back, printed and delivered.",
+            "faces": [
+              {
+                "label": "Front",
+                "w": 800,
+                "h": 457,
+                "src": "/assets/showcase/card-premium-front-800.jpg",
+                "small": "/assets/showcase/card-premium-front-400.jpg",
+                "alt": "A business card, front: the full AlvSolutions logo lockup centred on a dark navy background with a gold underline."
+              },
+              {
+                "label": "Back",
+                "w": 800,
+                "h": 457,
+                "src": "/assets/showcase/card-premium-back-800.jpg",
+                "small": "/assets/showcase/card-premium-back-400.jpg",
+                "alt": "A business card, back: a scannable QR code beside the logo, with name, phone number, city and website on the right."
+              }
+            ]
+          }
+        },
+        {
+          "label": "Premium, 250 cards",
+          "price": 225,
+          "note": "Custom double-sided design, 250 professionally printed cards on premium 16pt matte cardstock, delivered directly to your door. 1 revision is included.",
+          "addon": {},
+          "shot": {
+            "caption": "Front and back, printed and delivered.",
+            "faces": [
+              {
+                "label": "Front",
+                "w": 800,
+                "h": 457,
+                "src": "/assets/showcase/card-premium-front-800.jpg",
+                "small": "/assets/showcase/card-premium-front-400.jpg",
+                "alt": "A business card, front: the full AlvSolutions logo lockup centred on a dark navy background with a gold underline."
+              },
+              {
+                "label": "Back",
+                "w": 800,
+                "h": 457,
+                "src": "/assets/showcase/card-premium-back-800.jpg",
+                "small": "/assets/showcase/card-premium-back-400.jpg",
+                "alt": "A business card, back: a scannable QR code beside the logo, with name, phone number, city and website on the right."
               }
             ]
           }
@@ -716,39 +747,44 @@
       ],
       "factors": [
         {
-          "label": "Faces designed",
+          "label": "Design",
           "values": [
-            "Front only",
-            "Front and back"
+            "Custom standard design, front and back",
+            "Custom double-sided design",
+            "Custom double-sided design"
           ]
         },
         {
-          "label": "QR code to your site",
+          "label": "Physical cards printed",
           "values": [
             false,
+            "100 cards",
+            "250 cards"
+          ]
+        },
+        {
+          "label": "Premium 16pt matte cardstock",
+          "values": [
+            false,
+            true,
             true
           ]
         },
         {
-          "label": "Card stock",
+          "label": "Delivery to your door",
           "values": [
-            "Standard",
-            "Thick"
-          ]
-        },
-        {
-          "label": "You receive",
-          "values": [
-            "Files prepared for professional printing",
-            "Printed cards, delivered to you"
+            false,
+            true,
+            true
           ]
         },
         {
           "label": "For example",
           "example": true,
           "values": [
-            "Files you walk into a local print shop with",
-            "A finished box of cards in your hand"
+            "Files you take to the printer you choose",
+            "A finished box of 100 cards, delivered",
+            "A finished box of 250 cards, delivered"
           ]
         }
       ]
@@ -757,7 +793,11 @@
     "faq": [
       {
         "q": "Do you handle the printing?",
-        "a": "Premium is delivered printed. Basic is design only: you get files prepared for professional printing and take them to the printer you choose. They confirm final specifications and proofs."
+        "a": "On Premium Business Cards, yes: the cards are professionally printed and delivered directly to your door. Business Card Design is design only, so you get a print-ready PDF and a digital PNG and handle and pay for printing yourself."
+      },
+      {
+        "q": "Does the Complete package include printed cards?",
+        "a": "No. The Complete package includes the business card design and print-ready files only. It does not include printing, physical cards or delivery."
       }
     ],
     "related": [

@@ -75,7 +75,7 @@
 {%- from "components/identity.njk" import lockup %}
 {%- set p = svc.pricing %}
 {%- set brand = svc.family == "brand" %}
-{%- set startUrl = ("/contact/?service=" + svc.slug) if brand else "/contact/" %}
+{%- set startUrl = ("/contact/?service=" + svc.slug) if (brand or svc.slug == "business-cards") else "/contact/" %}
 {%- set myHue = hueFor(svc) | trim %}
 
 {#- How one level of a service sits in each package, from that level's own
@@ -165,7 +165,7 @@
 {%- set hasShots = shotFlags.length > 0 %}
 <section class="int-wrap sd-sec sd-sec--first" id="price" aria-labelledby="price-h">
   <div class="sd-head">
-    <h2 id="price-h" class="int-h2">Two levels, and the rule for each.</h2>
+    <h2 id="price-h" class="int-h2">{{ p.heading or "Two levels, and the rule for each." }}</h2>
     <p class="int-lede">Choose the one closest to your job. The rows below are what decides it, so the price is never a guess.</p>
   </div>
 
@@ -198,7 +198,7 @@
             <svg class="int-ic" aria-hidden="true"><use href="#i-refresh"/></svg><span>Show the back</span>
           </button>
           {%- endif %}
-          <span>{{ "Front and back. The logo on its own, then your details and a QR code to your site." if two else "One face: the logo, your name and how to reach you." }} This is my own card, in the treatment your business gets.</span>
+          <span>{{ "Front and back. The logo on its own, then your details." if two else "One face: the logo, your name and how to reach you." }} This is my own card, in the treatment your business gets.</span>
         </figcaption>
       </figure>
       {%- endif %}
@@ -295,24 +295,23 @@
   </div>
 </section>
 
-{#- The branding ladder: which of the three logo services fits depends on
-    the logo you already have. The bar rests under this page's rung; the key
+{#- The branding ladder: which of the two logo services fits depends on how
+    much of a brand you need. The bar rests under this page's rung; the key
     light glides along the rungs. -#}
 {%- if brand %}
 {%- set ladder = [
-  { slug: "brand-asset-setup", q: "Already have a logo?" },
-  { slug: "brand-starter-kit", q: "Need a new one?" },
-  { slug: "custom-identity", q: "Need something more developed?" }
+  { slug: "logo-design", q: "Need a logo?" },
+  { slug: "brand-identity", q: "Need the whole brand?" }
 ] %}
 {%- set onLadder = [] %}
 {%- for r in ladder %}{% if r.slug == svc.slug %}{% set _ = onLadder.push(1) %}{% endif %}{% endfor %}
 <section class="int-wrap sd-sec" aria-labelledby="ladder-h">
   <div class="sd-head">
-    <h2 id="ladder-h" class="int-h2">{{ "Where you start depends on the logo you have." if onLadder.length else "Need a usable logo first?" }}</h2>
-    {%- if not onLadder.length %}<p class="int-lede">The banner set is built from your logo. If it is not in shape yet, one of these comes first.</p>{% endif %}
+    <h2 id="ladder-h" class="int-h2">{{ "How much of a brand do you need?" if onLadder.length else "No logo or brand style yet?" }}</h2>
+    {%- if not onLadder.length %}<p class="int-lede">This work uses the branding you already have. If you do not have a logo yet, one of these comes first.</p>{% endif %}
   </div>
   <div class="sv-grid-wrap sd-ladder-wrap" data-spot=".sd-rung">
-    <ol class="sd-ladder">
+    <ol class="sd-ladder" style="--rungs: {{ ladder.length }}">
       {%- for r in ladder %}
       {%- set s = services | find("slug", r.slug) %}
       {%- set here = s.slug == svc.slug %}
@@ -418,7 +417,7 @@
     </div>
    </div>
     <div class="sd-get" data-get>
-      <h3 class="sd-get-h">What you get</h3>
+      <h3 class="sd-get-h">{{ svc.getHeading or "What you get" }}</h3>
       <ul class="sd-list sd-list--lit">
         {%- for i in svc.includes %}
         <li style="--d: {{ loop.index0 }}">{{ i }}</li>

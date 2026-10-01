@@ -238,7 +238,7 @@
 
 /* ---- the logo ladder: one floor line, the bar under where you stand ---- */
 .sd-ladder {
-  position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+  position: relative; display: grid; grid-template-columns: repeat(var(--rungs, 3), minmax(0, 1fr)); gap: 12px;
   margin: 0; padding: 0; list-style: none; border-bottom: 1px solid var(--sl-line2);
 }
 .sd-rung { position: relative; border-radius: 10px 10px 0 0; }

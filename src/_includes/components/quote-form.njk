@@ -163,9 +163,11 @@
         <span class="hint">Pick as many as apply.</span>
         <div class="opt-pair">
           <label class="opt"><input type="checkbox" name="needs" value="New website" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">New website</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Logo / branding" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Logo / branding</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Existing logo / brand asset preparation" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Existing logo / brand asset preparation</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Social / web graphics" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Social / web graphics</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Logo design" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Logo design</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Brand identity" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Brand identity</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Simple social graphic" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Simple social graphic</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Custom business graphics" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Custom business graphics</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Business cards" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Business cards</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Booking integration" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Booking integration</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Quote / estimate functionality" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Quote / estimate functionality</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Menu / services" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Menu / services</span></span></label>
@@ -216,7 +218,7 @@
         <legend class="fset-lg">Budget</legend>
         {#- A new website starts at the cheapest package, so the choices for a new
             website begin there; the smaller ranges are for services on their own
-            (a logo, a banner set, a page or booking added to a site you already
+            (a logo, a social graphic, a page or booking added to a site you already
             have). quote-wizard.ts swaps the two sets from what is ticked above. -#}
         {%- set siteFrom = packages.tiers[0].price | price %}
         <span class="hint" data-budget-hint="standalone">A range is enough. It steers the scope, it is not a commitment.</span>

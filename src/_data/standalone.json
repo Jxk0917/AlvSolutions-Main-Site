@@ -39,14 +39,13 @@
     "slug": "brand-and-design",
     "name": "Brand and design",
     "icon": "pencil",
-    "blurb": "A usable logo and the files to go with your site.",
+    "blurb": "A logo, a full identity, and the graphics your business uses.",
     "items": [
-      { "name": "Brand Asset Setup",                 "price": 75,  "note": "You already have a logo. Web-ready files and a favicon, no redesign.", "service": "brand-asset-setup" },
-      { "name": "Brand Starter Kit",                 "price": 250, "note": "A straightforward new logo. Two concepts, one revision round, SVG and PNG, light and dark, favicon.", "service": "brand-starter-kit", "brief": "A new logo: two concepts, one revision round, every file you need." },
-      { "name": "Additional logo concept",           "price": { "plus": 35 }, "note": "Added to the Brand Starter Kit." },
-      { "name": "Additional logo revision round",    "price": { "plus": 50 }, "note": "Added to the Brand Starter Kit." },
-      { "name": "Custom Identity",                   "price": { "from": 550 }, "note": "A more developed identity, quoted by complexity and deliverables.", "service": "custom-identity" },
-      { "name": "Social/Web Banner Set",             "price": 60,  "note": "Google Business Profile cover, Facebook cover and one square graphic.", "service": "social-web-banner-set" },
+      { "name": "Logo Design",                       "price": 200, "note": "A custom primary logo. Two design directions, two revision rounds, light and dark versions, final PNG and SVG files.", "service": "logo-design", "brief": "A custom logo: two design directions, two revision rounds, every file you need." },
+      { "name": "Additional logo design direction", "price": { "plus": 50 }, "note": "Added to Logo Design, beyond the two directions included." },
+      { "name": "Brand Identity",                    "price": 350, "note": "Everything in Logo Design, plus a secondary mark, color palette, typography, social profile and cover assets, and a mini brand guide.", "service": "brand-identity" },
+      { "name": "Simple Social Graphic",             "price": 75,  "note": "One graphic in one size, in your existing branding. You supply the wording, assets and photos. One revision.", "service": "simple-social-graphic" },
+      { "name": "Custom Business Graphics",          "price": { "from": 125 }, "note": "Starting price for one custom design project, such as a flyer, menu or promotion. Not a bundle. Final price depends on scope, complexity, deliverables and formats.", "service": "custom-business-graphics" },
       { "name": "Outside specialist coordination",   "price": { "plus": 75 }, "note": "Only for work outside what I do in-house. You pay the specialist directly. A referral alone carries no charge.", "brief": "For work outside what I do in-house. You pay the specialist directly." }
     ]
   },
@@ -56,8 +55,9 @@
     "icon": "card",
     "blurb": "The same brand as the site, on paper and on your team.",
     "items": [
-      { "name": "Business card, basic",              "price": 85,  "note": "Front design. Files prepared for professional printing.", "service": "business-cards" },
-      { "name": "Business card, premium",            "price": 165, "note": "Front and back, thick stock, QR code, delivered.", "service": "business-cards" },
+      { "name": "Business Card Design",              "price": 85,  "note": "Front and back, 1 revision, print-ready PDF and digital PNG. Design only: you handle and pay for printing.", "service": "business-cards" },
+      { "name": "Premium Business Cards, 100 cards", "price": 175, "note": "Custom double-sided design and 100 printed cards on premium 16pt matte cardstock, delivered to your door. 1 revision.", "service": "business-cards" },
+      { "name": "Premium Business Cards, 250 cards", "price": 225, "note": "Custom double-sided design and 250 printed cards on premium 16pt matte cardstock, delivered to your door. 1 revision.", "service": "business-cards" },
       { "name": "Shirt design",                    "price": { "soon": true }, "note": "Not open for orders yet. Ask and I will tell you when it is.", "service": "shirt-design", "brief": "Not open for orders yet." }
     ]
   },

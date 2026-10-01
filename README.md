@@ -87,7 +87,7 @@ is a snapshot, so trust the data files over this paragraph.
 - **Packages:** Foundation $650 (up to 3 pages, 1 revision round), Standard
   $1,050 (up to 5, 2 rounds, 3 page picks and 1 power feature), Complete $1,450
   (up to 7, 3 rounds, 5 page picks and 2 power features, plus booking
-  integration and a basic business card design). **Page limits are totals**: page
+  integration and a business card design with print-ready files, no printing). **Page limits are totals**: page
   picks fit inside them.
 - **Care plans:** Host $45/mo, Grow $95/mo. 3-month minimum, then 30 days' notice.
 - **Picks:** eight page add-ons at $125, six power features at $225, one small

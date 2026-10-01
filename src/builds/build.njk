@@ -19,8 +19,8 @@
       return {
         hue: b.hue,
         icon: b.icon,
-        back: { label: "Back to what I build", url: "/builds/" },
-        crumbs: [{ label: "What I build", url: "/builds/" }, { label: b.name }],
+        back: { label: "Back to industry builds", url: "/builds/" },
+        crumbs: [{ label: "Industry builds", url: "/builds/" }, { label: b.name }],
         heading: b.name,
         lede: b.for,
         actions: [
@@ -42,8 +42,8 @@
 ---
 {#
   ONE BUILD (/builds/<slug>/): the page behind each card on /builds/. The
-  builds are the industry-build system ("What I build"); the portfolio of
-  concept sites is Work (/work/), and every price is owned by /pricing/.
+  builds are the industry-build system ("Industry builds"); the portfolio of
+  concept sites is What I Build (/work/), and every price is owned by /pricing/.
     1. what is in it: the build's own parts as slots (the blueprint screen,
        interior.css), beside its price and who it is for;
     2. for the three builds that are the Standard package with the picks
@@ -112,9 +112,9 @@
 <section class="int-wrap bd-sec" aria-labelledby="bd-work-h">
   <div class="int-sheet bd-work">
     <h2 id="bd-work-h" class="int-h2">See a concept site for this trade</h2>
-    <p>{{ concept.name }} is a concept build for {{ concept.showcase.business | default("this kind of business") }}, shown in Work. It is fictional, made to show the finished work.</p>
+    <p>{{ concept.name }} is a concept build for {{ concept.showcase.business | default("this kind of business") }}, shown in What I Build. It is fictional, made to show the finished work.</p>
     <div class="int-cta-act">
-      <a class="alv-tlink" href="/work/#{{ concept.slug }}">See {{ concept.name }} in Work</a>
+      <a class="alv-tlink" href="/work/#{{ concept.slug }}">See {{ concept.name }} in What I Build</a>
     </div>
   </div>
 </section>

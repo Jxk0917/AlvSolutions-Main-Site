@@ -11,12 +11,13 @@
   "_foundersSpecial": "Public Founders Special spots still open. Edit this one number by hand as clients secure a spot (agreement signed AND 50% deposit received); every Founders Special panel on the site reads it. Set to 0 to hide the promotion everywhere.",
   "foundersSpecial": { "spots": 3 },
 
-  "_primaryNav": "The approved primary navigation, and nothing else: the logo is the Home link, then Work (/work/, the portfolio of concept builds), What I build (/builds/, the industry-build system), Services (/services/), Pricing (/pricing/), then Start a project as the separate button. No Home, About or Packages item: About and Packages are reached from the footer and in-page links.",
+  "_primaryNav": "The approved primary navigation: the logo is the Home link, then Packages (/packages/, the three packages and the four industry builds), Services (/services/), What I Build (/work/, the portfolio of concept builds), Pricing (/pricing/, the detailed pricing authority), About (/about/), then Start a project as the separate button.",
   "primaryNav": [
-    { "label": "Work",         "url": "/work/" },
-    { "label": "What I build", "url": "/builds/" },
+    { "label": "Packages",     "url": "/packages/" },
     { "label": "Services",     "url": "/services/" },
-    { "label": "Pricing",      "url": "/pricing/" }
+    { "label": "What I Build", "url": "/work/" },
+    { "label": "Pricing",      "url": "/pricing/" },
+    { "label": "About",        "url": "/about/" }
   ],
 
   "_footerGroups": "Three groups (Build / Services / ALVSolutions). Every link points at a route or anchor that exists; check-site.mjs and the audit script fail the build if one stops resolving.",
@@ -24,8 +25,8 @@
     {
       "title": "Build",
       "links": [
-        { "label": "What I build", "url": "/builds/" },
-        { "label": "Packages",     "url": "/packages/" },
+        { "label": "Packages",        "url": "/packages/" },
+        { "label": "Industry builds", "url": "/builds/" },
         { "label": "Care plans",   "url": "/packages/#care" }
       ]
     },
@@ -40,7 +41,7 @@
     {
       "title": "ALVSolutions",
       "links": [
-        { "label": "Work",            "url": "/work/" },
+        { "label": "What I Build",    "url": "/work/" },
         { "label": "About",           "url": "/about/" },
         { "label": "Policies",        "url": "/policies/" },
         { "label": "Start a project", "url": "/contact/" }

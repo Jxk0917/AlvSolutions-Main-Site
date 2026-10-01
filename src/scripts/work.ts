@@ -1,5 +1,5 @@
 /**
- * /work/ (Work, the portfolio; "What I build" is /builds/). The page is complete without this file: every
+ * /work/ (What I Build, the portfolio; the industry builds are /builds/). The page is complete without this file: every
  * screen is lit, every strip rests on its first frame, every link works.
  *
  * With script:

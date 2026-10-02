@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ALVSolutions Facebook group flyer</title>
+<style>
+  /* Facebook-group flyer, 1080 x 1350. Rendered by
+     Brand_Assets/tools/build-facebook-flyer.mjs; nothing here is written back to
+     the website or to any locked asset. Fonts, tokens and the lit-bar recipe are
+     the website's own (src/styles/tokens.css). The artifacts are ALVSolutions' own
+     identity: the approved symbol and horizontal logo, the Screen Light inks, the
+     site's type pair, and the business card in the treatment the site shows. */
+  @font-face { font-family: "Bricolage"; src: url("../../../src/assets/fonts/Bricolage-Grotesque-Variable.woff2") format("woff2-variations"); font-weight: 200 800; font-stretch: 75% 100%; }
+  @font-face { font-family: "Instrument"; src: url("../../../src/assets/fonts/Instrument-Sans-Variable.woff2") format("woff2-variations"); font-weight: 400 700; font-stretch: 75% 100%; }
+
+  :root {
+    --room: #0b0b0b;
+    --ink1: #f2f1ee;
+    --ink2: #b9b8b4;
+    --ink3: #8e8d89;
+    --line: rgb(242 241 238 / .14);
+    --bar: oklch(0.97 0.03 245);
+    --glow: 0 0 6px oklch(0.92 0.08 245 / .85), 0 0 18px 1px oklch(0.8 0.15 245 / .42), 0 0 44px 4px oklch(0.74 0.15 245 / .14);
+    --mx: 80px;
+  }
+  html, body { margin: 0; background: #000; }
+
+  .flyer {
+    position: relative; width: 1080px; height: 1350px; overflow: hidden;
+    background: var(--room); color: var(--ink1);
+    font-family: "Instrument", system-ui, sans-serif; font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
+  .flyer::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 40% at 30% 0%, rgb(242 241 238 / .035), transparent 70%),
+      radial-gradient(ellipse 75% 20% at 30% 100%, oklch(0.74 0.15 245 / .17), transparent 72%);
+  }
+
+  .h {
+    position: absolute; left: var(--mx); right: var(--mx); top: 88px; margin: 0;
+    font-family: "Bricolage", system-ui, sans-serif; font-weight: 620; font-size: 108px; line-height: .98;
+    letter-spacing: -0.04em; word-spacing: .05em; font-variation-settings: "opsz" 92; font-optical-sizing: none;
+  }
+
+  /* ---- the stage: identity artifacts, set like a designer's board ---- */
+  .stage { position: absolute; left: 0; right: 0; top: 450px; height: 540px; }
+  .cone {
+    position: absolute; left: 470px; width: 610px; top: -90px; height: 680px; pointer-events: none;
+    background: radial-gradient(ellipse 60% 70% at 50% 0%, oklch(0.8 0.12 245 / .34), oklch(0.74 0.15 245 / .09) 55%, transparent 78%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 40%); mask-image: linear-gradient(180deg, transparent 0, #000 40%);
+  }
+
+  /* Left: the mark under construction, its type pair and its inks. */
+  .sheet {
+    position: absolute; left: var(--mx); top: 0; width: 440px; height: 540px; box-sizing: border-box; border-radius: 14px;
+    background: linear-gradient(180deg, #111, #0d0d0d); box-shadow: 0 0 0 1px var(--line);
+  }
+  .sheet svg { position: absolute; left: 0; top: 0; width: 440px; height: 330px; }
+  .sheet .rule { position: absolute; left: 0; right: 0; top: 330px; height: 1px; background: var(--line); }
+  .spec { position: absolute; top: 352px; font-size: 21px; white-space: nowrap; line-height: 1; color: var(--ink3); }
+  .spec b { display: block; font-size: 88px; line-height: .9; letter-spacing: -0.03em; color: var(--ink1); margin-bottom: 12px; }
+  .spec.s1 { left: 32px; } .spec.s2 { left: 232px; }
+  .s1 b { font-family: "Bricolage", sans-serif; font-weight: 620; font-variation-settings: "opsz" 92; font-optical-sizing: none; }
+  .s2 b { font-family: "Instrument", sans-serif; font-weight: 500; }
+  .inks { position: absolute; left: 32px; right: 32px; bottom: 26px; display: flex; gap: 8px; }
+  .inks i { flex: 1; height: 38px; border-radius: 8px; box-shadow: inset 0 0 0 1px rgb(242 241 238 / .16); }
+
+  /* Right: the business card, front and back. */
+  .cards { position: absolute; left: 560px; top: 0; width: 440px; height: 540px; }
+  .card {
+    position: absolute; left: 0; width: 440px; height: 251px; box-sizing: border-box; border-radius: 12px; overflow: hidden;
+    background: radial-gradient(ellipse 90% 90% at 50% 35%, #1a1a1a, #0d0d0d 70%);
+    box-shadow: 0 0 0 1px rgb(242 241 238 / .2), 0 26px 60px rgb(0 0 0 / .6);
+  }
+  /* The social graphic: a cover in the same identity. */
+  .card.front { top: 0; background: radial-gradient(ellipse 70% 60% at 90% 110%, oklch(0.74 0.15 245 / .22), transparent 70%), radial-gradient(ellipse 90% 90% at 50% 35%, #181818, #0d0d0d 70%); }
+  .card.front .mark { position: absolute; right: -78px; top: -30px; width: 300px; height: auto; opacity: .065; display: block; }
+  .card.front .lg { position: absolute; left: 32px; top: 28px; width: 112px; height: auto; display: block; }
+  .card.front .hd { position: absolute; left: 32px; top: 82px; margin: 0; font-family: "Bricolage", sans-serif; font-weight: 620; font-size: 40px; line-height: 1; letter-spacing: -0.035em; font-variation-settings: "opsz" 72; font-optical-sizing: none; color: var(--ink1); }
+  .card.front s { position: absolute; left: 32px; bottom: 56px; width: 58px; height: 2px; border-radius: 2px; background: var(--bar); box-shadow: var(--glow); }
+  .card.front span { position: absolute; left: 32px; bottom: 24px; font-size: 18px; letter-spacing: .01em; color: var(--ink2); }
+  .card.back { top: 289px; padding: 30px 32px; display: grid; grid-template-columns: 96px 1fr; column-gap: 28px; align-items: end; }
+  .card.back .l { display: grid; align-content: space-between; height: 100%; }
+  .card.back .l img.m { width: 36px; height: auto; display: block; }
+  .card.back .l img.q { width: 96px; height: 96px; padding: 5px; box-sizing: border-box; border-radius: 8px; background: #fff; display: block; }
+  .card.back .who { align-self: center; display: grid; gap: 7px; font-size: 17px; line-height: 1.25; color: var(--ink2); padding-left: 26px; box-shadow: inset 1px 0 0 var(--line); white-space: nowrap; }
+  .card.back .who b { font-family: "Bricolage", sans-serif; font-weight: 620; font-size: 28px; letter-spacing: -0.02em; color: var(--ink1); margin-bottom: 4px; font-variation-settings: "opsz" 72; font-optical-sizing: none; }
+
+  /* Crop marks: the print-ready detail, set at the corners of the board. */
+  .crop { position: absolute; width: 18px; height: 18px; pointer-events: none; }
+  .crop::before, .crop::after { content: ""; position: absolute; background: var(--ink3); }
+  .crop::before { width: 18px; height: 1px; } .crop::after { width: 1px; height: 18px; }
+  .crop.tl { left: 52px; top: -28px; } .crop.tl::before { top: 18px; left: 0; } .crop.tl::after { left: 18px; top: 0; }
+  .crop.br { left: 1010px; top: 550px; } .crop.br::before { top: 0; left: 0; } .crop.br::after { left: 0; top: 0; }
+
+  /* ---- the message ---- */
+  .services { position: absolute; left: var(--mx); top: 1022px; margin: 0; font-size: 36px; line-height: 1.34; letter-spacing: -0.005em; color: var(--ink1); font-weight: 500; }
+  .services span { display: block; white-space: nowrap; }
+  .services i { font-style: normal; margin: 0 .32em; color: var(--ink3); }
+  .also { position: absolute; left: var(--mx); top: 1132px; margin: 0; font-size: 27px; line-height: 1.3; color: #7c7b77; }
+
+  /* ---- the footer ---- */
+  .track { position: absolute; left: var(--mx); right: var(--mx); top: 1196px; height: 2px; background: var(--line); border-radius: 2px; }
+  .track i { position: absolute; left: 0; top: 0; height: 2px; width: 34%; background: var(--bar); border-radius: 2px; box-shadow: var(--glow); }
+  .foot { position: absolute; left: var(--mx); right: var(--mx); top: 1226px; height: 48px; display: flex; align-items: center; justify-content: space-between; }
+  .foot img { height: 40px; width: auto; display: block; }
+  .foot div { text-align: right; font-size: 28px; line-height: 1.2; color: var(--ink2); }
+  .foot b { display: block; color: var(--ink1); font-weight: 600; }
+</style>
+</head>
+<body>
+<section class="flyer" id="flyer">
+  <h1 class="h">Your business deserves its own identity.</h1>
+
+  <div class="stage">
+    <div class="cone"></div>
+    <i class="crop tl"></i><i class="crop br"></i>
+
+    <div class="sheet" aria-hidden="true">
+      <!-- The approved ALV symbol (path from the master logo), with its construction drawn over it. -->
+      <svg viewBox="-60 -22 220 165" preserveAspectRatio="xMidYMid meet" fill="none">
+        <g stroke="rgb(242 241 238 / .2)" stroke-width=".4">
+          <line x1="-60" y1="6" x2="160" y2="6"/><line x1="-60" y1="57" x2="160" y2="57"/><line x1="-60" y1="63" x2="160" y2="63"/>
+          <line x1="4.75" y1="-22" x2="4.75" y2="143"/><line x1="50" y1="-22" x2="50" y2="143"/><line x1="95.25" y1="-22" x2="95.25" y2="143"/>
+          <circle cx="50" cy="50" r="50"/><circle cx="50" cy="50" r="31"/>
+          <line x1="17.25" y1="6" x2="-1" y2="135" stroke-dasharray="1.6 1.6"/><line x1="95.25" y1="6" x2="113.5" y2="135" stroke-dasharray="1.6 1.6"/>
+          <rect x="-7" y="-6" width="114" height="112" stroke-dasharray="2 2"/>
+        </g>
+        <path fill="#F2F1EE" d="M17.25 6L95.25 6L88.01 57L69.0625 57L56 19L44 19L30.9375 57L10.01 57ZM50 33L54.8 57L45.2 57ZM9.15 63L28.875 63L22 83L40 83L44 63L56 63L60 83L78 83L71.125 63L87.15 63L82.75 94L4.75 94Z"/>
+        <line x1="-60" y1="94" x2="160" y2="94" stroke-width=".7" style="stroke: var(--bar); filter: drop-shadow(0 0 1.5px oklch(0.8 0.15 245))"/>
+        <g stroke="rgb(242 241 238 / .75)" stroke-width=".6">
+          <path d="M-7 -1 v-5 h5 M107 -1 v-5 h-5 M-7 101 v5 h5 M107 101 v5 h-5"/>
+        </g>
+      </svg>
+      <div class="rule"></div>
+      <div class="spec s1"><b>Aa</b>Bricolage</div>
+      <div class="spec s2"><b>Aa</b>Instrument Sans</div>
+      <div class="inks"><i style="background:#0b0b0b"></i><i style="background:#b9b8b4"></i><i style="background:#8e8d89"></i><i style="background:#f2f1ee"></i><i style="background:oklch(0.97 0.03 245);box-shadow:0 0 16px oklch(0.8 0.15 245 / .55)"></i></div>
+    </div>
+
+    <div class="cards" aria-hidden="true">
+      <div class="card front">
+        <img class="mark" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-symbol-light.svg" alt="">
+        <img class="lg" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="">
+        <p class="hd">Built around<br>your business.</p>
+        <s></s>
+        <span>alvsolutions.co</span>
+      </div>
+      <div class="card back">
+        <div class="l"><img class="m" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-symbol-light.svg" alt=""><img class="q" src="../../../src/assets/showcase/alv-connect-qr.svg" alt=""></div>
+        <div class="who"><b>Sergio Alvarez</b><span>Founder, ALVSolutions</span><span>hello@alvsolutions.co</span><span>alvsolutions.co</span><span>San Antonio, TX</span></div>
+      </div>
+    </div>
+  </div>
+
+  <p class="services"><span>Logo Design<i>·</i>Brand Identity</span><span>Business Graphics<i>·</i>Business Cards</span></p>
+  <p class="also">Custom websites also available.</p>
+
+  <div class="track"><i></i></div>
+  <div class="foot">
+    <img src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+    <div><span>San Antonio, TX</span><b>alvsolutions.co</b></div>
+  </div>
+</section>
+</body>
+</html>

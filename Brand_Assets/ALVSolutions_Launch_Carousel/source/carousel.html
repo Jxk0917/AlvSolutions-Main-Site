@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ALVSolutions launch carousel</title>
+<style>
+  /* Instagram carousel, six slides at 1080 x 1350. Rendered by
+     Brand_Assets/tools/build-launch-carousel.mjs; nothing here is written back
+     to the website or to any locked asset. Fonts, tokens and the lit-bar recipe
+     are the website's own (src/styles/tokens.css). Logo and screenshots are the
+     approved files, referenced in place. */
+  @font-face { font-family: "Bricolage"; src: url("../../../src/assets/fonts/Bricolage-Grotesque-Variable.woff2") format("woff2-variations"); font-weight: 200 800; font-stretch: 75% 100%; }
+  @font-face { font-family: "Instrument"; src: url("../../../src/assets/fonts/Instrument-Sans-Variable.woff2") format("woff2-variations"); font-weight: 400 700; font-stretch: 75% 100%; }
+
+  :root {
+    --room: #0b0b0b;
+    --ink1: #f2f1ee;
+    --ink2: #b9b8b4;
+    --ink3: #8e8d89;
+    --line: rgb(242 241 238 / .14);
+    --bar: oklch(0.97 0.03 245);
+    --glow: 0 0 6px oklch(0.92 0.08 245 / .85), 0 0 18px 1px oklch(0.8 0.15 245 / .42), 0 0 44px 4px oklch(0.74 0.15 245 / .14);
+    --mx: 96px;          /* side margin */
+    --top: 96px;         /* top margin */
+    --bot: 104px;        /* bottom margin */
+  }
+  html, body { margin: 0; background: #000; }
+  body { display: flex; flex-direction: column; }
+
+  .slide {
+    position: relative; width: 1080px; height: 1350px; overflow: hidden; flex: none;
+    background: var(--room); color: var(--ink1);
+    font-family: "Instrument", system-ui, sans-serif; font-weight: 500;
+    -webkit-font-smoothing: antialiased;
+  }
+  /* The room: one faint neutral wash above, one pool of light-blue under the bar. */
+  .slide::before {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(ellipse 80% 45% at 50% 0%, rgb(242 241 238 / .035), transparent 70%),
+      radial-gradient(ellipse 70% 22% at var(--pool, 20%) 100%, oklch(0.74 0.15 245 / .17), transparent 72%);
+  }
+
+  .logo { position: absolute; left: var(--mx); top: var(--top); height: 32px; width: auto; display: block; }
+  .count { position: absolute; right: var(--mx); top: var(--top); height: 32px; display: flex; align-items: center; font-size: 28px; letter-spacing: .02em; color: var(--ink3); font-variant-numeric: tabular-nums; }
+
+  /* Progress: a hairline track and the lit bar, n of 6. */
+  .track { position: absolute; left: var(--mx); right: var(--mx); bottom: var(--bot); height: 2px; background: var(--line); border-radius: 2px; }
+  .track i { position: absolute; left: 0; top: 0; height: 2px; width: calc(100% * var(--n) / 6); background: var(--bar); border-radius: 2px; box-shadow: var(--glow); }
+
+  .h { font-family: "Bricolage", system-ui, sans-serif; font-weight: 620; letter-spacing: -0.04em; word-spacing: .05em; font-variation-settings: "opsz" 92; font-optical-sizing: none; margin: 0; color: var(--ink1); }
+  .sub { margin: 0; font-size: 40px; line-height: 1.32; color: var(--ink2); letter-spacing: -0.005em; }
+  .h, .sub, .rows, .url, .btn { position: absolute; left: var(--mx); }
+  .h, .sub, .rows { right: var(--mx); }
+
+  /* 1 cover */
+  .s1 .biglogo { position: absolute; left: var(--mx); top: 420px; width: 560px; height: auto; display: block; }
+  .s1 .h { top: 660px; font-size: 144px; line-height: .98; }
+  .s1 .sub { top: 1000px; }
+
+  /* 2 what I build */
+  .s2 .h { top: 330px; font-size: 112px; line-height: 1.02; }
+  .s2 .sub { top: 960px; max-width: 760px; }
+
+  /* 3 ways to build */
+  .s3 .h, .s5 .h { top: 230px; font-size: 96px; line-height: 1.02; }
+  .rows { top: 440px; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+  .rows li { padding: 44px 0 46px; border-bottom: 1px solid var(--line); }
+  .rows b { display: block; font-family: "Bricolage", system-ui, sans-serif; font-weight: 620; letter-spacing: -0.03em; font-variation-settings: "opsz" 72; font-optical-sizing: none; font-size: 68px; line-height: 1.05; color: var(--ink1); }
+  .rows span { display: block; margin-top: 14px; font-size: 34px; line-height: 1.3; color: var(--ink2); }
+
+  /* 4 selected work */
+  .s4 .h { top: 180px; font-size: 80px; line-height: 1; }
+  .work { position: absolute; left: var(--mx); right: var(--mx); margin: 0; }
+  .work.w1 { top: 300px; } .work.w2 { top: 750px; }
+  .work .shot { width: 100%; height: 350px; object-fit: cover; object-position: 50% 5%; display: block; border-radius: 14px; box-shadow: 0 0 0 1px var(--line); }
+  .work figcaption { display: flex; align-items: center; justify-content: space-between; margin-top: 22px; font-size: 36px; color: var(--ink1); font-weight: 600; letter-spacing: -0.01em; }
+  .work.w2 .shot { object-position: 50% 9%; }
+  .tag { font-size: 26px; font-weight: 600; letter-spacing: .01em; color: var(--ink2); border: 1.5px solid rgb(242 241 238 / .32); border-radius: 999px; padding: 8px 20px 9px; }
+
+  /* 5 approach */
+  .s5 .rows { top: 440px; }
+  .s5 .rows li { padding: 54px 0 56px; }
+  .s5 .rows b { font-size: 72px; }
+
+  /* 6 CTA */
+  .s6 .h { top: 330px; font-size: 128px; line-height: 1; }
+  .s6 .sub { top: 740px; font-size: 48px; color: var(--ink2); }
+  .s6 .url { top: 900px; font-family: "Bricolage", system-ui, sans-serif; font-weight: 620; letter-spacing: -0.03em; font-variation-settings: "opsz" 72; font-optical-sizing: none; font-size: 88px; line-height: 1; color: var(--ink1); }
+  .s6 .btn { top: 1040px; display: inline-flex; align-items: center; height: 88px; padding: 0 44px; border-radius: 999px; background: var(--ink1); color: var(--room); font-size: 36px; font-weight: 600; letter-spacing: -0.005em; }
+</style>
+</head>
+<body>
+
+<section class="slide s1" id="s1" style="--n:1;--pool:22%">
+  <img class="biglogo" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+  <h1 class="h">Built around your business.</h1>
+  <p class="sub">Websites and brand work, made in San Antonio.</p>
+  <div class="track"><i></i></div>
+</section>
+
+<section class="slide s2" id="s2" style="--n:2;--pool:36%">
+  <img class="logo" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+  <div class="count">2 / 6</div>
+  <h2 class="h">Custom websites built around what your business actually needs.</h2>
+  <p class="sub">Professional, mobile-first business websites.</p>
+  <div class="track"><i></i></div>
+</section>
+
+<section class="slide s3" id="s3" style="--n:3;--pool:50%">
+  <img class="logo" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+  <div class="count">3 / 6</div>
+  <h2 class="h">Three ways to build.</h2>
+  <ul class="rows">
+    <li><b>Website Packages</b><span>Foundation, Standard and Complete.</span></li>
+    <li><b>Industry Packages</b><span>Built for detailers, home services, salons and restaurants.</span></li>
+    <li><b>Individual Services</b><span>Branding, Google Business Profile and more.</span></li>
+  </ul>
+  <div class="track"><i></i></div>
+</section>
+
+<section class="slide s4" id="s4" style="--n:4;--pool:64%">
+  <img class="logo" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+  <div class="count">4 / 6</div>
+  <h2 class="h">Selected work.</h2>
+  <figure class="work w1">
+    <img class="shot" src="../../../src/assets/work/hacienda-grill-desktop.jpg" alt="Hacienda Grill concept website">
+    <figcaption><span>Hacienda Grill</span><span class="tag">Concept Build</span></figcaption>
+  </figure>
+  <figure class="work w2">
+    <img class="shot" src="../../../src/assets/work/lucid-detailing-desktop.jpg" alt="Lucid Detailing concept website">
+    <figcaption><span>Lucid Detailing</span><span class="tag">Concept Build</span></figcaption>
+  </figure>
+  <div class="track"><i></i></div>
+</section>
+
+<section class="slide s5" id="s5" style="--n:5;--pool:78%">
+  <img class="logo" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+  <div class="count">5 / 6</div>
+  <h2 class="h">The approach.</h2>
+  <ul class="rows">
+    <li><b>Custom-built.</b></li>
+    <li><b>Mobile optimized.</b></li>
+    <li><b>You own your domain.</b></li>
+    <li><b>Support after launch.</b></li>
+  </ul>
+  <div class="track"><i></i></div>
+</section>
+
+<section class="slide s6" id="s6" style="--n:6;--pool:90%">
+  <img class="logo" src="../../ALVSolutions_Master_Logo/svg/alvsolutions-horizontal-light.svg" alt="ALVSolutions">
+  <div class="count">6 / 6</div>
+  <h2 class="h">Have a project in mind?</h2>
+  <p class="sub">Let’s build around your business.</p>
+  <div class="url">alvsolutions.co</div>
+  <div class="btn">Start your project.</div>
+  <div class="track"><i></i></div>
+</section>
+
+</body>
+</html>

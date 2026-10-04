@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALVSolutions intro - mobile capture</title>
+  <!--
+    Portrait (9:16) capture of the same brand introduction as index.html.
+    The frame is authored at 1080x1920 and scaled to fit the window, so a
+    browser window of any shape can be recorded and the composition stays
+    the same. Motion: src/identity/motions.ts via intro.js (see index.html).
+
+    Press R to replay. Add ?loop to the URL to replay every 4 seconds.
+  -->
+  <link rel="stylesheet" href="../../src/styles/tokens.css">
+  <link rel="stylesheet" href="../../src/styles/identity.css">
+  <style>
+    @font-face {
+      font-family: "Archivo Variable";
+      src: url("../../src/assets/fonts/Archivo-Variable.woff2") format("woff2-variations");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--sl-room);
+      overflow: hidden;
+    }
+    .cap-frame {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      width: 1080px;
+      height: 1920px;
+      transform-origin: 50% 50%;
+      transform: translate(-50%, -50%) scale(var(--fit, 1));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--sl-room);
+    }
+    .cap-wm {
+      display: flex;
+    }
+    /* Portrait frame: the hero lockup sized for 1080px width, roughly 70%
+       of the frame, the same proportion the homepage gives it on phones. */
+    .cap-frame .alv-lockup--hero {
+      font-size: 96px;
+    }
+  </style>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <mask id="alvCut" maskUnits="userSpaceOnUse" x="-40" y="-40" width="180" height="180">
+        <rect x="-40" y="-40" width="180" height="180" fill="#fff"/>
+        <path fill="#000" d="M44 19 L56 19 L78 83 L60 83 L50 33 L40 83 L22 83 Z"/>
+      </mask>
+    </defs>
+  </svg>
+
+  <main class="cap-frame" id="frame">
+    <div class="cap-wm" data-intro>
+      <!-- Same markup as lockup("hero", "", "data-wm") in components/identity.njk. -->
+      <span class="alv-lockup alv-lockup--hero" data-wm><svg class="alv-symbol alv-lockup-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor" mask="url(#alvCut)"><path d="M17.25 6 L95.25 6 L88.01 57 L10.01 57 Z"/><path d="M9.15 63 L87.15 63 L82.75 94 L4.75 94 Z"/></g></svg><span class="alv-lockup-word">ALVSolutions</span></span>
+    </div>
+  </main>
+
+  <script src="intro.js"></script>
+  <script>
+    (function () {
+      var frame = document.getElementById("frame");
+      var stage = document.querySelector("[data-intro]");
+      var LEAD_IN = 800;
+      var timer = null;
+
+      // Scale the 1080x1920 frame to fit the window, keeping its shape.
+      function fit() {
+        var s = Math.min(innerWidth / 1080, innerHeight / 1920);
+        frame.style.setProperty("--fit", s);
+      }
+      fit();
+      addEventListener("resize", fit);
+
+      function play() {
+        clearTimeout(timer);
+        AlvIntro.finishIntro(stage);
+        stage.classList.remove("is-ready");
+        document.fonts.ready.then(function () {
+          timer = setTimeout(function () { AlvIntro.playIntro(stage); }, LEAD_IN);
+        });
+      }
+
+      addEventListener("keydown", function (e) {
+        if (e.key === "r" || e.key === "R") play();
+      });
+
+      play();
+      if (/[?&]loop\b/.test(location.search)) setInterval(play, 4000);
+    })();
+  </script>
+</body>
+</html>

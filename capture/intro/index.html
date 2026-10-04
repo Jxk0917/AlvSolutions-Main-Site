@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALVSolutions intro - capture</title>
+  <!--
+    Standalone capture page for the homepage's brand introduction only.
+    Not part of the Eleventy build (lives outside src/, so nothing here is
+    published with the site). Uses the production lockup markup, mask, and
+    identity.css; the motion is src/identity/motions.ts (playIntro), bundled
+    to intro.js.
+
+    Rebuild intro.js after changing motions.ts:
+      ./node_modules/.bin/esbuild src/identity/motions.ts --bundle --format=iife --global-name=AlvIntro --target=es2020 --outfile=capture/intro/intro.js
+
+    Press R to replay. Add ?loop to the URL to replay every 4 seconds.
+  -->
+  <link rel="stylesheet" href="../../src/styles/tokens.css">
+  <link rel="stylesheet" href="../../src/styles/identity.css">
+  <style>
+    /* Archivo is the only face the wordmark needs; the rest of the site's
+       fonts are not used by this page. Same family and file as fonts.css. */
+    @font-face {
+      font-family: "Archivo Variable";
+      src: url("../../src/assets/fonts/Archivo-Variable.woff2") format("woff2-variations");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: block;
+    }
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: var(--sl-room);
+      overflow: hidden;
+    }
+    .cap-stage {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* Same flex wrapper the homepage uses for the hero lockup (home.css .wm-stage). */
+    .cap-wm {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <!-- The shared cut mask the symbol references (copied from components/icon-sprite.njk). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <mask id="alvCut" maskUnits="userSpaceOnUse" x="-40" y="-40" width="180" height="180">
+        <rect x="-40" y="-40" width="180" height="180" fill="#fff"/>
+        <path fill="#000" d="M44 19 L56 19 L78 83 L60 83 L50 33 L40 83 L22 83 Z"/>
+      </mask>
+    </defs>
+  </svg>
+
+  <main class="cap-stage">
+    <div class="cap-wm" data-intro>
+      <!-- Same markup as lockup("hero", "", "data-wm") in components/identity.njk. -->
+      <span class="alv-lockup alv-lockup--hero" data-wm><svg class="alv-symbol alv-lockup-mark" viewBox="0 0 100 100" aria-hidden="true" focusable="false"><g fill="currentColor" mask="url(#alvCut)"><path d="M17.25 6 L95.25 6 L88.01 57 L10.01 57 Z"/><path d="M9.15 63 L87.15 63 L82.75 94 L4.75 94 Z"/></g></svg><span class="alv-lockup-word">ALVSolutions</span></span>
+    </div>
+  </main>
+
+  <script src="intro.js"></script>
+  <script>
+    (function () {
+      var stage = document.querySelector("[data-intro]");
+      // Production starts the introduction 0.8s into the opening; the same
+      // lead-in gives the capture a clean dark frame before the symbol appears.
+      var LEAD_IN = 800;
+      var timer = null;
+
+      function play() {
+        clearTimeout(timer);
+        AlvIntro.finishIntro(stage);
+        stage.classList.remove("is-ready");
+        document.fonts.ready.then(function () {
+          timer = setTimeout(function () { AlvIntro.playIntro(stage); }, LEAD_IN);
+        });
+      }
+
+      addEventListener("keydown", function (e) {
+        if (e.key === "r" || e.key === "R") play();
+      });
+
+      var loop = /[?&]loop\b/.test(location.search);
+      play();
+      if (loop) {
+        setInterval(play, 4000);
+      }
+    })();
+  </script>
+</body>
+</html>

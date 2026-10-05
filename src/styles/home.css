@@ -16,6 +16,7 @@
 @import "./light.css";
 @import "./offer.css";
 @import "./process.css";
+@import "./hero.css";
 
 :root {
   /* The locked Screen Light measure; the shared nav and footer align to it
@@ -38,159 +39,15 @@
   padding-bottom: 0.04em;
 }
 .h-lede { font-size: 17.5px; max-width: 52ch; color: var(--sl-ink2); }
-.h-h2, .h-panel-h, .h-close-h { text-wrap: balance; }
+.h-h2, .h-close-h { text-wrap: balance; }
 
-/* Reel scaffolding: present for the enhanced reel, inert at rest. */
-.h-fly, .h-track { display: none; }
+/* The opening's flying name: present for the enhancement, inert at rest. */
+.h-fly { display: none; }
 
-/* ============================================================
-   HERO + WORK
-   Locked: one room held while you scroll. At rest: the hero stands in the
-   key light (the opening's settled state, key at x 27), then the four
-   chapters follow, each with its own screens, powered on.
-   ============================================================ */
-.h-work { position: relative; }
-.h-room {
-  height: auto; min-height: 0; overflow: visible; overflow-x: clip;
-  padding-inline: var(--h-pad);
-  padding-bottom: clamp(56px, 9vh, 112px);
-  --h-hero: clamp(620px, 100svh, 1000px);
-  --kx: 27; --kw: 46; --ki: 1; --kpy: 86;
-}
-/* The key lights the hero, not the whole length of the work beneath it;
-   its falloff fades out rather than stopping at a seam. */
-.h-room > .room-light,
-.h-room::after {
-  bottom: auto; height: var(--h-hero);
-  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 72%, transparent 100%);
-}
-
-.h-col, .h-steps, .h-panel { position: relative; z-index: 2; }
-.h-col { width: min(40vw, 580px); }
-.h-copy {
-  min-height: var(--h-hero);
-  display: grid; align-content: center; justify-items: start; gap: 22px;
-  padding-block: calc(var(--alv-nav-h) + 32px) 56px;
-}
-.h-h1 {
-  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
-  font-size: clamp(46px, 5.8vw, 88px); line-height: 0.96; letter-spacing: -0.04em; padding-bottom: 0.06em;
-}
-.h-copy .h-lede { max-width: 40ch; }
-.h-ctas { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
-
-/* The work's own index: real anchors to each chapter. */
-.h-steps { margin-bottom: clamp(8px, 2vh, 24px); }
-.h-steps ol { display: flex; flex-wrap: wrap; gap: 4px; margin: 0; padding: 0; list-style: none; }
-.h-steps .alv-lit-sel { display: inline-flex; align-items: center; min-height: 40px; padding: 0 12px; font-size: 13.5px; }
-.h-steps li:first-child .alv-lit-sel { margin-left: -12px; }
-.h-steps .short { display: none; }
-
-/* A chapter: its story on the left, its work on the right. */
-.h-panel {
-  display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
-  gap: 40px clamp(40px, 6vw, 104px); align-items: center;
-  padding-block: clamp(56px, 9vh, 112px);
-}
-.h-panel-copy { display: grid; gap: 12px; align-content: center; justify-items: start; }
-.h-panel-h { font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto; font-size: clamp(36px, 3.8vw, 58px); line-height: 1; letter-spacing: -0.034em; color: var(--sl-ink1); padding-bottom: 0.04em; }
-.h-panel-body { font-size: 17px; color: var(--sl-ink2); max-width: 40ch; }
-.h-feats { display: flex; flex-wrap: wrap; gap: 4px 20px; margin: 4px 0 0; padding: 0; list-style: none; font-size: 14.5px; color: var(--sl-ink1); }
-.h-feats li { position: relative; padding-top: 8px; }
-.h-feats li::before { content: ""; position: absolute; left: 0; top: 0; width: 14px; height: 1px; background: rgb(var(--sl-L) / 0.5); }
-.h-honest { font-size: 13.5px; color: var(--sl-ink3); max-width: 44ch; margin-top: 6px; }
-.h-sign { margin-top: 8px; }
-.h-view { margin-top: 8px; font-size: 15px; }
-
-/* Screens at rest: standing in their chapter, powered on, the key's light
-   catching their top edge. Their floor light and reflection belong to the
-   held room and wait for Phase 4E. */
-.h-panel-work { position: relative; min-width: 0; }
-.h-room .dev {
-  position: relative; left: auto; top: auto; z-index: auto;
-  width: 100%; visibility: visible; will-change: auto;
-  --p: 1; --c: 0.3;
-}
-.h-room .dev-floor { display: none; }
-.h-room .dev--phone { width: clamp(200px, 19vw, 290px); margin-inline: auto; }
-/* Lucid: the desktop, with its phone standing forward at the right. */
-.h-panel-work .dev--desk + .dev--phone { position: absolute; right: -2%; bottom: -9%; width: 23%; margin: 0; }
-
-/* The pair: the one moment the story sits above the work, centred. */
-.h-pair { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; }
-.h-pair .h-panel-copy { justify-items: center; max-width: 820px; }
-.h-pair .h-panel-h { font-size: clamp(30px, 3.2vw, 48px); max-width: 22ch; }
-.h-pair .h-panel-body { max-width: 50ch; }
-/* Both screens stand on one floor, whatever their crop. */
-.h-pair .h-panel-work { width: 100%; max-width: 1080px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(20px, 3vw, 44px); align-items: end; }
-.h-pair-shot { display: grid; gap: 12px; text-align: left; }
-
-/* A bezel around every demo screen in the hero and the side-by-side
-   showcase: a thin near-black frame with a crisp light rim, so each build
-   reads as a device standing in the room rather than an image bleeding
-   into it. Scoped to the hero; the shared .dev-glass in light.css is
-   unchanged. The screen's own light and key catch stay inside the frame. */
-.h-work .dev-glass {
-  border: 7px solid #121212; border-radius: 14px;
-  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -34px rgb(0 0 0 / 0.95);
-}
-.h-work .dev--phone .dev-glass { border-width: 7px; border-radius: 30px; }
-
-/* The desktop and the phone: each screen sits in its own small device.
-   The desktop is a window, a slim title bar with three lights and an
-   address field; the phone has its island, home bar and side keys. They
-   power on with the screen: --p is the room's own power value, so as a
-   screen wakes, a lit bar draws across the desktop's title bar and the
-   phone's lens comes on. Static (no reel), the bar has nothing to draw. */
-.h-work .dev--desk .dev-glass { display: flex; flex-direction: column; }
-.h-work .dev--desk .dev-glass > img { flex: 1 1 0; height: auto; min-height: 0; }
-.dev-chrome {
-  position: relative; z-index: 1; flex: none; display: flex; align-items: center; gap: 5px;
-  height: 22px; padding-inline: 10px 45px;
-  background: #151515; box-shadow: inset 0 -1px 0 rgb(var(--sl-L) / 0.09);
-}
-.dev-chrome > i { flex: none; width: 5px; height: 5px; border-radius: 50%; background: rgb(var(--sl-L) / 0.2); }
-.dev-chrome > b {
-  flex: none; width: min(34%, 240px); height: 55%; margin-inline: auto; border-radius: 99px;
-  background: rgb(var(--sl-L) / 0.07); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.06);
-}
-.dev-load {
-  position: absolute; z-index: 3; left: 0; right: 0; top: 20px; height: 2px;
-  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); pointer-events: none;
-  transform-origin: 0 50%; transform: scaleX(0); opacity: 0;
-}
-.alv-reel .dev-load { transform: scaleX(var(--p, 0)); opacity: clamp(0, calc((1 - var(--p, 0)) * 5), 1); }
-
-.h-work .dev--phone .dev-glass { display: flex; flex-direction: column; }
-.h-work .dev--phone .dev-glass > img { flex: 1 1 0; height: auto; min-height: 0; }
-/* The phone's top band: the island sits in its own strip, so it never
-   covers the page's logo or menu. */
-.dev-island {
-  position: relative; z-index: 1; flex: none; height: 26px; background: #060606; pointer-events: none;
-}
-.dev-island::before {
-  content: ""; position: absolute; top: 6px; left: 50%; width: 30%; height: 14px; translate: -50% 0; border-radius: 99px;
-  background: #000; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07);
-}
-.dev-island::after {
-  content: ""; position: absolute; top: 11px; left: calc(50% + 15% - 12px); width: 4px; height: 4px; border-radius: 50%;
-  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); opacity: var(--p, 1);
-}
-.dev-home {
-  position: absolute; z-index: 3; bottom: 7px; left: 50%; width: 34%; height: 3px; translate: -50% 0; border-radius: 3px;
-  background: rgb(var(--sl-L) / 0.55); box-shadow: 0 0 0 1px rgb(0 0 0 / 0.25); opacity: calc(var(--p, 1) * 0.9); pointer-events: none;
-}
-.dev--phone { --key: #1b1b1b; }
-.dev--phone::before, .dev--phone::after {
-  content: ""; position: absolute; width: 3px; border-radius: 2px; background: var(--key); box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08);
-}
-.dev--phone::before { right: -3px; top: 24%; height: 13%; }
-.dev--phone::after { left: -3px; top: 20%; height: 9%; }
-.h-pair-shot figcaption { font-size: 13.5px; color: var(--sl-ink3); }
+/* The hero (words, stage, scenes and full view) lives in hero.css. */
 
 /* ============================================================
-   BELOW THE REEL
+   BELOW THE HERO
    Every section here stands in the same room as the reel: a floor, one
    key light from above, and client colour only where real client work
    emits it. Nothing below the reel pins or holds the page; motion follows
@@ -208,93 +65,200 @@
   width: 20px; height: 20px; flex: none;
   fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round;
 }
-/* Sections that carry their own key light. */
-.h-card--lead > .key-cone {
-  position: absolute; inset: 0; z-index: -1; pointer-events: none;
-}
 @keyframes h-rise {
   from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: none; }
 }
 
 /* ============================================================
-   WHAT IT TAKES: the parts of running a business online
-   Dark glass surfaces around the one the key light falls on: the
-   website, the centre of everything else. Each card is one link to the
-   page that owns the detail; pointing at one catches the key on its top
-   edge.
-   ============================================================ */
-.h-offer { padding-block: clamp(80px, 11vh, 128px) clamp(48px, 7vh, 80px); }
-.h-offer-head { display: grid; gap: 16px; margin-bottom: clamp(28px, 4vh, 44px); }
-.h-offer-head .h-h2 { max-width: 17ch; }
+   SERVICES: built for the whole business
+   One business (Hacienda Grill) carried across all three services. No
+   cards: three stations stand on one shared floor, each piece of work
+   under its own cone of key light, the client's warm colour behind it
+   and a length of the site's blue bar glowing on the floor beneath it.
+   Columns follow each work's silhouette: the website wide, the phone
+   narrow, the flyer between. The words stand below the floor.
 
-.h-offer-grid {
-  display: grid; grid-template-columns: minmax(0, 1.3fr) repeat(2, minmax(0, 1fr));
-  gap: 12px; margin: 0; padding: 0; list-style: none;
+   Pointing at a station hands the key to it: its cone and bar come up,
+   its work lifts, and the other two settle back into the dark. The lights
+   come up once as the row arrives (home/services.ts adds .is-dark, then
+   .is-on); without it they are simply on.
+   ============================================================ */
+.h-offer { padding-block: clamp(80px, 11vh, 128px) clamp(56px, 8vh, 96px); }
+.h-offer-head { position: relative; z-index: 1; display: grid; justify-items: start; gap: 16px; margin-bottom: clamp(12px, 2.4vh, 28px); }
+.h-offer-head .h-h2 { max-width: 17ch; }
+/* A small label naming what a section offers, used sparingly. */
+.h-eyebrow { font: 600 12.5px/1.2 var(--sl-f-text); letter-spacing: 0.16em; text-transform: uppercase; color: var(--sl-ink3); }
+
+.h-svc-row {
+  --stage-h: clamp(320px, 31vw, 430px);
+  position: relative; isolation: isolate;
+  display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 0.9fr) minmax(0, 1fr);
+  column-gap: clamp(28px, 4vw, 64px);
 }
-.h-card {
-  position: relative; isolation: isolate; overflow: hidden;
-  display: flex; flex-direction: column; align-items: flex-start; gap: 10px;
-  min-height: 212px; padding: clamp(22px, 2.2vw, 30px);
-  border-radius: 10px; background: #0d0d0d;
-  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 40px 70px -44px rgb(0 0 0 / 0.95);
-  transition: background-color 400ms var(--sl-e-out), box-shadow 400ms var(--sl-e-out);
+/* The shared floor: one hairline under all three, fading at its ends. */
+.h-svc-floor {
+  position: absolute; left: 0; right: 0; top: var(--stage-h); z-index: 1; height: 1px; pointer-events: none;
+  background: linear-gradient(90deg, transparent, var(--sl-line2) 14%, var(--sl-line2) 86%, transparent);
 }
-/* Each card's own light (--h1 -> --h2, hue angles from offer.njk): a
-   spectral top edge, and a faint wash falling from its upper corner. Both
-   brighten a step under attention; the type stays white. */
-.h-card::before {
-  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; pointer-events: none;
-  background: linear-gradient(90deg, transparent 2%, oklch(0.84 0.09 var(--h1, 0)) 30%, oklch(0.84 0.09 var(--h2, 0)) 70%, transparent 98%);
-  opacity: 0.4; transition: opacity 400ms var(--sl-e-out);
+.h-svc { position: relative; display: grid; grid-template-rows: var(--stage-h) auto; min-width: 0; }
+/* Where supported, the three stations share their rows, so each title,
+   sentence, list and link lines up across the floor. */
+@supports (grid-template-rows: subgrid) {
+  .h-svc-row { grid-template-rows: var(--stage-h) repeat(4, auto); }
+  .h-svc { grid-row: span 5; grid-template-rows: subgrid; }
+  .h-svc-copy { grid-row: 2 / span 4; grid-template-rows: subgrid; }
 }
-.h-card::after {
-  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background:
-    radial-gradient(ellipse 80% 60% at 0% 0%, oklch(0.7 0.12 var(--h1, 0) / 0.075), transparent 72%),
-    radial-gradient(ellipse 65% 50% at 100% 0%, oklch(0.7 0.12 var(--h2, 0) / 0.045), transparent 72%);
-  opacity: 0.85; transition: opacity 400ms var(--sl-e-out);
+
+/* ---- A station's light ----------------------------------------- */
+.h-svc-stage { position: relative; display: flex; align-items: flex-end; justify-content: center; min-width: 0; }
+.h-svc-cone, .h-svc-bloom { position: absolute; pointer-events: none; transition: opacity 700ms var(--sl-e-out); }
+/* The key, falling from above onto the work. */
+.h-svc-cone {
+  z-index: -2; left: -30%; right: -30%; top: -22%; bottom: -6%;
+  background: radial-gradient(ellipse 46% 96% at 50% -8%, rgb(var(--sl-L) / 0.17), rgb(var(--sl-L) / 0.07) 40%, rgb(var(--sl-L) / 0.02) 66%, transparent 90%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 30%); mask-image: linear-gradient(to bottom, transparent, #000 30%);
+  opacity: 0.6;
 }
-.h-card:hover { background: #111; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 40px 70px -44px rgb(0 0 0 / 0.95); }
-.h-card:hover::before, .h-card:focus-within::before,
-.h-card:hover::after, .h-card:focus-within::after { opacity: 1; }
-.h-card-ic { width: 24px; height: 24px; color: oklch(0.86 0.05 var(--h1, 0)); }
-.h-card-h {
-  margin-top: auto; padding-top: 28px;
-  font-family: var(--sl-f-brand); font-weight: 600; font-optical-sizing: auto;
-  font-size: clamp(19px, 1.55vw, 22px); line-height: 1.15; letter-spacing: -0.018em; color: var(--sl-ink1);
+/* The client's colour, thrown on the wall behind its work. */
+.h-svc-bloom {
+  z-index: -1; left: 4%; right: 4%; top: 16%; bottom: -2%;
+  background: radial-gradient(ellipse 50% 52% at 50% 64%, rgb(214 72 28 / 0.2), rgb(242 170 60 / 0.06) 55%, transparent 80%);
+  opacity: 0.6;
+}
+/* On the floor: a pool of light, and the site's lit bar beneath the work. */
+.h-svc-stage::before {
+  content: ""; position: absolute; z-index: -1; left: 6%; right: 6%; bottom: -34px; height: 68px; pointer-events: none;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, oklch(0.86 0.08 245 / 0.13), oklch(0.8 0.1 245 / 0.04) 50%, transparent 74%);
+  opacity: 0.5; transition: opacity 700ms var(--sl-e-out);
+}
+.h-svc-stage::after {
+  content: ""; position: absolute; z-index: 2; left: 18%; right: 18%; bottom: -1px; height: 2px; border-radius: 2px; pointer-events: none;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+  opacity: 0.5; transform: scaleX(0.5);
+  transition: opacity 600ms var(--sl-e-out), transform 700ms var(--sl-e-out);
+}
+
+/* ---- The work --------------------------------------------------- */
+.h-svc-art { position: relative; z-index: 1; min-width: 0; transition: transform 600ms var(--sl-e-out), opacity 600ms var(--sl-e-out); }
+.h-svc-art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+/* Screens: dark glass in a slim bezel, the key catching the glass. */
+.h-svc-glass {
+  position: relative; overflow: hidden; background: #040404;
+  border: 5px solid #131313; border-radius: 12px;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), 0 36px 60px -30px rgb(0 0 0 / 0.95);
+}
+.h-svc-glass::after {
+  content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(118deg, rgb(var(--sl-L) / 0.07), transparent 38%);
+}
+.h-svc-chrome {
+  position: relative; display: flex; align-items: center; gap: 4px; height: 18px; padding-inline: 9px 30px;
+  background: #151515; box-shadow: inset 0 -1px 0 rgb(var(--sl-L) / 0.09);
+}
+.h-svc-chrome > i { flex: none; width: 5px; height: 5px; border-radius: 50%; background: rgb(var(--sl-L) / 0.22); }
+.h-svc-chrome > b { flex: none; width: 34%; height: 9px; margin-inline: auto; border-radius: 99px; background: rgb(var(--sl-L) / 0.07); }
+
+/* Websites: Hacienda on a desktop, its phone standing forward. */
+.h-svc--web .h-svc-art { width: min(100%, 620px); padding-right: 6%; }
+.h-svc-glass--desk img { aspect-ratio: 1440 / 900; height: auto; }
+.h-svc-glass--phone {
+  position: absolute; right: 0; bottom: 0; width: 22%; aspect-ratio: 9 / 19;
+  border-width: 4px; border-radius: 18px;
+}
+/* Branding: the Instagram profile, on the phone it lives on. */
+.h-svc-glass--ig { height: calc(var(--stage-h) * 0.9); aspect-ratio: 1170 / 2532; border-radius: 26px; }
+/* Business graphics: the flyer, a printed sheet, set down a little askew. */
+.h-svc-sheet {
+  position: relative; overflow: hidden;
+  height: calc(var(--stage-h) * 0.84); aspect-ratio: 1275 / 1650;
+  border-radius: 3px; rotate: -2.5deg;
+  box-shadow: 0 2px 4px rgb(0 0 0 / 0.55), 0 30px 54px -22px rgb(0 0 0 / 0.95);
+  transition: rotate 700ms var(--sl-e-out);
+}
+.h-svc-sheet img { border-radius: inherit; }
+.h-svc-sheet::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(128deg, rgb(255 255 255 / 0.1), transparent 34%, transparent 70%, rgb(0 0 0 / 0.14));
+}
+
+/* ---- The words, below the floor --------------------------------- */
+.h-svc-copy { display: grid; justify-items: start; align-content: start; gap: 12px; padding-top: clamp(28px, 3vw, 40px); }
+.h-svc-title {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(22px, 1.9vw, 28px); line-height: 1.08; letter-spacing: -0.026em; color: var(--sl-ink1);
   text-wrap: balance;
 }
-/* The heading's link covers the whole card. */
-.h-card-link { color: inherit; text-decoration: none; }
-.h-card-link::after { content: ""; position: absolute; inset: 0; z-index: 1; border-radius: inherit; }
-.h-card-link:focus-visible { outline: none; }
-.h-card:has(.h-card-link:focus-visible) { outline: 2px solid var(--sl-ink1); outline-offset: 3px; }
-.h-card-body { font-size: 15px; color: var(--sl-ink2); max-width: 38ch; }
-.h-card-go {
-  position: absolute; top: clamp(22px, 2.2vw, 30px); right: clamp(22px, 2.2vw, 30px);
-  color: var(--sl-ink3); transition: color 300ms, transform 400ms var(--sl-e-out);
+.h-svc-body { font-size: 15.5px; color: var(--sl-ink2); max-width: 40ch; text-wrap: pretty; }
+.h-svc-items {
+  display: grid; grid-template-columns: repeat(2, max-content); gap: 7px 22px;
+  margin: 2px 0 0; padding: 0; list-style: none; font-size: 14px; color: var(--sl-ink3);
 }
-.h-card:hover .h-card-go,
-.h-card:focus-within .h-card-go { color: var(--sl-ink1); transform: translateX(3px); }
+.h-svc-items li { display: flex; align-items: center; gap: 9px; }
+.h-svc-items li::before {
+  content: ""; flex: none; width: 10px; height: 1px; background: rgb(var(--sl-L) / 0.35);
+  transition: background-color 400ms, box-shadow 400ms;
+}
+/* The call to action names the station; its link covers the whole of it. */
+.h-svc-cta {
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 6px;
+  font: 600 15px/1.2 var(--sl-f-text); color: var(--sl-ink1); text-decoration: none;
+}
+.h-svc-cta::after { content: ""; position: absolute; inset: 0; z-index: 3; }
+.h-svc-cta .h-ic { width: 18px; height: 18px; transition: transform 400ms var(--sl-e-out); }
+.h-svc-cta:focus-visible { outline: none; }
+.h-svc:has(.h-svc-cta:focus-visible) { outline: 2px solid var(--sl-ink1); outline-offset: 12px; border-radius: 12px; }
 
-/* The website: the largest surface, standing in the key light. */
-.h-card--lead {
-  grid-row: 1 / span 2; min-height: 440px; padding: clamp(28px, 3vw, 44px);
-  --kx: 34; --kw: 90; --ki: 0.7;
+/* ---- Attention: the key moves to the station ---------------------- */
+.h-svc:is(:hover, :focus-within) .h-svc-cone,
+.h-svc:is(:hover, :focus-within) .h-svc-bloom,
+.h-svc:is(:hover, :focus-within) .h-svc-stage::before { opacity: 1; }
+.h-svc:is(:hover, :focus-within) .h-svc-stage::after { opacity: 1; transform: none; }
+.h-svc:is(:hover, :focus-within) .h-svc-art { transform: translateY(-8px); }
+.h-svc:is(:hover, :focus-within) .h-svc-sheet { rotate: 0deg; }
+.h-svc:is(:hover, :focus-within) .h-svc-cta .h-ic { transform: translateX(4px); }
+.h-svc:is(:hover, :focus-within) .h-svc-items li::before { background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); }
+.h-svc:active .h-svc-art { transform: translateY(-5px) scale(0.99); }
+@media (hover: hover) {
+  .h-svc-row:has(.h-svc:hover) .h-svc:not(:hover) :is(.h-svc-cone, .h-svc-bloom) { opacity: 0.22; }
+  .h-svc-row:has(.h-svc:hover) .h-svc:not(:hover) .h-svc-art { opacity: 0.62; }
 }
-.h-card--lead .h-card-ic { width: 30px; height: 30px; }
-.h-card--lead .h-card-h { font-weight: 620; font-size: clamp(30px, 2.9vw, 42px); line-height: 1.02; letter-spacing: -0.034em; max-width: 13ch; }
-.h-card--lead .h-card-body { font-size: 16px; }
-.h-card-feats {
-  width: 100%; margin-top: 14px; padding-top: 16px; gap: 6px 22px;
-  border-top: 1px solid var(--sl-line); font-size: 14px; color: var(--sl-ink2);
-}
-.h-card-feats li { padding-top: 0; }
-.h-card-feats li::before { content: none; }
-.h-card--lead .h-card-go { top: clamp(28px, 3vw, 44px); right: clamp(28px, 3vw, 44px); }
 
-.h-offer-all { margin-top: 22px; font-size: 15px; }
+/* ---- The lights come up as the row arrives -------------------------- */
+.h-svc-row.is-dark :is(.h-svc-cone, .h-svc-bloom, .h-svc-floor),
+.h-svc-row.is-dark .h-svc-stage::before,
+.h-svc-row.is-dark .h-svc-stage::after { opacity: 0; }
+.h-svc-row.is-on .h-svc-floor { animation: h-svc-floor 1.3s var(--sl-e-out) backwards; }
+.h-svc-row.is-on :is(.h-svc-cone, .h-svc-bloom) { animation: h-svc-light 1.4s var(--sl-e-out) calc(250ms + var(--i, 0) * 200ms) backwards; }
+.h-svc-row.is-on .h-svc-stage::before { animation: h-svc-light 1.2s var(--sl-e-out) calc(450ms + var(--i, 0) * 200ms) backwards; }
+.h-svc-row.is-on .h-svc-stage::after { animation: h-svc-bar 1s var(--sl-e-out) calc(450ms + var(--i, 0) * 200ms) backwards; }
+.h-svc--brand { --i: 1; }
+.h-svc--print { --i: 2; }
+@keyframes h-svc-floor { from { opacity: 0; transform: scaleX(0); } }
+@keyframes h-svc-light { from { opacity: 0; } }
+@keyframes h-svc-bar { from { opacity: 0; transform: scaleX(0); } }
+
+/* ---- Narrower: the website across the top, the other two beneath ----- */
+@media (max-width: 1100px) {
+  .h-svc-row { --stage-h: clamp(300px, 40vw, 400px); grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: clamp(56px, 8vw, 80px); }
+  .h-svc--web { grid-column: 1 / -1; --stage-h: clamp(300px, 48vw, 440px); }
+  .h-svc-row, .h-svc-copy { grid-template-rows: none; }
+  .h-svc { grid-row: auto; grid-template-rows: var(--stage-h) auto; }
+  .h-svc-copy { grid-row: auto; }
+  .h-svc--web .h-svc-art { width: min(100%, 640px); }
+  .h-svc--web .h-svc-copy { max-width: 64ch; }
+  /* Each station stands on its own length of floor. */
+  .h-svc-floor { display: none; }
+  .h-svc-stage { box-shadow: inset 0 -1px 0 var(--sl-line2); }
+}
+@media (max-width: 760px) {
+  .h-offer { padding-top: clamp(56px, 9vh, 80px); }
+  .h-svc-row { --stage-h: clamp(300px, 92vw, 400px); grid-template-columns: minmax(0, 1fr); row-gap: 56px; }
+  .h-svc--web { --stage-h: clamp(220px, 64vw, 340px); }
+  .h-svc-cone { left: -8%; right: -8%; }
+  .h-svc-copy { padding-top: 24px; }
+  .h-svc-body { font-size: 15px; }
+}
 
 
 /* ============================================================
@@ -598,13 +562,6 @@
 /* ============================================================
    INTERMEDIATE WIDTHS
    ============================================================ */
-@media (max-width: 1100px) {
-  .h-steps .long { display: none; }
-  .h-steps .short { display: inline; }
-  /* The website card leads across the top; the rest pair beneath it. */
-  .h-offer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .h-card--lead { grid-row: auto; grid-column: 1 / -1; min-height: 340px; }
-}
 @media (max-width: 900px) {
   .h-close-in { grid-template-columns: minmax(0, 1fr); gap: 32px; }
   .h-close-copy { position: static; }
@@ -614,27 +571,6 @@
    NARROW: one column
    ============================================================ */
 @media (max-width: 760px) {
-  .h-room { --h-hero: clamp(540px, 82svh, 720px); }
-  .h-col { width: auto; }
-  .h-copy { padding-block: calc(var(--alv-nav-h) + 40px) 48px; }
-  .h-h1 { font-size: clamp(40px, 11.5vw, 60px); }
-  .h-copy { gap: 16px; }
-  .h-copy .h-lede { font-size: 16px; }
-
-  .h-panel { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: clamp(40px, 7vh, 64px); }
-  .h-panel-h { font-size: clamp(30px, 8.5vw, 40px); }
-  .h-panel-body { font-size: 15.5px; }
-  .h-honest { font-size: 13px; }
-  .h-room .dev--phone { width: min(62vw, 260px); }
-  .h-panel-work .dev--desk + .dev--phone { width: 28%; right: 0; bottom: -10%; }
-  .h-pair .h-panel-h { font-size: clamp(26px, 7vw, 34px); }
-  .h-pair .h-panel-work { grid-template-columns: minmax(0, 1fr); }
-
-  .h-offer { padding-top: clamp(56px, 9vh, 80px); }
-  .h-offer-grid { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-  .h-card { min-height: 0; }
-  .h-card-h { padding-top: 18px; }
-  .h-card--lead { min-height: 300px; --kw: 150; }
 
 
   /* Builds: two by two, each on its own floor line. */
@@ -656,140 +592,4 @@
 
   .h-close { --kx: 50; --kw: 120; }
   .h-close-in { padding-top: 72px; }
-}
-
-/* ============================================================
-   ENHANCED (Phase 4E-A): the opening and the held work reel
-   Everything below is scoped under classes the homepage's head script
-   sets before first paint, and only when JS is running with motion
-   allowed (home/prepaint.njk):
-     .alv-enhance   the page is being enhanced (either layout)
-     .alv-opening   the once-per-session opening is about to play
-     .alv-reel      the work is held in one room (PORTRAIT / WIDE)
-     [data-geo]     which geometry the room uses
-   A failsafe removes them if the enhancement never takes over, so the
-   static page above is always what remains.
-
-   Nothing here removes content from the accessibility tree: inactive
-   chapters are faded and moved, never display:none or visibility:hidden.
-   ============================================================ */
-
-/* ---- The signature signs as its chapter arrives --------------- */
-.alv-enhance .h-panel .alv-sign:not(.is-signed) .alv-sign-line { clip-path: inset(0 100% 0 0); transform: translateX(-4px); }
-
-/* ---- The hero words rise into the light ----------------------- */
-.alv-enhance .h-copy { opacity: var(--copy, 1); transform: translateY(calc((1 - var(--copy, 1)) * 60px)); }
-.alv-opening .h-copy { --copy: 0; }
-
-/* ---- The opening: the name, opening, then flying to the nav ---- */
-.h-fly { position: absolute; left: 0; top: 0; z-index: 250; transform-origin: 0 0; will-change: transform; }
-.alv-opening .h-fly { display: block; }
-/* A flex stage, so the lockup's own box is the stage's box (no line-box strut
-   under it): the flight measures this box against the nav lockup's. */
-.wm-stage { display: flex; }
-.alv-opening .h-fly.is-home { visibility: hidden; }
-.alv-opening [data-intro]:not(.is-ready) [data-wm] { visibility: hidden; }
-/* The room stops isolating its layers so the name can pass over the nav. */
-.alv-opening .h-room { isolation: auto; }
-.alv-opening .alv-nav-mark:not(.is-home) { opacity: 0; }
-.alv-opening .alv-nav-in > :not(.alv-nav-mark) { opacity: var(--nav, 0); }
-
-/* ---- Flat (narrow, or too short to hold a room) ---------------- */
-/* Screens wait in the dark and power on as they arrive; their light
-   reaches the floor in front of them. */
-.alv-enhance:not(.alv-reel) .h-room .dev { --p: 0.32; }
-.alv-enhance:not(.alv-reel) .h-room .dev-floor { display: block; }
-.alv-enhance:not(.alv-reel) .h-room .dev-refl { display: none; }
-
-/* ---- Held: one room, held while you scroll -------------------- */
-.alv-reel .h-room {
-  position: sticky; top: 0;
-  height: 100svh; min-height: 560px;
-  padding: 0; overflow: hidden;
-  --ki: 0; /* dark until the light comes up */
-}
-.alv-reel .h-room > .room-light,
-.alv-reel .h-room::after { height: auto; bottom: 0; -webkit-mask-image: none; mask-image: none; }
-.alv-reel .h-track { display: block; position: relative; margin-top: -100svh; pointer-events: none; }
-.alv-reel .h-track > span { display: block; height: 100lvh; }
-
-/* The composition frame: the locked geometry, capped at 1600 x 1000 and
-   centred on very large displays. --fy is the frame's inset from the top. */
-.alv-reel .h-room { --fy: calc((100% - min(100%, 1000px)) / 2); }
-
-/* The column the words stand in: the hero first, then each chapter's story. */
-.alv-reel .h-col,
-.alv-reel .h-panel-copy {
-  position: absolute; z-index: 20;
-  left: var(--h-pad); top: calc(var(--fy) + 84px); bottom: calc(var(--fy) + 76px);
-  width: min(36vw, 540px);
-}
-.alv-reel .h-col { display: grid; align-items: center; pointer-events: none; }
-.alv-reel .h-copy { min-height: 0; padding: 0; pointer-events: auto; }
-.alv-reel .h-copy.is-away { pointer-events: none; }
-/* Focus keeps the words lit only while the room is on them. Once the room
-   has moved to the work (.is-away), focus left behind in the words (a link
-   clicked, then scrolled away from) must not force them back over a chapter;
-   reel.ts hands focus on when a hero link takes the visitor to the work,
-   and brings the room back to the words if focus later returns to them. */
-.alv-reel .h-copy:not(.is-away):focus-within { --copy: 1 !important; pointer-events: auto; }
-
-/* Each chapter covers the room; only its story and its screens show. */
-.alv-reel .h-panel { position: absolute; inset: 0; z-index: auto; display: block; padding: 0; pointer-events: none; }
-.alv-reel .h-panel-work { position: static; }
-.alv-reel .h-panel-copy {
-  align-content: center; pointer-events: none;
-  opacity: 0; transform: translateY(26px);
-  transition: opacity 350ms var(--sl-e-out), transform 500ms var(--sl-e-out);
-}
-/* A project's story arrives with its light, not before it. */
-.alv-reel .h-panel.is-on .h-panel-copy {
-  opacity: 1; transform: none; pointer-events: auto;
-  transition: opacity 700ms var(--sl-e-out) 950ms, transform 900ms var(--sl-e-out) 950ms;
-}
-/* Whatever has keyboard focus is always shown, at once. */
-.alv-reel .h-panel:focus-within .h-panel-copy { opacity: 1; transform: none; pointer-events: auto; transition-delay: 0s; }
-
-/* The screens: placed and lit by the room engine (inline transform,
-   opacity and light), sized against the composition frame. */
-.alv-reel .h-room .dev {
-  position: absolute; left: 0; top: 0; right: auto; bottom: auto; margin: 0;
-  width: var(--dw); opacity: 0; pointer-events: none; will-change: transform, opacity;
-}
-.alv-reel .h-panel-work .dev--desk + .dev--phone { right: auto; bottom: auto; width: var(--dw); }
-.alv-reel .h-room .dev-floor { display: block; }
-.alv-reel[data-geo="wide"] .h-room .dev--desk { --dw: calc(min(100%, 1600px) * 0.44); }
-.alv-reel[data-geo="wide"] .h-room .dev--phone { --dw: calc(min(100%, 1600px) * 0.145); }
-.alv-reel[data-geo="portrait"] .h-room .dev--desk { --dw: 88%; }
-.alv-reel[data-geo="portrait"] .h-room .dev--phone { --dw: 34%; }
-
-/* The work's own index: at the foot of the room once the work has the
-   light, and always as soon as it has focus. */
-.alv-reel .h-steps {
-  position: absolute; z-index: 40; margin: 0;
-  left: var(--h-pad); bottom: calc(var(--fy) + 22px);
-  opacity: 0; pointer-events: none; transition: opacity 500ms;
-}
-.alv-reel .h-room.is-working .h-steps,
-.alv-reel .h-steps:focus-within { opacity: 1; pointer-events: auto; transition: opacity 500ms 300ms; }
-
-/* PORTRAIT: the locked stacked geometry - words at the top, work beneath. */
-.alv-reel[data-geo="portrait"] .h-col,
-.alv-reel[data-geo="portrait"] .h-panel-copy { top: calc(var(--alv-nav-h) + 12px); bottom: auto; right: var(--h-pad); width: auto; }
-.alv-reel[data-geo="portrait"] .h-col { align-items: start; }
-.alv-reel[data-geo="portrait"] .h-panel-copy { align-content: start; }
-.alv-reel[data-geo="portrait"] .h-steps { bottom: 12px; }
-
-/* The pair: the one moment the story sits above the work, centred. Its
-   static screenshots stay for assistive technology; the room's own screens
-   show the pair to sighted readers. */
-.alv-reel .h-pair .h-panel-copy {
-  left: 50%; right: auto; bottom: auto; top: calc(var(--fy) + 96px);
-  width: min(820px, calc(100% - 2 * var(--sl-gutter)));
-  translate: -50% 0; justify-items: center; text-align: center;
-}
-.alv-reel[data-geo="portrait"] .h-pair .h-panel-copy { top: calc(var(--alv-nav-h) + 12px); }
-.alv-reel .h-pair .h-panel-work {
-  position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden;
-  clip-path: inset(50%); white-space: nowrap;
 }

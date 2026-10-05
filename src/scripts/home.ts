@@ -1,26 +1,30 @@
 /**
- * Homepage enhancement (Phase 4E-A): the opening and the held work reel,
- * layered over the static homepage. The page is complete without this file;
- * everything here only changes how it is presented.
+ * Homepage enhancement: the opening and the hero stage, layered over the
+ * static homepage. The page is complete without this file; everything here
+ * only changes how it is presented.
  *
  * The head script (home/prepaint.njk) has already decided, before first
- * paint, whether the reel is held and whether the opening plays, and set a
- * failsafe that restores the static page if this never takes over.
+ * paint, whether the opening plays, and set a failsafe that restores the
+ * static page if this never takes over.
  */
 import { motionOn, onMotionChange } from "../motion/env";
-import { Reel } from "../home/reel";
 import { Opening } from "../home/opening";
-import { geoFor, layoutFor, watchResize } from "../home/reel-geometry";
+import { Hero } from "../home/hero";
 import { finishIntro } from "../identity/motions";
 import { Process } from "../home/process";
 import { Picker } from "../home/picker";
 import { initClose } from "../home/close";
 import { initQuoteForm } from "../forms/quote-wizard";
+import { initServices } from "../home/services";
 
-// The intake form works independently of the reel: wire it at once, not
+// The intake form works independently of the hero: wire it at once, not
 // after the fonts and the opening have settled.
 const quoteForm = document.getElementById("quote-form");
 if (quoteForm instanceof HTMLFormElement) initQuoteForm(quoteForm);
+
+// The services row lights itself as it arrives, whatever the hero does.
+const svcRow = document.querySelector<HTMLElement>("[data-svc]");
+if (svcRow) initServices(svcRow);
 
 declare global {
   interface Window {
@@ -38,13 +42,30 @@ const intent: Promise<void> = new Promise((r) => {
   else addEventListener("alv-intent", () => r(), { once: true });
 });
 
+/** Calls back on meaningful viewport changes only: not a touch browser's toolbar showing or hiding. */
+function watchResize(cb: () => void): void {
+  let lastW = innerWidth, lastH = innerHeight, raf = 0;
+  const coarse = matchMedia("(pointer: coarse)").matches;
+  addEventListener("resize", () => {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(() => {
+      const w = innerWidth, h = innerHeight;
+      if (w === lastW && h === lastH) return;
+      if (coarse && w === lastW && Math.abs(h - lastH) < 120) return;
+      lastW = w;
+      lastH = h;
+      cb();
+    });
+  });
+}
+
 async function boot(): Promise<void> {
-  const work = document.querySelector<HTMLElement>(".h-work");
+  const root = document.querySelector<HTMLElement>(".hx");
   const fly = document.querySelector<HTMLElement>("[data-fly]");
   const stage = document.querySelector<HTMLElement>("[data-intro]");
   const nav = document.querySelector<HTMLElement>("[data-nav]");
   const navMark = nav?.querySelector<HTMLElement>(".alv-nav-mark");
-  if (!work || !fly || !stage || !nav || !navMark) return;
+  if (!root || !fly || !stage || !nav || !navMark) return;
 
   // Measure with the real faces: the introduction and the flight depend on
   // them. But never make a visitor who has already moved on wait for them:
@@ -67,13 +88,11 @@ async function boot(): Promise<void> {
   if (html.classList.contains("alv-failsafe")) return;
   window.__alvHomeReady = true;
 
-  const reel = new Reel(work);
-  reel.setLayout(layoutFor(innerWidth, innerHeight, motionOn()), geoFor(innerWidth, innerHeight));
-  const opening = new Opening(reel, fly, stage, nav, navMark);
+  const hero = new Hero(root);
+  const opening = new Opening(hero, fly, stage, nav, navMark);
 
-  // The rest of the room below the reel. None of it pins or holds the page:
-  // everything follows native scrolling or answers a click. Each degrades
-  // on its own if its section is missing, so none of it gates the reel.
+  // The rest of the page. None of it pins or holds the page: everything
+  // follows native scrolling or answers a click.
   const $ = (sel: string): HTMLElement | null => document.querySelector<HTMLElement>(sel);
   const procRoot = $("#process");
   const proc = procRoot ? new Process(procRoot) : null;
@@ -81,43 +100,31 @@ async function boot(): Promise<void> {
   const close = $(".h-close");
   if (close) initClose(close);
 
-  // Every screen's own light; the opening waits a moment for it, not
-  // forever, and not at all for a visitor who has already moved on.
-  await Promise.race([reel.lightScreens(), wait(900), intent]);
-
   // Someone who scrolled (or pressed a scrolling key) before we were ready
   // has told us what they want: the finished room, now. prepaint.njk has
   // already dropped the dark start state so they were not left on black.
   const yielded = window.__alvIntent === true;
   const atTop = scrollY < innerHeight * 0.4 && !location.hash && !yielded;
-  if (html.classList.contains("alv-opening") || yielded) {
-    if (motionOn() && atTop && html.classList.contains("alv-opening")) opening.play();
-    else {
-      finishIntro(stage);
-      Opening.settle(nav, navMark, fly);
-    }
-  } else if (reel.layout === "held" && motionOn() && atTop) {
-    // A returning visitor: the room is already arranged; only the light comes up.
-    reel.raiseLight();
+  if (html.classList.contains("alv-opening") && motionOn() && atTop) {
+    // The stage begins as the words settle (or at once, if the opening is skipped).
+    opening.onReveal = () => hero.start();
+    opening.play();
+  } else {
+    finishIntro(stage);
+    Opening.settle(nav, navMark, fly);
+    hero.start();
   }
-  // Coming back through history to a place the browser has already restored
-  // (Back/Forward), the visitor's own position wins over the anchor.
-  const nav0 = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
-  if (!(nav0?.type === "back_forward" && scrollY > 4)) reel.followHash();
 
-  watchResize((w, h) => {
+  watchResize(() => {
     opening.skip();
-    reel.setLayout(layoutFor(w, h, motionOn()), geoFor(w, h));
+    hero.refresh();
     pickers.forEach((p) => p.refresh());
   });
 
   onMotionChange((on) => {
     html.classList.toggle("alv-enhance", on);
-    if (!on) {
-      opening.skip();
-      reel.signAll();
-    }
-    reel.setLayout(layoutFor(innerWidth, innerHeight, on), geoFor(innerWidth, innerHeight));
+    if (!on) opening.skip();
+    hero.setMotion(on);
     proc?.setMotion(on);
   });
 }

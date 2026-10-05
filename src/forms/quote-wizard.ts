@@ -256,7 +256,6 @@ export function initQuoteForm(form: HTMLFormElement): void {
       ["Email", val("email")],
       ["Phone", val("phone")],
       ["Service area", val("city")],
-      ["Current site", val("hasSite") === "Yes" ? val("siteUrl") || "Yes" : "No site yet"],
     ]);
     fill("business", [
       ["Type", val("businessType")],
@@ -264,6 +263,7 @@ export function initQuoteForm(form: HTMLFormElement): void {
     ]);
     fill("goals", [
       ["What you need", withOther(pickedList("needs"), val("needOther"))],
+      ["Current site", val("hasSite") === "Yes" ? val("siteUrl") || "Yes" : val("hasSite") === "No" ? "No site yet" : ""],
       ["Customers should be able to", withOther(pickedList("goals"), val("goalOther"))],
       ["Budget", val("budget")],
       ["Timeline", val("timeline")],
@@ -446,8 +446,8 @@ export function initQuoteForm(form: HTMLFormElement): void {
   const services: Record<string, { label: string; need: string }> = {
     "logo-design": { label: "Logo Design", need: "Logo design" },
     "brand-identity": { label: "Brand Identity", need: "Brand identity" },
-    "simple-social-graphic": { label: "Simple Social Graphic", need: "Simple social graphic" },
-    "custom-business-graphics": { label: "Custom Business Graphics", need: "Custom business graphics" },
+    "simple-social-graphic": { label: "Simple Social Graphic", need: "Social media presence" },
+    "custom-business-graphics": { label: "Custom Business Graphics", need: "Flyers / menus / business graphics" },
     "business-cards": { label: "Business Cards", need: "Business cards" },
   };
   const svc = services[params.get("service") ?? ""];
@@ -480,6 +480,28 @@ export function initQuoteForm(form: HTMLFormElement): void {
     syncAlert(goalsBox);
   }
   needBoxes.forEach((b) => b.addEventListener("change", syncGoals));
+
+  /* "Do you have a website now?" only matters when the project includes
+     website work. Hiding it clears the answer (and the address under it)
+     so a branding-only request never says anything about a site. */
+  const siteBox = form.querySelector<HTMLElement>("#c-site");
+  function syncSite(): void {
+    if (!siteBox) return;
+    const on = needBoxes.some((b) => b.checked && b.hasAttribute("data-web"));
+    if (on === !siteBox.hidden) return;
+    siteBox.hidden = !on;
+    if (on) {
+      replay(siteBox);
+      return;
+    }
+    $$<HTMLInputElement>('input[name="hasSite"]:checked', siteBox).forEach((r) => {
+      r.checked = false;
+      r.dispatchEvent(new Event("change"));
+    });
+    $$(".invalid", siteBox).forEach((el) => el.classList.remove("invalid"));
+    syncAlert(siteBox);
+  }
+  needBoxes.forEach((b) => b.addEventListener("change", syncSite));
 
   /* A new website starts at the cheapest package, so once the request
      includes one (ticked, or arriving from a package or trade build) the
@@ -515,6 +537,7 @@ export function initQuoteForm(form: HTMLFormElement): void {
 
   $$<HTMLInputElement>("[data-cond]").forEach(bindCond);
   syncGoals();
+  syncSite();
   syncBudget();
   paint();
 }

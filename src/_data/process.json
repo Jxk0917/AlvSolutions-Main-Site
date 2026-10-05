@@ -3,6 +3,13 @@
 
   "sentence": "Tell me what you need. I design and build it. We go live.",
 
+  "_homeComment": "The homepage's wording for the same three steps: it sells websites, branding and graphics, so its steps cover all three. Icons and payment notes come from `steps` (process.njk matches them by position). The service pages keep `steps` as written.",
+  "homeSteps": [
+    { "clause": "Tell me what you need.", "detail": "Share your business, what you're trying to accomplish and where you need help." },
+    { "clause": "I design and build it.", "detail": "You see the project as it comes together, not only when it's finished." },
+    { "clause": "We launch or deliver it.", "detail": "Your website goes live or your finished assets are delivered ready to use." }
+  ],
+
   "steps": [
     {
       "clause": "Tell me what you need.",

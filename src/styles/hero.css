@@ -1,0 +1,486 @@
+/* ============================================================
+   THE HERO (home/hero-work.njk, src/home/hero.ts)
+
+   ALVSolutions' words in the key light, and beside them a lit stage where
+   Hacienda Grill is carried across the whole business: Websites, Social,
+   Brand, Print. The page never holds: the hero is one screen tall.
+
+   The stage is one 16:11 canvas. Every piece is placed on it in
+   percentages and sized in canvas units (cqw), so a composition keeps its
+   proportions from a phone to a large display. Its light is the room's:
+   a spotlight from above, a pool on the floor, client colour behind the
+   work, and the site's lit blue bar on the floor under a settled scene.
+
+   Layers, so nothing fights: hero.ts moves each piece (.hx-o) with
+   transform and opacity; its resting tilt is the separate `rotate`
+   property; the pointer's lean and lift live on the inner .hx-lift.
+
+   Shape rule: screens 1.1cqw (phones 2.1cqw), framed cards 1.1cqw, the
+   board 1.4cqw, paper nearly square.
+   ============================================================ */
+
+/* ---- The hero room and its two columns ------------------------- */
+.hx { position: relative; }
+.hx-room {
+  height: auto; min-height: clamp(640px, 100svh, 1080px);
+  overflow: visible; overflow-x: clip;
+  padding-inline: var(--h-pad);
+  --kx: 27; --kw: 46; --ki: 1; --kpy: 86;
+}
+.hx-in {
+  position: relative; z-index: 2;
+  display: grid; grid-template-columns: minmax(0, 0.74fr) minmax(0, 1.26fr);
+  align-items: center; gap: clamp(28px, 3.4vw, 64px);
+  min-height: inherit;
+  padding-block: calc(var(--alv-nav-h) + 28px) 36px;
+}
+
+.h-copy { display: grid; align-content: center; justify-items: start; gap: 22px; }
+.h-h1 {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(44px, 4.9vw, 78px); line-height: 0.96; letter-spacing: -0.04em; padding-bottom: 0.06em;
+}
+.h-copy .h-lede { max-width: 38ch; }
+.h-ctas { display: flex; align-items: center; flex-wrap: wrap; gap: 22px; }
+
+/* ---- The stage ------------------------------------------------- */
+.hx-stage { position: relative; min-width: 0; display: grid; gap: 10px; scroll-margin-top: calc(var(--alv-nav-h) + 16px); }
+.hx-canvas {
+  position: relative; isolation: isolate;
+  aspect-ratio: 16 / 11; width: 100%;
+  container-type: inline-size;
+}
+.hx-scene { position: absolute; inset: 0; }
+.hx-scene--later { display: none; }
+.hx-ready .hx-scene--later { display: block; }
+
+/* The stage's light. Each scene moves it a little (hero.ts sets data-scene). */
+.hx-spot, .hx-glow, .hx-bar { position: absolute; pointer-events: none; }
+.hx-spot {
+  z-index: -2; left: -12%; right: -12%; top: -14%; height: 118%;
+  background: radial-gradient(ellipse 40% 72% at 50% 0%, rgb(var(--sl-L) / 0.085), rgb(var(--sl-L) / 0.03) 42%, transparent 76%);
+  transform: translateX(var(--spot-x, 0%)); transition: transform 1.4s var(--sl-e-out);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%); mask-image: linear-gradient(to bottom, transparent, #000 22%);
+}
+.hx-glow {
+  z-index: -1; inset: 0 -10%; opacity: 0.9;
+  transform: translateX(var(--gx, 0%)); transition: transform 1.4s var(--sl-e-out), opacity 1s;
+}
+.hx-glow--warm { background: radial-gradient(ellipse 30% 36% at 50% 60%, rgb(214 72 28 / 0.15), rgb(242 170 60 / 0.05) 55%, transparent 80%); --gx: -22%; }
+.hx-glow--cool { background: radial-gradient(ellipse 30% 36% at 50% 60%, rgb(90 150 235 / 0.13), rgb(120 170 240 / 0.04) 55%, transparent 80%); --gx: 22%; }
+.hx-canvas:not([data-scene="web"]) .hx-glow--warm { --gx: 0%; }
+.hx-canvas:not([data-scene="web"]) .hx-glow--cool { opacity: 0; }
+.hx-canvas[data-scene="print"] .hx-spot { --spot-x: -4%; }
+
+/* The site's lit bar, lying on the floor under the work. */
+.hx-bar {
+  z-index: 0; left: 14%; right: 14%; top: var(--bar-y, 84%); height: 2px; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+}
+.hx-bar::after {
+  content: ""; position: absolute; left: -10%; right: -10%; top: -26px; height: 54px;
+  background: radial-gradient(ellipse 50% 50% at 50% 50%, oklch(0.8 0.12 245 / 0.12), transparent 70%);
+}
+.hx-canvas[data-scene="web"] { --bar-y: 77%; }
+.hx-canvas[data-scene="social"] { --bar-y: 86%; }
+.hx-canvas[data-scene="brand"] { --bar-y: 80%; }
+.hx-canvas[data-scene="print"] { --bar-y: 84%; }
+
+/* ---- A piece on the stage -------------------------------------- */
+.hx-o {
+  position: absolute; z-index: var(--z, 1);
+  left: calc(var(--l) * 1%); top: calc(var(--t) * 1%); width: calc(var(--w) * 1%);
+  rotate: calc(var(--r, 0) * 1deg);
+  --hit: 0;
+}
+/* At rest a piece draws flat and at its own size (no transform), which
+   keeps it sharp. Under the pointer it lifts and leans; hero.ts sets the lean. */
+.hx-lift {
+  position: relative; display: block;
+  transform: none;
+  transition: transform 650ms var(--sl-e-out), opacity 200ms;
+  opacity: calc(1 - var(--out, 0));
+}
+/* Only the pieces themselves come forward: a backdrop (the brand board,
+   the print slab) must stay behind the work standing on it. */
+.hx-ready .is-settled :is(.hx-dev, .hx-piece):hover { z-index: 30; }
+.hx-ready .is-settled :is(.hx-dev, .hx-piece):hover > .hx-lift {
+  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-1.4%) scale(1.025);
+}
+.hx-piece img { display: block; width: 100%; height: auto; }
+
+/* Every piece is a button that opens it in full view. */
+.hx-dev, .hx-piece {
+  margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; text-align: left;
+  pointer-events: none;
+}
+.hx-ready .hx-dev, .hx-ready .hx-piece { pointer-events: auto; cursor: zoom-in; }
+.hx-piece:focus-visible { outline: none; }
+.hx-piece:focus-visible > .hx-lift { outline: 2px solid var(--sl-ink1); outline-offset: 4px; border-radius: 0.6cqw; }
+
+/* A small label naming the piece, the way the demo builds are named. It
+   stays level while its piece leans, and shows once the scene settles. */
+.hx-label {
+  position: absolute; left: 0; top: calc(100% + 0.8cqw);
+  font: 500 clamp(9.5px, 1.05cqw, 12.5px)/1.2 var(--sl-f-text); letter-spacing: 0.01em; white-space: nowrap;
+  color: var(--sl-ink2);
+  rotate: calc(var(--r, 0) * -1deg); transform-origin: 0 0;
+  transition: opacity 500ms var(--sl-e-out);
+  pointer-events: none;
+}
+.hx-label--top { top: auto; bottom: calc(100% + 0.8cqw); }
+.hx-ready .hx-label { opacity: 0; }
+.hx-ready .is-settled .hx-label { opacity: calc(1 - var(--out, 0)); }
+
+/* ---- Demo screens ---------------------------------------------- */
+.hx-dev[data-tone="hac"] { --tone: 236 120 52; }
+.hx-dev[data-tone="luc"] { --tone: 110 160 235; }
+.hx-glass {
+  position: relative; display: flex; flex-direction: column; overflow: hidden;
+  background: #040404; border: 0.6cqw solid #121212; border-radius: 1.1cqw;
+  box-shadow:
+    0 0 0 1px rgb(var(--sl-L) / 0.14),
+    0 3cqw 5.5cqw -2.4cqw rgb(0 0 0 / 0.95),
+    0 0 calc(3cqw * var(--hit)) rgb(var(--sl-L) / calc(0.35 * var(--hit)));
+  transition: box-shadow 450ms var(--sl-e-out);
+}
+.hx-dev--phone .hx-glass { aspect-ratio: 9 / 19.5; border-width: 0.5cqw; border-radius: 2.1cqw; }
+.hx-ready .is-settled .hx-dev:hover .hx-glass {
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.32), 0 3.6cqw 6cqw -2.4cqw rgb(0 0 0 / 0.95), 0 0 4cqw -1cqw rgb(var(--tone) / 0.35);
+}
+.hx-dev:focus-visible { outline: none; }
+.hx-dev:focus-visible .hx-glass { box-shadow: 0 0 0 2px var(--sl-ink1), 0 3cqw 5.5cqw -2.4cqw rgb(0 0 0 / 0.95); }
+
+/* A desktop: a slim window bar with its lights and address field. The lit
+   bar draws across it as the screen powers on (--p, set by hero.ts). */
+.hx-chrome {
+  position: relative; z-index: 3; flex: none; display: flex; align-items: center; gap: 0.32cqw;
+  height: 1.6cqw; padding-inline: 0.7cqw 2.6cqw;
+  background: #151515; box-shadow: inset 0 -1px 0 rgb(var(--sl-L) / 0.09);
+}
+.hx-chrome > i { flex: none; width: 0.36cqw; height: 0.36cqw; border-radius: 50%; background: rgb(var(--sl-L) / 0.22); }
+.hx-chrome > b { flex: none; width: 34%; height: 52%; margin-inline: auto; border-radius: 99px; background: rgb(var(--sl-L) / 0.07); }
+.hx-chrome::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+  transform-origin: 0 50%; transform: scaleX(var(--p, 1)); opacity: clamp(0, calc((1 - var(--p, 1)) * 5), 1);
+}
+/* A phone: the island sits in its own strip, never over the page's logo. */
+.hx-island { position: relative; z-index: 1; flex: none; height: 6.5%; background: #060606; }
+.hx-island::before {
+  content: ""; position: absolute; top: 22%; left: 50%; width: 32%; height: 56%; translate: -50% 0; border-radius: 99px;
+  background: #000; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07);
+}
+.hx-island::after {
+  content: ""; position: absolute; top: 42%; left: calc(50% + 12%); width: 3%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm); opacity: var(--p, 1);
+}
+.hx-shot { display: block; flex: 1 1 auto; width: 100%; min-height: 0; aspect-ratio: 1440 / 900; object-fit: cover; object-position: top; }
+.hx-dev--phone .hx-shot { aspect-ratio: auto; }
+/* The phone's second screen: the Instagram profile, revealed under a line of light. */
+.hx-ig { position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; object-fit: cover; object-position: top; visibility: hidden; }
+.hx-scan { position: absolute; inset: 0; z-index: 3; pointer-events: none; visibility: hidden; }
+.hx-scan::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow);
+}
+.hx-scan::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 100%; height: 22%;
+  background: linear-gradient(to bottom, transparent, oklch(0.85 0.1 245 / 0.18));
+}
+/* Power: an unpowered screen is dark glass; the key glints on it. */
+.hx-off { position: absolute; inset: 0; z-index: 4; background: #030303; opacity: calc(1 - var(--p, 1)); pointer-events: none; }
+.hx-sheen {
+  position: absolute; inset: 0; z-index: 5; pointer-events: none;
+  background: linear-gradient(118deg, rgb(var(--sl-L) / 0.07), transparent 38%);
+}
+/* Each screen's own light, thrown on the floor in front of it. */
+.hx-floor {
+  position: absolute; z-index: -1; left: -25%; right: -25%; top: 92%; height: 30%; pointer-events: none;
+  background: radial-gradient(ellipse 46% 42% at 50% 10%, rgb(var(--tone) / calc(0.3 * var(--p, 1))), transparent 76%);
+}
+/* The trail of light a screen leaves as it glides in. */
+.hx-trail {
+  position: absolute; z-index: -1; top: 12%; bottom: 12%; left: 50%; width: 150%;
+  transform-origin: 0% 50%; visibility: hidden; pointer-events: none;
+  background: radial-gradient(ellipse 70% 50% at 0% 50%, oklch(0.88 0.06 245 / 0.2), oklch(0.8 0.1 245 / 0.06) 45%, transparent 72%);
+}
+.hx-trail::before {
+  content: ""; position: absolute; left: 0; right: 30%; top: 50%; height: 2px; translate: 0 -50%; border-radius: 2px;
+  background: linear-gradient(90deg, var(--sl-bar), transparent); box-shadow: var(--sl-bar-glow-sm);
+}
+
+/* Names under the two builds. */
+.hx-names {
+  left: 2%; right: 2%; top: 80.5%; width: auto; margin: 0;
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 7%;
+  font-size: clamp(11.5px, 1.25cqw, 13.5px); color: var(--sl-ink3);
+}
+.hx-names b { font-weight: 600; color: var(--sl-ink1); margin-right: 6px; }
+/* The maker's signature, signed again as each scene settles (hero.ts). */
+.hx-sig { position: absolute; z-index: 20; left: 2%; top: 89.5%; margin: 0; pointer-events: none; }
+.hx-sig .alv-sign { font-size: clamp(12px, 1.35cqw, 14.5px); }
+.alv-enhance .hx-sig .alv-sign:not(.is-signed) .alv-sign-line { clip-path: inset(0 100% 0 0); transform: translateX(-4px); }
+
+/* ---- Social: framed posts --------------------------------------- */
+/* Each post stands in a slim dark frame with a lit top edge, the way the
+   site frames its own screens, so it reads as a placed piece of work. */
+.hx-frame > .hx-lift {
+  padding: 0.42cqw; border-radius: 1.1cqw;
+  background: linear-gradient(180deg, #1a1a1a, #0d0d0d);
+  box-shadow:
+    0 0 0 1px rgb(var(--sl-L) / 0.13),
+    inset 0 1px 0 rgb(var(--sl-L) / 0.1),
+    0 2.6cqw 5cqw -2cqw rgb(0 0 0 / 0.95),
+    0 0 calc(3cqw * var(--hit)) rgb(var(--sl-L) / calc(0.3 * var(--hit)));
+}
+.hx-frame img { border-radius: 0.72cqw; }
+.hx-ready .is-settled .hx-frame:hover > .hx-lift { box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.3), inset 0 1px 0 rgb(var(--sl-L) / 0.14), 0 3.2cqw 6cqw -2cqw rgb(0 0 0 / 0.95); }
+
+/* ---- Brand: one board ------------------------------------------- */
+.hx-board {
+  height: calc(var(--h) * 1%);
+  border-radius: 1.4cqw;
+  background:
+    radial-gradient(ellipse 70% 55% at 35% 0%, rgb(var(--sl-L) / 0.05), transparent 70%),
+    linear-gradient(180deg, #121212, #0b0b0b);
+  box-shadow:
+    0 0 0 1px rgb(var(--sl-L) / 0.1),
+    inset 0 1px 0 rgb(var(--sl-L) / 0.08),
+    0 4cqw 8cqw -3cqw rgb(0 0 0 / 0.95),
+    0 0 calc(5cqw * var(--hit)) rgb(242 194 48 / calc(0.18 * var(--hit)));
+}
+.hx-board::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px;
+  background: linear-gradient(90deg, transparent 6%, rgb(var(--sl-L) / calc(0.4 + 0.4 * var(--hit))) 50%, transparent 94%);
+}
+.hx-board-label {
+  position: absolute; left: 4.2%; top: 2.6%;
+  font: 600 clamp(10px, 1.1cqw, 13.5px)/1.2 var(--sl-f-text); color: var(--sl-ink1);
+}
+.hx-board-label span { margin-left: 0.6em; font-weight: 400; color: var(--sl-ink3); }
+.hx-mod img { border-radius: 0.6cqw; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 1.4cqw 2.6cqw -1.2cqw rgb(0 0 0 / 0.9); }
+.hx-mod { --hit: 0; }
+.hx-mod[data-k="bLogo"] img { box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 1.4cqw 2.6cqw -1.2cqw rgb(0 0 0 / 0.9), 0 0 calc(4cqw * var(--hit)) rgb(242 194 48 / calc(0.4 * var(--hit))); }
+.hx-band {
+  aspect-ratio: 55.5 / 2.2; border-radius: 0.3cqw;
+  background: url("/assets/showcase/hacienda/hg-diamond-band.svg") 0 50% / auto 100% repeat-x;
+}
+.hx-avatar img { display: block; width: 100%; height: auto; border-radius: 50%; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.15), 0 0 calc(5cqw * var(--hit)) rgb(242 194 48 / calc(0.55 * var(--hit))); }
+
+/* ---- Print: paper on a display surface --------------------------- */
+/* The surface: a dark slab seen in perspective, catching the key. */
+.hx-slab { aspect-ratio: 84 / 20; pointer-events: none; }
+.hx-slab::before {
+  content: ""; position: absolute; inset: 0; border-radius: 2cqw;
+  transform: perspective(110cqw) rotateX(56deg); transform-origin: 50% 0%;
+  -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent 96%); mask-image: linear-gradient(to bottom, #000 35%, transparent 96%);
+  background:
+    radial-gradient(ellipse 60% 70% at 46% 0%, rgb(var(--sl-L) / 0.07), transparent 70%),
+    linear-gradient(180deg, #161616, #0a0a0a 80%);
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.07), inset 0 1px 0 rgb(var(--sl-L) / 0.14);
+}
+/* Paper: a contact shadow, a long soft one, and light lying across the sheet. */
+.hx-paper > .hx-lift { border-radius: 0.3cqw; }
+.hx-paper img {
+  border-radius: 0.3cqw;
+  box-shadow:
+    0 0.15cqw 0.3cqw rgb(0 0 0 / 0.55),
+    0 2.4cqw 4.4cqw -1.4cqw rgb(0 0 0 / 0.92),
+    0 0 calc(3cqw * var(--hit)) rgb(var(--sl-L) / calc(0.3 * var(--hit)));
+}
+.hx-paper > .hx-lift::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(128deg, rgb(255 255 255 / 0.11), transparent 34%, transparent 68%, rgb(0 0 0 / 0.14));
+}
+/* The card that turns over: two faces on one card. */
+.hx-flip > .hx-lift { perspective: 70cqw; }
+.hx-flip > .hx-lift::after { content: none; }
+.hx-flip-in { position: relative; display: block; transform-style: preserve-3d; }
+.hx-face { display: block; backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.hx-face--back { position: absolute; inset: 0; transform: rotateY(180deg); }
+.hx-flip-sheen {
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; visibility: hidden; border-radius: 0.3cqw;
+  background: linear-gradient(105deg, transparent 30%, rgb(255 255 255 / 0.32) 50%, transparent 70%);
+  transform: translateZ(1px);
+}
+
+/* ---- The scene tabs -------------------------------------------- */
+/* One glass bar above the stage. A lit pill slides to the scene chosen,
+   the site's blue bar glowing under it; while autoplay runs, a line fills
+   toward the next scene. Until someone chooses, the bar draws a little
+   light now and then, so the stage reads as something to explore. */
+.hx-tabs {
+  position: relative; z-index: 2; display: none; justify-self: center;
+  gap: 2px; padding: 5px; border-radius: 999px;
+  background: linear-gradient(180deg, rgb(var(--sl-L) / 0.055), rgb(var(--sl-L) / 0.02));
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.13), inset 0 1px 0 rgb(var(--sl-L) / 0.08), 0 18px 40px -22px rgb(0 0 0 / 0.95);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.hx-ready .hx-tabs { display: inline-flex; }
+.hx-tabs.is-new { animation: hx-call 2.8s var(--sl-e-out) 1.6s 3; }
+@keyframes hx-call {
+  0%, 100% { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.13), inset 0 1px 0 rgb(var(--sl-L) / 0.08), 0 18px 40px -22px rgb(0 0 0 / 0.95), 0 0 0 0 oklch(0.85 0.1 245 / 0); }
+  40% { box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.26), inset 0 1px 0 rgb(var(--sl-L) / 0.1), 0 18px 40px -22px rgb(0 0 0 / 0.95), 0 0 28px 2px oklch(0.85 0.1 245 / 0.2); }
+}
+.hx-tab {
+  position: relative; z-index: 1;
+  display: inline-flex; align-items: center; min-height: 38px; padding: 0 18px; border: 0; border-radius: 999px;
+  background: none; font: 500 14px/1 var(--sl-f-text); letter-spacing: -0.005em; color: var(--sl-ink2);
+  cursor: pointer; white-space: nowrap; transition: color 250ms, transform 200ms;
+}
+.hx-tab:hover, .hx-tab[aria-current] { color: var(--sl-ink1); }
+.hx-tab:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.hx-tab:active { transform: scale(0.97); }
+.hx-tab .short { display: none; }
+.hx-tab-ind {
+  position: absolute; left: 0; top: 5px; bottom: 5px; border-radius: 999px; pointer-events: none;
+  background: linear-gradient(180deg, rgb(var(--sl-L) / 0.13), rgb(var(--sl-L) / 0.06));
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.2), inset 0 1px 0 rgb(var(--sl-L) / 0.16);
+  transition: transform 550ms var(--sl-e-out), width 550ms var(--sl-e-out);
+}
+.hx-tab-ind::after {
+  content: ""; position: absolute; left: 50%; bottom: -5px; width: 26px; height: 2px; translate: -50% 0; border-radius: 2px;
+  background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+}
+.hx-tab-ind::before {
+  content: ""; position: absolute; left: 16px; right: 16px; bottom: 6px; height: 1px; border-radius: 1px;
+  background: rgb(var(--sl-L) / 0.45); transform-origin: 0 50%; transform: scaleX(var(--t, 0));
+  opacity: 0; transition: opacity 300ms;
+}
+.hx-stage.is-auto .hx-tab-ind::before { opacity: 1; }
+
+/* ---- A demo, opened ---------------------------------------------- */
+html.hx-locked { overflow: hidden; }
+.hx-focus {
+  position: fixed; inset: 0; z-index: 400;
+  display: grid; place-content: center; justify-items: center; gap: 16px;
+  padding: 24px 16px;
+}
+.hx-focus[hidden] { display: none; }
+.hx-focus-back {
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse 60% 55% at 50% 42%, rgb(20 20 20 / 0.82), rgb(5 5 5 / 0.95));
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+}
+.hx-focus[data-tone="hac"] { --tone: 236 120 52; }
+.hx-focus[data-tone="luc"] { --tone: 110 160 235; }
+.hx-focus-frame {
+  position: relative; display: flex; flex-direction: column; overflow: hidden;
+  width: min(1120px, 92vw, calc((100svh - 190px) * 1.55));
+  background: #040404; border: 8px solid #121212; border-radius: 16px;
+  box-shadow:
+    0 0 0 1px rgb(var(--sl-L) / 0.18),
+    0 60px 120px -40px rgb(0 0 0 / 0.95),
+    0 0 140px -20px rgb(var(--tone, 242 241 238) / 0.22);
+  will-change: transform;
+}
+.hx-focus-frame .hx-chrome { height: 26px; gap: 6px; padding-inline: 12px 60px; }
+.hx-focus-frame .hx-chrome > i { width: 7px; height: 7px; }
+.hx-focus-frame .hx-chrome::after { content: none; }
+.hx-focus-frame .hx-island { height: 28px; }
+.hx-focus[data-kind="desk"] .hx-island,
+.hx-focus[data-kind="phone"] .hx-chrome { display: none; }
+.hx-focus[data-kind="phone"] .hx-focus-frame {
+  width: min(92vw, calc(min(76svh, 780px) * 9 / 19.5)); aspect-ratio: 9 / 19.5;
+  border-width: 7px; border-radius: 36px;
+}
+.hx-focus-view {
+  position: relative; overflow-y: auto; overscroll-behavior: contain;
+  aspect-ratio: 1440 / 900; scrollbar-width: thin; scrollbar-color: rgb(var(--sl-L) / 0.3) transparent;
+}
+.hx-focus[data-kind="phone"] .hx-focus-view { aspect-ratio: auto; flex: 1 1 auto; min-height: 0; }
+.hx-focus-view:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.hx-focus-view img { display: block; width: 100%; height: auto; }
+.hx-focus-bar {
+  position: relative; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  width: min(1120px, 92vw, calc((100svh - 190px) * 1.55));
+}
+.hx-focus[data-kind="phone"] .hx-focus-bar { width: min(92vw, 460px); flex-wrap: wrap; }
+.hx-focus-h { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.016em; color: var(--sl-ink1); }
+.hx-focus-note { margin-top: 2px; font-size: 13px; color: var(--sl-ink3); }
+.hx-focus-act { display: flex; align-items: center; gap: 12px; }
+.hx-close {
+  position: relative; flex: none; width: 44px; height: 44px; border: 0; border-radius: 999px; cursor: pointer;
+  background: rgb(var(--sl-L) / 0.06); box-shadow: inset 0 0 0 1px var(--sl-line2); color: var(--sl-ink1);
+  transition: background-color 200ms, box-shadow 200ms, transform 300ms var(--sl-e-out);
+}
+.hx-close > span::before, .hx-close > span::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 16px; height: 1.5px; border-radius: 2px; background: currentColor;
+  translate: -50% -50%; rotate: 45deg;
+}
+.hx-close > span::after { rotate: -45deg; }
+.hx-close:hover { background: rgb(var(--sl-L) / 0.12); box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.45); }
+.hx-close:active { transform: scale(0.96); }
+.hx-close:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 3px; }
+
+/* ---- The opening: the name, opening, then flying to the nav ---- */
+.alv-enhance .h-copy { opacity: var(--copy, 1); transform: translateY(calc((1 - var(--copy, 1)) * 60px)); }
+.alv-opening .h-copy { --copy: 0; }
+.alv-opening .hx-room { --ki: 0; isolation: auto; }
+.h-fly { position: absolute; left: 0; top: 0; z-index: 250; transform-origin: 0 0; will-change: transform; }
+.alv-opening .h-fly { display: block; }
+/* A flex stage, so the lockup's own box is the stage's box (no line-box strut
+   under it): the flight measures this box against the nav lockup's. */
+.wm-stage { display: flex; }
+.alv-opening .h-fly.is-home { visibility: hidden; }
+.alv-opening [data-intro]:not(.is-ready) [data-wm] { visibility: hidden; }
+.alv-opening .alv-nav-mark:not(.is-home) { opacity: 0; }
+.alv-opening .alv-nav-in > :not(.alv-nav-mark) { opacity: var(--nav, 0); }
+
+/* ---- Narrower screens ------------------------------------------- */
+/* Tablet and below: the words, then the stage beneath them. */
+@media (max-width: 1000px) {
+  .hx-room { min-height: 0; }
+  .hx-in { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-block: calc(var(--alv-nav-h) + 40px) 48px; }
+  .hx-stage { width: min(100%, 780px); justify-self: center; }
+}
+@media (max-width: 760px) {
+  .h-h1 { font-size: clamp(40px, 11.5vw, 60px); }
+  .h-copy { gap: 16px; }
+  .h-copy .h-lede { font-size: 16px; }
+  .hx-in { gap: 20px; padding-block: calc(var(--alv-nav-h) + 32px) 40px; }
+  .hx-tab { padding: 0 13px; font-size: 13.5px; min-height: 36px; }
+  .hx-tab .long { display: none; }
+  .hx-tab .short { display: inline; }
+  .hx-tab-ind::before { left: 12px; right: 12px; }
+  /* Small screens keep the signature; the names are in the full view. */
+  .hx-names { display: none; }
+  .hx-focus-bar { flex-wrap: wrap; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hx-lift, .hx-spot, .hx-glow { transition: none; }
+  .hx-tabs.is-new { animation: none; }
+}
+.no-motion .hx-lift, .no-motion .hx-spot, .no-motion .hx-glow { transition: none; }
+
+/* ---- Social: the platform on the screens it lives on -------------- */
+/* The same device language as the websites: the Facebook page in a
+   browser window behind, the profile on the phone in front, the story on
+   a second phone beside it, the post framed in front. The key moves onto
+   the profile phone and the client's warm light gathers under it. */
+.hx-dev--win .hx-glass { border-width: 0.55cqw; }
+.hx-shot--cover { aspect-ratio: 1640 / 624; }
+/* A story is shown whole, letterboxed on the taller phone as it would be. */
+.hx-dev--phone .hx-shot--story { object-fit: contain; object-position: 50% 50%; background: #050505; }
+.hx-story-bar {
+  position: absolute; z-index: 3; left: 6%; right: 6%; top: 2.4%;
+  display: flex; gap: 3%; pointer-events: none;
+}
+.hx-story-bar > i { flex: 1; height: 2px; border-radius: 2px; background: rgb(255 255 255 / 0.32); }
+.hx-story-bar > i:first-child { background: rgb(255 255 255 / 0.92); }
+.hx-canvas[data-scene="social"] { --spot-x: 8%; }
+.hx-canvas[data-scene="social"] .hx-glow--warm { --gx: 8%; }
+
+/* ---- A graphic, opened: whole, in a slim frame -------------------- */
+.hx-focus[data-kind="image"] .hx-chrome,
+.hx-focus[data-kind="image"] .hx-island { display: none; }
+.hx-focus[data-kind="image"] .hx-focus-frame { border-width: 6px; border-radius: 14px; background: #0b0b0b; }
+.hx-focus[data-kind="image"] .hx-focus-view { overflow: hidden; }
+.hx-focus[data-kind="image"] .hx-focus-view img { border-radius: 8px; }
+.hx-focus[data-kind="phone"] .hx-focus-view { display: flex; flex-direction: column; background: #040404; }
+.hx-focus[data-kind="phone"] .hx-focus-view img { flex: none; margin-block: auto; }
+
+/* A graphic has no live demo to open. */
+.hx-focus [hidden] { display: none !important; }

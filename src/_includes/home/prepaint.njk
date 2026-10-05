@@ -1,11 +1,10 @@
 <script>
-  /* Homepage, before first paint. Decides whether the work reel is held and
+  /* Homepage, before first paint. Decides whether the hero is enhanced and
      whether the opening plays, so neither flashes in or jumps after the
-     page has drawn. Mirrors
-     src/home/reel-geometry.ts (layoutFor / geoFor) and the session key in
-     src/home/opening.ts. Without JS none of this runs and the static page
-     is untouched. If the enhancement has not taken over within 4.5s
-     (script blocked, failed or very slow) the static page comes back.
+     page has drawn (the session key is src/home/opening.ts'). Without JS
+     none of this runs and the static page is untouched. If the
+     enhancement has not taken over within 4.5s (script blocked, failed or
+     very slow) the static page comes back.
 
      The opening yields to the visitor from the very first moment. Until
      home.js has loaded and measured, the room is dark; a visitor who
@@ -19,10 +18,7 @@
   (function () {
     var r = document.documentElement;
     if (/\bno-motion\b/.test(r.className)) return;
-    var w = innerWidth, h = innerHeight;
-    var held = w >= 761 && h >= 560;
-    r.setAttribute("data-geo", held ? (w / h < 0.85 ? "portrait" : "wide") : "narrow");
-    r.className += " alv-enhance" + (held ? " alv-reel" : "");
+    r.className += " alv-enhance";
     var seen = false;
     try { seen = sessionStorage.getItem("alv-home-opened") === "1"; } catch (e) {}
     if (!seen && !location.hash) {
@@ -45,7 +41,7 @@
     }
     setTimeout(function () {
       if (window.__alvHomeReady) return;
-      r.classList.remove("alv-enhance", "alv-reel", "alv-opening");
+      r.classList.remove("alv-enhance", "alv-opening");
       r.classList.add("alv-failsafe");
     }, 4500);
   })();

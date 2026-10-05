@@ -1,53 +1,79 @@
 {#
-  WHAT IT TAKES: the pieces of running a business online, one card each,
-  routing to its own service page. The homepage only names each piece and
-  says what it does for the customer; everything else is on the page it
-  links to. Each card's service (route and icon) is read from
-  services.json by slug; only the short homepage wording lives here.
+  SERVICES: the three things ALVSolutions makes for a business, shown as
+  one business (Hacienda Grill) carried across all three. No cards: each
+  service is a station standing on one shared, lit floor, its work under
+  its own spotlight, its words beneath the floor. The website is the
+  flagship and the widest station; the Instagram profile and the flyer
+  stand beside it, each sized to its own silhouette.
 
-  The website is the centre, so it is the largest surface and the one the
-  key light falls on. The rest are dark glass around it; pointing at one
-  catches the key on its top edge (CSS only).
-
-  Each card also carries its own coloured light (h1 -> h2, OKLCH hue
-  angles) on its top edge, its icon and a faint wash in its corner. In
-  reading order the five run as one spectrum, so the set reads as a
-  single light split across the grid. Colour never touches the type.
+  Light, not boxes: a cone from above, the client's warm colour behind the
+  work, and a length of the site's blue bar glowing on the floor under it.
+  Pointing at a station hands the key light to it (its cone and bar come
+  up, its work lifts) while the other two settle back. The lights come up
+  as the row reaches the viewport (home/services.ts); without JS, or with
+  motion off, they are simply on. Each station is one link to the page
+  that owns the detail. No prices here: the website packages follow.
 #}
+{%- set hac = work.projects | find("slug", "hacienda-grill") %}
+{%- set hg = "/assets/showcase/hacienda/" %}
 {%- set cards = [
-  { slug: "business-websites", h1: 290, h2: 240, title: "A website built around your business", body: "Custom-coded, fast on a phone and written for how your customers search. You own the domain, and the finished site is yours once it is paid for." },
-  { slug: "booking-integration", h1: 240, h2: 200, title: "Bookings and quote requests", body: "Customers book a time or ask for a quote at any hour, without phone tag." },
-  { slug: "google-business-profile", h1: 200, h2: 155, title: "Found on Google", body: "Your Business Profile, set up in your own Google account so the listing stays yours." },
-  { slug: "care-plans", h1: 155, h2: 100, title: "Hosting and upkeep", body: "Hosting, SSL, backups and monthly edits handled for you, from " + (careplans.plans[0].price | price) + "/mo." },
-  { slug: "logo-design", h1: 100, h2: 40, title: "Logo and business cards", body: "A logo that works on screen, and cards that match the site in hand.", href: "/services/#branding-design" }
+  { key: "web", title: "Websites",
+    body: "Custom sites designed around your customers, services and goals. Never a recycled template.",
+    items: ["Custom-built", "Mobile-first", "Booking & quotes", "Google-ready"],
+    cta: "Explore websites", href: "/services/#websites" },
+  { key: "brand", title: "Branding & social presence",
+    body: "Logos, visual identity and social graphics that make your business look the same everywhere.",
+    items: ["Logo design", "Brand identity", "Social graphics", "Profile visuals"],
+    cta: "Explore branding", href: "/services/#branding-design" },
+  { key: "print", title: "Business graphics",
+    body: "Business cards, menus, flyers and branded materials that carry your brand beyond the website.",
+    items: ["Business cards", "Menus", "Flyers", "Custom graphics"],
+    cta: "Explore business graphics", href: "/services/custom-business-graphics/" }
 ] %}
-{%- set foundation = packages.tiers[0] %}
 <section class="h-offer h-wrap" id="services" aria-labelledby="offer-h">
   <div class="h-offer-head">
-    <h2 id="offer-h" class="h-h2">Everything it takes to run a business online.</h2>
-    <p class="h-lede">The site is the centre. These are the parts around it, handled by the same person.</p>
+    <p class="h-eyebrow">Services</p>
+    <h2 id="offer-h" class="h-h2">Built for the whole business.</h2>
+    <p class="h-lede">From the website people land on to the brand they remember and the materials they take with them.</p>
   </div>
 
-  <ul class="h-offer-grid">
+  <div class="h-svc-row" data-svc>
+    <span class="h-svc-floor" aria-hidden="true"></span>
     {%- for c in cards %}
-    {%- set svc = services | find("slug", c.slug) %}
-    <li class="h-card{% if loop.first %} h-card--lead{% endif %}" style="--h1: {{ c.h1 }}; --h2: {{ c.h2 }}">
-      {%- if loop.first %}<span class="key-cone" aria-hidden="true"></span>{% endif %}
-      <svg class="h-ic h-card-ic" aria-hidden="true"><use href="#i-{{ svc.icon }}"/></svg>
-      <h3 class="h-card-h"><a class="h-card-link" href="{{ c.href or ('/services/' + svc.slug + '/') }}">{{ c.title }}</a></h3>
-      <p class="h-card-body">{{ c.body | safe }}</p>
-      {%- if loop.first %}
-      {#- What every package includes, read from Foundation's own facts. #}
-      <ul class="h-feats h-card-feats" aria-label="In every package">
-        {%- for f in packages.features %}
-        {%- if foundation.has[f.key] and not (f.key in ["pages", "custom", "revisions"]) %}<li>{{ f.label }}</li>{% endif %}
-        {%- endfor %}
-      </ul>
-      {%- endif %}
-      <svg class="h-ic h-card-go" aria-hidden="true"><use href="#i-arrow"/></svg>
-    </li>
+    <article class="h-svc h-svc--{{ c.key }}" aria-labelledby="svc-{{ c.key }}">
+      <div class="h-svc-stage" data-deal="fade">
+        <span class="h-svc-cone" aria-hidden="true"></span>
+        <span class="h-svc-bloom" aria-hidden="true"></span>
+        <div class="h-svc-art">
+          {%- if c.key == "web" %}
+          {%- set d = hac.screenshots.desktop %}{% set m = hac.screenshots.mobile %}
+          <div class="h-svc-glass h-svc-glass--desk">
+            <span class="h-svc-chrome" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+            <img src="{{ d.src }}" srcset="{{ d.small }} 720w, {{ d.src }} 1440w" sizes="(min-width: 1101px) 34vw, (min-width: 761px) 70vw, 86vw" width="{{ d.width }}" height="{{ d.height }}" alt="{{ d.alt }}" loading="lazy" decoding="async" />
+          </div>
+          <div class="h-svc-glass h-svc-glass--phone">
+            <img src="{{ m.src }}" width="{{ m.width }}" height="{{ m.height }}" alt="{{ m.alt }}" loading="lazy" decoding="async" />
+          </div>
+          {%- elif c.key == "brand" %}
+          <div class="h-svc-glass h-svc-glass--ig">
+            <img src="{{ hg }}hg-ig-profile-screen-1170.webp" srcset="{{ hg }}hg-ig-profile-screen-780.webp 780w, {{ hg }}hg-ig-profile-screen-1170.webp 1170w" sizes="(min-width: 761px) 220px, 46vw" width="1170" height="2532" alt="Hacienda Grill's Instagram profile: its logo, bio, story highlights and a grid of branded posts" loading="lazy" decoding="async" />
+          </div>
+          {%- else %}
+          <div class="h-svc-sheet">
+            <img src="{{ hg }}hg-flyer-1275.webp" srcset="{{ hg }}hg-flyer-638.webp 638w, {{ hg }}hg-flyer-1275.webp 1275w" sizes="(min-width: 761px) 300px, 62vw" width="1275" height="1650" alt="Hacienda Grill's birria tacos flyer" loading="lazy" decoding="async" />
+          </div>
+          {%- endif %}
+        </div>
+      </div>
+      <div class="h-svc-copy" data-deal="unit">
+        <h3 id="svc-{{ c.key }}" class="h-svc-title">{{ c.title }}</h3>
+        <p class="h-svc-body">{{ c.body }}</p>
+        <ul class="h-svc-items">
+          {%- for i in c.items %}<li>{{ i }}</li>{% endfor %}
+        </ul>
+        <a class="h-svc-cta" href="{{ c.href }}">{{ c.cta }}<svg class="h-ic" aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </article>
     {%- endfor %}
-  </ul>
-
-  <p class="h-offer-all"><a class="alv-tlink" href="/services/">Every service and its price</a></p>
+  </div>
 </section>

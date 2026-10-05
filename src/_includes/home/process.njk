@@ -17,12 +17,13 @@
   <h2 id="process-h" class="h-proc-h">{{ processHeading | default("How a project runs.") }}</h2>
   <ol class="h-line">
     {%- for s in process.steps %}
+    {%- set w = process.homeSteps[loop.index0] if procHome else s %}
     <li class="h-stn" data-stn>
-      <h3 class="h-stn-clause">{{ s.clause }}</h3>
+      <h3 class="h-stn-clause">{{ w.clause }}</h3>
       <span class="h-stn-node" aria-hidden="true"><i></i></span>
       <div class="h-stn-body">
         <svg class="h-ic" aria-hidden="true"><use href="#i-{{ s.icon }}"/></svg>
-        <p>{{ s.detail }}</p>
+        <p>{{ w.detail }}</p>
         <p class="alv-tag h-stn-note">{{ s.note }}</p>
       </div>
     </li>

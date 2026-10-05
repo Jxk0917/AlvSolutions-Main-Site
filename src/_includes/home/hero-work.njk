@@ -1,102 +1,238 @@
 {#
-  HERO + WORK: in the locked design, one room held while you scroll - the
-  words first, then the room handed to each piece of work. This is its
-  static resting form: the hero stands in the key light, then the four work
-  chapters follow in reading order, each an <article> carrying its own
-  story and its own screens, all present in the HTML.
+  THE HERO: ALVSolutions' words in the key light, and beside them a lit
+  stage where one fictional client, Hacienda Grill, is carried across
+  everything ALVSolutions makes for a business:
 
-  Hooks for the held reel (Phase 4E): data-room, .room-light/.bounce,
-  .h-fly/[data-intro]/[data-wm], [data-copy], [data-panel], [data-obj],
-  [data-go], [data-work-live] and the .h-track steps.
+    Websites  the flagship. Hacienda and Lucid, desktop and phone, flow in
+              and power on.
+    Social    the Hacienda phone steps forward and its screen turns into the
+              Instagram profile; the Facebook page rises behind it, the
+              story phone glides in beside it and the post turns over in
+              front of it.
+    Brand     the profile's logo grows into the brand board.
+    Print     the logo becomes the business card, which turns over, and the
+              flyer and menu blow in beside it.
+
+  The words never change; the stage tells the story. The scenes are chosen
+  with the tabs under the stage (src/home/hero.ts). Autoplay is secondary:
+  it holds still under the pointer, under focus, and for good once someone
+  chooses a scene. Nothing here pins or holds the page.
+
+  Every piece is a button: it answers the pointer, carries a small label
+  naming what it is, and opens into a full view of itself (a demo site as
+  its whole scrollable page). "Built by ALVSolutions" signs each scene.
+
+  At rest (no JS) the stage shows the Websites scene, still. Positions are
+  percentages of one 16:11 canvas (--l/--t/--w: left, top, width; --r a
+  resting tilt; --z its layer), so a composition keeps its proportions at
+  any size. Images are the prepared web exports, at least twice the size
+  they are drawn, so they stay sharp on high-density screens.
 #}
 {% from "components/identity.njk" import lockup, signature %}
-{% from "home/macros.njk" import device %}
-<section class="h-work" id="top" aria-label="ALVSolutions and its work">
-  <div class="room h-room" data-room="work">
-    <div class="room-light" aria-hidden="true">
-      <span class="key-cone"></span>
-      <span class="key-pool"></span>
-      {%- for p in work.projects %}
-      <span class="bounce" data-for="{{ p.reelKey }}D"></span>
-      <span class="bounce" data-for="{{ p.reelKey }}P"></span>
-      {%- endfor %}
-    </div>
+{%- set hac = work.projects | find("slug", "hacienda-grill") %}
+{%- set luc = work.projects | find("slug", "lucid-detailing") %}
+{%- set hg = "/assets/showcase/hacienda/" %}
+{%- set brandNote = "Hacienda Grill is a fictional brand created by ALVSolutions for portfolio demonstration." %}
+
+{#- A demo site on the stage: opens as its whole page, scrollable. #}
+{%- macro screen(key, p, kind, l, t, w, z) %}
+{%- set phone = kind == "phone" %}
+{%- set s = p.screenshots.mobile if phone else p.screenshots.desktop %}
+{%- set full = p.showcase.mobile if phone else p.showcase.desktop %}
+<button type="button" class="hx-o hx-dev hx-dev--{{ kind }}" data-k="{{ key }}" data-kind="{{ kind }}" data-tone="{{ p.reelKey }}"
+  data-title="{{ p.name }}, {{ p.category | lower }}" data-note="{{ work.disclosure }}" data-demo="{{ p.demoUrl }}"
+  data-full="{{ full.src }}" data-full-w="{{ full.width }}" data-full-h="{{ full.height }}" data-full-alt="{{ full.alt }}"
+  aria-haspopup="dialog" aria-label="Open {{ p.name }}, {{ 'on a phone' if phone else 'on a desktop' }}, in full view"
+  style="--l: {{ l }}; --t: {{ t }}; --w: {{ w }}; --z: {{ z }}">
+  <span class="hx-trail" aria-hidden="true"></span>
+  <span class="hx-floor" aria-hidden="true"></span>
+  <span class="hx-lift">
+    <span class="hx-glass">
+      {%- if phone %}<span class="hx-island" aria-hidden="true"></span>{% else %}<span class="hx-chrome" aria-hidden="true"><i></i><i></i><i></i><b></b></span>{% endif %}
+      <img class="hx-shot" src="{{ s.src }}"{% if s.small %} srcset="{{ s.small }} 720w, {{ s.src }} {{ s.width }}w" sizes="(min-width: 761px) 36vw, 60vw"{% endif %} width="{{ s.width }}" height="{{ s.height }}" alt="{{ s.alt }}" decoding="async" />
+      <span class="hx-off" aria-hidden="true"></span>
+      <span class="hx-sheen" aria-hidden="true"></span>
+    </span>
+  </span>
+</button>
+{%- endmacro %}
+
+{#- A piece of client work: framed, labelled, and opened as itself. #}
+{%- macro piece(key, src, w, h, l, t, pw, label, r = 0, z = 1, cls = "", srcset = "", sizes = "", full = "", fw = 0, fh = 0, alt = "", top = false, max = 0) %}
+<button type="button" class="hx-o hx-piece{% if cls %} {{ cls }}{% endif %}" data-k="{{ key }}" data-kind="image"
+  data-title="{{ label }}, Hacienda Grill" data-note="{{ brandNote }}"
+  data-full="{{ hg }}{{ full or src }}" data-full-w="{{ fw or w }}" data-full-h="{{ fh or h }}" data-full-alt="{{ alt }}"{% if max %} data-full-max="{{ max }}"{% endif %}
+  aria-haspopup="dialog" aria-label="Open the {{ label | lower }} in full view"
+  style="--l: {{ l }}; --t: {{ t }}; --w: {{ pw }}; --r: {{ r }}; --z: {{ z }}">
+  <span class="hx-lift"><img src="{{ hg }}{{ src }}"{% if srcset %} srcset="{{ srcset }}" sizes="{{ sizes }}"{% endif %} width="{{ w }}" height="{{ h }}" alt="{{ alt }}" loading="lazy" decoding="async" /></span>
+  <span class="hx-label{% if top %} hx-label--top{% endif %}">{{ label }}</span>
+</button>
+{%- endmacro %}
+
+<section class="hx" id="top" aria-label="ALVSolutions">
+  <div class="room hx-room" data-room="hero">
+    <div class="room-light" aria-hidden="true"><span class="key-cone"></span><span class="key-pool"></span></div>
 
     <div class="h-fly" data-fly aria-hidden="true">
       <div class="wm-stage" data-intro>{{ lockup("hero", "", "data-wm") }}</div>
     </div>
 
-    <div class="h-col">
+    <div class="hx-in">
       <div class="h-copy" data-copy>
         <h1 class="lit-display h-h1" data-lit>Built around your business.</h1>
-        <p class="lit-body h-lede" data-lit>Websites for small businesses in San Antonio, built around how your customers find you and buy from you. One flat price, typically live {{ site.turnaround }} after your content arrives.</p>
+        <p class="lit-body h-lede" data-lit>Websites, branding and business graphics — built around how your customers find you, recognize you and choose you.</p>
         <div class="h-ctas">
           <a class="alv-btn" href="/contact/">Start a project</a>
-          <a class="alv-tlink" href="#work" data-go="1">See the work</a>
+          <a class="alv-tlink" href="#work" data-see>See the work</a>
         </div>
       </div>
-    </div>
 
-    <nav class="h-steps" id="work" aria-label="The work">
-      <ol>
-        {%- for ch in work.chapters %}
-        <li><a class="alv-lit-sel" href="#work-{{ ch.id }}" data-go="{{ loop.index }}"><span class="long">{{ ch.nav.long }}</span><span class="short">{{ ch.nav.short }}</span></a></li>
-        {%- endfor %}
-      </ol>
-    </nav>
+      <div class="hx-stage" id="work" data-stage>
+        <nav class="hx-tabs" aria-label="What ALVSolutions makes" data-tabs>
+          <span class="hx-tab-ind" data-ind aria-hidden="true"></span>
+          <button type="button" class="hx-tab" data-go="web" aria-current="true"><span class="long">Websites</span><span class="short">Web</span></button>
+          <button type="button" class="hx-tab" data-go="social"><span class="long">Social presence</span><span class="short">Social</span></button>
+          <button type="button" class="hx-tab" data-go="brand"><span class="long">Brand identity</span><span class="short">Brand</span></button>
+          <button type="button" class="hx-tab" data-go="print"><span class="long">Business graphics</span><span class="short">Print</span></button>
+        </nav>
 
-    {%- for ch in work.chapters %}
-    {%- if ch.project %}{% set p = work.projects | find("slug", ch.project) %}{% else %}{% set p = null %}{% endif %}
-    <article class="h-panel{% if ch.projects %} h-pair{% endif %}" id="work-{{ ch.id }}" data-panel="{{ loop.index }}" aria-labelledby="w{{ loop.index }}">
-      <div class="h-panel-copy">
-        {%- if ch.tag %}
-        <p class="alv-tag">{{ ch.tag }}</p>
-        {%- elif p %}
-        <p class="alv-tag">Demo build, {{ p.category | lower }}</p>
-        {%- endif %}
-        <h2 id="w{{ loop.index }}" class="h-panel-h">{{ ch.heading or p.name }}</h2>
-        <p class="h-panel-body">{{ ch.body or p.description }}</p>
-        {%- if ch.features %}
-        <ul class="h-feats">
-          {%- for f in p.features %}<li>{{ f }}</li>{% endfor %}
-        </ul>
-        {%- endif %}
-        {%- if ch.signed %}
-        <p class="h-honest">{{ work.disclosure }}</p>
-        <p class="h-sign">{{ signature("panel") }}</p>
-        <a class="alv-tlink h-view" href="{{ p.demoUrl }}" target="_blank" rel="noopener">View build<span class="alv-sr-only">: {{ p.name }}, opens in a new tab</span></a>
-        {%- endif %}
-        {%- if ch.link %}
-        <a class="alv-tlink" href="{{ ch.link.href }}" data-pair-link>{{ ch.link.label }}</a>
-        {%- endif %}
-        {%- if ch.projects %}
-        <a class="alv-tlink" href="/work/">See the full portfolio</a>
-        {%- endif %}
-      </div>
+        <div class="hx-canvas" data-canvas data-scene="web">
+          {#- The stage's own light: a spotlight from above, client colour
+              behind the work, and the lit floor bar under a settled scene. #}
+          <span class="hx-spot" aria-hidden="true"></span>
+          <span class="hx-glow hx-glow--warm" aria-hidden="true"></span>
+          <span class="hx-glow hx-glow--cool" aria-hidden="true"></span>
+          <span class="hx-bar" data-bar aria-hidden="true"></span>
 
-      <div class="h-panel-work">
-        {%- if p %}
-        {%- for shot in ch.shots %}{{ device(p, shot) }}{% endfor %}
-        {%- else %}
-        {%- for slug in ch.projects %}
-        {%- set q = work.projects | find("slug", slug) %}
-        {%- set s = q.screenshots.desktop %}
-        <figure class="h-pair-shot">
-          <div class="dev-glass"{% if q.reelCrop %} style="aspect-ratio: {{ q.reelCrop.desktopAspectRatio }}"{% endif %}>
-            <img src="{{ s.small or s.src }}" width="{{ s.width }}" height="{{ s.height }}" alt="{{ s.alt }}" loading="lazy" decoding="async" />
+          {#- ── Websites ── #}
+          <div class="hx-scene" data-scene-of="web">
+            {{ screen("hacD", hac, "desk", 2, 22, 46.5, 4) }}
+            {{ screen("lucD", luc, "desk", 51.5, 22, 46.5, 4) }}
+            {{ screen("hacP", hac, "phone", 36.5, 33, 13, 6) }}
+            {{ screen("lucP", luc, "phone", 85, 33, 13, 6) }}
+            <p class="hx-o hx-names" data-k="webCap"><span><b>{{ hac.name }}</b> {{ hac.category | lower }}</span><span><b>{{ luc.name }}</b> {{ luc.category | lower }}</span></p>
           </div>
-          <figcaption>{{ q.name }}, {{ q.category | lower }}</figcaption>
-        </figure>
-        {%- endfor %}
-        {%- endif %}
-      </div>
-    </article>
-    {%- endfor %}
 
-    <p class="alv-sr-only" aria-live="polite" data-work-live></p>
-  </div>
-  <div class="h-track" aria-hidden="true">
-    <span data-step="0"></span>
-    {%- for ch in work.chapters %}<span data-step="{{ loop.index }}"></span>{% endfor %}
+          {#- ── Social: the same identity on every platform, on the screens it lives on. ── #}
+          <div class="hx-scene hx-scene--later" data-scene-of="social">
+            <button type="button" class="hx-o hx-dev hx-dev--win" data-k="sWin" data-kind="image" data-tone="hac"
+              data-title="Facebook cover, Hacienda Grill" data-note="{{ brandNote }}"
+              data-full="{{ hg }}hg-fb-cover-1640.webp" data-full-w="1640" data-full-h="624" data-full-alt="Hacienda Grill's happy hour Facebook cover"
+              aria-haspopup="dialog" aria-label="Open the Facebook cover in full view" style="--l: 8; --t: 14; --w: 60; --z: 2">
+              <span class="hx-floor" aria-hidden="true"></span>
+              <span class="hx-lift">
+                <span class="hx-glass">
+                  <span class="hx-chrome" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+                  <img class="hx-shot hx-shot--cover" src="{{ hg }}hg-fb-cover-1640.webp" srcset="{{ hg }}hg-fb-cover-820.webp 820w, {{ hg }}hg-fb-cover-1640.webp 1640w" sizes="(min-width: 761px) 46vw, 76vw" width="1640" height="624" alt="Hacienda Grill's happy hour Facebook cover" loading="lazy" decoding="async" />
+                  <span class="hx-off" aria-hidden="true"></span>
+                  <span class="hx-sheen" aria-hidden="true"></span>
+                </span>
+              </span>
+              <span class="hx-label hx-label--top">Facebook cover</span>
+            </button>
+
+            {{ piece("sPost", "hg-ig-post-1080.webp", 1080, 1080, 11, 45, 20.5, "Instagram post", -4, 5, "hx-frame", hg + "hg-ig-post-540.webp 540w, " + hg + "hg-ig-post-1080.webp 1080w", "(min-width: 761px) 16vw, 34vw", "", 0, 0, "Hacienda Grill's happy hour Instagram post", max=520) }}
+
+            <button type="button" class="hx-o hx-dev hx-dev--phone" data-k="sPhone" data-kind="phone" data-tone="hac"
+              data-title="Instagram profile, Hacienda Grill" data-note="{{ brandNote }}"
+              data-full="{{ hg }}hg-ig-profile-screen-1170.webp" data-full-w="1170" data-full-h="2532" data-full-alt="Hacienda Grill's Instagram profile"
+              aria-haspopup="dialog" aria-label="Open the Instagram profile in full view" style="--l: 49.5; --t: 16; --w: 17.5; --z: 6">
+              <span class="hx-floor" aria-hidden="true"></span>
+              <span class="hx-lift">
+                <span class="hx-glass">
+                  <span class="hx-island" aria-hidden="true"></span>
+                  <img class="hx-shot" src="{{ hac.screenshots.mobile.src }}" width="430" height="860" alt="" loading="lazy" decoding="async" />
+                  <img class="hx-ig" src="{{ hg }}hg-ig-profile-screen-1170.webp" width="1170" height="2532" alt="Hacienda Grill's Instagram profile" loading="lazy" decoding="async" />
+                  <span class="hx-scan" aria-hidden="true"></span>
+                  <span class="hx-off" aria-hidden="true"></span>
+                  <span class="hx-sheen" aria-hidden="true"></span>
+                </span>
+              </span>
+              <span class="hx-label">Instagram profile</span>
+            </button>
+
+            <button type="button" class="hx-o hx-dev hx-dev--phone" data-k="sStory" data-kind="phone" data-tone="hac"
+              data-title="Instagram story, Hacienda Grill" data-note="{{ brandNote }}"
+              data-full="{{ hg }}hg-ig-story-1080.webp" data-full-w="1080" data-full-h="1920" data-full-alt="Hacienda Grill's happy hour Instagram story"
+              aria-haspopup="dialog" aria-label="Open the Instagram story in full view" style="--l: 74; --t: 26.5; --w: 13.5; --z: 4">
+              <span class="hx-trail" aria-hidden="true"></span>
+              <span class="hx-floor" aria-hidden="true"></span>
+              <span class="hx-lift">
+                <span class="hx-glass">
+                  <img class="hx-shot hx-shot--story" src="{{ hg }}hg-ig-story-1080.webp" srcset="{{ hg }}hg-ig-story-720.webp 720w, {{ hg }}hg-ig-story-1080.webp 1080w" sizes="(min-width: 761px) 12vw, 26vw" width="1080" height="1920" alt="Hacienda Grill's happy hour Instagram story" loading="lazy" decoding="async" />
+                  <span class="hx-story-bar" aria-hidden="true"><i></i><i></i><i></i></span>
+                  <span class="hx-off" aria-hidden="true"></span>
+                  <span class="hx-sheen" aria-hidden="true"></span>
+                </span>
+              </span>
+              <span class="hx-label">Instagram story</span>
+            </button>
+          </div>
+
+          {#- ── Brand: one sleek board, grown from the logo. ── #}
+          <div class="hx-scene hx-scene--later" data-scene-of="brand">
+            <div class="hx-o hx-board" data-k="bBoard" style="--l: 20.5; --t: 6; --w: 59; --h: 73; --z: 1">
+              <span class="hx-board-label">Hacienda Grill <span>Brand identity</span></span>
+            </div>
+            {{ piece("bLogo", "hg-module-logo-palette.webp", 664, 828, 23, 13.5, 24.5, "Primary logo & palette", 0, 3, "hx-mod", "", "", "hg-module-logo-palette-1328.webp", 1328, 1656, "Hacienda Grill's primary badge above its colour palette") }}
+            {{ piece("bMono", "hg-module-monogram.webp", 392, 300, 49.5, 13.5, 13.9, "HG monogram", 0, 3, "hx-mod", "", "", "hg-module-monogram-1176.webp", 1176, 900, "The HG monogram, at three sizes") }}
+            {{ piece("bBanner", "hg-module-banner.webp", 392, 300, 64.6, 13.5, 13.9, "Reverse banner", 0, 3, "hx-mod", "", "", "hg-module-banner-1176.webp", 1176, 900, "The reverse banner logo", max=760) }}
+            {{ piece("bType", "hg-module-type.webp", 804, 508, 49.5, 34, 29, "Typography", 0, 3, "hx-mod", "", "", "hg-module-type-1608.webp", 1608, 1016, "Hacienda Grill's typography") }}
+            <div class="hx-o hx-band" data-k="bBand" style="--l: 23; --t: 66.5; --w: 55.5; --z: 3"><span class="hx-label">Diamond pattern</span></div>
+            <div class="hx-o hx-avatar" data-k="bAvatar" style="--l: 25; --t: 15; --w: 20.5; --z: 8" aria-hidden="true">
+              <img src="{{ hg }}hg-ig-avatar-round-640.webp" width="640" height="640" alt="" loading="lazy" decoding="async" />
+            </div>
+          </div>
+
+          {#- ── Print: the card turns over; the sheets blow in. ── #}
+          <div class="hx-scene hx-scene--later" data-scene-of="print">
+            <div class="hx-o hx-slab" data-k="pSlab" style="--l: 8; --t: 60; --w: 84; --z: 0"></div>
+            {{ piece("pMenu", "hg-menu-1275.webp", 1275, 1650, 11, 8, 25, "Menu", -7, 2, "hx-paper", hg + "hg-menu-638.webp 638w, " + hg + "hg-menu-1275.webp 1275w, " + hg + "hg-menu-1600.webp 1600w", "(min-width: 761px) 18vw, 40vw", "hg-menu-1600.webp", 1600, 2071, "Hacienda Grill's menu") }}
+            {{ piece("pFlyer", "hg-flyer-1275.webp", 1275, 1650, 32.5, 12, 26, "Flyer", 4, 3, "hx-paper", hg + "hg-flyer-638.webp 638w, " + hg + "hg-flyer-1275.webp 1275w, " + hg + "hg-flyer-1600.webp 1600w", "(min-width: 761px) 18vw, 40vw", "hg-flyer-1600.webp", 1600, 2071, "Hacienda Grill's birria tacos flyer") }}
+            {{ piece("pFront", "hg-card-front-1050.webp", 1050, 600, 61, 28, 29, "Business card, front", 8, 3, "hx-paper hx-paper--card", hg + "hg-card-front-525.webp 525w, " + hg + "hg-card-front-1050.webp 1050w", "(min-width: 761px) 20vw, 42vw", "", 0, 0, "The front of Hacienda Grill's business card", true) }}
+            <button type="button" class="hx-o hx-piece hx-paper hx-paper--card hx-flip" data-k="pCard" data-kind="image"
+              data-title="Business card, back, Hacienda Grill" data-note="{{ brandNote }}"
+              data-full="{{ hg }}hg-card-back-1050.webp" data-full-w="1050" data-full-h="600" data-full-alt="The back of Hacienda Grill's business card: the owner's name, phone, email, address and hours"
+              aria-haspopup="dialog" aria-label="Open the back of the business card in full view" style="--l: 57; --t: 47; --w: 34; --r: -3; --z: 5">
+              <span class="hx-lift">
+                <span class="hx-flip-in" data-flip>
+                  <img class="hx-face" src="{{ hg }}hg-card-front-1050.webp" srcset="{{ hg }}hg-card-front-525.webp 525w, {{ hg }}hg-card-front-1050.webp 1050w" sizes="(min-width: 761px) 24vw, 48vw" width="1050" height="600" alt="" loading="lazy" decoding="async" />
+                  <img class="hx-face hx-face--back" src="{{ hg }}hg-card-back-1050.webp" srcset="{{ hg }}hg-card-back-525.webp 525w, {{ hg }}hg-card-back-1050.webp 1050w" sizes="(min-width: 761px) 24vw, 48vw" width="1050" height="600" alt="The back of Hacienda Grill's business card" loading="lazy" decoding="async" />
+                  <span class="hx-flip-sheen" aria-hidden="true"></span>
+                </span>
+              </span>
+              <span class="hx-label">Business card, back</span>
+            </button>
+          </div>
+
+          {#- The maker's signature, signed again as each scene settles. #}
+          <p class="hx-sig" data-sig>{{ signature("panel") }}</p>
+        </div>
+        <p class="alv-sr-only" aria-live="polite" data-live></p>
+      </div>
+    </div>
   </div>
 </section>
+
+{#- Any piece, opened: a demo site as its whole page (scrollable), a graphic
+    whole and in full detail. hero.ts moves it to the end of <body>. #}
+<div class="hx-focus" data-focus role="dialog" aria-modal="true" aria-labelledby="hx-focus-h" hidden>
+  <div class="hx-focus-back" data-close-backdrop></div>
+  <div class="hx-focus-frame" data-frame>
+    <span class="hx-chrome" aria-hidden="true"><i></i><i></i><i></i><b></b></span>
+    <span class="hx-island" aria-hidden="true"></span>
+    <div class="hx-focus-view" data-view tabindex="0" aria-label="The full piece">
+      <img data-full alt="" decoding="async" />
+    </div>
+  </div>
+  <div class="hx-focus-bar" data-focus-bar>
+    <div class="hx-focus-id">
+      <h2 id="hx-focus-h" class="hx-focus-h" data-focus-name></h2>
+      <p class="hx-focus-note" data-focus-note></p>
+    </div>
+    <div class="hx-focus-act">
+      <a class="alv-btn alv-btn--sm" data-focus-demo href="/demo-restaurant/" target="_blank" rel="noopener">View live demo<span class="alv-sr-only"> (opens in a new tab)</span></a>
+      <button type="button" class="hx-close" data-close aria-label="Close full view"><span aria-hidden="true"></span></button>
+    </div>
+  </div>
+</div>

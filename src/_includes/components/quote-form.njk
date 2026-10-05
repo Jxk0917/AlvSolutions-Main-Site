@@ -85,28 +85,6 @@
                aria-describedby="h-city e-city" placeholder="San Antonio and surrounding areas" />
         <span class="err" id="e-city"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me the city or area you serve</span>
       </div>
-
-      <fieldset class="fset" data-field data-req data-group>
-        <legend class="fset-lg">Do you have a website now?</legend>
-        <div class="seg">
-          <label class="opt opt-one">
-            <input type="radio" name="hasSite" value="Yes" data-cond="c-url" />
-            <span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Yes</span></span>
-          </label>
-          <label class="opt opt-one">
-            <input type="radio" name="hasSite" value="No" />
-            <span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">No</span></span>
-          </label>
-        </div>
-        <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Choose yes or no</span>
-      </fieldset>
-
-      <div class="field cond" id="c-url" data-field data-req hidden>
-        <label for="f-url">What is the address?</label>
-        <input class="input" id="f-url" name="siteUrl" type="text" autocomplete="url" inputmode="url"
-               data-check="url" aria-describedby="e-url" placeholder="alvarezroofing.com" />
-        <span class="err" id="e-url"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter the web address, like alvarezroofing.com</span>
-      </div>
     </section>
 
     <!-- ══════════════ 2. BUSINESS ══════════════ -->
@@ -163,14 +141,13 @@
         <span class="hint">Pick as many as apply.</span>
         <div class="opt-pair">
           <label class="opt"><input type="checkbox" name="needs" value="New website" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">New website</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Website redesign" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Website redesign</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Logo design" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Logo design</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Brand identity" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Brand identity</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Simple social graphic" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Simple social graphic</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Custom business graphics" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Custom business graphics</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Social media presence" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Social media presence</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Business cards" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Business cards</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Booking integration" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Booking integration</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Quote / estimate functionality" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Quote / estimate functionality</span></span></label>
-          <label class="opt"><input type="checkbox" name="needs" value="Menu / services" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Menu / services</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Flyers / menus / business graphics" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Flyers / menus / business graphics</span></span></label>
+          <label class="opt"><input type="checkbox" name="needs" value="Booking / quote functionality" data-web /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Booking / quote functionality</span></span></label>
           <label class="opt"><input type="checkbox" name="needs" value="Other" data-cond="c-need" /><span class="opt-face"><span class="opt-mark"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-check"/></svg></span><span class="opt-txt">Other</span></span></label>
         </div>
         <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Pick at least one thing you need</span>
@@ -181,6 +158,32 @@
         <input class="input" id="f-need-other" name="needOther" type="text" maxlength="200"
                aria-describedby="e-need-other" placeholder="Menu boards for the restaurant" />
         <span class="err" id="e-need-other"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Tell me what else you need</span>
+      </div>
+
+      {#- Whether they have a site, and where, only matters when part of the
+          project is a website; quote-wizard.ts shows it from the options above. -#}
+      <div class="cond" id="c-site" hidden>
+        <fieldset class="fset" data-field data-req data-group>
+          <legend class="fset-lg">Do you have a website now?</legend>
+          <div class="seg">
+            <label class="opt opt-one">
+              <input type="radio" name="hasSite" value="Yes" data-cond="c-url" />
+              <span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">Yes</span></span>
+            </label>
+            <label class="opt opt-one">
+              <input type="radio" name="hasSite" value="No" />
+              <span class="opt-face"><span class="opt-mark"></span><span class="opt-txt">No</span></span>
+            </label>
+          </div>
+          <span class="err"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Choose yes or no</span>
+        </fieldset>
+
+        <div class="field cond" id="c-url" data-field data-req hidden>
+          <label for="f-url">What is the address?</label>
+          <input class="input" id="f-url" name="siteUrl" type="text" autocomplete="url" inputmode="url"
+                 data-check="url" aria-describedby="e-url" placeholder="alvarezroofing.com" />
+          <span class="err" id="e-url"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#i-alert"/></svg>Enter the web address, like alvarezroofing.com</span>
+        </div>
       </div>
 
       {#- The website-behaviour question only makes sense when part of the

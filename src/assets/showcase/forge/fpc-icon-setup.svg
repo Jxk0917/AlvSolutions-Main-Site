@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Setup">
+  <title>Forge Setup</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M6 7 H42 L44 9 V32 L42 34 H6 L4 32 V9 Z" stroke="#F7F5F2"/>
+    <path d="M24 34 V40 M16 41 H32" stroke="#F7F5F2"/>
+    <path d="M12 15.5 L17 20.5 L12 25.5 M20.5 25.5 H29" stroke="#FF6A00"/>
+  </g>
+</svg>

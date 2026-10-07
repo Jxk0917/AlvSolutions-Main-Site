@@ -1,0 +1,207 @@
+{#
+  The work, on each brand service page (services/service.njk, straight
+  after the price). Quieter than Selected Work on /services/: each one shows
+  only what its own service produces, staged rather than laid out as files.
+    logo-design               each client's logo in the key light on a small
+                              stage, its working versions as plates beside it
+    brand-identity            IronRidge's composed centerpiece (pieces.njk)
+                              with the type and the parts it is built from;
+                              Forge PC as a second direction
+    simple-social-graphic     Hacienda's channels set down together around
+                              the profile they live on
+    custom-business-graphics  Hacienda's printed pieces on one table
+  The tables (.bp-table) are .pc boxes: layers at measured places, and the
+  one under the pointer comes forward to be read. Plates and captions come
+  from brandwork.css. Brand files are used as supplied; the Forge SVGs stay
+  <img> (shared gradient id).
+#}
+{%- from "brand/pieces.njk" import irPiece, fpPiece %}
+{%- set ir = "/assets/showcase/ironridge/" %}
+{%- set hg = "/assets/showcase/hacienda/" %}
+{%- set fp = "/assets/showcase/forge/" %}
+
+{%- if svc.slug == "logo-design" %}
+<section class="int-wrap sd-sec bp" aria-labelledby="work-h">
+  <div class="sd-head">
+    <h2 id="work-h" class="int-h2">Logos, in the versions you will use.</h2>
+    <p class="int-lede">A logo arrives ready for real places: full color, a version for dark backgrounds, and a mark that still reads when it is small.</p>
+  </div>
+
+  <div class="bp-proj">
+    <div class="bp-proj-h"><h3>IronRidge Excavation</h3><p>An excavation company</p></div>
+    <div class="bp-set">
+      <figure class="bx-p bp-stage bp-stage--ir" data-deal="fade">
+        <span class="key-cone" aria-hidden="true"></span><span class="key-pool" aria-hidden="true"></span>
+        <img class="bp-hero" src="{{ ir }}ir-logo-primary-background-safe.svg" width="1926" height="632" alt="IronRidge Excavation primary logo: a graphite hex bolt with a rust-orange ridge band and an excavator arm, beside the IRONRIDGE EXCAVATION wordmark, inside a light outline so it holds on any ground" loading="lazy" decoding="async" />
+        <figcaption class="bp-k"><b>Primary logo</b>, background-safe</figcaption>
+      </figure>
+      <div class="bp-vers">
+        <figure class="bx-p">
+          <div class="bx-plate bx-plate--quarry"><img src="{{ ir }}ir-logo-primary-fullcolor.svg" width="1828" height="600" alt="IronRidge Excavation logo in full color on Quarry White" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Full color</b>, on light</figcaption>
+        </figure>
+        <figure class="bx-p bp-v-stack">
+          <div class="bx-plate bx-plate--graphite"><img src="{{ ir }}ir-logo-stacked-reversed.svg" width="1205" height="1185" alt="IronRidge Excavation stacked logo, reversed for dark backgrounds: the symbol above the wordmark" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Stacked</b>, for square spaces</figcaption>
+        </figure>
+        <figure class="bx-p bp-v-mark">
+          <div class="bx-plate bx-plate--quarry"><img src="{{ ir }}ir-symbol-fullcolor.svg" width="520" height="600" alt="IronRidge brand mark on its own: the hex bolt with an excavator arm" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Symbol</b>, when space is tight</figcaption>
+        </figure>
+        <figure class="bx-p">
+          <div class="bx-plate bx-plate--black"><img src="{{ ir }}ir-logo-primary-white.svg" width="1828" height="600" alt="IronRidge Excavation logo in one color, white, for single-color printing and vinyl" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>One color</b>, for print and vinyl</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+
+  <div class="bp-proj">
+    <div class="bp-proj-h"><h3>Forge PC</h3><p>A PC build and repair shop</p></div>
+    <div class="bp-set bp-set--flip">
+      <figure class="bx-p bp-stage bp-stage--fp" data-deal="fade">
+        <span class="key-cone" aria-hidden="true"></span><span class="key-pool" aria-hidden="true"></span>
+        <img class="bp-hero" src="{{ fp }}fpc-badge.svg" width="256" height="256" alt="Forge PC badge: the anvil mark in an orange ember gradient on a dark rounded tile, for app icons and profile pictures" loading="lazy" decoding="async" />
+        <figcaption class="bp-k"><b>Primary mark</b>, as the badge</figcaption>
+      </figure>
+      <div class="bp-vers bp-vers--sq">
+        <figure class="bx-p">
+          <div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark.svg" width="256" height="256" alt="Forge PC primary mark: an anvil in an orange ember gradient" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Gradient</b></figcaption>
+        </figure>
+        <figure class="bx-p">
+          <div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark-ember.svg" width="256" height="256" alt="Forge PC mark in flat ember orange" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Flat</b>, for print</figcaption>
+        </figure>
+        <figure class="bx-p">
+          <div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark-light.svg" width="256" height="256" alt="Forge PC mark in off-white, for dark backgrounds" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Light</b>, on dark</figcaption>
+        </figure>
+        <figure class="bx-p">
+          <div class="bx-plate bx-plate--spark"><img src="{{ fp }}fpc-mark-dark.svg" width="256" height="256" alt="Forge PC mark in near-black, for light backgrounds" loading="lazy" decoding="async" /></div>
+          <figcaption class="bp-k"><b>Dark</b>, on light</figcaption>
+        </figure>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- elif svc.slug == "brand-identity" %}
+<section class="int-wrap sd-sec bp" aria-labelledby="work-h">
+  <div class="sd-head">
+    <h2 id="work-h" class="int-h2">An identity is a system, not one file.</h2>
+    <p class="int-lede">The logo comes with the mark, the colors and the type it works with, so everything made after it looks like the same business.</p>
+  </div>
+
+  <div class="bp-proj">
+    <div class="bp-proj-h"><h3>IronRidge Excavation</h3><p>An excavation company</p></div>
+    <div class="bp-sys">
+      <figure class="bx-p bp-stage bp-stage--piece" data-deal="fade">
+        <span class="key-cone" aria-hidden="true"></span><span class="key-pool" aria-hidden="true"></span>
+        {{ irPiece() }}
+        <figcaption class="bp-k"><b>The system together</b>: the logo, the brand mark and the four colors</figcaption>
+      </figure>
+      <figure class="bx-p bp-sys-type">
+        <img src="{{ ir }}ir-module-type-1440.webp" width="1440" height="1106" alt="IronRidge typography: Saira Semi Condensed for headings and Barlow Semi Condensed for body text" loading="lazy" decoding="async" />
+        <figcaption class="bp-k"><b>Typography</b></figcaption>
+      </figure>
+      <dl class="bp-parts">
+        <div><dt>Primary logo</dt><dd>The default, for signs, trucks, documents and the website header.</dd></div>
+        <div><dt>Brand mark</dt><dd>The symbol on its own, for icons, hard hats and small spaces.</dd></div>
+        <div><dt>Color system</dt><dd>Four named colors, each with a job, so every piece matches.</dd></div>
+        <div><dt>Typography</dt><dd>One face for headings and one for text, chosen to sit with the logo.</dd></div>
+      </dl>
+    </div>
+  </div>
+
+  <div class="bp-proj">
+    <div class="bp-proj-h"><h3>Forge PC</h3><p>A different trade, a different direction</p></div>
+    <div class="bp-sys bp-sys--flip">
+      <figure class="bx-p bp-stage bp-stage--piece bp-stage--ember" data-deal="fade">
+        <span class="key-cone" aria-hidden="true"></span><span class="key-pool" aria-hidden="true"></span>
+        {{ fpPiece("lazy", 560) }}
+        <figcaption class="bp-k"><b>The system together</b>: the badge, the Facebook cover and the service icons</figcaption>
+      </figure>
+      <div class="bp-sys-marks">
+        <div class="bp-vers bp-vers--sq">
+          <figure class="bx-p">
+            <div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark.svg" width="256" height="256" alt="Forge PC primary mark: an anvil in an orange ember gradient" loading="lazy" decoding="async" /></div>
+            <figcaption class="bp-k"><b>Mark</b></figcaption>
+          </figure>
+          <figure class="bx-p">
+            <div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark-ember.svg" width="256" height="256" alt="Forge PC mark in flat ember orange" loading="lazy" decoding="async" /></div>
+            <figcaption class="bp-k"><b>Flat</b>, for print</figcaption>
+          </figure>
+          <figure class="bx-p">
+            <div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark-light.svg" width="256" height="256" alt="Forge PC mark in off-white, for dark backgrounds" loading="lazy" decoding="async" /></div>
+            <figcaption class="bp-k"><b>Light</b>, on dark</figcaption>
+          </figure>
+          <figure class="bx-p">
+            <div class="bx-plate bx-plate--spark"><img src="{{ fp }}fpc-mark-dark.svg" width="256" height="256" alt="Forge PC mark in near-black, for light backgrounds" loading="lazy" decoding="async" /></div>
+            <figcaption class="bp-k"><b>Dark</b>, on light</figcaption>
+          </figure>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{%- elif svc.slug == "simple-social-graphic" %}
+<section class="int-wrap sd-sec bp" aria-labelledby="work-h">
+  <div class="sd-head">
+    <h2 id="work-h" class="int-h2">Social graphics, in the brand you already have.</h2>
+    <p class="int-lede">Hacienda Grill's channels, made from its existing logo, colors and type. Each one is a single graphic, sized for where it is posted.</p>
+  </div>
+
+  <div class="bp-warm">
+    <figure class="bx-p bp-tbl-fig" data-deal="fade">
+      <div class="pc bp-table bp-table--social">
+        <div class="pc-l bp-t-cover" style="--z: 1">
+          <img src="{{ hg }}hg-fb-cover-820.webp" srcset="{{ hg }}hg-fb-cover-820.webp 820w, {{ hg }}hg-fb-cover-1640.webp 1640w" sizes="(max-width: 760px) 62vw, 470px" width="1640" height="624" alt="Hacienda Grill Facebook cover for weekday happy hour: $2 street tacos and half-price aguas frescas" loading="lazy" decoding="async" />
+        </div>
+        <div class="pc-l bp-t-story" style="--z: 2">
+          <img src="{{ hg }}hg-ig-story-720.webp" srcset="{{ hg }}hg-ig-story-720.webp 720w, {{ hg }}hg-ig-story-1080.webp 1080w" sizes="(max-width: 760px) 22vw, 170px" width="1080" height="1920" alt="Hacienda Grill Instagram story for happy hour, with photos of tacos and agua fresca" loading="lazy" decoding="async" />
+        </div>
+        <div class="pc-l bp-t-phone" style="--z: 3">
+          <div class="pc-phone"><img src="{{ hg }}hg-ig-profile-screen-780.webp" srcset="{{ hg }}hg-ig-profile-screen-780.webp 780w, {{ hg }}hg-ig-profile-screen-1170.webp 1170w" sizes="(max-width: 760px) 26vw, 200px" width="1170" height="2532" alt="Hacienda Grill's Instagram profile with its posts in place, all in the same brand" loading="lazy" decoding="async" /></div>
+        </div>
+        <div class="pc-l bp-t-post" style="--z: 4">
+          <img src="{{ hg }}hg-ig-post-540.webp" srcset="{{ hg }}hg-ig-post-540.webp 540w, {{ hg }}hg-ig-post-1080.webp 1080w" sizes="(max-width: 760px) 30vw, 230px" width="1080" height="1080" alt="Hacienda Grill Instagram post for weekday happy hour" loading="lazy" decoding="async" />
+        </div>
+      </div>
+      <figcaption class="bp-k"><b>Facebook cover, Instagram story and post</b>, and the profile they sit on</figcaption>
+    </figure>
+    <div class="bp-scope">
+      <h3>The brand came first.</h3>
+      <p>Hacienda's logo, colors and type were already set, so each graphic follows them instead of inventing a new look. A Simple Social Graphic is one of these: one design, in one size.</p>
+      <p>Starting without a logo or brand style? That is <a class="alv-tlink" href="/services/brand-identity/">Brand Identity</a>.</p>
+    </div>
+  </div>
+</section>
+
+{%- elif svc.slug == "custom-business-graphics" %}
+<section class="int-wrap sd-sec bp" aria-labelledby="work-h">
+  <div class="sd-head">
+    <h2 id="work-h" class="int-h2">Business pieces that match the brand.</h2>
+    <p class="int-lede">Hacienda Grill's menu, promo flyer and business card, made from the same logo, colors and type as its social posts, so a customer meets one business everywhere.</p>
+  </div>
+
+  <figure class="bx-p bp-tbl-fig bp-tbl-fig--wide bp-warm" data-deal="fade">
+    <div class="pc bp-table bp-table--biz">
+      <div class="pc-l bp-t-menu" style="--z: 1">
+        <img src="{{ hg }}hg-menu-638.webp" srcset="{{ hg }}hg-menu-638.webp 638w, {{ hg }}hg-menu-1275.webp 1275w" sizes="(max-width: 760px) 40vw, 330px" width="1275" height="1650" alt="Hacienda Grill menu, The Board: tacos, burritos, bowls, sides and drinks with prices" loading="lazy" decoding="async" />
+      </div>
+      <div class="pc-l bp-t-flyer" style="--z: 3">
+        <img src="{{ hg }}hg-flyer-638.webp" srcset="{{ hg }}hg-flyer-638.webp 638w, {{ hg }}hg-flyer-1275.webp 1275w" sizes="(max-width: 760px) 40vw, 330px" width="1275" height="1650" alt="Hacienda Grill promotional flyer for birria tacos, $14.50 for three, with a birria bowl beneath" loading="lazy" decoding="async" />
+      </div>
+      <div class="pc-l bp-t-back" style="--z: 2">
+        <img src="{{ hg }}hg-card-back-525.webp" srcset="{{ hg }}hg-card-back-525.webp 525w, {{ hg }}hg-card-back-1050.webp 1050w" sizes="(max-width: 760px) 44vw, 340px" width="1050" height="600" alt="Hacienda Grill business card back: the owner's name and contact details, a QR code and opening hours" loading="lazy" decoding="async" />
+      </div>
+      <div class="pc-l bp-t-front" style="--z: 4">
+        <img src="{{ hg }}hg-card-front-525.webp" srcset="{{ hg }}hg-card-front-525.webp 525w, {{ hg }}hg-card-front-1050.webp 1050w" sizes="(max-width: 760px) 44vw, 340px" width="1050" height="600" alt="Hacienda Grill business card front: the logo over San Antonio, Texas, since 2012" loading="lazy" decoding="async" />
+      </div>
+    </div>
+    <figcaption class="bp-k"><b>Menu, promo flyer and business card</b>, front and back</figcaption>
+  </figure>
+</section>
+{%- endif %}

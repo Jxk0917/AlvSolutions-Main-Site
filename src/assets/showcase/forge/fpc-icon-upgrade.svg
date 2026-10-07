@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Upgrade">
+  <title>Forge Upgrade</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M7 21 H41 L43 23 V35 L41 37 H7 L5 35 V23 Z" stroke="#F7F5F2"/>
+    <circle cx="16" cy="29" r="4.5" stroke="#F7F5F2"/>
+    <circle cx="32" cy="29" r="4.5" stroke="#F7F5F2"/>
+    <path d="M15 37 V41 H33 V37" stroke="#F7F5F2"/>
+    <path d="M24 16 V5 M18.5 10.5 L24 5 L29.5 10.5" stroke="#FF6A00"/>
+  </g>
+</svg>

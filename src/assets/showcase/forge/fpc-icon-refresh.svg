@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Refresh">
+  <title>Forge Refresh</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M9 5 H39 L43 9 V39 L39 43 H9 L5 39 V9 Z" stroke="#F7F5F2"/>
+    <circle cx="24" cy="24" r="15" stroke="#F7F5F2"/>
+    <circle cx="24" cy="24" r="3.5" stroke="#F7F5F2"/>
+    <path d="M24 19.5 C24 16 26 13.5 29.5 12.5" stroke="#FF6A00" transform="rotate(0 24 24)"/>
+    <path d="M24 19.5 C24 16 26 13.5 29.5 12.5" stroke="#FF6A00" transform="rotate(120 24 24)"/>
+    <path d="M24 19.5 C24 16 26 13.5 29.5 12.5" stroke="#FF6A00" transform="rotate(240 24 24)"/>
+  </g>
+</svg>

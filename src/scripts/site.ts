@@ -40,3 +40,27 @@ if (backSlot && back && "IntersectionObserver" in window) {
     { rootMargin: `-${navH}px 0px 0px 0px` }
   ).observe(backSlot);
 }
+
+/**
+ * Coming back from a page you opened from the list: when the previous page
+ * in this tab is the very page the back button names, go back in history,
+ * which returns to the scroll position you left. Anywhere else (a shared
+ * link, a new tab) the button is the plain link it always was. The contact
+ * page's own button manages its own history (data-show-if).
+ */
+if (back instanceof HTMLAnchorElement && !back.hasAttribute("data-show-if")) {
+  back.addEventListener("click", (e) => {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (!document.referrer || history.length < 2) return;
+    try {
+      const from = new URL(document.referrer);
+      const to = new URL(back.href);
+      if (from.origin === location.origin && from.pathname === to.pathname) {
+        e.preventDefault();
+        history.back();
+      }
+    } catch {
+      /* malformed referrer: the link works as written */
+    }
+  });
+}

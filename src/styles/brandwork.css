@@ -1,0 +1,532 @@
+/* ============================================================
+   BRAND WORK - the branding exhibition and the service proofs
+
+   Transparent brand files are material to compose with, not files to
+   paste onto the page. Every client's work is staged as a centerpiece
+   (.pc, brand/pieces.njk): a fixed-proportion box whose layers stand at
+   measured places and depths, so it scales as one object. Supporting
+   pieces stay smaller than the thing they support.
+
+   Selected Work (/services/#branding-design, brand/exhibit.njk) is one
+   stage: ALVSolutions' room, its key light from above and the pool it
+   leaves on the floor. The three centerpieces stand on an implied orbit
+   that brand/exhibit.ts turns; the fuller identity opens in a drawer
+   below. The client's colour reaches the room only as a faint bounce off
+   the work (--tone), never on type.
+
+   The proofs on the brand service pages (brand/proof.njk) reuse the
+   pieces and plates, still, one job each.
+
+   Shape rule, as the rest of the site: surfaces 10px, controls full pill.
+   Exhibits sit inside a surface, so their plates step down to 6px.
+   Imported by interior.css.
+   ============================================================ */
+
+/* ---- exhibits: plates, captions ---- */
+.bx-p { position: relative; margin: 0; min-width: 0; }
+.bx-p :where(img) { display: block; width: 100%; height: auto; }
+.bx-p figcaption,
+.bp-k {
+  margin-top: 10px; font-size: 12.5px; line-height: 1.35; letter-spacing: 0.01em; color: var(--sl-ink3);
+}
+.bx-p figcaption b, .bp-k b { font-weight: 500; color: var(--sl-ink2); }
+.bx-plate {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.06), 0 26px 44px -30px rgb(0 0 0 / 0.95);
+}
+.bx-plate > img { width: auto; max-width: 100%; }
+/* Brand grounds, from each brand's own palette. */
+.bx-plate--quarry { background: #eeefec; }
+.bx-plate--graphite { background: #1e2328; }
+.bx-plate--cream { background: #f7f1e1; }
+.bx-plate--forge { background: linear-gradient(160deg, #1b2028, #0b0d10 70%); }
+.bx-plate--spark { background: #f7f5f2; }
+.bx-plate--black { background: #0f0f0f; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.1); }
+
+/* ============================================================
+   PIECES: one client's centerpiece, 100 x 70 units (cqw) of its own
+   ============================================================ */
+.pc { position: relative; width: 100%; aspect-ratio: 10 / 7; container-type: inline-size; }
+.pc-l { position: absolute; margin: 0; transition: translate 650ms var(--sl-e-out); }
+.pc :where(img) { display: block; width: 100%; height: auto; }
+/* Pointing at a piece opens it up a little: front layers rise further. */
+@media (hover: hover) {
+  .pc:hover .pc-l { translate: 0 calc(var(--z, 1) * -0.55cqw); }
+}
+/* Printed matter: the key catching the sheet, a contact shadow under it. */
+.pc-sheet, .hg-p-menu, .hg-p-post, .hg-p-card {
+  overflow: hidden; border-radius: 0.5cqw;
+  box-shadow: 0 0.2cqw 0.5cqw rgb(0 0 0 / 0.5), 0 3cqw 5cqw -2cqw rgb(0 0 0 / 0.9);
+}
+.hg-p-menu::after, .hg-p-post::after, .hg-p-card::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(128deg, rgb(255 255 255 / 0.1), transparent 34%, transparent 70%, rgb(0 0 0 / 0.16));
+}
+/* A phone: dark glass in a slim bezel, sized by its own width. */
+.pc-phone {
+  padding: 3.6%; border-radius: 13% / 6%; background: #050505;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.14), inset 0 0 0 1px rgb(var(--sl-L) / 0.05), 0 3cqw 5cqw -2cqw rgb(0 0 0 / 0.95);
+}
+.pc-phone img { border-radius: 10% / 4.6%; }
+
+/* IronRidge: engineered. The lockup carries its own light outline, so it
+   holds on the dark without a plate; the mark stands behind it on
+   graphite; the palette is a measured strip. Nothing turns. */
+.ir-p-plate {
+  left: 52cqw; top: 1cqw; width: 37cqw; height: 47cqw;
+  display: grid; justify-items: center; align-content: start; padding-top: 7.5cqw;
+  border-radius: 1.4cqw; background: linear-gradient(170deg, #252b31, #1e2328 60%);
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 3cqw 6cqw -2.5cqw rgb(0 0 0 / 0.9);
+}
+.ir-p-plate img { width: auto; height: 22cqw; }
+.ir-p-lockup { left: 4cqw; top: 33cqw; width: 66cqw; filter: drop-shadow(0 1.4cqw 2.2cqw rgb(0 0 0 / 0.6)); }
+.ir-p-palette {
+  left: 4cqw; top: 60.5cqw; width: 46cqw; overflow: hidden; border-radius: 0.6cqw;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.06), 0 2cqw 3cqw -1.5cqw rgb(0 0 0 / 0.9);
+}
+
+/* Hacienda: a table of real pieces in mixed formats, set down at slight
+   angles; the logo floats over them. */
+.hg-p-menu { left: 3cqw; top: 7cqw; width: 29cqw; rotate: -7deg; }
+.hg-p-phone { left: 36cqw; top: 1cqw; width: 24.5cqw; rotate: 2.5deg; }
+.hg-p-logo { left: 66cqw; top: 3cqw; width: 30cqw; filter: drop-shadow(0 1.4cqw 2cqw rgb(0 0 0 / 0.55)); }
+.hg-p-post { left: 15cqw; top: 39cqw; width: 24cqw; rotate: 5deg; }
+.hg-p-card { left: 60cqw; top: 39cqw; width: 34cqw; rotate: -5deg; }
+
+/* Forge PC: modular, dark, one ember. The badge stands forward in its own
+   glow; the cover behind it; the icons lock together on a tight gap. */
+.fp-p-cover {
+  left: 16cqw; top: 3cqw; width: 76cqw; overflow: hidden; border-radius: 1.2cqw;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 3cqw 5cqw -2cqw rgb(0 0 0 / 0.9);
+}
+.fp-p-badge { left: 6cqw; top: 26cqw; width: 34cqw; }
+.fp-p-badge::before {
+  content: ""; position: absolute; inset: 8% 4% -10%; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 50% 46% at 50% 62%, rgb(255 106 0 / 0.26), rgb(255 106 0 / 0.06) 55%, transparent 75%);
+}
+.fp-p-badge img { filter: drop-shadow(0 2cqw 2.6cqw rgb(0 0 0 / 0.7)); }
+.fp-p-icons {
+  left: 45cqw; top: 38cqw; width: 46cqw;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.3cqw;
+  padding: 0; list-style: none;
+}
+.fp-p-icons li {
+  display: grid; place-items: center; aspect-ratio: 1; border-radius: 1cqw;
+  background: linear-gradient(165deg, #1f252e, #161a20);
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.07), 0 1.6cqw 2.4cqw -1.2cqw rgb(0 0 0 / 0.9);
+}
+.fp-p-icons img { width: 42%; }
+
+/* ============================================================
+   SELECTED WORK
+   ============================================================ */
+.bx { margin-top: clamp(64px, 9vh, 104px); }
+.bx-head { display: grid; gap: 10px; margin-bottom: clamp(22px, 3.4vh, 32px); }
+/* The site's eyebrow (home.css .h-eyebrow), used once on this page. */
+.bx-eyebrow { font: 600 12.5px/1.2 var(--sl-f-text); letter-spacing: 0.16em; text-transform: uppercase; color: var(--sl-ink3); }
+.bx-h {
+  font-family: var(--sl-f-brand); font-weight: 620; font-optical-sizing: auto;
+  font-size: clamp(26px, 2.8vw, 38px); line-height: 1.06; letter-spacing: -0.03em; color: var(--sl-ink1); text-wrap: balance;
+}
+.bx-lede { font-size: 16px; color: var(--sl-ink2); max-width: 58ch; }
+
+/* ---- the stage ---- */
+.bx-stage {
+  position: relative; isolation: isolate; overflow: hidden;
+  border-radius: 10px; background: #0c0c0c;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 60px 110px -60px rgb(0 0 0 / 0.95);
+  --kx: 50; --kw: 70; --ki: 0.95; --kpy: 80;
+  /* The orbit (read by brand/exhibit.ts): its half-width as a share of
+     the stage, how far back projects rise (share of a piece's height),
+     how small and how lit they are a third of a turn away. */
+  --piece-w: 48%;
+  --orbit-rx: 0.335;
+  --orbit-lift: 0.17;
+  --orbit-back: 0.6;
+  --orbit-dim: 0.32;
+  touch-action: pan-y;
+}
+.bx-room { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.bx-room > span { position: absolute; inset: 0; }
+/* The work's own light: a faint bounce of the brand's colour off the floor
+   and the back wall. One per project; only the one in front is up. */
+.bx-tone { opacity: 0; transition: opacity 900ms var(--sl-e-out); }
+.bx-tone[data-tone="ir"] { --t: 107 119 128; --ta: 0.12; }
+.bx-tone[data-tone="hg"] { --t: 248 146 33; --ta: 0.11; }
+.bx-tone[data-tone="fp"] { --t: 255 106 0; --ta: 0.1; }
+.bx-tone {
+  background:
+    radial-gradient(ellipse 34% 40% at 50% 46%, rgb(var(--t) / var(--ta)), transparent 72%),
+    radial-gradient(ellipse 40% 8% at 50% 80%, rgb(var(--t) / calc(var(--ta) * 1.4)), transparent 78%);
+}
+.bx-stage[data-on="ir"] .bx-tone[data-tone="ir"],
+.bx-stage[data-on="hg"] .bx-tone[data-tone="hg"],
+.bx-stage[data-on="fp"] .bx-tone[data-tone="fp"] { opacity: 1; }
+/* Without script every project stands in the room; the room glows warm. */
+.bx:not(.is-js) .bx-tone[data-tone="hg"] { opacity: 0.6; }
+
+/* ---- the orbit ----
+   Every project is anchored at the same point; brand/exhibit.ts moves it
+   round the ring with transform alone, so the stage never changes size. */
+.bx-orbit { position: relative; }
+.bx.is-js .bx-orbit { aspect-ratio: 2.25 / 1; }
+.bx.is-js .bx-sat {
+  position: absolute; left: 50%; bottom: 9%;
+  width: var(--piece-w); margin-left: calc(var(--piece-w) * -0.5);
+  transform-origin: 50% 62%;
+  will-change: transform, opacity, filter;
+}
+/* Only the artwork itself answers the pointer, never the empty box around
+   it, so a background project can be clicked wherever it shows. */
+.bx.is-js .bx-sat { pointer-events: none; }
+.bx.is-js .bx-sat .pc-l { pointer-events: auto; }
+.bx.is-js .bx-sat:not(.is-front) { cursor: pointer; }
+.bx.is-js .bx-sat:not(.is-front) .pc-l { transition-duration: 400ms; }
+@media (hover: hover) {
+  .bx.is-js .bx-sat:not(.is-front):hover .pc-l { translate: 0 calc(var(--z, 1) * -0.4cqw - 1cqw); }
+  .bx-stage.is-turning .bx-sat .pc-l { translate: none; }
+}
+/* Without script: the three centerpieces side by side. */
+.bx:not(.is-js) .bx-orbit {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(16px, 3vw, 40px);
+  padding: clamp(24px, 4vw, 48px) clamp(16px, 3vw, 40px);
+}
+
+/* ---- controls: Previous, the three names (the lit bar under the one in
+   front), Next. They stand on the stage floor. ---- */
+.bx-ctl {
+  position: relative; display: flex; align-items: center; justify-content: center; gap: clamp(8px, 2vw, 20px);
+  padding: 0 clamp(14px, 2.4vw, 28px) clamp(16px, 2.4vw, 24px);
+}
+.bx-ctl[hidden] { display: none; }
+.bx-arrow {
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px; padding: 0;
+  border-radius: 999px; border: 1px solid var(--sl-line2); background: rgb(12 12 12 / 0.6); color: var(--sl-ink1);
+  cursor: pointer; transition: border-color 250ms, background-color 250ms, transform 200ms var(--sl-e-out);
+}
+.bx-arrow:hover { border-color: rgb(var(--sl-L) / 0.42); background: rgb(var(--sl-L) / 0.05); }
+.bx-arrow:active { transform: scale(0.94); background: rgb(var(--sl-L) / 0.09); }
+.bx-arrow:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.bx-arrow-ic { width: 18px; height: 18px; }
+.bx-arrow-ic--back { transform: rotate(180deg); }
+
+.bx-tabs { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); min-width: 0; width: min(100%, 540px); --n: 3; }
+.bx-tab {
+  min-width: 0; min-height: 44px; padding: 0 8px 4px; border: 0; background: none; cursor: pointer;
+  font: 500 14px/1.2 var(--sl-f-text); color: var(--sl-ink3); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  border-radius: 6px; transition: color 300ms;
+}
+.bx-tab:hover { color: var(--sl-ink1); }
+.bx-tab[aria-current="true"] { color: var(--sl-ink1); }
+.bx-tab:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: -2px; }
+.bx-tab-short { display: none; }
+.bx-tabs::before {
+  content: ""; position: absolute; left: 8%; right: 8%; bottom: 6px; height: 1px; background: var(--sl-line2); pointer-events: none;
+}
+.bx-tabs-bar {
+  position: absolute; left: 0; bottom: 5px; width: calc(100% / var(--n)); height: 2px; pointer-events: none;
+  transform: translateX(calc(var(--i, 0) * 100%)); transition: transform 900ms cubic-bezier(0.45, 0, 0.2, 1);
+}
+.bx-tabs-bar::before {
+  content: ""; position: absolute; inset: 0 18%; border-radius: 2px; background: var(--sl-bar); box-shadow: var(--sl-bar-glow-sm);
+}
+
+/* ---- what is in front ---- */
+.bx-bar {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: start; gap: 16px clamp(20px, 3vw, 40px);
+  margin-top: clamp(22px, 3vh, 30px);
+}
+/* All three in one cell, so changing project never moves the page. */
+.bx.is-js .bx-infos { display: grid; }
+.bx.is-js .bx-info { grid-area: 1 / 1; visibility: hidden; opacity: 0; translate: 0 6px; transition: opacity 380ms var(--sl-e-out), translate 500ms var(--sl-e-out), visibility 0s 380ms; }
+.bx.is-js .bx-info.is-on { visibility: visible; opacity: 1; translate: none; transition-delay: 140ms, 140ms, 0s; }
+.bx-info {
+  display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); grid-template-areas: "h d" "k d";
+  align-content: start; gap: 4px clamp(18px, 2.6vw, 32px);
+}
+.bx-info-h { grid-area: h; font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(20px, 1.9vw, 25px); line-height: 1.1; letter-spacing: -0.022em; color: var(--sl-ink1); }
+.bx-info-k { grid-area: k; font-size: 14px; color: var(--sl-ink2); }
+.bx-info-k .alv-tlink { color: var(--sl-ink2); }
+.bx-info-k .alv-tlink:hover { color: var(--sl-ink1); }
+.bx-info-d { grid-area: d; font-size: 14.5px; line-height: 1.5; color: var(--sl-ink2); max-width: 46ch; }
+.bx:not(.is-js) .bx-infos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+.bx:not(.is-js) .bx-info { grid-template-columns: 1fr; grid-template-areas: "h" "k" "d"; }
+
+.bx-toggle { gap: 10px; min-height: 52px; padding: 0 26px 0 28px; font-size: 16px; }
+.bx-toggle:hover { box-shadow: 0 16px 34px -14px rgb(var(--sl-L) / 0.42), 0 0 0 4px rgb(var(--sl-L) / 0.08); }
+.bx-toggle[hidden] { display: none; }
+.bx-toggle-ic { width: 18px; height: 18px; transition: transform 450ms var(--sl-e-out); }
+.bx-toggle[aria-expanded="true"] .bx-toggle-ic { transform: rotate(180deg); }
+
+/* ---- the drawer: the fuller identity ---- */
+.bx-more-in { padding-top: clamp(26px, 3.6vh, 36px); }
+.bx-more { margin-top: clamp(20px, 3vh, 28px); border-top: 1px solid var(--sl-line); }
+.bx-more[hidden] { display: none; }
+.bx:not(.is-js) .bx-dt + .bx-dt { margin-top: clamp(40px, 6vh, 64px); }
+.bx-dt[hidden] { display: none; }
+.dt-h { margin: 0; font-family: var(--sl-f-brand); font-weight: 600; font-size: 18px; letter-spacing: -0.014em; color: var(--sl-ink1); margin-bottom: 16px; }
+/* The drawer already sits under the project's name. */
+.bx.is-js .dt-h { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.bx-less {
+  display: inline-flex; margin-top: clamp(28px, 4vh, 40px); padding: 0; border: 0; background: none; cursor: pointer;
+  font: 500 14px/1.4 var(--sl-f-text);
+}
+.bx-less[hidden] { display: none; }
+
+/* IronRidge: the logo set in one measured row, then type beside colour. */
+.dt-ir-logos { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1.9fr) minmax(0, 1fr) minmax(0, 1fr); gap: 14px; }
+.dt-ir-logos .bx-plate { height: clamp(92px, 11vw, 128px); }
+/* Centred within a fixed height, each at its own optical size. */
+.dt-ir-logos .bx-plate > img { position: absolute; inset: 0; margin: auto; width: auto; height: auto; max-width: 74%; max-height: 60%; }
+.dt-ir-stack .bx-plate > img { max-height: 72%; }
+.dt-ir-mark .bx-plate > img { max-height: 58%; }
+.dt-ir-sys { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); gap: clamp(20px, 3vw, 40px); margin-top: clamp(24px, 3.4vh, 32px); align-items: start; }
+.dt-ir-type { max-width: 340px; }
+.dt-ir-type img { border-radius: 6px; box-shadow: 0 26px 44px -30px rgb(0 0 0 / 0.95); }
+.dt-ir-palette img { border-radius: 5px; }
+.dt-parts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 24px; margin: 22px 0 0; }
+.dt-parts dt { font-family: var(--sl-f-brand); font-weight: 600; font-size: 15px; letter-spacing: -0.01em; color: var(--sl-ink1); }
+.dt-parts dd { margin: 4px 0 0; font-size: 14px; line-height: 1.5; color: var(--sl-ink2); }
+
+/* Hacienda: three small tables of real pieces, one per job. */
+.dt-hg-groups { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 40px); }
+.dt-g-art { position: relative; aspect-ratio: 1.15 / 1; container-type: inline-size; margin-bottom: 16px; }
+.dt-g-art > * { position: absolute; margin: 0; box-shadow: 0 0.6cqw 1.4cqw rgb(0 0 0 / 0.5), 0 7cqw 10cqw -5cqw rgb(0 0 0 / 0.9); transition: translate 600ms var(--sl-e-out), rotate 600ms var(--sl-e-out); }
+.dt-g-art > :where(img) { display: block; height: auto; border-radius: 1.4cqw; }
+.dt-g-h { margin: 0; font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.012em; color: var(--sl-ink1); }
+.dt-g-d { margin-top: 4px; font-size: 14px; color: var(--sl-ink2); }
+@media (hover: hover) {
+  .dt-g:hover .dt-g-art > :nth-child(1) { translate: 0 -1.5cqw; }
+  .dt-g:hover .dt-g-art > :nth-child(2) { translate: 0 -2.5cqw; }
+  .dt-g:hover .dt-g-art > :nth-child(3) { translate: 0 -3.5cqw; }
+}
+.dt-hg-lp { left: 4cqw; top: 4cqw; width: 42cqw; rotate: -4deg; }
+.dt-hg-type { left: 36cqw; top: 14cqw; width: 58cqw; rotate: 2deg; }
+.dt-hg-mono { left: 58cqw; top: 54cqw; width: 26cqw; rotate: -6deg; border-radius: 5cqw; box-shadow: 0 4cqw 7cqw -3cqw rgb(0 0 0 / 0.9); }
+.dt-hg-story { left: 6cqw; top: 6cqw; width: 30cqw; rotate: -5deg; }
+.dt-hg-phone { left: 38cqw; top: 1cqw; width: 30cqw; rotate: 2deg; }
+.dt-hg-cover { left: 30cqw; top: 58cqw; width: 66cqw; rotate: -2deg; }
+.dt-hg-menu { left: 4cqw; top: 4cqw; width: 40cqw; rotate: -5deg; }
+.dt-hg-flyer { left: 40cqw; top: 2cqw; width: 40cqw; rotate: 3deg; }
+.dt-hg-back { left: 34cqw; top: 54cqw; width: 58cqw; rotate: -3deg; }
+
+/* Forge PC: the marks, the icon system, the cover in use. */
+.fp-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; margin: 0; padding: 0; list-style: none; }
+.fp-tile {
+  display: grid; place-items: center; aspect-ratio: 1; border-radius: 6px; background: linear-gradient(165deg, #1f252e, #161a20);
+  box-shadow: inset 0 0 0 1px rgb(var(--sl-L) / 0.06);
+}
+.fp-tile img { width: 40%; }
+.dt-fp-grid { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); grid-template-areas: "marks icons" "cover icons"; gap: clamp(20px, 3vw, 36px); align-items: start; }
+.dt-fp-marks { grid-area: marks; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.dt-fp-marks .bx-plate { aspect-ratio: 1; }
+.dt-fp-marks .bx-plate > img { width: 58%; }
+.dt-fp-icons { grid-area: icons; max-width: 300px; justify-self: end; width: 100%; }
+.dt-fp-icons .fp-tile { align-content: center; gap: 6px; }
+.dt-fp-icons .fp-tile img { width: 30%; }
+.dt-fp-icons .fp-tile span { font-size: 11px; letter-spacing: 0.02em; color: var(--sl-ink3); }
+.dt-fp-cover { grid-area: cover; }
+.dt-fp-cover img { border-radius: 6px; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.08), 0 26px 44px -30px rgb(0 0 0 / 0.95); }
+
+/* ---- from the work to a project ---- */
+.bx-close {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 28px;
+  margin-top: clamp(32px, 5vh, 48px); padding-top: clamp(22px, 3vh, 28px); border-top: 1px solid var(--sl-line);
+}
+.bx-close p { font-family: var(--sl-f-brand); font-weight: 600; font-size: clamp(18px, 1.6vw, 21px); letter-spacing: -0.016em; color: var(--sl-ink1); }
+.bx-close-act { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 24px; }
+
+/* ---- motion off: the orbit turns at once, nothing eases ---- */
+.no-motion .pc-l, .no-motion .bx-info, .no-motion .bx-tabs-bar, .no-motion .bx-tone, .no-motion .dt-g-art > * { transition: none !important; }
+
+/* ---- tablet ---- */
+@media (max-width: 900px) {
+  .dt-ir-logos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dt-fp-grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "marks" "cover" "icons"; }
+  .dt-fp-icons { justify-self: start; max-width: 360px; }
+}
+
+/* ---- phone: one project forward, the other two behind its shoulders ---- */
+@media (max-width: 760px) {
+  .bx-stage { --piece-w: 72%; --orbit-rx: 0.285; --orbit-lift: 0.44; --orbit-back: 0.5; --orbit-dim: 0.38; }
+  .bx.is-js .bx-orbit { aspect-ratio: 1.36 / 1; }
+  .bx.is-js .bx-sat { bottom: 6%; }
+  .bx-ctl { padding-inline: 10px; gap: 4px; }
+  .bx-tab { padding-inline: 4px; font-size: 13.5px; }
+  .bx-tab-long { display: none; }
+  .bx-tab-short { display: inline; }
+  .bx-bar { grid-template-columns: minmax(0, 1fr); }
+  .bx-info { grid-template-columns: minmax(0, 1fr); grid-template-areas: "h" "k" "d"; }
+  .bx-info-d { margin-top: 6px; font-size: 14px; }
+  .bx-toggle { justify-self: start; }
+  .bx:not(.is-js) .bx-orbit, .bx:not(.is-js) .bx-infos { grid-template-columns: minmax(0, 1fr); }
+  .bx-close { flex-direction: column; align-items: flex-start; }
+
+  .dt-ir-sys { grid-template-columns: minmax(0, 1fr); }
+  .dt-ir-type { max-width: 300px; }
+  .dt-parts { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .dt-hg-groups { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .dt-g-art { max-width: 340px; }
+  .dt-fp-marks { gap: 8px; }
+}
+@media (max-width: 420px) {
+  .dt-ir-logos { gap: 10px; }
+  .dt-ir-logos .bx-plate { height: 84px; }
+}
+
+/* ============================================================
+   SERVICE PROOFS (brand/proof.njk)
+   ============================================================ */
+.bp-proj + .bp-proj { margin-top: clamp(48px, 7vh, 76px); }
+.bp-proj-h { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; margin-bottom: 16px; }
+.bp-proj-h h3 { font-family: var(--sl-f-brand); font-weight: 600; font-size: clamp(18px, 1.6vw, 21px); letter-spacing: -0.016em; color: var(--sl-ink1); }
+.bp-proj-h p { font-size: 14px; color: var(--sl-ink3); }
+
+/* ---- a small studio stage: the room, the key light, the pool ---- */
+.bp-stage {
+  position: relative; isolation: isolate; display: grid; place-items: center; overflow: hidden;
+  border-radius: 10px; background: #0c0c0c;
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.075), 0 50px 90px -60px rgb(0 0 0 / 0.95);
+  --kx: 50; --kw: 72; --ki: 0.9; --kpy: 76;
+}
+.bp-stage > .key-cone, .bp-stage > .key-pool { position: absolute; inset: 0; z-index: -1; pointer-events: none; }
+.bp-stage > figcaption { position: absolute; left: 18px; bottom: 14px; margin: 0; }
+.bp-hero { transition: translate 650ms var(--sl-e-out); }
+@media (hover: hover) {
+  .bp-stage:hover .bp-hero { translate: 0 -6px; }
+}
+/* Forge's own light: an ember bounce off the floor under the mark. */
+.bp-stage--fp::before, .bp-stage--ember::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: radial-gradient(ellipse 30% 26% at 50% 56%, rgb(255 106 0 / 0.13), transparent 72%), radial-gradient(ellipse 34% 7% at 50% 78%, rgb(255 106 0 / 0.12), transparent 80%);
+}
+
+/* ---- Logo Design: the logo in the light, its versions beside it ---- */
+.bp-set { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(14px, 2vw, 24px); align-items: stretch; }
+.bp-set--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); }
+.bp-set--flip .bp-stage { order: 2; }
+.bp-stage--ir, .bp-stage--fp { min-height: clamp(230px, 22vw, 290px); padding-bottom: 28px; }
+.bp-stage--ir .bp-hero { width: min(62%, 340px); filter: drop-shadow(0 14px 20px rgb(0 0 0 / 0.6)); }
+.bp-stage--fp .bp-hero { width: clamp(112px, 11vw, 148px); filter: drop-shadow(0 18px 22px rgb(0 0 0 / 0.7)); }
+.bp-vers { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; align-content: center; }
+.bp-vers .bx-plate { height: clamp(84px, 8vw, 108px); transition: translate 450ms var(--sl-e-out), box-shadow 450ms var(--sl-e-out); }
+.bp-vers .bx-plate > img { position: absolute; inset: 0; margin: auto; width: auto; height: auto; max-width: 70%; max-height: 52%; }
+.bp-vers .bp-v-mark .bx-plate > img { max-height: 62%; }
+.bp-vers .bp-v-stack .bx-plate > img { max-height: 78%; }
+.bp-vers--sq .bx-plate > img { max-height: 56%; }
+@media (hover: hover) {
+  .bp-vers .bx-p:hover .bx-plate { translate: 0 -3px; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.12), 0 30px 44px -26px rgb(0 0 0 / 0.95); }
+}
+
+/* ---- Brand Identity: the system together, then what it is made of ---- */
+.bp-sys {
+  display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr); grid-template-areas: "stage side" "parts parts";
+  gap: clamp(22px, 3vw, 36px) clamp(20px, 3vw, 44px); align-items: center;
+}
+.bp-sys--flip { grid-template-columns: minmax(0, 1fr) minmax(0, 1.45fr); grid-template-areas: "side stage"; }
+.bp-sys .bp-stage { grid-area: stage; padding: clamp(26px, 3.6vw, 44px) clamp(26px, 4.6vw, 64px) clamp(44px, 5vw, 60px); }
+.bp-stage--piece .pc { max-width: 500px; }
+.bp-sys-type { grid-area: side; justify-self: center; width: 100%; max-width: 300px; }
+.bp-sys-type img { border-radius: 6px; box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.06), 0 30px 50px -30px rgb(0 0 0 / 0.95); }
+.bp-sys-marks { grid-area: side; justify-self: center; width: 100%; max-width: 300px; }
+.bp-sys-marks .bp-vers .bx-plate { height: auto; aspect-ratio: 1; }
+.bp-parts { grid-area: parts; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px clamp(16px, 2.4vw, 28px); margin: 0; }
+.bp-parts > div { padding-top: 14px; border-top: 1px solid var(--sl-line); }
+.bp-parts dt { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.012em; color: var(--sl-ink1); }
+.bp-parts dd { margin: 4px 0 0; font-size: 14.5px; line-height: 1.5; color: var(--sl-ink2); max-width: 32ch; }
+
+/* ---- Hacienda: real pieces set down together under a warm bounce ----
+   One table, the pieces overlapping a little; the one under the pointer
+   comes forward and straightens to be read. */
+.bp-warm { position: relative; isolation: isolate; }
+.bp-warm::before {
+  content: ""; position: absolute; z-index: -1; inset: -4% -2% 0; pointer-events: none;
+  background: radial-gradient(ellipse 46% 48% at 40% 50%, rgb(214 72 28 / 0.12), rgb(242 170 60 / 0.035) 55%, transparent 78%);
+}
+.bp-tbl-fig > figcaption { margin-top: 18px; }
+.bp-table .pc-l { transition: translate 650ms var(--sl-e-out), scale 450ms var(--sl-e-out), rotate 450ms var(--sl-e-out); }
+.bp-table .pc-l > img { border-radius: 0.5cqw; }
+.bp-t-cover, .bp-t-story, .bp-t-post, .bp-t-menu, .bp-t-flyer, .bp-t-back, .bp-t-front {
+  overflow: hidden; border-radius: 0.5cqw;
+  box-shadow: 0 0.2cqw 0.5cqw rgb(0 0 0 / 0.5), 0 3cqw 5cqw -2cqw rgb(0 0 0 / 0.9);
+}
+@media (hover: hover) {
+  .bp-table .pc-l:hover { z-index: 10; scale: 1.04; rotate: 0deg; }
+}
+
+.bp-warm:has(.bp-table--social) { display: grid; grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.bp-table--social { aspect-ratio: 100 / 61; }
+.bp-t-cover { left: 0; top: 1cqw; width: 60cqw; rotate: -1.5deg; }
+.bp-t-story { left: 5cqw; top: 25cqw; width: 19cqw; rotate: -4deg; }
+.bp-t-phone { left: 38cqw; top: 7cqw; width: 23cqw; rotate: 2deg; }
+.bp-t-post { left: 66cqw; top: 22cqw; width: 30cqw; rotate: 4deg; }
+.bp-scope { display: grid; gap: 10px; }
+.bp-scope h3 { font-family: var(--sl-f-brand); font-weight: 600; font-size: 19px; letter-spacing: -0.014em; color: var(--sl-ink1); }
+.bp-scope p { font-size: 14.5px; color: var(--sl-ink2); max-width: 44ch; }
+
+.bp-tbl-fig--wide { max-width: 1040px; }
+.bp-table--biz { aspect-ratio: 100 / 48; }
+.bp-t-menu { left: 3cqw; top: 3cqw; width: 27cqw; rotate: -5deg; }
+.bp-t-flyer { left: 30cqw; top: 6cqw; width: 27cqw; rotate: 3deg; }
+.bp-t-back { left: 60cqw; top: 6cqw; width: 35cqw; rotate: -4deg; }
+.bp-t-front { left: 63cqw; top: 26.5cqw; width: 33cqw; rotate: 5deg; }
+
+/* ---- tablet ---- */
+@media (max-width: 900px) {
+  .bp-sys { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); grid-template-areas: "stage stage" "side parts"; align-items: start; }
+  .bp-sys--flip { grid-template-columns: minmax(0, 1fr); grid-template-areas: "stage" "side"; }
+  .bp-sys-marks { max-width: 520px; }
+  .bp-sys-marks .bp-vers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+  .bp-sys-type, .bp-sys-marks { justify-self: start; }
+  .bp-parts { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+  .bp-parts > div:nth-child(-n + 2) { padding-top: 0; border-top: 0; }
+  .bp-parts > div { padding-block: 12px 16px; }
+  .bp-warm:has(.bp-table--social) { grid-template-columns: minmax(0, 1fr); }
+}
+/* ---- phone: the stage over its versions; the tables re-laid taller so
+   every piece stays big enough to read ---- */
+@media (max-width: 760px) {
+  .bp-set, .bp-set--flip { grid-template-columns: minmax(0, 1fr); }
+  .bp-set--flip .bp-stage { order: 0; }
+  .bp-stage--ir, .bp-stage--fp { min-height: 200px; }
+  .bp-stage--ir .bp-hero { width: 70%; }
+  .bp-vers { gap: 10px; }
+  .bp-vers .bx-plate { height: 84px; }
+  .bp-sys { grid-template-columns: minmax(0, 1fr); grid-template-areas: "stage" "side" "parts"; }
+  .bp-sys .bp-stage { padding: 22px 20px 62px; }
+  .bp-sys-marks { max-width: none; }
+  .bp-sys-marks .bp-vers { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+  .bp-sys-marks .bp-k { font-size: 12px; }
+  .bp-parts { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .bp-parts > div, .bp-parts > div:nth-child(-n + 2) { padding-block: 12px; border-top: 1px solid var(--sl-line); }
+
+  .bp-table--social { aspect-ratio: 100 / 96; }
+  .bp-t-cover { left: 2cqw; top: 1cqw; width: 92cqw; rotate: -1deg; }
+  .bp-t-story { left: 3cqw; top: 33cqw; width: 30cqw; }
+  .bp-t-phone { left: 35cqw; top: 29cqw; width: 30cqw; }
+  .bp-t-post { left: 64cqw; top: 52cqw; width: 34cqw; }
+
+  .bp-table--biz { aspect-ratio: 100 / 104; }
+  .bp-t-menu { left: 2cqw; top: 3cqw; width: 46cqw; rotate: -3deg; }
+  .bp-t-flyer { left: 51cqw; top: 6cqw; width: 46cqw; rotate: 2deg; }
+  .bp-t-back { left: 2cqw; top: 65cqw; width: 52cqw; rotate: -3deg; }
+  .bp-t-front { left: 46cqw; top: 71cqw; width: 52cqw; rotate: 4deg; }
+}
+
+/* ============================================================
+   THE ORBIT TEASES: each project shows its strongest pieces only.
+   The full set stays in the drawer and on the service pages.
+   ============================================================ */
+.bx .ir-p-palette { left: 14cqw; top: 59cqw; width: 28cqw; opacity: 0.55; }
+.bx .ir-p-plate { left: 50cqw; top: 6cqw; width: 36cqw; height: 46cqw; }
+.bx .ir-p-lockup { left: 8cqw; top: 29cqw; width: 70cqw; }
+
+.bx .hg-p-post, .bx .hg-p-card { display: none; }
+.bx .hg-p-menu { left: 6cqw; top: 14cqw; width: 28cqw; rotate: -6deg; }
+.bx .hg-p-phone { left: 36cqw; top: 3cqw; width: 26cqw; rotate: 2deg; }
+.bx .hg-p-logo { left: 60cqw; top: 22cqw; width: 33cqw; }
+
+.bx .fp-p-icons { display: none; }
+.bx .fp-p-cover { left: 18cqw; top: 8cqw; width: 72cqw; }
+.bx .fp-p-badge { left: 8cqw; top: 25cqw; width: 36cqw; }

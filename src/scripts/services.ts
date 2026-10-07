@@ -14,8 +14,13 @@
  * into transforms and transitions those.
  */
 import { Spot } from "../interior/spot";
+import { initExhibit } from "../brand/exhibit";
 
 const spots: Spot[] = [];
+
+// Branding's Selected Work: three projects on one orbit, turned by hand,
+// with the project in front's identity in a drawer below.
+document.querySelectorAll<HTMLElement>("[data-bx]").forEach(initExhibit);
 
 const rail = document.querySelector<HTMLElement>("[data-rail]");
 const cats = Array.from(document.querySelectorAll<HTMLElement>("[data-cat]"));

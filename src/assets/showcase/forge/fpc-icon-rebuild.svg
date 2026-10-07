@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Rebuild">
+  <title>Forge Rebuild</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M9.17 18 A16 16 0 0 1 38.83 18" stroke="#F7F5F2"/>
+    <path d="M33 18 H39 V12" stroke="#F7F5F2"/>
+    <path d="M38.83 30 A16 16 0 0 1 9.17 30" stroke="#F7F5F2"/>
+    <path d="M15 30 H9 V36" stroke="#F7F5F2"/>
+    <path d="M20 18 H28 L30 20 V28 L28 30 H20 L18 28 V20 Z" stroke="#FF6A00"/>
+    <path d="M22 14.5 V17 M26 14.5 V17 M22 31 V33.5 M26 31 V33.5 M14.5 22 H17 M14.5 26 H17 M31 22 H33.5 M31 26 H33.5" stroke="#FF6A00"/>
+  </g>
+</svg>

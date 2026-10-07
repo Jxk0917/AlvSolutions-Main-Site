@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Showcase">
+  <title>Forge Showcase</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M12 5 H36 L39 8 V40 L36 43 H12 L9 40 V8 Z" stroke="#F7F5F2"/>
+    <path d="M14.5 20 L20 14.5 M14.5 27 L20 21.5" stroke="#F7F5F2"/>
+    <path d="M27.5 11 H31.5 L33 12.5 V35.5 L31.5 37 H27.5 L26 35.5 V12.5 Z" stroke="#FF6A00"/>
+  </g>
+</svg>

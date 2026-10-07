@@ -55,8 +55,9 @@
                    packages that include that level. Business cards also
                    stand the card itself in the key light: ALVSolutions' own
                    card, live in the identity, turning over to its back;
-         flat    - one price strip, plus the logo ladder on the branding
-                   pages (the key light glides along it, the bar rests under
+         flat    - one price strip; on the branding pages, the work that
+                   service produces (brand/proof.njk), then the logo ladder
+                   (the key light glides along it, the bar rests under
                    where this service stands);
          package - the three packages on one floor line, the bar gliding;
          care    - the two plans, the key resting on the recommended one;
@@ -294,6 +295,9 @@
     <a class="alv-btn sd-flat-go" href="{{ startUrl }}">Start a project</a>
   </div>
 </section>
+
+{#- The work this service produces, straight after its price. -#}
+{%- if brand %}{% include "brand/proof.njk" %}{% endif %}
 
 {#- The branding ladder: which of the two logo services fits depends on how
     much of a brand you need. The bar rests under this page's rung; the key

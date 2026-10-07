@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Build">
+  <title>Forge Build</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M16 5 H32 L35 8 V40 L32 43 H16 L13 40 V8 Z" stroke="#F7F5F2"/>
+    <path d="M18 11 H30" stroke="#F7F5F2"/>
+    <circle cx="24" cy="28" r="7" stroke="#FF6A00"/>
+    <circle cx="24" cy="28" r="1.75" fill="#FF6A00" stroke="none"/>
+  </g>
+</svg>

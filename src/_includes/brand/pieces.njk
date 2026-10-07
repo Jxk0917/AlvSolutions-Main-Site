@@ -1,0 +1,75 @@
+{#
+  BRAND PIECES: each client's centerpiece, composed once from its real
+  files and set down wherever that client's work is shown (Selected Work's
+  orbit on /services/, the brand service pages).
+
+  A piece is one fixed-proportion box (.pc, brandwork.css) whose layers sit
+  at measured places inside it, so it scales as a single object: the orbit
+  can shrink a piece into the background and every layer keeps its place.
+  Each one is composed for its own brand, never a shared template:
+    IronRidge  engineered: the background-safe lockup set over a graphite
+               plate carrying the mark, the palette as a measured strip.
+               Nothing turns; everything sits square;
+    Hacienda   mixed formats, set down like a table of real pieces: the
+               menu, the Instagram profile on its phone, a post, the card,
+               the logo floating over them;
+    Forge PC   the badge forward in its own ember glow, the cover behind it,
+               the service icons locking together as one system.
+
+  Layers carry --z (how far forward they stand): on hover the piece opens
+  up a little, front layers rising further than back ones.
+  Brand files are used as supplied; Forge SVGs stay <img> (shared gradient
+  id). `sz` is the piece's rendered width, for the images' `sizes`.
+#}
+{%- set ir = "/assets/showcase/ironridge/" %}
+{%- set hg = "/assets/showcase/hacienda/" %}
+{%- set fp = "/assets/showcase/forge/" %}
+
+{%- macro irPiece(load = "lazy") %}
+<div class="pc pc--ir">
+  <div class="pc-l ir-p-plate" style="--z: 1">
+    <img src="{{ ir }}ir-symbol-reversed.svg" width="520" height="600" alt="IronRidge brand mark: the hex bolt and excavator arm in light gray, with its rust-orange ridge band, on Forged Graphite" loading="{{ load }}" decoding="async" />
+  </div>
+  <img class="pc-l ir-p-lockup" style="--z: 3" src="{{ ir }}ir-logo-primary-background-safe.svg" width="1926" height="632" alt="IronRidge Excavation primary logo, background-safe version: the hex bolt mark and IRONRIDGE EXCAVATION wordmark inside a light outline, so it holds on any ground" loading="{{ load }}" decoding="async" />
+  <div class="pc-l ir-p-palette" style="--z: 2">
+    <img src="{{ ir }}ir-module-palette-2336.webp" width="2336" height="336" alt="IronRidge color palette: Forged Graphite, Iron Oxide, Quarry White and Ridge Steel" loading="{{ load }}" decoding="async" />
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro hgPiece(load = "lazy", sz = 540) %}
+<div class="pc pc--hg">
+  <div class="pc-l hg-p-menu" style="--z: 1">
+    <img src="{{ hg }}hg-menu-638.webp" srcset="{{ hg }}hg-menu-638.webp 638w, {{ hg }}hg-menu-1275.webp 1275w" sizes="{{ (sz * 0.3) | round }}px" width="1275" height="1650" alt="Hacienda Grill menu, The Board: tacos, burritos, bowls, sides and drinks with prices" loading="{{ load }}" decoding="async" />
+  </div>
+  <div class="pc-l hg-p-phone" style="--z: 3">
+    <div class="pc-phone">
+      <img src="{{ hg }}hg-ig-profile-screen-780.webp" srcset="{{ hg }}hg-ig-profile-screen-780.webp 780w, {{ hg }}hg-ig-profile-screen-1170.webp 1170w" sizes="{{ (sz * 0.25) | round }}px" width="1170" height="2532" alt="Hacienda Grill's Instagram profile: its logo, bio, story highlights and a grid of branded posts" loading="{{ load }}" decoding="async" />
+    </div>
+  </div>
+  <img class="pc-l hg-p-logo" style="--z: 2" src="{{ hg }}hg-logo-primary-363.webp" srcset="{{ hg }}hg-logo-primary-363.webp 363w, {{ hg }}hg-logo-primary-726.webp 726w" sizes="{{ (sz * 0.29) | round }}px" width="726" height="594" alt="Hacienda Grill logo: an Aztec warrior holding a red chili above a HACIENDA GRILL banner" loading="{{ load }}" decoding="async" />
+  <div class="pc-l hg-p-post" style="--z: 4">
+    <img src="{{ hg }}hg-ig-post-540.webp" srcset="{{ hg }}hg-ig-post-540.webp 540w, {{ hg }}hg-ig-post-1080.webp 1080w" sizes="{{ (sz * 0.26) | round }}px" width="1080" height="1080" alt="Hacienda Grill Instagram post for weekday happy hour: $2 street tacos and half-price aguas frescas" loading="{{ load }}" decoding="async" />
+  </div>
+  <div class="pc-l hg-p-card" style="--z: 4">
+    <img src="{{ hg }}hg-card-front-525.webp" srcset="{{ hg }}hg-card-front-525.webp 525w, {{ hg }}hg-card-front-1050.webp 1050w" sizes="{{ (sz * 0.33) | round }}px" width="1050" height="600" alt="Hacienda Grill business card front: the logo over San Antonio, Texas, since 2012" loading="{{ load }}" decoding="async" />
+  </div>
+</div>
+{%- endmacro %}
+
+{%- macro fpPiece(load = "lazy", sz = 540) %}
+{%- set icons = ["build", "upgrade", "check", "clean", "setup", "transfer"] %}
+<div class="pc pc--fp">
+  <div class="pc-l fp-p-cover" style="--z: 1">
+    <img src="{{ fp }}fpc-fb-cover-1640.webp" srcset="{{ fp }}fpc-fb-cover-1640.webp 1640w, {{ fp }}fpc-fb-cover-3280.webp 3280w" sizes="{{ (sz * 0.8) | round }}px" width="1640" height="624" alt="Forge PC Facebook cover: the anvil mark beside FORGE PC and the line Built. Tuned. Tested." loading="{{ load }}" decoding="async" />
+  </div>
+  <div class="pc-l fp-p-badge" style="--z: 4">
+    <img src="{{ fp }}fpc-badge.svg" width="256" height="256" alt="Forge PC badge: the ember anvil mark on a dark rounded tile" loading="{{ load }}" decoding="async" />
+  </div>
+  <ul class="pc-l fp-p-icons" style="--z: 2" role="img" aria-label="Six of Forge PC's service icons: Build, Upgrade, Check, Clean, Setup and Transfer">
+    {%- for i in icons %}
+    <li><img src="{{ fp }}fpc-icon-{{ i }}.svg" width="48" height="48" alt="" loading="{{ load }}" decoding="async" /></li>
+    {%- endfor %}
+  </ul>
+</div>
+{%- endmacro %}

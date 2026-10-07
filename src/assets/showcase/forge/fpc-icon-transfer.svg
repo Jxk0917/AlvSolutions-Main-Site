@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Transfer">
+  <title>Forge Transfer</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M6 11 H14 L16 13 V35 L14 37 H6 L4 35 V13 Z" stroke="#F7F5F2"/>
+    <path d="M7.5 16 H12.5" stroke="#F7F5F2"/>
+    <path d="M34 11 H42 L44 13 V35 L42 37 H34 L32 35 V13 Z" stroke="#F7F5F2"/>
+    <path d="M35.5 16 H40.5" stroke="#F7F5F2"/>
+    <path d="M19.5 24 H27.5 M23.5 20 L27.5 24 L23.5 28" stroke="#FF6A00"/>
+  </g>
+</svg>

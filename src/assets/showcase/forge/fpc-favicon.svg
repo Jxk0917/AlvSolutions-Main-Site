@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Forge PC">
+  <title>Forge PC</title>
+  <defs>
+    <linearGradient id="ember" x1="20" y1="22" x2="236" y2="226" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFAE42"/>
+      <stop offset="0.5" stop-color="#FF6A00"/>
+      <stop offset="1" stop-color="#DB3800"/>
+    </linearGradient>
+  </defs>
+  <g transform="translate(-39.7 -32.2) scale(1.242)">
+    <path fill="url(#ember)" fill-rule="evenodd" d="M54 50 L172 50 L226 66 L226 76 L166 90
+    C164 106 152 116 152 144 L152 156
+    C152 168 158 168 176 168 L206 168 L206 199 L197 208
+    L71 208 L62 199 L62 168 L92 168
+    C110 168 116 168 116 156 L116 144
+    C116 116 104 106 102 90 L44 90 L44 60 Z"/>
+  </g>
+</svg>

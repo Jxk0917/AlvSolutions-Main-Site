@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Forge Clean">
+  <title>Forge Clean</title>
+  <g fill="none" stroke-width="2.5" stroke-linejoin="miter" stroke-linecap="square">
+    <path d="M14 19 H27 L29 21 V41 L27 43 H14 L12 41 V21 Z" stroke="#F7F5F2"/>
+    <path d="M16 19 V14 H25 V19" stroke="#F7F5F2"/>
+    <path d="M20.5 14 V9 H30" stroke="#F7F5F2"/>
+    <path d="M16.5 30 H24.5" stroke="#F7F5F2"/>
+    <path d="M34 6 L38 3 M35 9 H41 M34 12 L38 15" stroke="#FF6A00"/>
+  </g>
+</svg>

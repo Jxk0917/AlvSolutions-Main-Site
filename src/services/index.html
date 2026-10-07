@@ -27,7 +27,9 @@ cta:
        keeping it found and running, the brand, print). Each card carries
        its own hue as light on its surface, never on its type, and a
        spotlight in that hue glides to the card under attention;
-    3. the two ways to buy any of it.
+    3. Branding & design closes on its Selected Work exhibition
+       (brand/exhibit.njk): the work behind its four services;
+    4. the two ways to buy any of it.
   Every name, icon, route and price is read from _data; only the short card
   wording for the services whose blurb restates a price lives here.
 #}
@@ -106,6 +108,8 @@ cta:
         </ul>
         <span class="sv-spot" aria-hidden="true"></span>
       </div>
+      {#- Branding proves itself: the work behind the four services. #}
+      {%- if c.slug == "brand" %}{% include "brand/exhibit.njk" %}{% endif %}
     </section>
     {%- endfor %}
   </div>

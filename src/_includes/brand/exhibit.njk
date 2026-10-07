@@ -1,0 +1,206 @@
+{#
+  SELECTED WORK: the branding exhibition on /services/#branding-design.
+
+  ALVSolutions supplies the stage (the room, one key light from above, the
+  pool it leaves on the floor, the site's lit bar under the project being
+  shown). The three projects stand on one implied orbit: one forward in the
+  key light, the other two further back on either side, smaller and in
+  shadow. Each is its own composed centerpiece (brand/pieces.njk), never the
+  full board pasted in.
+
+  Previous / Next turn the orbit a third of a turn: a background project
+  travels round to the front while the one in front travels back to the
+  next place on the ring (brand/exhibit.ts). The project's name, kind and
+  sentence sit under the stage. "View full identity" opens the fuller system
+  in a drawer below; it always shows the project in front, so moving the
+  orbit while it is open changes what it holds, never leaves it behind.
+
+  Without script: the three centerpieces stand side by side with their
+  captions, and every project's identity is open below. The deal
+  (motion/deal.ts) leaves the stage alone; it owns its own motion.
+#}
+{%- from "brand/pieces.njk" import irPiece, hgPiece, fpPiece %}
+{%- set ir = "/assets/showcase/ironridge/" %}
+{%- set hg = "/assets/showcase/hacienda/" %}
+{%- set fp = "/assets/showcase/forge/" %}
+{%- set fpIcons = ["build", "check", "clean", "rebuild", "refresh", "setup", "showcase", "transfer", "upgrade"] %}
+{%- set projects = [
+  { key: "ir", name: "IronRidge Excavation", short: "IronRidge", kind: "Brand Identity", href: "/services/brand-identity/",
+    d: "A hex-bolt mark and a condensed wordmark for an excavation company, with the colors and type that hold it together." },
+  { key: "hg", name: "Hacienda Grill", short: "Hacienda", kind: "Brand + Business",
+    d: "One restaurant identity, carried onto Instagram, the menu and the business card without changing a thing." },
+  { key: "fp", name: "Forge PC", short: "Forge PC", kind: "Brand Identity", href: "/services/brand-identity/",
+    d: "A mark-led identity for a PC build and repair shop, with a nine-icon service system and its social cover." }
+] %}
+
+<section class="bx" id="selected-work" aria-labelledby="bx-h" data-bx>
+  <div class="bx-head">
+    <p class="bx-eyebrow">Selected work</p>
+    <h3 id="bx-h" class="bx-h">See the work behind the services.</h3>
+    <p class="bx-lede">Three identities, each built as a working system: the logo, the colors and type behind it, and the places it gets used.</p>
+  </div>
+
+  <div class="bx-show" data-deal="off" role="region" aria-roledescription="carousel" aria-label="Selected branding work">
+    <div class="bx-stage" data-bx-stage>
+      <div class="bx-room" aria-hidden="true">
+        <span class="key-cone"></span>
+        {%- for p in projects %}<span class="bx-tone" data-tone="{{ p.key }}"></span>{% endfor %}
+        <span class="key-pool"></span>
+      </div>
+
+      <div class="bx-orbit" data-bx-orbit>
+        {%- for p in projects %}
+        <div class="bx-sat" data-sat data-tone="{{ p.key }}" role="group" aria-roledescription="slide" aria-label="{{ loop.index }} of {{ projects.length }}: {{ p.name }}">
+          {%- if p.key == "ir" %}{{ irPiece("eager") }}{% elif p.key == "hg" %}{{ hgPiece("lazy", 540) }}{% else %}{{ fpPiece("lazy", 540) }}{% endif %}
+        </div>
+        {%- endfor %}
+      </div>
+
+      <div class="bx-ctl" data-bx-ctl hidden>
+        <button class="bx-arrow" type="button" data-bx-prev aria-label="Previous project"><svg class="int-ic bx-arrow-ic bx-arrow-ic--back" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+        <div class="bx-tabs" role="group" aria-label="Choose a project">
+          {%- for p in projects %}
+          <button class="bx-tab" type="button" data-bx-to="{{ loop.index0 }}"><span class="bx-tab-long">{{ p.name }}</span><span class="bx-tab-short" aria-hidden="true">{{ p.short }}</span></button>
+          {%- endfor %}
+          <i class="bx-tabs-bar" aria-hidden="true"></i>
+        </div>
+        <button class="bx-arrow" type="button" data-bx-next aria-label="Next project"><svg class="int-ic bx-arrow-ic" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+      </div>
+    </div>
+
+    {#- What is in front: its name, kind and sentence, and the way in. #}
+    <div class="bx-bar">
+      <div class="bx-infos">
+        {%- for p in projects %}
+        <div class="bx-info" data-info>
+          <h4 class="bx-info-h">{{ p.name }}</h4>
+          <p class="bx-info-k">{% if p.href %}<a class="alv-tlink" href="{{ p.href }}">{{ p.kind }}</a>{% else %}{{ p.kind }}{% endif %}</p>
+          <p class="bx-info-d">{{ p.d }}</p>
+        </div>
+        {%- endfor %}
+      </div>
+      <button class="alv-btn bx-toggle" type="button" aria-expanded="false" aria-controls="bx-more" data-bx-toggle hidden>
+        <span data-bx-toggle-label>View full identity</span>
+        <svg class="int-ic bx-toggle-ic" aria-hidden="true"><use href="#i-chevron-down"/></svg>
+      </button>
+    </div>
+
+    {#- The fuller system, one project at a time. #}
+    <div class="bx-more" id="bx-more" data-bx-more>
+      <div class="bx-more-in">
+
+        {#- ── IronRidge: the logo set, then the system behind it ── #}
+        <div class="bx-dt dt-ir" data-dt role="group" aria-label="IronRidge Excavation identity">
+          <h5 class="dt-h">IronRidge Excavation</h5>
+          <div class="dt-ir-logos">
+            <figure class="bx-p dt-ir-primary">
+              <div class="bx-plate bx-plate--quarry"><img src="{{ ir }}ir-logo-primary-fullcolor.svg" width="1828" height="600" alt="IronRidge Excavation primary logo in full color: a graphite hex bolt with a rust-orange ridge band and an excavator arm, beside the wordmark" loading="lazy" decoding="async" /></div>
+              <figcaption><b>Primary logo</b></figcaption>
+            </figure>
+            <figure class="bx-p dt-ir-rev">
+              <div class="bx-plate bx-plate--graphite"><img src="{{ ir }}ir-logo-primary-reversed.svg" width="1828" height="600" alt="IronRidge Excavation logo reversed for dark backgrounds" loading="lazy" decoding="async" /></div>
+              <figcaption><b>Reversed</b>, for dark grounds</figcaption>
+            </figure>
+            <figure class="bx-p dt-ir-stack">
+              <div class="bx-plate bx-plate--graphite"><img src="{{ ir }}ir-logo-stacked-reversed.svg" width="1205" height="1185" alt="IronRidge Excavation stacked logo, reversed: the symbol above the wordmark" loading="lazy" decoding="async" /></div>
+              <figcaption><b>Stacked</b></figcaption>
+            </figure>
+            <figure class="bx-p dt-ir-mark">
+              <div class="bx-plate bx-plate--quarry"><img src="{{ ir }}ir-symbol-fullcolor.svg" width="520" height="600" alt="IronRidge brand mark on its own: the hex bolt with an excavator arm" loading="lazy" decoding="async" /></div>
+              <figcaption><b>Brand mark</b></figcaption>
+            </figure>
+          </div>
+          <div class="dt-ir-sys">
+            <figure class="bx-p dt-ir-type">
+              <img src="{{ ir }}ir-module-type-1440.webp" width="1440" height="1106" alt="IronRidge typography: Saira Semi Condensed for headings and Barlow Semi Condensed for body text" loading="lazy" decoding="async" />
+              <figcaption><b>Typography</b></figcaption>
+            </figure>
+            <div class="dt-ir-side">
+              <figure class="bx-p dt-ir-palette">
+                <img src="{{ ir }}ir-module-palette-2336.webp" width="2336" height="336" alt="IronRidge color palette: Forged Graphite #1E2328, Iron Oxide #B8481C, Quarry White #EEEFEC and Ridge Steel #6B7780" loading="lazy" decoding="async" />
+                <figcaption><b>Color system</b></figcaption>
+              </figure>
+              <dl class="dt-parts">
+                <div><dt>Primary logo</dt><dd>The default, for signs, trucks, documents and the website header.</dd></div>
+                <div><dt>Brand mark</dt><dd>The symbol on its own, for icons, hard hats and small spaces.</dd></div>
+                <div><dt>Color system</dt><dd>Four named colors, each with a job, so every piece matches.</dd></div>
+                <div><dt>Typography</dt><dd>One face for headings and one for text, chosen to sit with the logo.</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+        {#- ── Hacienda: the identity, then where it went ── #}
+        <div class="bx-dt dt-hg" data-dt role="group" aria-label="Hacienda Grill identity">
+          <h5 class="dt-h">Hacienda Grill</h5>
+          <div class="dt-hg-groups">
+            <div class="dt-g">
+              <div class="dt-g-art dt-hg-id">
+                <img class="dt-hg-lp" src="{{ hg }}hg-module-logo-palette.webp" srcset="{{ hg }}hg-module-logo-palette.webp 664w" sizes="180px" width="664" height="828" alt="Hacienda Grill primary logo on cream, above its palette: Chili Red, Agave, Sun Gold, Ink and Cream" loading="lazy" decoding="async" />
+                <img class="dt-hg-type" src="{{ hg }}hg-module-type.webp" srcset="{{ hg }}hg-module-type.webp 804w, {{ hg }}hg-module-type-1608.webp 1608w" sizes="220px" width="804" height="508" alt="Hacienda Grill type system: League Gothic for display, Fjalla One for headings, Montserrat for labels and Source Sans 3 for body text" loading="lazy" decoding="async" />
+                <img class="dt-hg-mono" src="{{ hg }}hg-monogram-512.webp" width="512" height="512" alt="Hacienda Grill HG monogram, white on chili red, used as the app icon" loading="lazy" decoding="async" />
+              </div>
+              <h6 class="dt-g-h">Brand identity</h6>
+              <p class="dt-g-d">Logo, palette, type and the HG monogram.</p>
+            </div>
+            <div class="dt-g">
+              <div class="dt-g-art dt-hg-soc">
+                <img class="dt-hg-story" src="{{ hg }}hg-ig-story-720.webp" srcset="{{ hg }}hg-ig-story-720.webp 720w, {{ hg }}hg-ig-story-1080.webp 1080w" sizes="120px" width="1080" height="1920" alt="Hacienda Grill Instagram story for happy hour, with photos of tacos and agua fresca" loading="lazy" decoding="async" />
+                <div class="dt-hg-phone pc-phone"><img src="{{ hg }}hg-ig-profile-screen-780.webp" width="1170" height="2532" alt="Hacienda Grill's Instagram profile with its posts in place" loading="lazy" decoding="async" /></div>
+                <img class="dt-hg-cover" src="{{ hg }}hg-fb-cover-820.webp" srcset="{{ hg }}hg-fb-cover-820.webp 820w, {{ hg }}hg-fb-cover-1640.webp 1640w" sizes="240px" width="1640" height="624" alt="Hacienda Grill Facebook cover for weekday happy hour" loading="lazy" decoding="async" />
+              </div>
+              <h6 class="dt-g-h">Social presence</h6>
+              <p class="dt-g-d">Profile, story, post and Facebook cover.</p>
+            </div>
+            <div class="dt-g">
+              <div class="dt-g-art dt-hg-biz">
+                <img class="dt-hg-menu" src="{{ hg }}hg-menu-638.webp" sizes="150px" width="1275" height="1650" alt="Hacienda Grill menu, The Board" loading="lazy" decoding="async" />
+                <img class="dt-hg-flyer" src="{{ hg }}hg-flyer-638.webp" sizes="150px" width="1275" height="1650" alt="Hacienda Grill promotional flyer for birria tacos" loading="lazy" decoding="async" />
+                <img class="dt-hg-back" src="{{ hg }}hg-card-back-525.webp" sizes="170px" width="1050" height="600" alt="Hacienda Grill business card back: the owner's name and contact details, a QR code and opening hours" loading="lazy" decoding="async" />
+              </div>
+              <h6 class="dt-g-h">Business graphics</h6>
+              <p class="dt-g-d">Menu, promo flyer and both sides of the card.</p>
+            </div>
+          </div>
+        </div>
+
+        {#- ── Forge PC: the marks, the icon system, the cover ── #}
+        <div class="bx-dt dt-fp" data-dt role="group" aria-label="Forge PC identity">
+          <h5 class="dt-h">Forge PC</h5>
+          <div class="dt-fp-grid">
+            <div class="dt-fp-marks">
+              <figure class="bx-p"><div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark.svg" width="256" height="256" alt="Forge PC primary mark: an anvil in an orange ember gradient" loading="lazy" decoding="async" /></div><figcaption><b>Primary</b></figcaption></figure>
+              <figure class="bx-p"><div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark-ember.svg" width="256" height="256" alt="Forge PC mark in flat ember orange" loading="lazy" decoding="async" /></div><figcaption><b>Flat</b></figcaption></figure>
+              <figure class="bx-p"><div class="bx-plate bx-plate--forge"><img src="{{ fp }}fpc-mark-light.svg" width="256" height="256" alt="Forge PC mark in off-white, for dark backgrounds" loading="lazy" decoding="async" /></div><figcaption><b>Light</b></figcaption></figure>
+              <figure class="bx-p"><div class="bx-plate bx-plate--spark"><img src="{{ fp }}fpc-mark-dark.svg" width="256" height="256" alt="Forge PC mark in near-black, for light backgrounds" loading="lazy" decoding="async" /></div><figcaption><b>Dark</b></figcaption></figure>
+            </div>
+            <figure class="bx-p dt-fp-icons">
+              <ul class="fp-grid">
+                {%- for i in fpIcons %}
+                <li class="fp-tile"><img src="{{ fp }}fpc-icon-{{ i }}.svg" width="48" height="48" alt="" loading="lazy" decoding="async" /><span>{{ i | capitalize }}</span></li>
+                {%- endfor %}
+              </ul>
+              <figcaption><b>Service icon system</b>, nine icons drawn as one set</figcaption>
+            </figure>
+            <figure class="bx-p dt-fp-cover">
+              <img src="{{ fp }}fpc-fb-cover-1640.webp" srcset="{{ fp }}fpc-fb-cover-1640.webp 1640w, {{ fp }}fpc-fb-cover-3280.webp 3280w" sizes="(max-width: 760px) 92vw, 560px" width="1640" height="624" alt="Forge PC Facebook cover: the anvil mark beside FORGE PC and the line Built. Tuned. Tested." loading="lazy" decoding="async" />
+              <figcaption><b>In use</b>, the Facebook cover</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <button class="alv-tlink bx-less" type="button" data-bx-less hidden>Hide full identity</button>
+      </div>
+    </div>
+
+    <p class="alv-sr-only" aria-live="polite" data-bx-live></p>
+  </div>
+
+  <div class="bx-close">
+    <p>Want an identity like these for your business?</p>
+    <div class="bx-close-act">
+      <a class="alv-btn" href="/contact/?service=brand-identity">Start a project</a>
+      <a class="alv-tlink" href="/pricing/#brand-and-design">See the price list</a>
+    </div>
+  </div>
+</section>

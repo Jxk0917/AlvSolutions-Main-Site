@@ -11,10 +11,11 @@
   "_foundersSpecial": "Public Founders Special spots still open. Edit this one number by hand as clients secure a spot (agreement signed AND 50% deposit received); every Founders Special panel on the site reads it. Set to 0 to hide the promotion everywhere.",
   "foundersSpecial": { "spots": 3 },
 
-  "_primaryNav": "The approved primary navigation: the logo is the Home link, then Packages (/packages/, the three packages and the four industry builds), Services (/services/), What I Build (/work/, the portfolio of concept builds), Pricing (/pricing/, the detailed pricing authority), About (/about/), then Start a project as the separate button.",
+  "_primaryNav": "The approved primary navigation: Home (/), Services (/services/), Packages (/packages/, the three packages and the four industry builds), What I Build (/work/, the portfolio of concept builds), Pricing (/pricing/, the detailed pricing authority), About (/about/), then Start a project as the separate button. The logo also links Home.",
   "primaryNav": [
-    { "label": "Packages",     "url": "/packages/" },
+    { "label": "Home",         "url": "/" },
     { "label": "Services",     "url": "/services/" },
+    { "label": "Packages",     "url": "/packages/" },
     { "label": "What I Build", "url": "/work/" },
     { "label": "Pricing",      "url": "/pricing/" },
     { "label": "About",        "url": "/about/" }

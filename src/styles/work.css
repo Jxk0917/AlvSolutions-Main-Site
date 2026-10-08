@@ -115,8 +115,41 @@ a.wk-screen:hover .wk-glass { box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.2), 0 50
   html:not(.no-motion) .wk-feed {
     animation: wk-feed linear both;
     animation-timeline: --wk-show;
-    animation-range: cover 22% cover 84%;
+    /* Starts past the point the first showcase already sits at on load, so
+       the top frame (the hero) is what shows before any scroll. */
+    animation-range: cover 50% cover 90%;
   }
+}
+
+/* ---- Desktop display: the home stage's window ------------------
+   Same build as the homepage's desktops (hero.css .hx-glass/.hx-chrome):
+   a dark rim and a slim window bar with its three lights and address
+   field. The bar is reserved as padding (2.4% of the width); work.html's
+   ratio accounts for it, so the strip still ends on its last frame. */
+.wk-screen--desk .wk-glass {
+  padding-top: 2.4%; border: 5px solid #121212; border-radius: 10px;
+  box-shadow:
+    0 0 0 1px rgb(var(--sl-L) / 0.14),
+    0 50px 90px -40px rgb(0 0 0 / 0.95);
+}
+a.wk-screen--desk:hover .wk-glass {
+  box-shadow: 0 0 0 1px rgb(var(--sl-L) / 0.32), 0 56px 96px -40px rgb(0 0 0 / 0.95);
+}
+.wk-screen--desk .wk-glass::before, .wk-screen--desk .wk-glass::after {
+  content: ""; position: absolute; z-index: 3; pointer-events: none;
+}
+.wk-screen--desk .wk-glass::before {
+  left: 0; right: 0; top: 0; height: 3.84%;
+  background:
+    radial-gradient(circle 2.5px at 12px 50%, rgb(var(--sl-L) / 0.22) 98%, transparent) no-repeat,
+    radial-gradient(circle 2.5px at 22px 50%, rgb(var(--sl-L) / 0.22) 98%, transparent) no-repeat,
+    radial-gradient(circle 2.5px at 32px 50%, rgb(var(--sl-L) / 0.22) 98%, transparent) no-repeat,
+    #151515;
+  box-shadow: inset 0 -1px 0 rgb(var(--sl-L) / 0.09);
+}
+.wk-screen--desk .wk-glass::after {
+  left: 33%; width: 34%; top: 0.85%; height: 2.1%; border-radius: 99px;
+  background: rgb(var(--sl-L) / 0.07);
 }
 @keyframes wk-feed {
   0%, 12% { transform: translateY(0); animation-timing-function: cubic-bezier(0.5, 0, 0.3, 1); }

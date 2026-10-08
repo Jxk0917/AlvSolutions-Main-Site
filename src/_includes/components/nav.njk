@@ -20,7 +20,7 @@
 
     <nav class="alv-nav-links" aria-label="Primary">
       {%- for item in site.primaryNav %}
-      <a class="alv-lit-sel" href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% elif page.url.startsWith(item.url) %} aria-current="true"{% endif %}>{{ item.label }}</a>
+      <a class="alv-lit-sel" href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% elif item.url != "/" and page.url.startsWith(item.url) %} aria-current="true"{% endif %}>{{ item.label }}</a>
       {%- endfor %}
     </nav>
 
@@ -31,7 +31,7 @@
       <div class="alv-menu-panel">
         <nav aria-label="Mobile">
           {%- for item in site.primaryNav %}
-          <a href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% elif page.url.startsWith(item.url) %} aria-current="true"{% endif %}>{{ item.label }}</a>
+          <a href="{{ item.url }}"{% if page.url == item.url %} aria-current="page"{% elif item.url != "/" and page.url.startsWith(item.url) %} aria-current="true"{% endif %}>{{ item.label }}</a>
           {%- endfor %}
         </nav>
         <a class="alv-btn" href="/contact/">Start a project</a>

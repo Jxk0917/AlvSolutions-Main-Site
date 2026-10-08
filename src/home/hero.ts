@@ -70,6 +70,7 @@ export class Hero implements OpeningHost {
   private settled: SceneId | null = null;
   private busy = false;
   private started = false;
+  private tabsIn = false;
   private tl: gsap.core.Timeline | null = null;
 
   private auto: boolean;
@@ -99,7 +100,8 @@ export class Hero implements OpeningHost {
     gsap.set([...this.allItems(), this.bar], { autoAlpha: 0 });
     this.sign?.classList.remove("is-signed");
     this.stage.classList.toggle("is-auto", this.auto);
-    this.tabsEl.classList.add("is-new");
+    // The tab bar waits too: it arrives with the stage, never under the opening.
+    if (motionOn()) gsap.set([this.tabsEl, ...this.tabs, this.ind], { autoAlpha: 0 });
     this.placeInd();
     document.fonts?.ready.then(() => this.placeInd());
 
@@ -131,7 +133,38 @@ export class Hero implements OpeningHost {
   start(): void {
     if (this.started) return;
     this.started = true;
+    this.introTabs();
     this.show("web", true);
+  }
+
+  /** The tab bar arrives: the glass first, then each tab flies in on an arc
+      and lands in its place, one after another; the lit pill comes last,
+      under the scene that is playing. */
+  private introTabs(): void {
+    if (this.tabsIn) return;
+    this.tabsIn = true;
+    const all = [this.tabsEl, ...this.tabs, this.ind];
+    const done = (): void => {
+      gsap.set(all, { clearProps: "opacity,visibility,transition,filter" });
+      gsap.set([this.tabsEl, ...this.tabs], { clearProps: "transform" });
+      this.placeInd();
+      if (this.auto) this.tabsEl.classList.add("is-new");
+    };
+    if (!motionOn()) return done();
+
+    // The tabs' own CSS transform transition would drag behind every frame.
+    gsap.set(this.tabs, { transition: "none" });
+    const tl = gsap.timeline({ onComplete: done });
+    tl.fromTo(this.tabsEl,
+      { autoAlpha: 0, y: 16, scaleX: 0.82 },
+      { autoAlpha: 1, y: 0, scaleX: 1, duration: 0.6, ease: "power3.out" }, 0);
+    this.tabs.forEach((tab, i) => {
+      tl.fromTo(tab,
+        { autoAlpha: 0, x: 160 + i * 36, y: -54, rotation: 9, scale: 0.78, filter: "blur(6px)" },
+        { autoAlpha: 1, x: 0, y: 0, rotation: 0, scale: 1, filter: "blur(0px)", duration: 0.75, ease: "back.out(1.6)" },
+        0.3 + i * 0.17);
+    });
+    tl.to(this.ind, { autoAlpha: 1, duration: 0.4, ease: "power2.out" }, 0.3 + this.tabs.length * 0.17 + 0.3);
   }
 
   /** The viewport changed: compositions are measured, so stand the scene again. */
@@ -181,6 +214,7 @@ export class Hero implements OpeningHost {
   private go(to: SceneId): void {
     if (!this.started) {
       this.started = true;
+      this.introTabs();
       this.cur = to;
       this.show(to, true);
       return;

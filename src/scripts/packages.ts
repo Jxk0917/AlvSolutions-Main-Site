@@ -19,6 +19,7 @@
  * #complete) open that package, as the old anchors did.
  */
 import { Spot } from "../interior/spot";
+import { motionOn } from "../motion/env";
 
 const radio = (slug: string): HTMLInputElement | null => document.getElementById(`pk-${slug}`) as HTMLInputElement | null;
 const checkedSlug = (): string => document.querySelector<HTMLInputElement>(".pk-rail-input:checked")?.value ?? "standard";
@@ -140,3 +141,37 @@ if (buildList) {
   phone.addEventListener("change", sync);
   sync();
 }
+
+/**
+ * The choice explorer inside each package file: a native <details> whose
+ * body eases open and shut. All three stay in step, so choosing another
+ * package keeps it as open or closed as it was. With motion off it just
+ * toggles.
+ */
+const explorers = Array.from(document.querySelectorAll<HTMLDetailsElement>("[data-ex]"));
+explorers.forEach((d) => {
+  const sum = d.querySelector<HTMLElement>("summary");
+  const body = d.querySelector<HTMLElement>(".pk-ex-body");
+  if (!sum || !body) return;
+  let anim: Animation | null = null;
+  sum.addEventListener("click", (e) => {
+    e.preventDefault();
+    const open = !d.open;
+    explorers.forEach((o) => {
+      if (o !== d) o.open = open;
+    });
+    anim?.cancel();
+    if (!motionOn()) {
+      d.open = open;
+      return;
+    }
+    const from = body.getBoundingClientRect().height;
+    d.open = true;
+    const to = open ? body.scrollHeight : 0;
+    anim = body.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration: 420, easing: "cubic-bezier(0.45, 0, 0.2, 1)" });
+    anim.onfinish = () => {
+      anim = null;
+      d.open = open;
+    };
+  });
+});

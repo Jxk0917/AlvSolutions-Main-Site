@@ -116,7 +116,12 @@ async function boot(): Promise<void> {
   }
 
   watchResize(() => {
-    opening.skip();
+    if (opening.running) {
+      // The opening carries on; the stage is measured when it begins.
+      opening.remeasure();
+      hero.room.measure();
+      return;
+    }
     hero.refresh();
     pickers.forEach((p) => p.refresh());
   });

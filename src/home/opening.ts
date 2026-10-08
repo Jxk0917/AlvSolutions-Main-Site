@@ -18,7 +18,7 @@
  * failsafe there shows everything if this never takes over.
  */
 import { gsap } from "gsap";
-import { playIntro, finishIntro } from "../identity/motions";
+import { playIntro, finishIntro, refitIntro } from "../identity/motions";
 import type { Room, RoomState } from "../light/room";
 
 /** What the opening plays in: the hero's room, its words and its light. */
@@ -85,6 +85,16 @@ export class Opening {
     };
   }
 
+  /** The viewport changed while the opening plays: measure again and carry on.
+      Ending the opening here would flash the finished wordmark and start the
+      stage from the top, which reads as the animation restarting. */
+  remeasure(): void {
+    if (!this.tl) return;
+    refitIntro(this.stage);
+    this.measure();
+    this.render();
+  }
+
   private render(): void {
     const { f } = this.flight;
     const g = this.geo;
@@ -102,6 +112,7 @@ export class Opening {
   }
 
   play(): void {
+    if (this.tl) return; // already playing: never reset a running opening
     const room = this.host.room;
     const { start } = this.host.openingStates();
     room.go(start, { instant: true });

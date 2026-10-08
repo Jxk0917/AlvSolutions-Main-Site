@@ -42,6 +42,7 @@ type Geometry = { finalWidth: number; markWidth: number };
 const VARS = ["--sol-op", "--sol-x", "--sol-ls", "--sol-m", "--shift"] as const;
 
 const introTimelines = new WeakMap<HTMLElement, gsap.core.Timeline>();
+const introLive = new WeakMap<HTMLElement, { wm: HTMLElement; s: IntroState; g: Geometry }>();
 
 function writeIntro(wm: HTMLElement, s: IntroState, g: Geometry): void {
   const claimed = g.markWidth + s.grow * (g.finalWidth - g.markWidth);
@@ -80,6 +81,7 @@ export function prepareIntro(stage: HTMLElement): { wm: HTMLElement; s: IntroSta
   wm.style.width = `${finalWidth}px`;
   writeIntro(wm, s, g);
   stage.classList.add("is-ready");
+  introLive.set(stage, { wm, s, g });
   return { wm, s, g };
 }
 
@@ -102,6 +104,22 @@ export function playIntro(stage: HTMLElement): void {
     .to(s, { ls: REST.ls, duration: 1.05, ease: "expo.out" }, 0.42);
 
   introTimelines.set(stage, tl);
+}
+
+/** The viewport changed under a running introduction: the wordmark is pinned
+    to the width it had when the introduction began, so measure it again and
+    carry on from the same frame. */
+export function refitIntro(stage: HTMLElement): void {
+  const live = introLive.get(stage);
+  if (!live || !introTimelines.get(stage)?.isActive()) return;
+  const { wm, s, g } = live;
+  const mark = wm.querySelector<HTMLElement>(".alv-lockup-mark");
+  if (!mark) return;
+  clearIntro(wm);
+  g.finalWidth = wm.getBoundingClientRect().width;
+  g.markWidth = mark.getBoundingClientRect().width;
+  wm.style.width = `${g.finalWidth}px`;
+  writeIntro(wm, s, g);
 }
 
 /** Ends any running introduction on its resting wordmark. */

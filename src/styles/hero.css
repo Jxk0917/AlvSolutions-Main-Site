@@ -426,6 +426,11 @@ html.hx-locked { overflow: hidden; }
 .alv-opening .h-fly.is-home { visibility: hidden; }
 .alv-opening [data-intro]:not(.is-ready) [data-wm] { visibility: hidden; }
 .alv-opening .alv-nav-mark:not(.is-home) { opacity: 0; }
+/* Only the opening shows while it plays: on a tall window the sections below
+   the hero (the services row) would otherwise peek in under it. They fade up
+   when the opening ends. */
+#main > :not(.hx), .alv-foot { transition: opacity 700ms var(--sl-e-out); }
+.alv-opening #main > :not(.hx), .alv-opening .alv-foot { opacity: 0; visibility: hidden; transition: none; }
 .alv-opening .alv-nav-in > :not(.alv-nav-mark) { opacity: var(--nav, 0); }
 
 /* ---- Narrower screens ------------------------------------------- */

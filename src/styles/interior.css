@@ -863,3 +863,43 @@
   /* The way back stands above the path on a phone. */
   .int-head-top { flex-direction: column; align-items: flex-start; gap: 14px; }
 }
+
+/* ---- The choice explorer: what this package lets you pick, as part of
+   the package file. A native <details>; packages.ts animates its height. ---- */
+.pk-ex { margin-top: 4px; border-top: 1px solid var(--sl-line); }
+.pk-ex-sum {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px 20px; min-height: 52px; padding: 10px 0;
+  cursor: pointer; list-style: none; border-radius: 6px;
+}
+.pk-ex-sum::-webkit-details-marker { display: none; }
+.pk-ex-sum:focus-visible { outline: 2px solid var(--sl-ink1); outline-offset: 2px; }
+.pk-ex-q { font-family: var(--sl-f-brand); font-weight: 600; font-size: 16px; letter-spacing: -0.014em; color: var(--sl-ink1); }
+.pk-ex-cue { flex: none; display: inline-flex; align-items: center; gap: 8px; font: 500 14px/1 var(--sl-f-text); color: var(--sl-ink2); transition: color 250ms; }
+.pk-ex-cue .int-ic { width: 16px; height: 16px; transition: transform 450ms var(--sl-e-out); }
+.pk-ex-sum:hover .pk-ex-cue { color: var(--sl-ink1); }
+.pk-ex[open] .pk-ex-cue .int-ic { transform: rotate(180deg); }
+.pk-ex-close, .pk-ex[open] .pk-ex-open { display: none; }
+.pk-ex[open] .pk-ex-close { display: inline; }
+
+.pk-ex-in { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px clamp(20px, 3vw, 40px); padding: 6px 0 14px; }
+.pk-ex-grp { min-width: 0; }
+.pk-ex-grp h5 { margin: 0 0 10px; font: 600 14px/1.3 var(--sl-f-text); color: var(--sl-ink1); }
+.pk-ex-grp h5 span { margin-left: 6px; font-weight: 400; color: var(--sl-ink3); }
+.pk-ex-chips { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.pk-ex-chips li {
+  padding: 6px 11px; border-radius: 999px; font-size: 13px; line-height: 1.2; color: var(--sl-ink1);
+  box-shadow: inset 0 0 0 1px var(--sl-line2); background: rgb(var(--sl-L) / 0.025);
+}
+.pk-ex-chips--still li { color: var(--sl-ink2); box-shadow: inset 0 0 0 1px var(--sl-line); }
+.pk-ex-note { margin-top: 10px; font-size: 13px; color: var(--sl-ink3); max-width: 46ch; }
+.pk-ex-grp--paid { grid-column: 1 / -1; padding-top: 16px; border-top: 1px solid var(--sl-line); }
+.pk-ex-paid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 24px; margin: 0; padding: 0; list-style: none; font-size: 13px; line-height: 1.45; color: var(--sl-ink2); }
+.pk-ex-paid b { display: block; font: 600 15px/1.2 var(--sl-f-brand); color: var(--sl-ink1); margin-bottom: 2px; }
+.pk-ex-body { overflow: hidden; }
+@media (max-width: 760px) {
+  .pk-ex-in { grid-template-columns: minmax(0, 1fr); }
+  .pk-ex-paid { grid-template-columns: minmax(0, 1fr); }
+  .pk-ex-paid li { display: flex; gap: 10px; align-items: baseline; }
+  .pk-ex-paid b { display: inline; margin: 0; min-width: 44px; }
+  .pk-ex-q { font-size: 15px; }
+}

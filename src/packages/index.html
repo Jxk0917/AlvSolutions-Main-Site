@@ -108,7 +108,7 @@ cta:
           <svg class="int-ic" aria-hidden="true"><use href="#i-grid"/></svg>
           <h4>Picked for your business</h4>
           {%- if t.picks %}
-          <p class="pk-part-val is-new">{{ t.picks.pages }} pages, {{ t.picks.power }} feature{{ "s" if t.picks.power != 1 }}</p>
+          <p class="pk-part-val is-new">{{ t.picks.pages }} page choices + {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}</p>
           <ul>
             {{ line("Pages such as a photo gallery, services page or FAQ. They fit inside the page limit, they are not extra pages.") }}
             {{ line("Features such as online booking or a quote request form") }}
@@ -136,6 +136,56 @@ cta:
           </ul>
         </section>
       </div>
+
+      {#- The choice explorer: what this package lets you pick, read from
+          addons.json and this tier's picks/has, so it cannot drift from the
+          price list. Native <details>; packages.ts only animates it. -#}
+      {%- set pageClass = addons.classes[0] %}
+      {%- set powerClass = addons.classes[1] %}
+      {%- set smallClass = addons.classes[2] %}
+      <details class="pk-ex" data-ex>
+        <summary class="pk-ex-sum">
+          <span class="pk-ex-q">{{ "What can I choose with this package?" if t.picks else "What's included with this package?" }}</span>
+          <span class="pk-ex-cue"><span class="pk-ex-open">View choices</span><span class="pk-ex-close">Hide choices</span><svg class="int-ic" aria-hidden="true"><use href="#i-chevron-down"/></svg></span>
+        </summary>
+        <div class="pk-ex-body"><div class="pk-ex-in">
+          {%- if t.picks %}
+          <section class="pk-ex-grp" aria-labelledby="ex-{{ t.slug }}-pages">
+            <h5 id="ex-{{ t.slug }}-pages">Choose {{ t.picks.pages }} pages <span>included</span></h5>
+            <ul class="pk-ex-chips">{% for i in pageClass.items %}<li>{{ i.name }}</li>{% endfor %}</ul>
+            <p class="pk-ex-note">They fit inside your {{ t.has.pages | replace("Up to ", "") }} pages, they are not extra pages.</p>
+          </section>
+          <section class="pk-ex-grp" aria-labelledby="ex-{{ t.slug }}-power">
+            <h5 id="ex-{{ t.slug }}-power">Choose {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }} <span>included</span></h5>
+            <ul class="pk-ex-chips">{% for i in powerClass.items %}<li>{{ i.name }}</li>{% endfor %}</ul>
+          </section>
+          {%- set separate = [] %}
+          {%- for f in packages.features %}
+          {%- if f.key in ["booking", "card", "schema"] and t.has[f.key] %}{% set _ = separate.push({ label: f.label, value: t.has[f.key] }) %}{% endif %}
+          {%- endfor %}
+          {%- if separate.length %}
+          <section class="pk-ex-grp" aria-labelledby="ex-{{ t.slug }}-sep">
+            <h5 id="ex-{{ t.slug }}-sep">Also included <span>uses none of your choices</span></h5>
+            <ul class="pk-ex-chips pk-ex-chips--still">{% for s in separate %}<li>{{ s.label }}{% if s.value !== true %}: {{ s.value | lower }}{% endif %}</li>{% endfor %}</ul>
+          </section>
+          {%- endif %}
+          {%- else %}
+          <section class="pk-ex-grp" aria-labelledby="ex-{{ t.slug }}-normal">
+            <h5 id="ex-{{ t.slug }}-normal">Your {{ t.has.pages | replace("Up to ", "") }} pages <span>included</span></h5>
+            <ul class="pk-ex-chips pk-ex-chips--still">{% for n in t.normalPages %}<li>{{ n }}</li>{% endfor %}</ul>
+            <p class="pk-ex-note">Ordinary pages. {{ t.name }} has no page or power feature choices of its own; Standard and Complete add those.</p>
+          </section>
+          {%- endif %}
+          <section class="pk-ex-grp pk-ex-grp--paid" aria-labelledby="ex-{{ t.slug }}-paid">
+            <h5 id="ex-{{ t.slug }}-paid">{{ "Optional, paid" if t.picks else "Optional upgrades, paid" }}</h5>
+            <ul class="pk-ex-paid">
+              <li><b>{{ pageClass.price | price | safe }}</b> {{ "another" if t.picks else "any" }} page add-on{% if not t.picks %}, such as {{ pageClass.items[0].name | lower }} or {{ pageClass.items[2].name | lower }}. It fits inside your {{ t.has.pages | replace("Up to ", "") }} pages{% endif %}</li>
+              <li><b>{{ powerClass.price | price | safe }}</b> {{ "another" if t.picks else "any" }} power feature{% if not t.picks %}, such as {{ powerClass.items[0].name | lower }}{% endif %}</li>
+              <li><b>{{ smallClass.price | price | safe }}</b> a small enhancement, such as {{ smallClass.items[0].name | lower }}</li>
+            </ul>
+          </section>
+        </div></div>
+      </details>
 
       <div class="pk-file-act">
         <button class="alv-btn" type="submit">Start with {{ t.name }}</button>

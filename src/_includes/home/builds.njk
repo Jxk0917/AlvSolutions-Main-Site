@@ -35,10 +35,11 @@
             </span>
             <span class="h-opt-price">{{ b.price | price | safe }}</span>
             <span class="h-opt-for">{{ b.brief }}</span>
-            <span class="h-opt-state" aria-hidden="true"><span class="h-state-on">Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ b.shortName }}</span></span></span>
+            <span class="h-opt-state" aria-hidden="true"><span class="h-state-on"><svg class="h-ic" aria-hidden="true"><use href="#i-check"/></svg>Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ b.shortName }}</span></span></span>
           </label>
           {%- endfor %}
         </div>
+        <span class="h-pick-frame" aria-hidden="true"></span>
         <span class="h-pick-bar" aria-hidden="true"></span>
       </div>
     </fieldset>

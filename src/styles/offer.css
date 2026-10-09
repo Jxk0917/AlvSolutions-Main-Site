@@ -14,76 +14,106 @@
 /* ============================================================
    THE PICKER: packages and builds
    Options stand on one floor line. Two lights answer two things: the
-   room's key falls on the option under attention, and a glowing
-   selection bar lies on the floor under the option chosen. At rest (no
-   JS) both are :has() states on the checked option; with JS
-   (picker.ts) one key and one bar glide between them.
+   room's key falls on the option under attention (a preview), and a lit
+   frame - the site's bar traced all the way round the option, the same
+   edge the Founders Special notice wears - stands around the option
+   chosen. At rest (no JS) both are :has() states on the checked option;
+   with JS (picker.ts) one key and one frame glide between them.
    ============================================================ */
 .h-pick-set { border: 0; margin: 0; padding: 0; min-width: 0; }
-.h-pick { position: relative; isolation: isolate; --kx: 50; --kw: 40; --ki: 0.95; --kpy: 90; --n: 3; }
+.h-pick { position: relative; isolation: isolate; --kx: 50; --kw: 40; --ki: 0.95; --kpy: 90; --n: 3; --opt-px: clamp(16px, 1.7vw, 26px); }
+/* The options carry their own inset so the frame has room around the
+   words; the row steps out by the same amount, so the words still line
+   up with the heading above. */
 .h-pick-row {
   display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr));
-  column-gap: clamp(14px, 2vw, 28px); border-bottom: 1px solid var(--sl-line2);
+  column-gap: clamp(10px, 1.2vw, 18px);
+  margin-inline: calc(-1 * var(--opt-px));
+  /* The floor line keeps to the words' measure, not the stepped-out row. */
+  background: linear-gradient(var(--sl-line2), var(--sl-line2)) no-repeat center bottom / calc(100% - 2 * var(--opt-px)) 1px;
 }
 .h-opt {
   position: relative; display: grid; gap: 6px; align-content: start; justify-items: start; text-align: left;
-  padding: 22px 0; border-radius: 12px; cursor: pointer;
+  padding: 22px var(--opt-px) 24px; margin-bottom: 14px; border-radius: 14px; cursor: pointer;
 }
 /* The radio stays in the page for keyboard and assistive technology; the
    whole option is its visible label. */
-.h-opt-input { position: absolute; top: 26px; left: 0; width: 1px; height: 1px; margin: 0; opacity: 0; }
+.h-opt-input { position: absolute; top: 26px; left: var(--opt-px); width: 1px; height: 1px; margin: 0; opacity: 0; }
 .h-opt:has(.h-opt-input:focus-visible) {
-  outline: 2px solid var(--sl-ink1); outline-offset: 6px;
+  outline: 2px solid var(--sl-ink1); outline-offset: 5px;
 }
 .h-opt-mark { font-size: 13px; line-height: 1.3; color: var(--sl-ink2); min-height: 1.3em; }
 .h-opt-name { font-family: var(--sl-f-brand); font-weight: 600; font-size: 24px; letter-spacing: -0.022em; color: var(--sl-ink1); transition: color 300ms; }
 .h-opt-price { font-family: var(--sl-f-brand); font-weight: 620; font-size: clamp(40px, 4.2vw, 62px); letter-spacing: -0.036em; line-height: 1; color: var(--sl-ink1); font-variant-numeric: tabular-nums; margin: 4px 0; transition: color 300ms; }
-.h-opt-for { font-size: 15px; color: var(--sl-ink2); max-width: 34ch; min-height: 3.2em; }
+.h-opt-for { font-size: 15px; color: var(--sl-ink2); max-width: 34ch; min-height: 3.2em; transition: color 300ms; }
 .h-opt-facts { display: grid; gap: 3px; margin-top: 6px; font-size: 14px; color: var(--sl-ink2); transition: color 300ms; }
 .h-opt-state { position: relative; margin-top: 10px; font-size: 14.5px; color: var(--sl-ink2); text-decoration: underline; text-decoration-color: rgb(var(--sl-L) / 0.3); text-underline-offset: 0.25em; }
 .h-opt:hover .h-opt-state { color: var(--sl-ink1); text-decoration-color: var(--sl-ink1); }
 .h-state-on { display: none; }
-.h-opt:has(:checked) .h-state-on { display: inline; }
+.h-opt:has(:checked) .h-state-on { display: inline-flex; align-items: center; gap: 7px; }
 .h-opt:has(:checked) .h-state-off { display: none; }
 .h-opt:has(:checked) .h-opt-state { color: var(--sl-ink1); text-decoration: none; font-weight: 600; }
-/* The chosen option reads as chosen; the others recede a step. */
-.h-pick:has(:checked) .h-opt:not(:has(:checked)) :is(.h-opt-name, .h-opt-price) { color: var(--sl-ink2); }
+/* The check wears the frame's light: a lit disc, the bar's core colour. */
+.h-state-on .h-ic {
+  width: 18px; height: 18px; padding: 3px; border-radius: 50%; stroke-width: 2.4;
+  color: var(--sl-room); background: oklch(0.97 0.03 var(--bh)); box-shadow: 0 0 10px oklch(0.8 0.15 var(--bh) / 0.55);
+}
+/* The chosen option reads as chosen; the others step well back into the
+   room, and come forward again under the pointer as a preview. */
+.h-pick:has(:checked) .h-opt:not(:has(:checked)) :is(.h-opt-name, .h-opt-for, .h-opt-facts) { color: var(--sl-ink3); }
+.h-pick:has(:checked) .h-opt:not(:has(:checked)) .h-opt-price { color: var(--sl-shade); }
+.h-pick:has(:checked) .h-opt:not(:has(:checked)):hover :is(.h-opt-name, .h-opt-price) { color: var(--sl-ink2); }
 .h-opt:has(:checked) .h-opt-facts { color: var(--sl-ink1); }
 
-/* The selection bar's light: the site's lit bar (tokens.css), a near-white
-   core with a light blue glow. The builds override it with their own hue. */
+/* The frame's light: the site's lit bar (tokens.css) - a near-white core
+   edge with a light blue glow falling outside it and just inside it, and
+   a faint wash of the same blue over the option. --bh is the hue (245,
+   the site's blue); the builds hand it each build's own. */
+@property --bh { syntax: "<number>"; inherits: true; initial-value: 245; }
 .h-pick {
-  --bar: var(--sl-bar); --bar-glow: var(--sl-bar-glow);
+  --frame-glow: 0 0 0 1.5px oklch(0.97 0.03 var(--bh)), 0 0 8px oklch(0.92 0.08 var(--bh) / 0.7), 0 0 28px 1px oklch(0.8 0.15 var(--bh) / 0.32),
+    inset 0 0 22px oklch(0.8 0.15 var(--bh) / 0.09);
+  --frame-wash: linear-gradient(180deg, oklch(0.85 0.1 var(--bh) / 0.07), oklch(0.85 0.1 var(--bh) / 0.015) 70%);
 }
 
-/* At rest: a still cone and a bar on the checked option, from :checked alone. */
+/* At rest: a still cone and a frame on the checked option, from :checked alone. */
 .h-opt:has(:checked)::before {
   content: ""; position: absolute; z-index: -1; left: -22%; right: -22%; top: -140px; bottom: 0; pointer-events: none;
   background: radial-gradient(ellipse 44% 80% at 50% 0%, rgb(var(--sl-L) / 0.095), rgb(var(--sl-L) / 0.03) 55%, transparent 100%);
 }
 .h-opt:has(:checked)::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -1.5px; height: 2px; border-radius: 2px; pointer-events: none;
-  background: var(--bar); box-shadow: var(--bar-glow);
+  content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  background: var(--frame-wash); box-shadow: var(--frame-glow);
 }
 
-/* With JS: one key and one bar, travelling (transitioned transforms, so
-   they composite). Placed first, then allowed to glide (.is-placed).
-   The glide is a gentle ease-in-out over most of a second: the site's
-   usual fast-out curve covers most of the distance in the first tenth of
-   a second, which reads as a snap rather than light travelling. */
-.h-pick { --glide: 850ms cubic-bezier(0.45, 0, 0.2, 1); }
+/* With JS: one key and one frame, travelling. Placed first, then allowed
+   to glide (.is-placed). The key's glide is a gentle ease-in-out over
+   most of a second, light travelling; the frame answers a click, so it
+   moves sooner and settles softly. */
+.h-pick { --glide: 850ms cubic-bezier(0.45, 0, 0.2, 1); --snap: 620ms cubic-bezier(0.22, 0.9, 0.24, 1); }
 .h-pick > .key-cone, .h-pick > .key-pool { display: none; }
+.h-pick-frame {
+  display: none; position: absolute; left: 0; top: 0; z-index: -1;
+  width: var(--bw, 0); height: var(--bht, 0); border-radius: 14px; pointer-events: none;
+  background: var(--frame-wash); box-shadow: var(--frame-glow);
+  transform: translate(var(--bx, 0), var(--by, 0));
+}
+/* The underglow: a short lit bar on the floor line that rides with the key
+   light - it follows the option under attention and returns to the chosen
+   one when attention leaves. The frame, not the bar, marks the choice. */
 .h-pick-bar {
   display: none; position: absolute; left: 0; top: 0; z-index: 1;
-  width: var(--bw, 0); height: 2px; border-radius: 2px; pointer-events: none;
-  background: var(--bar); box-shadow: var(--bar-glow);
-  transform: translate(var(--bx, 0), calc(var(--by, 0px) - 1.5px));
+  width: var(--kbw, 0); height: 2px; border-radius: 2px; pointer-events: none;
+  background: oklch(0.97 0.03 var(--kh, 245));
+  box-shadow: 0 0 6px oklch(0.92 0.08 var(--kh, 245) / 0.85), 0 0 18px 1px oklch(0.8 0.15 var(--kh, 245) / 0.42), 0 0 44px 4px oklch(0.74 0.15 var(--kh, 245) / 0.14);
+  transform: translate(var(--kbx, 0), calc(var(--kby, 0px) - 1.5px));
 }
-.h-pick.is-js > .key-cone, .h-pick.is-js > .key-pool, .h-pick.is-js .h-pick-bar { display: block; }
+.h-pick.is-js > .key-cone, .h-pick.is-js > .key-pool, .h-pick.is-js .h-pick-frame, .h-pick.is-js .h-pick-bar { display: block; }
 .h-pick.is-js .h-opt::before, .h-pick.is-js .h-opt::after { content: none; }
 .h-pick.is-placed > .key-cone, .h-pick.is-placed > .key-pool { transition: transform var(--glide); }
+.h-pick.is-placed .h-pick-frame { transition: transform var(--snap), width var(--snap), height var(--snap); }
 .h-pick.is-placed .h-pick-bar { transition: transform var(--glide), width var(--glide); }
-.no-motion .h-pick > .key-cone, .no-motion .h-pick > .key-pool, .no-motion .h-pick .h-pick-bar { transition: none; }
+.no-motion .h-pick > .key-cone, .no-motion .h-pick > .key-pool, .no-motion .h-pick .h-pick-frame, .no-motion .h-pick .h-pick-bar { transition: none; }
 
 .h-pick-act { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; margin-top: 28px; }
 
@@ -112,8 +142,10 @@
 
 @media (max-width: 760px) {
   /* Packages: three narrow heads, each still on the one floor line. */
-  .h-pick-row { column-gap: 10px; }
-  .h-opt { padding: 16px 0 18px; gap: 4px; }
+  .h-pick { --opt-px: 10px; }
+  .h-pick-row { column-gap: 4px; }
+  .h-opt { padding: 16px var(--opt-px) 18px; margin-bottom: 10px; gap: 4px; border-radius: 12px; }
+  .h-pick-frame { border-radius: 12px; }
   .h-opt-input { top: 16px; }
   .h-opt-name { font-size: 19px; }
   .h-opt-price { font-size: clamp(26px, 7.6vw, 34px); }

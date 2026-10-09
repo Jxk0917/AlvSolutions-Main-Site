@@ -36,6 +36,102 @@ const openFromHash = (): void => {
 addEventListener("hashchange", openFromHash);
 openFromHash();
 
+/**
+ * The package file swap. Choosing another package sends the old file
+ * flying off to the right - gathering speed, fading and softening as it
+ * goes - while the new one flows in from the left, the side the rail is
+ * on, its parts following a beat behind. The stage eases between the two
+ * heights so nothing below it jumps. A new choice mid-flight sends the
+ * arriving file off from wherever it has got to. Off screen (a choice
+ * made down at the chart) or with motion off, the file simply changes.
+ */
+const stage = document.querySelector<HTMLElement>(".pk-files");
+if (stage) {
+  const files = Array.from(stage.querySelectorAll<HTMLElement>(".pk-file"));
+  const file = (slug: string): HTMLElement | undefined => files.find((f) => f.dataset.for === slug);
+  let current = file(checkedSlug());
+  current?.classList.add("is-shown");
+  stage.classList.add("is-js");
+
+  let running: Animation[] = [];
+  const settle = (): void => {
+    running.forEach((a) => a.cancel());
+    running = [];
+    files.forEach((f) => f.classList.remove("is-leaving"));
+  };
+  const inView = (): boolean => {
+    const r = stage.getBoundingClientRect();
+    return r.bottom > 0 && r.top < innerHeight;
+  };
+
+  document.addEventListener("change", (e) => {
+    if (!(e.target as HTMLElement).matches(".pk-rail-input")) return;
+    const next = file(checkedSlug());
+    const prev = current;
+    if (!next || next === prev) return;
+    current = next;
+
+    // Read where everything is before anything is cancelled.
+    const from = stage.offsetHeight;
+    const animate = motionOn() && inView() && prev !== undefined;
+    const prevStyle = prev && getComputedStyle(prev);
+    const start = { opacity: prevStyle?.opacity ?? "1", transform: prevStyle?.transform === "none" ? "translateX(0)" : prevStyle?.transform ?? "translateX(0)" };
+
+    settle();
+    prev?.classList.remove("is-shown");
+    next.classList.add("is-shown");
+    if (!animate || !prev) return;
+
+    prev.classList.add("is-leaving");
+    const to = stage.offsetHeight;
+
+    // Out: gathering speed to the right, softening as it goes; its light
+    // drops away on its own, shorter curve, so it is gone before the new
+    // file lands.
+    const out = prev.animate(
+      [
+        { transform: start.transform, filter: "blur(0px)" },
+        { transform: "translateX(24%)", filter: "blur(8px)" },
+      ],
+      { duration: 400, easing: "cubic-bezier(0.45, 0, 0.8, 0.4)", fill: "forwards" }
+    );
+    const fade = prev.animate([{ opacity: start.opacity }, { opacity: 0 }], {
+      duration: 300, easing: "cubic-bezier(0.4, 0, 1, 1)", fill: "forwards",
+    });
+    out.onfinish = () => {
+      prev.classList.remove("is-leaving");
+      out.cancel();
+      fade.cancel();
+    };
+    running.push(out, fade);
+
+    // In: the file glides from the left and settles; it lands on top of
+    // the leaving one, and its opacity comes up quickly so the two never
+    // read through each other.
+    running.push(
+      next.animate([{ transform: "translateX(-12%)" }, { transform: "translateX(0)" }], {
+        duration: 760, delay: 180, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards",
+      }),
+      next.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, delay: 180, easing: "cubic-bezier(0.2, 0, 0.2, 1)", fill: "backwards" })
+    );
+    next.querySelectorAll<HTMLElement>(".pk-file-head, .pk-file-key, .pk-part-block, .pk-ex, .pk-file-act").forEach((part, i) => {
+      running.push(
+        part.animate(
+          [
+            { opacity: 0, transform: "translateX(-32px)" },
+            { opacity: 1, transform: "translateX(0)" },
+          ],
+          { duration: 640, delay: 230 + i * 45, easing: "cubic-bezier(0.16, 1, 0.3, 1)", fill: "backwards" }
+        )
+      );
+    });
+
+    if (from !== to) {
+      running.push(stage.animate([{ height: `${from}px` }, { height: `${to}px` }], { duration: 640, easing: "cubic-bezier(0.45, 0, 0.2, 1)" }));
+    }
+  });
+}
+
 const spots: Spot[] = [];
 
 const rail = document.querySelector<HTMLElement>('[data-spot="rail"]');

@@ -67,6 +67,7 @@ cta:
       <span class="pk-rail-bar" aria-hidden="true"></span>
     </fieldset>
 
+    <div class="pk-files">
     {%- for t in packages.tiers %}
     {%- set prev = packages.tiers[loop.index0 - 1] if not loop.first else null %}
     <div class="pk-file" data-for="{{ t.slug }}">
@@ -193,6 +194,7 @@ cta:
       </div>
     </div>
     {%- endfor %}
+    </div>
   </form>
 </section>
 

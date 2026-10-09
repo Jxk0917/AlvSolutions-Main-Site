@@ -4,13 +4,13 @@
  *   - the room's key light (.key-cone/.key-pool) glides to the option under
  *     attention: a hover or focus previews one, leaving returns it to
  *     whichever radio is actually checked;
- *   - the lit bar (.h-pick-bar) rides the same option, gliding along the
- *     floor line in step with the key: it follows the option under attention,
- *     and returns to the chosen one when attention leaves.
+ *   - the lit frame (.h-pick-frame) stands around the chosen option only,
+ *     and glides to the next one when the choice changes. It never follows
+ *     a preview, so which option is chosen is never in doubt.
  *
- * Only custom properties are written; light.css and home.css turn them into
- * transforms and transition those, so both travel on the compositor. The
- * native radio group and its :has() resting state stay the no-JS state.
+ * Only custom properties are written; light.css and offer.css turn them
+ * into transforms and transition those. The native radio group and its
+ * :has() resting state stay the no-JS state.
  */
 export class Picker {
   private root: HTMLElement;
@@ -52,6 +52,7 @@ export class Picker {
   /** Re-measures (resize) and re-places both lights. */
   refresh(): void {
     this.reveal(this.shown);
+    this.frame(this.chosen);
   }
 
   private fromHash(): void {
@@ -66,12 +67,14 @@ export class Picker {
   private choose(slug: string): void {
     this.chosen = slug;
     this.reveal(slug);
+    this.frame(slug);
   }
 
   private find(slug: string): HTMLElement | undefined {
     return this.opts.find((o) => o.dataset.opt === slug);
   }
 
+  /** The key light: on the option under attention. */
   private reveal(slug: string): void {
     const opt = this.find(slug);
     if (!opt) return;
@@ -85,10 +88,24 @@ export class Picker {
     s.setProperty("--kx", (((opt.offsetLeft + opt.offsetWidth / 2) / W) * 100).toFixed(2));
     s.setProperty("--kw", Math.max(24, (opt.offsetWidth / W) * 170).toFixed(2));
     s.setProperty("--kpy", (((opt.offsetTop + opt.offsetHeight) / H) * 100).toFixed(2));
-    // The bar rides with the key, tinted by the same option.
+    // The underglow: a short bar on the floor line, centred under the option.
+    const cs = getComputedStyle(opt);
+    const bw = Math.min(56, opt.offsetWidth);
+    const floor = opt.offsetTop + opt.offsetHeight + (parseFloat(cs.marginBottom) || 0);
+    s.setProperty("--kbx", `${opt.offsetLeft + (opt.offsetWidth - bw) / 2}px`);
+    s.setProperty("--kby", `${floor}px`);
+    s.setProperty("--kbw", `${bw}px`);
+  }
+
+  /** The lit frame: around the chosen option, tinted by its hue. */
+  private frame(slug: string): void {
+    const opt = this.find(slug);
+    if (!opt) return;
+    const s = this.root.style;
     if (opt.dataset.hue) s.setProperty("--bh", opt.dataset.hue);
     s.setProperty("--bx", `${opt.offsetLeft}px`);
-    s.setProperty("--by", `${opt.offsetTop + opt.offsetHeight}px`);
+    s.setProperty("--by", `${opt.offsetTop}px`);
     s.setProperty("--bw", `${opt.offsetWidth}px`);
+    s.setProperty("--bht", `${opt.offsetHeight}px`);
   }
 }

@@ -415,8 +415,11 @@
 .pk-rail:has(#pk-standard:checked) { --i: 1; }
 .pk-rail:has(#pk-complete:checked) { --i: 2; }
 
-/* The file: only the checked package's shows. Opening one is the change
-   the reader asked for, so it is the one thing that animates in. */
+/* The file: only the checked package's shows. Without script it follows
+   :checked and simply opens in place. With script (packages.ts) the stage
+   takes over: choosing another package sends the old file flying off to
+   the right while the new one flows in from the left, from the rail. */
+.pk-files { position: relative; min-width: 0; }
 .pk-file {
   display: none; position: relative; isolation: isolate; overflow: hidden;
   padding: clamp(18px, 2vw, 26px); border-radius: 10px;
@@ -426,12 +429,16 @@
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
   background: radial-gradient(ellipse 60% 55% at 12% -8%, rgb(var(--sl-L) / 0.07), transparent 70%);
 }
-.pk-pick:has(#pk-foundation:checked) .pk-file[data-for="foundation"],
-.pk-pick:has(#pk-standard:checked) .pk-file[data-for="standard"],
-.pk-pick:has(#pk-complete:checked) .pk-file[data-for="complete"] { display: block; animation: pk-open 600ms var(--sl-e-out); }
+.pk-pick:has(#pk-foundation:checked) .pk-files:not(.is-js) .pk-file[data-for="foundation"],
+.pk-pick:has(#pk-standard:checked) .pk-files:not(.is-js) .pk-file[data-for="standard"],
+.pk-pick:has(#pk-complete:checked) .pk-files:not(.is-js) .pk-file[data-for="complete"] { display: block; animation: pk-open 600ms var(--sl-e-out); }
+.pk-files.is-js .pk-file.is-shown { display: block; z-index: 1; }
+/* The leaving file is lifted out of the flow, so the stage measures only
+   the arriving one while both are on screen. */
+.pk-files.is-js .pk-file.is-leaving { display: block; position: absolute; inset: 0 0 auto; z-index: 0; pointer-events: none; }
 /* Without :has(), every package shows, one after another. */
 @supports not selector(:has(*)) {
-  .pk-file { display: block; margin-bottom: 16px; }
+  .pk-files:not(.is-js) .pk-file { display: block; margin-bottom: 16px; }
   .pk-rail-bar { display: none; }
 }
 @keyframes pk-open { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }

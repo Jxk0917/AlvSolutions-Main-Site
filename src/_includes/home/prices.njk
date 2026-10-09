@@ -7,9 +7,9 @@
   Statically it is a real form: a native radio group (name="package"),
   Standard checked, submitting by GET to /contact/ so the wizard receives
   ?package=<tier> with no JS. At rest the chosen column carries its own lit
-  bar and a still cone (:has()). With JS (src/home/picker.ts) the room's
-  key light glides to the package under attention and one glowing
-  selection bar glides along the floor to the package chosen.
+  frame and a still cone (:has()). With JS (src/home/picker.ts) the room's
+  key light glides to the package under attention and one lit frame - the
+  site's bar traced all the way round - glides to the package chosen.
 
   The same picker, smaller, carries the four industry builds (builds.njk).
 #}
@@ -41,10 +41,11 @@
               <span>{{ t.picks.pages }} page add-ons, {{ t.picks.power }} power feature{{ "s" if t.picks.power != 1 }}</span>
               {%- endif %}
             </span>
-            <span class="h-opt-state" aria-hidden="true"><span class="h-state-on">Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ t.name }}</span></span></span>
+            <span class="h-opt-state" aria-hidden="true"><span class="h-state-on"><svg class="h-ic" aria-hidden="true"><use href="#i-check"/></svg>Your choice</span><span class="h-state-off">Choose<span class="h-state-name"> {{ t.name }}</span></span></span>
           </label>
           {%- endfor %}
         </div>
+        <span class="h-pick-frame" aria-hidden="true"></span>
         <span class="h-pick-bar" aria-hidden="true"></span>
       </div>
     </fieldset>

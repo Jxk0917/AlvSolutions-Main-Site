@@ -282,7 +282,7 @@
 }
 .h-builds-lede { font-size: 15.5px; color: var(--sl-ink2); }
 .h-pick--builds { --n: 4; --ki: 0.9; }
-.h-pick--builds .h-opt { gap: 4px; padding: 18px 0; }
+.h-pick--builds .h-opt { gap: 4px; padding: 18px var(--opt-px) 20px; }
 .h-pick--builds .h-opt-input { top: 22px; }
 .h-opt-top { display: flex; align-items: center; gap: 10px; }
 .h-pick--builds .h-opt-name { font-size: 19px; letter-spacing: -0.018em; }
@@ -292,15 +292,12 @@
 .h-pick--builds .h-opt:has(:checked)::before { top: -90px; }
 
 /* Each build's own hue (--hue, from bundles.json). The key takes the hue
-   of the build under attention (--kh) and the bar's glow the hue of the
-   build chosen (--bh); picker.ts sets both, and as registered numbers they
-   blend from one hue to the next as the lights glide. */
+   of the build under attention (--kh) and the frame the hue of the build
+   chosen (--bh, registered in offer.css); picker.ts sets both, and as
+   registered numbers they blend from one hue to the next as the lights
+   glide. */
 @property --kh { syntax: "<number>"; inherits: true; initial-value: 245; }
-@property --bh { syntax: "<number>"; inherits: true; initial-value: 245; }
-.h-pick--builds {
-  --bar-glow: 0 0 6px oklch(0.92 0.08 var(--bh) / 0.85), 0 0 18px 1px oklch(0.8 0.15 var(--bh) / 0.42), 0 0 44px 4px oklch(0.74 0.15 var(--bh) / 0.14);
-}
-.h-pick--builds.is-placed { transition: --kh var(--glide), --bh var(--glide); }
+.h-pick--builds.is-placed { transition: --kh var(--glide), --bh var(--snap); }
 .no-motion .h-pick--builds { transition: none; }
 .h-pick--builds > .key-cone {
   background: radial-gradient(ellipse 52% 96% at 50% -14%,
@@ -310,14 +307,10 @@
   background: radial-gradient(ellipse 44% 7.5% at 50% 50%,
     oklch(0.9 0.08 var(--kh) / 0.15) 0%, oklch(0.85 0.09 var(--kh) / 0.07) 45%, oklch(0.8 0.09 var(--kh) / 0.015) 75%, transparent 100%);
 }
-.h-pick--builds .h-pick-bar { background: oklch(0.97 0.03 var(--bh)); }
 .h-pick--builds .h-opt-top .h-ic { color: oklch(0.84 0.11 var(--hue, 0)); opacity: 0.7; transition: opacity 300ms; }
 .h-pick--builds .h-opt:is(:has(:checked), :hover) .h-opt-top .h-ic { opacity: 1; }
-/* At rest (no JS) the checked build's own bar carries its own hue. */
-.h-pick--builds .h-opt:has(:checked)::after {
-  background: oklch(0.97 0.03 var(--hue, 0));
-  box-shadow: 0 0 6px oklch(0.92 0.08 var(--hue, 0) / 0.85), 0 0 18px 1px oklch(0.8 0.15 var(--hue, 0) / 0.42), 0 0 44px 4px oklch(0.74 0.15 var(--hue, 0) / 0.14);
-}
+/* At rest (no JS) the checked build's own frame carries its own hue. */
+.h-pick--builds .h-opt:has(:checked) { --bh: var(--hue); }
 .h-builds .h-pick-act { margin-top: 22px; }
 
 /* ============================================================
@@ -575,9 +568,7 @@
 
   /* Builds: two by two, each on its own floor line. */
   .h-pick--builds { --n: 2; }
-  .h-pick--builds .h-pick-row { border-bottom: 0; row-gap: 4px; }
-  .h-pick--builds .h-opt { border-bottom: 1px solid var(--sl-line2); border-radius: 0; }
-  .h-pick--builds .h-opt:has(:checked)::after { bottom: -1.5px; }
+  .h-pick--builds .h-pick-row { row-gap: 2px; }
   .h-pick--builds .h-opt-for { display: block; font-size: 13px; }
   .h-pick--builds .h-opt-name { font-size: 17px; }
 
